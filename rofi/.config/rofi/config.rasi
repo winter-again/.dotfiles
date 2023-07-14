@@ -16,7 +16,6 @@ configuration {
     fg: #c0caf5;
     cyan: #7dcfff;
     purple: #9d7cd8;
-
     background-color: @bg;
     border: 0;
     margin: 0;
@@ -27,12 +26,23 @@ window {
     border: 5;
     padding: 2;
     width: 50%;
-    background-color: @purple;
+    border-color: @purple;
 }
 mainbox {
     border: 0;
     padding: 0;
     children: [inputbar, listview];
+}
+inputbar {
+    spacing: 5;
+    text-color: @fg;
+    background-color: @bg;
+    padding: 10 10 10 10;
+}
+prompt {
+    spacing: 0;
+    padding: 12 0 0 12;
+    text-color: @fg;
 }
 listview {
     fixed-height: 0;
@@ -62,18 +72,7 @@ element-icon {
         padding: 0;
         background-color: transparent;
 }
-inputbar {
-    spacing: 5;
-    text-color: @fg;
-    background-color: @bg;
-    padding: 10 10 10 10;
-}
 entry {
-    spacing: 0;
-    padding: 12 0 0 12;
-    text-color: @fg;
-}
-prompt {
     spacing: 0;
     padding: 12 0 0 12;
     text-color: @fg;
