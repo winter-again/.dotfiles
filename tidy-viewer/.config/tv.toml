@@ -1,0 +1,24 @@
+# The delimiter separating the columns. [default: ,]
+delimiter = ","
+# Add a title to your tv. Example 'Test Data' [default: NA ("")]
+title = ""
+# Add a footer to your tv. Example 'footer info' [default: NA ("")]
+footer = ""
+# The upper (maximum) width of columns. [default: 20]
+upper_column_width = 20
+# The minimum width of columns. Must be 2 or larger. [default: 2]
+lower_column_width = 2
+# head number of rows to output <row-display> [default: 25]
+number = 10
+# extend width and length in terms of the number of rows and columns displayed beyond term width [default: false]
+extend_width_length = false
+# meta_color = [R,G,B] color for row index and "tv dim: rows x cols"
+meta_color = [122, 162, 247]
+# header_color = [R,G,B] color for column headers
+header_color = [157, 124, 216]
+# std_color = [R,G,B] color for standard cell data values
+std_color = [192, 202, 245]
+# na_color = [R,G,B] color for NA values
+na_color = [125, 207, 255]
+# neg_num_color = [R,G,B] color for negative values
+neg_num_color = [247, 118, 142]

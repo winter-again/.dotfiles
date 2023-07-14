@@ -1,0 +1,20 @@
+[user]
+    name = Andrew Tiu
+    email = 63322884+winter-again@users.noreply.github.com
+[core]
+	editor = nvim
+    pager = delta
+	autocrlf = input
+	excludesfile = /home/andrew/.gitignore
+[init]
+	defaultBranch = main
+[delta]
+    navigate = true
+    light = false
+    line-numbers = true
+    side-by-side = true
+    syntax-theme = Enki-Tokyo-Night
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default

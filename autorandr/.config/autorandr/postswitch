@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+i3-msg restart
+
+if [[ $(xrandr -q | grep "DP-3-1 disconnected") ]] && [[ $(xrandr -q | grep "DP-3-2 disconnected") ]]; then
+    i3-msg '[workspace="^(1|2|3|4|5|6|7|8|9|10)"] move workspace to output eDP-1;'
+fi
