@@ -55,6 +55,7 @@ alias rm="rm -i"
 alias grep="grep --color=auto"
 alias nvimrc="nvim ~/.config/nvim/"
 alias tv="tidy-viewer"
+alias cap="bash ~/.local/bin/caps_to_esc.sh"
 
 # git aliases
 alias gs="git status"

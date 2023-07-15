@@ -185,7 +185,7 @@ client.placeholder      #000000 #000000 #c0caf5 #000000   #000000
 focus_follows_mouse no
 # caps lock to ctrl
 # exec_always --no-startup-id /usr/bin/setxkbmap -option "ctrl:nocaps"
-exec_always --nostartup-id ~/.local/bin/caps_to_esc.sh
+exec_always --no-startup-id ~/.local/bin/caps_to_esc.sh
 # touchpad
 exec xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1
 exec xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Natural Scrolling Enabled" 1
