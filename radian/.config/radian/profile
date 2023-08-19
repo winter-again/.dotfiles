@@ -1,0 +1,4 @@
+options(radian.color_scheme = 'monokai')
+options(radian.editing_mode = 'vi')
+options(radian.emacs_bindings_in_vi_insert_mode = TRUE)
+options(radian.insert_new_line = FALSE)

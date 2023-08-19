@@ -1,0 +1,101 @@
+configuration {
+    show-icons: false;
+    font: "Hack Nerd Font Mono 40";
+}
+
+* {
+    bg: #16161e;
+    bg-alt: #292e42;
+    fg: #c0caf5;
+    cyan: #7dcfff;
+    purple: #9d7cd8;
+    background-color: @bg;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    border: 5;
+    border-radius: 30;
+    padding: 0;
+    width: 500;
+    border-color: @purple;
+}
+
+mainbox {
+    border: 0;
+    padding: 0;
+    children: [inputbar, message, listview];
+}
+
+inputbar {
+    enabled: false;
+    spacing: 5;
+    background-color: @bg;
+    text-color: @fg;
+}
+
+prompt {
+    padding: 12 0 0 12;
+    background-color: @bg;
+    text-color: @fg;
+}
+
+message {
+    enabled: true;
+    margin: 0px;
+    padding: 10px;
+    border: 0px solid;
+    border-radius: 0;
+    border-color: @bg-alt;
+    background-color: @bg;
+    text-color: @fg;
+}
+textbox {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    placeholder-color:           @fg;
+    blink:                       true;
+    markup:                      true;
+}
+error-message {
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               30;
+    border-color:                @bg-alt;
+    background-color:            @bg;
+    text-color:                  @fg;
+}
+
+listview {
+    scrollbar: false;
+    lines: 5;
+    fixed-height: true;
+    fixed-columns: true;
+    border: 0;
+    spacing: 0;
+    padding: 0 0 0 0;
+    border-color: @fg;
+    text-color: @fg;
+}
+
+element {
+    border: 0;
+    padding: 10;
+    text-color: @fg;
+}
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+    highlight: bold;
+    vertical-align: 0.5;
+    horizontal-align: 0;
+}
+element selected.normal {
+    background-color:            var(bg-alt);
+    text-color:                  var(cyan);
+}

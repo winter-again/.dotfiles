@@ -1,0 +1,11 @@
+# caps lock to ctrl
+setxkbmap -option ctrl:swapcaps
+# faster keys
+xset r rate 200 40
+# don't turn off screen
+# though betterlockscreen seems to look at DPMS
+xset s off
+xset -dpms
+xset s noblank
+
+autorandr --change
