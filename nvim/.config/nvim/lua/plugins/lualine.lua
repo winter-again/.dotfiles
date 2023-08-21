@@ -97,7 +97,7 @@ return {
                 lualine_a = {'mode'},
                 lualine_b = {'branch', {'diff', source=diff_source}, 'diagnostics'},
                 lualine_c = {{'filename', path=1}},
-                lualine_x = {'filetype', {display_lsp_venv, icon={' LSP:'}}},
+                lualine_x = {'encoding', 'filetype', {display_lsp_venv, icon={' LSP:'}}},
                 lualine_y = {'progress'},
                 lualine_z = {'location'}
               },
