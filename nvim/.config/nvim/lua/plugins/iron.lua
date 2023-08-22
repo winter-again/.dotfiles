@@ -11,10 +11,10 @@ return {
                 repl_open_cmd = view.split.vertical.botright(0.45),
                 repl_definition = {
                     python = require('iron.fts.python').ipython,
-                    r = {
-                        command = {'radian'},
-                        format = require('iron.fts.common').bracketed_paste
-                    }
+                    -- r = {
+                    --     -- command = {'radian'},
+                    --     -- format = require('iron.fts.common').bracketed_paste
+                    -- }
                 }
             },
             keymaps = {
