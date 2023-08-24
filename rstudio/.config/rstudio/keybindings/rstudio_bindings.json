@@ -1,3 +1,6 @@
 {
-    "commentUncomment": "Ctrl+/"
+    "commentUncomment": "Ctrl+/",
+    "focusNextPane": "Ctrl+L",
+    "focusPreviousPane": "Ctrl+H",
+    "consoleClear": "Ctrl+Shift+L"
 }
