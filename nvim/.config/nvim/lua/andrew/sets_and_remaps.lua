@@ -121,19 +121,19 @@ vim.keymap.set('n', 'n', 'nzzzv', opts)
 vim.keymap.set('n', 'N', 'Nzzzv', opts)
 -- keep cursor at the bottom of selection after yanking it
 vim.keymap.set('v', 'y', 'ygv<esc>', opts)
--- yanking and pasting behavior
--- "_ passes to black hole register
--- vim.keymap.set("n", "d", '"_d', opts) -- delete line without losing what's yanked
--- vim.keymap.set("v", "p", '"_dP', opts) -- paste over text without losing what's yanked
--- send the deleted text to black hole instead of overwriting
+-- paste without overwriting what's yanked
 vim.keymap.set('x', '<leader>p', '"_dP')
--- yanking to clipboard
-vim.keymap.set('n', '<leader>y', '"+y')
-vim.keymap.set('v', '<leader>y', '"+y')
-vim.keymap.set('n', '<leader>Y', '"+Y')
+-- yank into clipboard
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y')
+vim.keymap.set({'n', 'v'}, '<leader>Y', '"+Y')
+-- delete into clipboard
+-- vim.keymap.set({'n', 'v'}, '<leader>d', '"+d')
+-- vim.keymap.set({'n', 'v'}, '<leader>D', '"+D')
+-- paste from clipboard
+-- vim.keymap.set('n', '<leader>p', '"+p')
+-- vim.keymap.set('n', '<leader>P', '"+P')
 -- delete to black hole register to prevent overwriting
-vim.keymap.set('n', '<leader>d', '"_d')
-vim.keymap.set('v', '<leader>d', '"_d')
+vim.keymap.set({'n', 'v'}, '<leader>d', '"_d')
 -- disable "Q"
 -- apparently "Q" would replay the last recorded macro?
 -- https://github.com/neovim/neovim/issues/15404
