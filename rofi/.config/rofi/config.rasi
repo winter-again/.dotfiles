@@ -27,6 +27,7 @@ window {
     border-radius: 30;
     padding: 2;
     width: 50%;
+    height: 50%;
     border-color: @purple;
 }
 mainbox {
