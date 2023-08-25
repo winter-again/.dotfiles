@@ -121,9 +121,9 @@ obs() {
 #     cd "$dir"
 # }
 
-# export PYENV_ROOT="$HOME/.pyenv"
-# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
