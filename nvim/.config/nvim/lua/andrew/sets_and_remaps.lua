@@ -13,6 +13,8 @@ vim.opt.undofile = true -- save undo history to an undo file and restore from to
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true -- highlight current line and its line number
+-- colorcol
+-- vim.opt.colorcolumn = '80' -- for some reason, it's slower than expected
 -- tab settings
 vim.opt.tabstop = 4 -- how wide tab characters are
 vim.opt.softtabstop = 4 -- how Tab and Backspace should operate 
@@ -30,8 +32,7 @@ vim.opt.incsearch = true -- show search result while typing the search term
 vim.opt.termguicolors = true -- nice colors
 vim.opt.scrolloff = 4 -- always keep at least this number of lines above/below the cursor when scrolling
 vim.opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show 
--- using this for now; just sets yanking to system clipboard
--- vim.opt.clipboard = 'unnamedplus'
+-- vim.opt.clipboard = 'unnamedplus' -- makes all yanking use clipboard
 -- highlights the text you just yanked (visual cue)
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
