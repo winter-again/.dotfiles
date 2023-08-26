@@ -38,8 +38,7 @@ return {
                 f = {
                     name = 'Telescope',
                     b = {'Find buffers'},
-                    c = {'Find commands'},
-                    C = {'Find colorscheme'},
+                    c = {'Find colorscheme'},
                     D = {'Find workspace diagnostics'},
                     d = {'Find file diagnostics'},
                     f = {'Find file'},
@@ -49,7 +48,7 @@ return {
                     h = {'Find highlights'},
                     j = {'Find jumplist'},
                     k = {'Find keymaps'},
-                    l = {'Find Lazy plugins'},
+                    -- l = {'Find Lazy plugins'},
                     p = {'Find session'},
                     r = {'Find registers'},
                     s = {'Find string in cwd'},

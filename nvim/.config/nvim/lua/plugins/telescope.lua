@@ -86,6 +86,7 @@ return {
             require('telescope').load_extension('undo')
             require('telescope').load_extension('file_browser')
             require('telescope').load_extension('persisted')
+            -- require('telescope').load_extension('harpoon')
             -- require('telescope').load_extension('lazy')
 
             local builtin = require('telescope.builtin')
