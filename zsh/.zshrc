@@ -93,17 +93,15 @@ ff() {
     dir=$(fd . ~/Documents/Bansal_lab ~/Documents/projects --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
     cd "$dir"
 }
-
+# use fd and fzf to jump to dirs in .dotfiles
 dot() {
     local dir
     dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf --no-preview)
     cd "$dir"
 }
-# use fd and fzf to jump to dirs in .dotfiles
 dots() {
     cd ~/.dotfiles
 }
-
 # for Obsidian vault
 obs() {
     if [ $(pwd) != "~/Documents/andrew-obsidian/" ]
@@ -111,20 +109,17 @@ obs() {
         cd ~/Documents/andrew-obsidian
     fi
     git status
-
 }
 # https://github.com/junegunn/fzf/wiki/Examples#changing-directory
-# cdf() {
-#     local dir
-#     dir=$(find ${1:-.} -path '*/\.*' -prune \
-#         -o -type d -print 2> /dev/null | fzf +m) &&
-#     cd "$dir"
-# }
-
+cdf() {
+    local dir
+    dir=$(find ${1:-.} -path '*/\.*' -prune \
+        -o -type d -print 2> /dev/null | fzf +m) &&
+    cd "$dir"
+}
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
 
