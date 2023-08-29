@@ -94,7 +94,8 @@ config.keys = {
     {key = 'UpArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize{'Up', 2}},
     {key = 'DownArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize{'Down', 2}},
     {key = 'M', mods = 'CTRL|SHIFT', action = wezterm.action.ToggleFullScreen},
-    -- {key="/", mods="CTRL", action=wezterm.action{SendString="\x1f"}} -- workaround to get Ctrl-/ to work; think only needed for Unix (sort of)
+    -- workaround to get Ctrl-/ to work if using tmux or when term isn't recognizing in general
+    {key="/", mods="CTRL", action=wezterm.action{SendString="\x1f"}}
 }
 
 -- maximize on startup
