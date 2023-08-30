@@ -94,7 +94,9 @@ config.keys = {
     {key = 'UpArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize{'Up', 2}},
     {key = 'DownArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize{'Down', 2}},
     {key = 'M', mods = 'CTRL|SHIFT', action = wezterm.action.ToggleFullScreen},
-    -- workaround to get Ctrl-/ to work if using tmux or when term isn't recognizing in general
+    -- workaround to get Ctrl-/ to work if using tmux
+    -- or when term isn't recognizing in general
+    -- paired with comment keymap that is defined using "_" instead of "/"
     {key="/", mods="CTRL", action=wezterm.action{SendString="\x1f"}}
 }
 
