@@ -93,6 +93,9 @@ ff() {
     dir=$(fd . ~/Documents/Bansal_lab ~/Documents/projects --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
     cd "$dir"
 }
+tt() {
+    ~/.local/bin/tmux-sessionizer.sh
+}
 # use fd and fzf to jump to dirs in .dotfiles
 dot() {
     local dir
@@ -136,12 +139,10 @@ export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 # p10k
 # source ~/powerlevel10k/powerlevel10k.zsh-theme
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 unsetopt autocd beep
 autoload -Uz colors && colors
-
 autoload -U compinit && compinit
 _comp_options+=(globdots) # include hidden files in completion
 setopt MENU_COMPLETE # on ambiguous completion insert first match and cycle thru rest
