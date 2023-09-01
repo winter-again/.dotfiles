@@ -33,6 +33,7 @@ vim.opt.termguicolors = true -- nice colors
 vim.opt.scrolloff = 4 -- always keep at least this number of lines above/below the cursor when scrolling
 vim.opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show 
 -- vim.opt.clipboard = 'unnamedplus' -- makes all yanking use clipboard
+
 -- highlights the text you just yanked (visual cue)
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -42,7 +43,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     group = highlight_group,
     pattern = '*'
 })
--- autocommand for setting line wrapping for .md files; experiment with it for now
+-- allow line wrapping for .md files
 local wrap_group = vim.api.nvim_create_augroup('MarkdownWrap', {clear = true})
 vim.api.nvim_create_autocmd('BufEnter', {
     pattern = {'*.md'},
@@ -84,7 +85,7 @@ vim.opt.pumblend = 30
 -- docs: https://neovim.io/doc/user/vimindex.html
 -- how to use vim.keymap.set(): https://neovim.io/doc/user/lua.html#vim.keymap.set()
 -- defaults to NOT use recursive mapping
-local opts = {silent = true} -- silent prevents printing to command line
+local opts = {silent = true} -- prevents printing to command line
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', opts) -- unbind space in case it interferes with leader setting
 vim.keymap.set('n', '<leader>pv', ':NvimTreeToggle<CR>', opts) -- toggle file tree
 -- create splits
@@ -151,3 +152,7 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G', opts)
 -- vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', {silent = true})
 -- with Netrw disabled, use this to follow hyperlinks
 vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
+-- set transparency
+vim.keymap.set('n', '<leader>o', ':lua Transp()<CR>')
+-- delete buffer without losing window layout
+vim.keymap.set('n', '<leader>db', ':bn<CR>:bd#<CR>')

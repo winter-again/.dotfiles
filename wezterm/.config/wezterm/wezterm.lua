@@ -47,14 +47,16 @@ config.window_frame = {
     active_titlebar_bg = '#1d202f', -- color of the space behind tabs
     inactive_titlebar_bg = '#1d202f',
 }
--- config.window_background_opacity = 0.6 -- transparency of wezterm's bg
--- background image
--- config.window_background_image = ''
--- config.window_background_image_hsb = {
---     brightness = 0.3,
---     hue = 1.0,
---     saturation = 1.0
--- }
+-- background
+config.background = {
+    {
+        source = {
+            File = ''
+        },
+        -- vertical_offset = -300,
+        opacity = 0.2,
+    }
+}
 config.use_fancy_tab_bar = true -- default
 config.show_tab_index_in_tab_bar = true
 -- config.enable_tab_bar = false -- disable tab bar

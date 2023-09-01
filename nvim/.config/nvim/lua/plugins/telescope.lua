@@ -10,7 +10,6 @@ return {
             'nvim-lua/plenary.nvim',
             'debugloop/telescope-undo.nvim',
             'nvim-telescope/telescope-file-browser.nvim',
-            -- 'tsakirist/telescope-lazy.nvim'
         },
         config = function()
             -- how to specify remaps for operations within Telescope
@@ -67,19 +66,7 @@ return {
                                 ['<C-CR>'] = require('telescope-undo.actions').restore
                             }
                         }
-                    },
-                    file_browser = {
-                        hijack_netrw = true,
-                        hidden = true,
-                    },
-                    persisted = {
-                        -- layout_config = {width = 0.55, height = 0.55}
-                    },
-                    -- lazy = {
-                    --     mappings = {
-                    --         open_in_browser = '<CR>' -- opens the plugin's repo in browser
-                    --     }
-                    -- }
+                    }
                 }
             })
             require('telescope').load_extension('fzf')
@@ -87,7 +74,6 @@ return {
             require('telescope').load_extension('file_browser')
             require('telescope').load_extension('persisted')
             -- require('telescope').load_extension('harpoon')
-            -- require('telescope').load_extension('lazy')
 
             local builtin = require('telescope.builtin')
             -- use '<leader>ff' to find among ALL files; respects .gitignore
@@ -118,10 +104,8 @@ return {
             vim.keymap.set('n', '<leader>fj', builtin.jumplist, {silent = true})
             -- extensions
             vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', {silent = true}) -- keymap to open Telescope undo
-            -- vim.keymap.set('n', '<leader>fe', '<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>', {silent = true}) -- keymap to open Telescope file browser from within folder of current buffer
             vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', {silent = true}) -- more general
             vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', {silent=true}) -- for persisted.nvim plugin
-            -- vim.keymap.set('n', '<leader>fl', '<cmd>Telescope lazy<CR>', {silent=true})
         end
     }
 }

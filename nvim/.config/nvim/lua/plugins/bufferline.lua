@@ -17,13 +17,13 @@ return {
                 right_mouse_command = 'Bdelete',
                 indicator = {
                     style = 'icon'
-                },
+                } ,
                 groups = {
                     items = {
                         require('bufferline.groups').builtin.pinned:with({icon = ''})
                     }
                 },
-                separator_style = 'slope',
+                -- separator_style = 'slope',
                 always_show_bufferline = false,
                 show_buffer_icons = true,
                 show_buffer_close_icons = false,
@@ -32,7 +32,7 @@ return {
             },
             highlights = {
                 buffer_selected = {
-                    bold = false
+                    bold = true
                 }
             }
         })

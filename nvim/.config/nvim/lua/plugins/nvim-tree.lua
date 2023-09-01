@@ -32,11 +32,6 @@ return {
                 indent_markers = {
                     enable = true
                 },
-                -- root_folder_label = function(path)
-                --     path = vim.fn.fnamemodify(path, ':~:s?$?/..?') -- default string mod
-                --     path = path:gsub('\\', '/')
-                --     return path
-                -- end,
                 icons = {
                     glyphs = {
                         git = {
