@@ -49,9 +49,17 @@ require('iron.fts').rmd = {
 }
 -- transparency
 Transp = function()
-    vim.api.nvim_set_hl(0, 'Normal', {bg='none'})
-    vim.api.nvim_set_hl(0, 'NormalFloat', {bg='none'})
-    vim.api.nvim_set_hl(0, 'SignColumn', {bg='none'})
+    local highlights = {
+        'Normal',
+        -- 'NormalNC', -- seems to work w/o this
+        -- 'NormalFloat', -- affects docs pop-up
+        -- 'Float', -- affects telescope
+        'SignColumn',
+        'FoldColumn'
+    }
+    for _, hl in pairs(highlights) do
+        vim.api.nvim_set_hl(0, hl, {bg='none'})
+    end
 end
 
 Transp()
