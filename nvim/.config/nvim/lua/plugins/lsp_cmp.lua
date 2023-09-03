@@ -44,11 +44,6 @@ return {
                 },
                 automatic_installation = false -- don't autoinstall when opening file
             })
-            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities({
-                dynamicRegistration = false,
-                lineFoldingOnly = true
-            })
             -- lspconfig appearance and behavior
             require('lspconfig.ui.windows').default_options.border = 'rounded'
             -- modify diagnostic sign icons
@@ -71,9 +66,16 @@ return {
                 virtual_text = false, -- don't use virtual text for LSP diagnostics
                 signs = true,
                 float = {border='rounded'},
-                underline = true,
+                underline = false,
                 severity_sort = true
             })
+            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
+            local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- from nvim-ufo
+            lsp_capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
+            }
             -- setup LSPs:
             -- if using below setup functionality, shouldn't use direct setup from lspconfig
             -- see docs here (search `setup_handlers`): https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
@@ -85,12 +87,15 @@ return {
                 -- optional default handler
                 function(server_name)
                     lspconfig[server_name].setup({
-                        -- settings here
+                        -- on_attach = ...
+                        capabilities = lsp_capabilities
                     })
                 end,
-                -- then dedicated handler overrides for specific servers with the server name as key
+                -- then dedicated handler overrides for specific servers
+                -- with the server name as key
                 ['lua_ls'] = function()
                     lspconfig.lua_ls.setup({
+                        capabilities = lsp_capabilities,
                         settings = {
                             Lua = {
                                 runtime = {
