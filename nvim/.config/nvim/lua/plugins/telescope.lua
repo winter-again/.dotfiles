@@ -9,6 +9,7 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'debugloop/telescope-undo.nvim',
+            'nvim-telescope/telescope-file-browser.nvim'
         },
         config = function()
             -- how to specify remaps for operations within Telescope
@@ -65,12 +66,16 @@ return {
                                 ['<C-CR>'] = require('telescope-undo.actions').restore
                             }
                         }
+                    },
+                    file_browser = {
+                        hijack_netrw = true
                     }
                 }
             })
             require('telescope').load_extension('fzf')
             require('telescope').load_extension('undo')
             require('telescope').load_extension('persisted')
+            require('telescope').load_extension('file_browser')
             -- require('telescope').load_extension('harpoon')
 
             local builtin = require('telescope.builtin')
@@ -101,8 +106,9 @@ return {
             --search jumplist
             vim.keymap.set('n', '<leader>fj', builtin.jumplist, {silent = true})
             -- extensions
-            vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', {silent = true}) -- keymap to open Telescope undo
-            vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', {silent=true}) -- for persisted.nvim plugin
+            vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', {silent = true})
+            vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', {silent=true})
+            vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', {silent=true})
         end
     }
 }

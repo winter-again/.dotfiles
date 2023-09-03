@@ -134,7 +134,7 @@ vim.keymap.set('n', '<leader>rs', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left
 vim.keymap.set('n', '+', '<C-x>', opts)
 vim.keymap.set('n', '-', '<C-a>', opts)
 -- select all in doc
-vim.keymap.set('n', '<C-a>', 'gg<S-v>G', opts)
+-- vim.keymap.set('n', '<C-a>', 'gg<S-v>G', opts)
 -- cycle through buffers if not using bufferline
 -- vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', {silent = true})
 -- vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', {silent = true})

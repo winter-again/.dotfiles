@@ -12,8 +12,9 @@ return {
             -- must set up these plugins this order:
             -- 1) mason.nvim
             -- 2) mason-lspconfig.nvim
-            -- 3) lspconfig server setup
+            -- 3) lspconfig server setup -> I opt to use something from mason-lspconfig instead
             require('neodev').setup() -- neodev needs to be setup BEFORE lspconfig
+            -- (1)
             require('mason').setup({
                 ui = {
                     border = 'rounded',
@@ -24,18 +25,19 @@ return {
                     }
                 }
             })
+            -- (2)
             require('mason-lspconfig').setup({
                 ensure_installed = {
                     'lua_ls',
                     'pyright',
                     'r_language_server',
                     'html',
+                    'emmet_ls',
                     'cssls',
                     'tsserver',
                     'eslint',
                     'jsonls',
                     'astro',
-                    'emmet_ls',
                     'sqlls',
                     'marksman',
                     'bashls'
@@ -47,8 +49,7 @@ return {
                 dynamicRegistration = false,
                 lineFoldingOnly = true
             })
-            -- setup LSP via a mix of Mason's extended functionality and lspconfig
-            local lspconfig = require('lspconfig')
+            -- lspconfig appearance and behavior
             require('lspconfig.ui.windows').default_options.border = 'rounded'
             -- modify diagnostic sign icons
             -- I think lowercase name is for statusline and uppercase is for actual sign column?
@@ -66,51 +67,51 @@ return {
                 local hl = 'DiagnosticSign' .. type
                 vim.fn.sign_define(hl, {text=icon, texthl=hl, numhl=hl})
             end
-            -- don't use virtual text for LSP diagnostics
             vim.diagnostic.config({
-                virtual_text = false,
+                virtual_text = false, -- don't use virtual text for LSP diagnostics
                 signs = true,
                 float = {border='rounded'},
                 underline = true,
                 severity_sort = true
             })
+            -- setup LSPs:
             -- if using below setup functionality, shouldn't use direct setup from lspconfig
-            -- ref here: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
-            -- addtional override configs for servers go in below table
-            -- gets passed to the `settings` field of server config
-            -- use server name as the key
-            local servers = {
-                lua_ls = {
-                    Lua = {
-                        runtime = {
-                            version = 'LuaJIT'
-                        },
-                        diagnostics = {
-                            globals = {'vim'}
-                        },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file('', true),
-                            checkThirdParty = false
-                        },
-                        telemetry = {
-                            enable = false
-                        },
-                        -- neodev-related
-                        completion = {
-                            callSnippet = 'Replace'
-                        }
-                    }
-                }
-            }
+            -- see docs here (search `setup_handlers`): https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
+            local lspconfig = require('lspconfig')
             require('mason-lspconfig').setup_handlers({
-                -- default handler called for each installed server that doesn't have a dedicated
-                -- handler
+                -- first entry (no key) will be default handler and will be called for each installed server
+                -- that doesn't have dedicated handler
+                -- aka a catch-all setting
+                -- optional default handler
                 function(server_name)
-                    -- lspconfig setup in here
                     lspconfig[server_name].setup({
-                        -- on_attach = lsp_attach,
-                        capabilities = lsp_capabilities,
-                        settings = servers[server_name]
+                        -- settings here
+                    })
+                end,
+                -- then dedicated handler overrides for specific servers with the server name as key
+                ['lua_ls'] = function()
+                    lspconfig.lua_ls.setup({
+                        settings = {
+                            Lua = {
+                                runtime = {
+                                    version = 'LuaJIT'
+                                },
+                                diagnostics = {
+                                    globals = {'vim'}
+                                },
+                                workspace = {
+                                    library = vim.api.nvim_get_runtime_file('', true),
+                                    checkThirdParty = false
+                                },
+                                telemetry = {
+                                    enable = false
+                                },
+                                -- for neodev
+                                completion = {
+                                    callSnippet = 'Replace'
+                                }
+                            }
+                        }
                     })
                 end
             })
@@ -122,11 +123,12 @@ return {
         -- ensure friendly-snippets is a dep
         -- lazy_load to speed up startup time
         dependencies = {
-            'rafamadriz/friendly-snippets', -- snippet source
+            'rafamadriz/friendly-snippets',
             config = function()
                 require('luasnip.loaders.from_vscode').lazy_load()
             end
-        }
+        },
+        config = true
     },
     {
         'hrsh7th/nvim-cmp',
@@ -146,8 +148,6 @@ return {
             local luasnip = require('luasnip')
             local lspkind = require('lspkind')
 
-            luasnip.config.setup()
-
             cmp.setup({
                 -- required: specify a snippet engine
                 snippet = {
@@ -162,12 +162,12 @@ return {
                 },
                 formatting = {
                     fields = {'abbr', 'kind', 'menu'}, -- what fields show in completion item
-                    -- use lspkind here
+                    -- config lspkind
                     format = lspkind.cmp_format({
                         mode = 'symbol_text',
                         -- to also show source of the completion items
                         menu = ({
-                            -- should match sources
+                            -- define labels
                             nvim_lsp = '[LSP]',
                             luasnip = '[LuaSnip]',
                             path = '[path]',
@@ -178,16 +178,16 @@ return {
                         maxwidth = 50,
                         ellipsis_char = '...',
                         -- called before lspkind does any mods; can put other customization here
-                        before = function(entry, vim_item)
-                            return vim_item
-                        end
+                        -- before = function(entry, vim_item)
+                        --     return vim_item
+                        -- end
                     })
                 },
                 performance = {
                     max_view_entries = 10
                 },
                 sources = cmp.config.sources({
-                    -- order determines suggestion order too
+                    -- order determines suggestion order
                     -- can use keyword_length to change when auto completion gets triggered
                     {name = 'nvim_lsp'},
                     {name = 'luasnip'},
@@ -234,12 +234,14 @@ return {
 
                 })
             })
-            cmp.setup.cmdline('/', {
+            -- use buffer source for '/' and '?'
+            cmp.setup.cmdline({'/', '?'}, {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
                     {name = 'buffer'}
                 }
             })
+            -- use cmdline & path sources for ':'
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({
