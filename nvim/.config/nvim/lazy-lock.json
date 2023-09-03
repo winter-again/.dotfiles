@@ -4,7 +4,7 @@
   "alpha-nvim": { "branch": "main", "commit": "5f211a1597b06be24b1600d72a62b94cab1e2df9" },
   "annotate.nvim": { "branch": "main", "commit": "0ee7d39626a0c10effa8d945363ee4197b7a0464" },
   "bufferline.nvim": { "branch": "main", "commit": "d24378edc14a675c820a303b4512af3bbc5761e9" },
-  "catppuccin": { "branch": "main", "commit": "2e3e5ebcdc24ef0d5b14a0a999dbbe7936512c46" },
+  "catppuccin": { "branch": "main", "commit": "135f9b01386fa18da6d75c16ceb83e1aa3669430" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-cmdline": { "branch": "main", "commit": "8ee981b4a91f536f52add291594e89fb6645e451" },
   "cmp-nerdfont": { "branch": "main", "commit": "853a946eda00016f60c0602a20d8595c6eb074a6" },
@@ -58,7 +58,7 @@
   "telescope.nvim": { "branch": "0.1.x", "commit": "776b509f80dd49d8205b9b0d94485568236d1192" },
   "tokyonight.nvim": { "branch": "main", "commit": "9a01eada39558dc3243278e6805d90e8dff45dc0" },
   "trouble.nvim": { "branch": "main", "commit": "3f85d8ed30e97ceeddbbcf80224245d347053711" },
-  "vim-flog": { "branch": "master", "commit": "e369dcf85ac8853c414175f22be6b5dfad931c40" },
+  "vim-flog": { "branch": "master", "commit": "58c1d39ec42f92d23a1204b1869e5d1dece8b86c" },
   "vim-fugitive": { "branch": "master", "commit": "572c8510123cbde02e8a1dafcd376c98e1e13f43" },
   "which-key.nvim": { "branch": "main", "commit": "7ccf476ebe0445a741b64e36c78a682c1c6118b7" },
   "zen-mode.nvim": { "branch": "main", "commit": "68f554702de63f4b7b6b6d4bcb10178f41a0acc7" }
