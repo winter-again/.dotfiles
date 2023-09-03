@@ -52,7 +52,7 @@ vim.opt.sessionoptions = 'buffers,curdir,folds,globals,winpos,winsize'
 vim.opt.pumblend = 35
 
 -- highlight the text you just yanked (visual cue)
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', {clear = true})
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
         vim.highlight.on_yank()
@@ -71,7 +71,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
 -- setting it with autocmd otherwise ftplugin overrides it
 -- BufWinEnter event is late enough to override formatoptions
 -- https://www.reddit.com/r/neovim/comments/sqld76/stop_automatic_newline_continuation_of_comments/
-local exit_cursor_group = vim.api.nvim_create_augroup('ModAutoComment', { clear = true })
+local exit_cursor_group = vim.api.nvim_create_augroup('ModAutoComment', {clear = true})
 vim.api.nvim_create_autocmd("BufWinEnter", { command = 'set formatoptions-=cro', group = exit_cursor_group })
 --------------------------------------------------------------------------------------------------------
 -- defaults to NOT use recursive mapping
