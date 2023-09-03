@@ -2,7 +2,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = {'BufReadPost', 'BufNewFile'},
-    dependencies = 'JoosepAlviste/nvim-ts-context-commenstring',
+    dependencies = 'JoosepAlviste/nvim-ts-context-commentstring',
     config = function()
         require('nvim-treesitter.configs').setup({
             -- first 5 are advised to always be installed
