@@ -9,7 +9,6 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'debugloop/telescope-undo.nvim',
-            'nvim-telescope/telescope-file-browser.nvim',
         },
         config = function()
             -- how to specify remaps for operations within Telescope
@@ -71,7 +70,6 @@ return {
             })
             require('telescope').load_extension('fzf')
             require('telescope').load_extension('undo')
-            require('telescope').load_extension('file_browser')
             require('telescope').load_extension('persisted')
             -- require('telescope').load_extension('harpoon')
 
@@ -84,7 +82,7 @@ return {
             vim.keymap.set('n', '<leader>fgs', builtin.git_status, {silent = true})
             -- search for string in current working dir
             vim.keymap.set('n', '<leader>fs', builtin.live_grep, {silent = true})
-            -- search within current buffer; likely a more friendly alt to '/'
+            -- search within current buffer
             vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, {silent = true})
             -- search previously open files
             vim.keymap.set('n', '<leader>fr', builtin.registers, {silent = true})
@@ -98,13 +96,12 @@ return {
             vim.keymap.set('n', '<leader>fk', builtin.keymaps, {silent = true})
             -- search highlights
             vim.keymap.set('n', '<leader>fh', builtin.highlights, {silent = true})
-            -- search colorscheme and preview
+            -- search colorscheme
             vim.keymap.set('n', '<leader>fc', builtin.colorscheme, {silent = true})
             --search jumplist
             vim.keymap.set('n', '<leader>fj', builtin.jumplist, {silent = true})
             -- extensions
             vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', {silent = true}) -- keymap to open Telescope undo
-            vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', {silent = true}) -- more general
             vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', {silent=true}) -- for persisted.nvim plugin
         end
     }
