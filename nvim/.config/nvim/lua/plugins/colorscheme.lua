@@ -17,7 +17,7 @@ return {
                     highlights['FidgetTask'] = {fg=colors.fg} -- override for fidget plugin
                 end
             })
-            vim.cmd('colorscheme tokyonight') -- set default colorscheme after configuring
+            -- vim.cmd('colorscheme tokyonight') -- set default colorscheme after configuring
         end
     },
     {
@@ -104,7 +104,11 @@ return {
             require('rose-pine').setup({
                 variant = 'moon',
                 highlight_groups = {
-                    TreesitterContext = {bg = 'foam', blend = 10},
+                    TreesitterContext = {bg='foam', blend=10},
+                    -- for transparency, otherwise bg remains
+                    GitSignsAdd = {bg='none'},
+                    GitSignsDelete = {bg='none'},
+                    GitSignsChange = {bg='none'},
                 }
             })
         end

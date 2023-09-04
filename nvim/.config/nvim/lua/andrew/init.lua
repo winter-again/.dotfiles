@@ -63,4 +63,5 @@ Transp = function()
     end
 end
 
+vim.cmd('colorscheme tokyonight') -- default colorscheme
 Transp()
