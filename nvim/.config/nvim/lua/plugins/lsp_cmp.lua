@@ -26,24 +26,72 @@ return {
                 }
             })
             -- (2)
-            require('mason-lspconfig').setup({
-                ensure_installed = {
-                    'lua_ls',
-                    'pyright',
-                    'r_language_server',
-                    'html',
-                    'emmet_ls',
-                    'cssls',
-                    'tsserver',
-                    'eslint',
-                    'jsonls',
-                    'astro',
-                    'sqlls',
-                    'marksman',
-                    'bashls'
+            local servers = {
+                lua_ls = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT'
+                        },
+                        diagnostics = {
+                            globals = {'vim'}
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file('', true),
+                            checkThirdParty = false
+                        },
+                        telemetry = {
+                            enable = false
+                        },
+                        -- for neodev
+                        completion = {
+                            callSnippet = 'Replace'
+                        }
+                    }
                 },
+                pyright = {},
+                r_language_server = {},
+                html = {},
+                emmet_ls = {},
+                cssls = {},
+                tsserver = {},
+                eslint = {},
+                astro = {},
+                jsonls = {},
+                sqlls = {},
+                marksman = {},
+                bashls = {}
+            }
+
+            require('mason-lspconfig').setup({
+                ensure_installed = vim.tbl_keys(servers), -- install from table above
                 automatic_installation = false -- don't autoinstall when opening file
             })
+            -- setup LSPs:
+            -- if using below setup functionality, shouldn't use direct setup from lspconfig
+            -- see docs here (search `setup_handlers`): https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
+            -- below uses kickstart.nvim's struc instead of what's in the above docs
+
+            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
+            -- from kickstart.nvim
+            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
+            -- from nvim-ufo
+            lsp_capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
+            }
+
+            require('mason-lspconfig').setup_handlers({
+                function(server_name)
+                    require('lspconfig')[server_name].setup({
+                        capabilities = lsp_capabilities,
+                        on_attach = on_attach,
+                        settings = servers[server_name],
+                        filetypes = (servers[server_name] or {}).filetypes
+                    })
+                end
+            })
+
             -- lspconfig appearance and behavior
             require('lspconfig.ui.windows').default_options.border = 'rounded'
             -- modify diagnostic sign icons
@@ -68,59 +116,6 @@ return {
                 float = {border='rounded'},
                 underline = false,
                 severity_sort = true
-            })
-            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            -- from kickstart.nvim
-            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
-            -- from nvim-ufo
-            lsp_capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true
-            }
-            -- setup LSPs:
-            -- if using below setup functionality, shouldn't use direct setup from lspconfig
-            -- see docs here (search `setup_handlers`): https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
-            local lspconfig = require('lspconfig')
-            require('mason-lspconfig').setup_handlers({
-                -- first entry (no key) will be default handler and will be called for each installed server
-                -- that doesn't have dedicated handler
-                -- aka a catch-all setting
-                -- optional default handler
-                function(server_name)
-                    lspconfig[server_name].setup({
-                        -- on_attach = ...
-                        capabilities = lsp_capabilities
-                    })
-                end,
-                -- then dedicated handler overrides for specific servers
-                -- with the server name as key
-                ['lua_ls'] = function()
-                    lspconfig.lua_ls.setup({
-                        capabilities = lsp_capabilities,
-                        settings = {
-                            Lua = {
-                                runtime = {
-                                    version = 'LuaJIT'
-                                },
-                                diagnostics = {
-                                    globals = {'vim'}
-                                },
-                                workspace = {
-                                    library = vim.api.nvim_get_runtime_file('', true),
-                                    checkThirdParty = false
-                                },
-                                telemetry = {
-                                    enable = false
-                                },
-                                -- for neodev
-                                completion = {
-                                    callSnippet = 'Replace'
-                                }
-                            }
-                        }
-                    })
-                end
             })
         end
     },
@@ -232,12 +227,11 @@ return {
                     -- avoid inserting the text of selected item until confirmed
                     ['<C-p>'] = cmp.mapping.select_prev_item({behavior = cmp.SelectBehavior.Select}),
                     ['<C-n>'] = cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}),
-                    -- scroll through completion menu's hover docs
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<CR>'] = cmp.mapping.confirm({select=false}), -- only confirm explicitly selected
-                    ['<C-y'] = cmp.config.disable,
-                    ['<C-e>'] = cmp.mapping.abort() -- close completion menu and cancel completion
+                    ['<CR>'] = cmp.mapping.confirm({behavior=cmp.ConfirmBehavior.Replace, select=false}), -- only confirm explicitly selected
+                    ['<C-y>'] = cmp.config.disable,
+                    ['<C-e>'] = cmp.mapping.abort()
 
                 })
             })
