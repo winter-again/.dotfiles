@@ -27,6 +27,7 @@ return {
             })
             -- (2)
             local servers = {
+                -- LSPs
                 lua_ls = {
                     Lua = {
                         runtime = {
@@ -49,6 +50,7 @@ return {
                     }
                 },
                 pyright = {},
+                ruff_lsp = {}, -- happens to be LSP interface for a linter
                 r_language_server = {},
                 html = {},
                 emmet_ls = {},
