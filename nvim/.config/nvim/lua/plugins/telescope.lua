@@ -58,13 +58,6 @@ return {
                         layout_strategy = 'vertical',
                         layout_config = {
                             preview_height = 0.8
-                        },
-                        mappings = {
-                            i = {
-                                ['<CR>'] = require('telescope-undo.actions').yank_additions,
-                                ['<S-CR>'] = require('telescope-undo.actions').yank_deletions,
-                                ['<C-CR>'] = require('telescope-undo.actions').restore
-                            }
                         }
                     },
                     file_browser = {
