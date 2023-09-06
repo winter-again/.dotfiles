@@ -26,53 +26,28 @@ return {
                 }
             })
             -- (2)
-            local servers = {
-                -- LSPs
-                lua_ls = {
-                    Lua = {
-                        runtime = {
-                            version = 'LuaJIT'
-                        },
-                        diagnostics = {
-                            globals = {'vim'}
-                        },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file('', true),
-                            checkThirdParty = false
-                        },
-                        telemetry = {
-                            enable = false
-                        },
-                        -- for neodev
-                        completion = {
-                            callSnippet = 'Replace'
-                        }
-                    }
-                },
-                pyright = {},
-                ruff_lsp = {}, -- happens to be LSP interface for a linter
-                r_language_server = {},
-                html = {},
-                emmet_ls = {},
-                cssls = {},
-                tsserver = {},
-                eslint = {},
-                astro = {},
-                jsonls = {},
-                sqlls = {},
-                marksman = {},
-                bashls = {}
-            }
-
-            require('mason-lspconfig').setup({
-                ensure_installed = vim.tbl_keys(servers), -- install from table above
-                automatic_installation = false -- don't autoinstall when opening file
-            })
             -- setup LSPs:
             -- if using below setup functionality, shouldn't use direct setup from lspconfig
             -- see docs here (search `setup_handlers`): https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
-            -- below uses kickstart.nvim's struc instead of what's in the above docs
-
+            require('mason-lspconfig').setup({
+                ensure_installed = {
+                    'lua_ls',
+                    'pyright',
+                    'ruff_lsp',
+                    'r_language_server',
+                    'html',
+                    'emmet_ls',
+                    'cssls',
+                    'tsserver',
+                    'eslint',
+                    'astro',
+                    'jsonls',
+                    'sqlls',
+                    'marksman',
+                    'bashls'
+                }, -- install from table above
+                automatic_installation = false -- don't autoinstall when opening file
+            })
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
             -- from kickstart.nvim
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -83,13 +58,36 @@ return {
                 lineFoldingOnly = true
             }
 
+            local lspconfig = require('lspconfig')
             require('mason-lspconfig').setup_handlers({
+                -- default handler
                 function(server_name)
-                    require('lspconfig')[server_name].setup({
-                        capabilities = lsp_capabilities,
-                        on_attach = on_attach,
-                        settings = servers[server_name],
-                        filetypes = (servers[server_name] or {}).filetypes
+                    lspconfig[server_name].setup()
+                end,
+                -- server-specific overrides
+                ['lua_ls'] = function()
+                    require('lua_ls').setup({
+                        settings = {
+                            Lua = {
+                                runtime = {
+                                    version = 'LuaJIT'
+                                },
+                                diagnostics = {
+                                    globals = {'vim'}
+                                },
+                                workspace = {
+                                    library = vim.api.nvim_get_runtime_file('', true),
+                                    checkThirdParty = false
+                                },
+                                telemetry = {
+                                    enable = false
+                                },
+                                -- for neodev
+                                completion = {
+                                    callSnippet = 'Replace'
+                                }
+                            }
+                        }
                     })
                 end
             })
