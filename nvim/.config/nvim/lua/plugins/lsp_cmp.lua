@@ -31,7 +31,7 @@ return {
                 ensure_installed = {
                     'lua_ls',
                     'pyright',
-                    'ruff_lsp',
+                    -- 'ruff_lsp',
                     'r_language_server',
                     'html',
                     'emmet_ls',
@@ -76,13 +76,13 @@ return {
                         }
                     })
                 end,
-                ['ruff_lsp'] = function()
-                    require('lspconfig')['ruff_lsp'].setup({
-                        on_attach = function(client, bufnr)
-                            client.server_capabilities.hoverProvider = false
-                        end
-                    })
-                end
+                -- ['ruff_lsp'] = function()
+                --     require('lspconfig')['ruff_lsp'].setup({
+                --         on_attach = function(client, bufnr)
+                --             client.server_capabilities.hoverProvider = false
+                --         end
+                --     })
+                -- end
             }
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
