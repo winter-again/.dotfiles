@@ -33,8 +33,8 @@ export PATH="$HOME/.local/bin:$PATH" # for zoxide and others
 
 # aliases
 # some taken from zap-zsh proj (https://github.com/zap-zsh)
-alias ls="exa -a --icons --color=always --group-directories-first" # nicer ls
-alias ll="exa -lah --icons --color=always --group-directories-first"
+alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls
+alias ll="eza -lah --icons --color=always --group-directories-first"
 alias tree="ls -lh --tree --level=2"
 alias cp="cp -i"
 alias mv="mv -i"
