@@ -56,7 +56,7 @@ Transp = function()
         -- 'Float',
         'FloatTitle',
         'SignColumn',
-        'FoldColumn'
+        'FoldColumn',
     }
     for _, hl in pairs(highlights) do
         vim.api.nvim_set_hl(0, hl, {bg='none'})
