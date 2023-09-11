@@ -1,6 +1,10 @@
 # mirror and repos
-repos <- c(CRAN = "https://cloud.r-project.org", Stan = "https://mc-stan.org/r-packages/")
-options(repos = repos)
+options(
+    repos = c(
+        CRAN = "https://cloud.r-project.org",
+        Stan = "https://mc-stan.org/r-packages/"
+    )
+)
 options(
     warnPartialMatchAttr = TRUE,
     warnPartialMatchDollar = TRUE,
