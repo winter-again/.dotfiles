@@ -42,7 +42,9 @@ return {
                     'jsonls',
                     'sqlls',
                     'marksman',
-                    'bashls'
+                    'bashls',
+                    'taplo',
+                    'yamlls'
                 },
                 automatic_installation = false
             })
