@@ -81,7 +81,6 @@ return {
     event = 'VeryLazy',
     dependencies = {'nvim-tree/nvim-web-devicons'},
     config = function()
-        -- local colors = require('tokyonight.colors').setup() -- get the Tokyonight colors
         require('lualine').setup({
             options = {
                 disabled_filetypes = {
@@ -89,7 +88,7 @@ return {
                 },
                 globalstatus = true,
                 component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
+                section_separators = { left = '', right = ''}
             },
             -- most of this is default
             sections = {
