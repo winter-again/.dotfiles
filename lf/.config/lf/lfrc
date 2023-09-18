@@ -1,3 +1,53 @@
+set shell sh
+# options for shell commands
+# -e = exit on error
+# -u error for unset var
+set shellopts '-eu'
+set ifs "\n"
+
 set hidden true
 set ignorecase true
 set icons true
+set mouse true
+
+map <enter> open
+# replace d with x for cutting
+map d
+map x cut
+map DD delete
+map dd trash
+map ` !true
+map . set hidden!
+
+cmd open &{{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
+cmd mkdir ${{
+    printf "Dir name: "
+    read ans
+    mkdir $ans
+}}
+
+cmd mkfile ${{
+    printf "File name: "
+    read ans
+    $EDITOR $ans
+}}
+
+cmd trash ${{
+    files=$(printf "$fx" | tr '\n' ';')
+    while [ "$files" ]; do
+        file=${files%%;*}
+
+        trash-put "$(basename "$file")"
+        if [ "$files" = "$file" ]; then
+            files=''
+        else
+            files="${files#*;}"
+        fi
+    done
+}}
