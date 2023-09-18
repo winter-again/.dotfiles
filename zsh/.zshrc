@@ -133,6 +133,11 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 # Java for pyspark
 export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
+# Go
+export GOPATH=$HOME/go # should already be default
+export GOBIN="$GOPATH/bin" # should also be default
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin # loc of installed binaries
 
 ################################
 # starship (keep at end of file)
