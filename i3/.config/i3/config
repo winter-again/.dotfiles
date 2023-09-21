@@ -148,8 +148,8 @@ focus_follows_mouse no
 # keyboard settings
 bindsym $mod+Shift+x exec --no-startup-id ~/.local/bin/keyboard_settings.sh
 # touchpad
-exec --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1
-exec --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Natural Scrolling Enabled" 1
+exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1
+exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Natural Scrolling Enabled" 1
 # suspend or lock
 bindsym $mod+Shift+period exec --no-startup-id systemctl suspend
 bindsym $mod+Shift+comma exec --no-startup-id betterlockscreen --lock dim
