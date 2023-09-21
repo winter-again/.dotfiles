@@ -42,6 +42,7 @@ alias rm="rm -i"
 alias grep="grep --color=auto"
 alias tv="tidy-viewer"
 alias keys="bash ~/.local/bin/keyboard_settings.sh"
+alias R="R --no-save" # never prompt to save workspace image
 
 # git aliases
 alias gs="git status"
