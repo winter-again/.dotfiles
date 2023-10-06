@@ -85,7 +85,7 @@ return {
             -- search previously open files
             vim.keymap.set('n', '<leader>fr', builtin.registers, {silent = true})
             -- search open buffers in current neovim instance
-            vim.keymap.set('n', '<leader>fb', builtin.buffers, {silent = true})
+            vim.keymap.set('n', '<leader>fl', builtin.buffers, {silent = true})
             -- search diagnostics for current buffer
             vim.keymap.set('n', '<leader>fd', function() builtin.diagnostics({bufnr=0}) end, {silent = true})
             -- search diagnostics for entire workspace
