@@ -93,17 +93,22 @@ return {
             -- most of this is default
             sections = {
                 lualine_a = {'mode'},
-                lualine_b = {'branch', {'diff', source=diff_source}, 'diagnostics'},
+                lualine_b = {
+                    -- reuse info from gitsigns
+                    {'b:gitsigns_head', icon = ''},
+                    {'diff', source = diff_source, symbols = {added = ' ', modified = ' ', removed = ' '}},
+                    'diagnostics'
+                },
                 lualine_c = {{'filename', path=1}},
                 lualine_x = {'encoding', 'filetype', {display_lsp_venv, icon={' LSP:'}}},
                 lualine_y = {'progress'},
                 lualine_z = {'location'}
               },
             winbar = {
-                lualine_c = {{'filename', path=3}}
+                lualine_c = {{'filename', path = 3}}
             },
             inactive_winbar = {
-                lualine_c = {{'filename', path=3}}
+                lualine_c = {{'filename', path = 3}}
             },
             extensions = {'nvim-tree', 'fugitive'}
         })
