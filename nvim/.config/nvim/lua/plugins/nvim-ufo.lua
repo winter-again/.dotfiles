@@ -2,20 +2,19 @@ return {
     'kevinhwang91/nvim-ufo',
     dependencies = {
         'kevinhwang91/promise-async',
-        'luukvbaal/statuscol.nvim'
+        'luukvbaal/statuscol.nvim',
     },
-    event = {'BufReadPost', 'BufNewFile'},
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function()
-        vim.keymap.set('n', 'zR', require('ufo').openAllFolds, {silent=true})
-        vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, {silent=true})
+        vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { silent = true })
+        vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { silent = true })
         -- use same keymap as lspsaga to preview the fold but handle it nicely
         vim.keymap.set('n', 'K', function()
             local winid = require('ufo').peekFoldedLinesUnderCursor()
             if not winid then
                 vim.cmd('Lspsaga hover_doc')
             end
-        end
-        )
+        end)
         -- handler function for customizing the virtual text displayed by fold line
         local handler = function(virtText, lnum, endLnum, width, truncate)
             local newVirtText = {}
@@ -31,7 +30,7 @@ return {
                 else
                     chunkText = truncate(chunkText, targetWidth - curWidth)
                     local hlGroup = chunk[2]
-                    table.insert(newVirtText, {chunkText, hlGroup})
+                    table.insert(newVirtText, { chunkText, hlGroup })
                     chunkWidth = vim.fn.strdisplaywidth(chunkText)
                     -- str width returned from truncate() may less than 2nd argument, need padding
                     if curWidth + chunkWidth < targetWidth then
@@ -41,20 +40,20 @@ return {
                 end
                 curWidth = curWidth + chunkWidth
             end
-            table.insert(newVirtText, {suffix, 'MoreMsg'})
+            table.insert(newVirtText, { suffix, 'MoreMsg' })
             return newVirtText
         end
         require('ufo').setup({
             preview = {
                 mappings = {
                     scrollU = '<C-b>',
-                    scrollD = '<C-f>'
-                }
+                    scrollD = '<C-f>',
+                },
             },
             provider_selector = function()
-                return {'lsp', 'indent'}
+                return { 'lsp', 'indent' }
             end,
-            fold_virt_text_handler = handler
+            fold_virt_text_handler = handler,
         })
-    end
+    end,
 }

@@ -7,8 +7,8 @@ return {
             keymaps = {
                 normal = 'ss',
                 change = 'sc',
-                delete = 'sd'
-            }
+                delete = 'sd',
+            },
         })
-    end
+    end,
 }

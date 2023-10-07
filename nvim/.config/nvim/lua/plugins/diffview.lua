@@ -1,6 +1,6 @@
 return {
     'sindrets/diffview.nvim',
-    event = {'BufReadPost', 'BufNewFile'},
+    event = { 'BufReadPost', 'BufNewFile' },
     enabled = false,
-    config = true
+    config = true,
 }

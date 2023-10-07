@@ -1,3 +1,3 @@
 return {
-    'kkharji/sqlite.lua'
+    'kkharji/sqlite.lua',
 }
