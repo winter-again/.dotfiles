@@ -9,7 +9,7 @@ end
 Transp = function()
     local highlights = {
         'Normal',
-        -- 'NormalNC', -- seems to work w/o this
+        'NormalNC', -- unfocused windows
         -- 'NormalFloat', -- affects docs pop-up
         -- 'Float',
         'FloatTitle',
