@@ -27,6 +27,12 @@ R = function(name)
     return require(name)
 end
 
+-- save and execute lua file for quick iterating
+Save_exec = function()
+    vim.cmd('silent! write')
+    vim.cmd('luafile %')
+end
+
 -- transparency
 Transp = function()
     local highlights = {

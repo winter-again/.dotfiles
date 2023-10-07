@@ -67,3 +67,4 @@ vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfil
 vim.keymap.set('n', '<leader><leader>o', '<cmd>lua Transp()<CR>') -- set transparency
 vim.keymap.set('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>') -- delete buffer without losing window layout
 vim.keymap.set('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }) -- set here since plugin only loaded on command
+vim.keymap.set('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>') -- set transparency
