@@ -35,6 +35,7 @@ local lazy_opts = {
 require('lazy').setup('plugins', lazy_opts)
 require('andrew.sets_and_remaps')
 require('andrew.globals')
+require('andrew.autocmds')
 
 -- currently no definition for Rmd files in iron.nvim
 -- require('iron.fts').rmd = {

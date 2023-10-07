@@ -51,22 +51,6 @@ vim.opt.sessionoptions = 'buffers,curdir,folds,globals,winpos,winsize'
 -- not setting + having transparent bg makes just the transparent background show
 vim.opt.pumblend = 35
 
--- highlight the text you just yanked (visual cue)
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-    group = highlight_group,
-    pattern = '*',
-})
--- allow line wrapping for .md files
-local wrap_group = vim.api.nvim_create_augroup('MarkdownWrap', { clear = true })
-vim.api.nvim_create_autocmd('BufEnter', {
-    pattern = { '*.md' },
-    group = wrap_group,
-    command = 'setlocal wrap',
-})
 -- modify automatic formatting to not continue comments when you hit Enter
 -- setting it with autocmd otherwise ftplugin overrides it
 -- BufWinEnter event is late enough to override formatoptions
