@@ -33,7 +33,8 @@ local lazy_opts = {
 -- get plugin specs from their individual files in the plugins directory
 -- any file in lua/plugins/*.lua will be merged into the main plugin spec
 require('lazy').setup('plugins', lazy_opts)
-require('andrew.sets_and_remaps')
+require('andrew.settings')
+require('andrew.keymaps')
 require('andrew.globals')
 require('andrew.autocmds')
 
