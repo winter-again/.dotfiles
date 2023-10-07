@@ -60,8 +60,8 @@ vim.keymap.set('n', '+', '<C-a>', opts)
 -- select all in doc
 -- vim.keymap.set('n', '<C-a>', 'gg<S-v>G', opts)
 -- cycle through buffers if not using bufferline
--- vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', {silent = true})
--- vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', {silent = true})
+vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', {silent = true})
+vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', {silent = true})
 -- with Netrw disabled, use this to follow hyperlinks
 vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
 vim.keymap.set('n', '<leader><leader>o', '<cmd>lua Transp()<CR>') -- set transparency
