@@ -98,16 +98,6 @@ config.keys = {
     { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
 }
 
--- customize window title
--- wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
-    -- local index = ''
-    -- if #tabs > 1 then
-    --     index = string.format('[%d/%d] ', tab.tab_index + 1, #tabs)
-    -- end
-    -- return index
-    -- return ''
--- end)
-
 -- changes bg from within nvim
 wezterm.on('user-var-changed', function(window, pane, name, value)
     local overrides = window:get_config_overrides() or {}
