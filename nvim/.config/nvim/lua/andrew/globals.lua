@@ -48,14 +48,3 @@ Transp = function()
         vim.api.nvim_set_hl(0, hl, { bg = 'none' })
     end
 end
-
--- send config override signal to current wezterm
--- from folke's zen-mode plugin
-Wezterm = function(bg)
-    local stdout = vim.loop.new_tty(1, false)
-    -- stdout:write(('\x1b]1337;SetUserVar=%s=%s\b'):format('BG_IMG', vim.fn.system({ 'base64' }, 'foo')))
-    stdout:write(
-        ('\x1bPtmux;\x1b\x1b]1337;SetUserVar=%s=%s\007\x1b\\'):format('BG_IMG', vim.fn.system({ 'base64' }, bg))
-    )
-end
-vim.keymap.set('n', '<leader><leader>w', ':lua Wezterm("bg_1")<CR>')
