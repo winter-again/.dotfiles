@@ -123,4 +123,9 @@ local override_keymap = {
     action = wezterm.action.EmitEvent('clear-overrides')
 }
 table.insert(config.keys, override_keymap)
+
+-- wezterm.on('window-config-reloaded', function(window, pane)
+--   window:toast_notification('Wezterm', 'Configuration reloaded...', nil, 2000)
+-- end)
+
 return config
