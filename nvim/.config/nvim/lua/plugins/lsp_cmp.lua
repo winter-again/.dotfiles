@@ -2,18 +2,20 @@
 return {
     {
         'neovim/nvim-lspconfig',
-        event = { 'BufReadPre', 'BufNewFile' },
+        -- event = { 'BufReadPre', 'BufNewFile' },
         enabled = true,
         dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
+            'WhoIsSethDaniel/mason-tool-installer.nvim',
             'folke/neodev.nvim',
         },
         config = function()
             -- must set up these plugins this order:
             -- 1) mason.nvim
             -- 2) mason-lspconfig.nvim
-            -- 3) lspconfig server setup -> I opt to use something from mason-lspconfig instead
+            -- 3) mason-tool-installer.nvim
+            -- 4) lspconfig server setup -> I opt to use something from mason-lspconfig instead
             require('neodev').setup() -- neodev needs to be setup BEFORE lspconfig
             -- (1)
             require('mason').setup({
@@ -48,7 +50,17 @@ return {
                 },
                 automatic_installation = false,
             })
-
+            -- (3)
+            require('mason-tool-installer').setup({
+                auto_update = true,
+                debounce_hours = 24,
+                ensure_installed = {
+                    'black',
+                    'isort',
+                    'stylua',
+                },
+            })
+            -- (4)
             local handlers = {
                 function(server_name)
                     require('lspconfig')[server_name].setup({})
@@ -113,20 +125,6 @@ return {
                 float = { border = 'rounded' },
                 underline = false,
                 severity_sort = true,
-            })
-        end,
-    },
-    {
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        config = function()
-            require('mason-tool-installer').setup({
-                auto_update = true,
-                debounce_hours = 24,
-                ensure_installed = {
-                    'black',
-                    'isort',
-                    'stylua',
-                },
             })
         end,
     },

@@ -7,13 +7,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         vim.highlight.on_yank()
     end,
 })
--- allow line wrapping for .md files
-local wrap_group = vim.api.nvim_create_augroup('MarkdownWrap', { clear = true })
-vim.api.nvim_create_autocmd('BufEnter', {
-    group = wrap_group,
-    pattern = { '*.md' },
-    command = 'setlocal wrap',
-})
+
 -- modify automatic formatting to not continue comments when you hit Enter
 -- setting it with autocmd otherwise ftplugin overrides it
 -- BufWinEnter event is late enough to override formatoptions
