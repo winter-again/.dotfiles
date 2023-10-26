@@ -73,6 +73,32 @@ return {
                 dynamicRegistration = false,
                 lineFoldingOnly = true,
             }
+            -- global keymaps
+            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+            -- config if not using lsp saga
+            -- local on_attach = function(_, bufnr)
+            --     local nmap = function(keys, func, desc)
+            --         vim.keymap.set('n', keys, func, { desc = desc, silent = true })
+            --     end
+            --     nmap('K', vim.lsp.buf.hover, 'Hover docs')
+            --     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature docs')
+            --     nmap('<leader>rn', vim.lsp.buf.rename, 'Rename')
+            --     nmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+            --     nmap('gd', require('telescope.builtin').lsp_definitions, 'Go defn.')
+            --     nmap('gr', require('telescope.builtin').lsp_references, 'Go refs.')
+            --     nmap('gI', require('telescope.builtin').lsp_implementations, 'Go imps.')
+            --     nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type defns.')
+            --     nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Doc symbols')
+            --     nmap('<leader>ds', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
+            -- end
+            -- global floating window borders:
+            -- local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
+            -- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+            --     opts = opts or {}
+            --     opts.border = 'rounded'
+            --     return orig_util_open_float_prev(contents, syntax, opts, ...)
+            -- end
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             local handlers = {
@@ -80,12 +106,14 @@ return {
                 function(server_name)
                     require('lspconfig')[server_name].setup({
                         capabilties = lsp_capabilties,
+                        -- on_attach = on_attach,
                     })
                 end,
                 -- override default handler by server
                 ['lua_ls'] = function()
                     require('lspconfig')['lua_ls'].setup({
                         capabilities = lsp_capabilties,
+                        -- on_attach = on_attach,
                         settings = {
                             Lua = {
                                 runtime = {
@@ -113,18 +141,21 @@ return {
                     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
                     require('lspconfig')['cssls'].setup({
                         capabilities = lsp_capabilities,
+                        -- on_attach = on_attach,
                     })
                 end,
                 ['html'] = function()
                     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
                     require('lspconfig')['cssls'].setup({
                         capabilities = lsp_capabilities,
+                        -- on_attach = on_attach,
                     })
                 end,
                 ['jsonls'] = function()
                     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
                     require('lspconfig')['cssls'].setup({
                         capabilities = lsp_capabilities,
+                        -- on_attach = on_attach,
                     })
                 end,
             }
@@ -153,10 +184,15 @@ return {
             vim.diagnostic.config({
                 virtual_text = false, -- virtual text for LSP diagnostics
                 signs = true,
-                float = { border = 'rounded' },
+                float = {
+                    border = 'rounded',
+                },
                 underline = false,
+                update_in_insert = false,
                 severity_sort = true,
             })
+            -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+            -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
         end,
     },
     {
@@ -171,6 +207,7 @@ return {
                     html = { 'prettierd' },
                     javascript = { 'prettierd' },
                     javascriptreact = { 'prettierd' },
+                    json = { 'prettierd' },
                     lua = { 'stylua' },
                     python = { 'isort', 'black' }, -- run sequentially
                     typescript = { 'prettierd' },

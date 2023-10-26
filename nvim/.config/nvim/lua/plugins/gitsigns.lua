@@ -10,6 +10,34 @@ return {
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
                 local opts = { silent = true }
+                -- nav between hunks
+                local function map(mode, l, r, opts)
+                    opts = opts or {}
+                    opts.buffer = bufnr
+                    vim.keymap.set(mode, l, r, opts)
+                end
+
+                -- Navigation
+                map('n', ']c', function()
+                    if vim.wo.diff then
+                        return ']c'
+                    end
+                    vim.schedule(function()
+                        gs.next_hunk()
+                    end)
+                    return '<Ignore>'
+                end, { expr = true })
+
+                map('n', '[c', function()
+                    if vim.wo.diff then
+                        return '[c'
+                    end
+                    vim.schedule(function()
+                        gs.prev_hunk()
+                    end)
+                    return '<Ignore>'
+                end, { expr = true })
+
                 vim.keymap.set('n', '<leader>gb', gs.toggle_current_line_blame, opts)
                 -- diff: working tree vs. index
                 vim.keymap.set('n', '<leader>gd', gs.diffthis, opts)
@@ -19,14 +47,14 @@ return {
                 end, opts)
                 -- vim.keymap.set('n', '<leader>gd', gs.toggle_deleted, opts)
                 vim.keymap.set('n', '<leader>ghs', gs.stage_hunk, opts)
+                vim.keymap.set('n', '<leader>ghu', gs.undo_stage_hunk, opts)
+                vim.keymap.set('n', '<leader>ghr', gs.reset_hunk, opts)
                 vim.keymap.set('v', '<leader>ghs', function()
                     gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
                 end, opts)
                 vim.keymap.set('v', '<leader>ghr', function()
                     gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
                 end, opts)
-                vim.keymap.set('n', '<leader>ghu', gs.undo_stage_hunk, opts)
-                vim.keymap.set('n', '<leader>ghr', gs.reset_hunk, opts)
                 vim.keymap.set('n', '<leader>ghp', gs.preview_hunk, opts)
             end,
             preview_config = {
