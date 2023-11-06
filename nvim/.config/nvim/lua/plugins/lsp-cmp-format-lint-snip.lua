@@ -55,7 +55,7 @@ return {
             -- (3)
             require('mason-tool-installer').setup({
                 auto_update = true,
-                -- debounce_hours = 24,
+                debounce_hours = 24,
                 ensure_installed = {
                     'black',
                     'eslint_d',
@@ -110,6 +110,35 @@ return {
                     })
                 end,
                 -- override default handler by server
+                ['cssls'] = function()
+                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+                    require('lspconfig')['cssls'].setup({
+                        capabilities = lsp_capabilities,
+                        -- on_attach = on_attach,
+                    })
+                end,
+                -- ['eslint'] = function()
+                --     require('lspconfig')['eslint'].setup({
+                --         capabilities = lsp_capabilities,
+                --         -- this should only start eslint if the given config files are found
+                --         root_dir = require('lspconfig').util.root_pattern('.eslintrc.js', 'eslint.config.js'),
+                --         -- on_attach = on_attach,
+                --     })
+                -- end,
+                ['html'] = function()
+                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+                    require('lspconfig')['html'].setup({
+                        capabilities = lsp_capabilities,
+                        -- on_attach = on_attach,
+                    })
+                end,
+                ['jsonls'] = function()
+                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+                    require('lspconfig')['jsonls'].setup({
+                        capabilities = lsp_capabilities,
+                        -- on_attach = on_attach,
+                    })
+                end,
                 ['lua_ls'] = function()
                     require('lspconfig')['lua_ls'].setup({
                         capabilities = lsp_capabilties,
@@ -135,27 +164,6 @@ return {
                                 },
                             },
                         },
-                    })
-                end,
-                ['cssls'] = function()
-                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-                    require('lspconfig')['cssls'].setup({
-                        capabilities = lsp_capabilities,
-                        -- on_attach = on_attach,
-                    })
-                end,
-                ['html'] = function()
-                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-                    require('lspconfig')['cssls'].setup({
-                        capabilities = lsp_capabilities,
-                        -- on_attach = on_attach,
-                    })
-                end,
-                ['jsonls'] = function()
-                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-                    require('lspconfig')['cssls'].setup({
-                        capabilities = lsp_capabilities,
-                        -- on_attach = on_attach,
                     })
                 end,
             }
@@ -191,8 +199,6 @@ return {
                 update_in_insert = false,
                 severity_sort = true,
             })
-            -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-            -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
         end,
     },
     {
@@ -220,7 +226,8 @@ return {
                     return { timeout_ms = 500, lsp_fallback = true }
                 end,
             })
-            vim.keymap.set('n', '<leader>fm', function()
+
+            vim.keymap.set('n', '<leader><leader>fm', function()
                 require('conform').format({ async = true, lsp_fallback = true })
             end, { silent = true })
             -- user commands for toggling autoformatting on save
@@ -241,20 +248,22 @@ return {
             end, {
                 desc = 'Re-enable autoformat-on-save',
             })
-            -- vim.cmd('FormatDisable') -- keep off by default
         end,
     },
     {
         'mfussenegger/nvim-lint',
         event = { 'BufReadPre', 'BufNewFile' },
         config = function()
-            require('lint').linters_by_ft = {
-                javascript = { 'eslint' },
-                javascriptreact = { 'eslint' },
-                typescript = { 'eslint' },
-                typescriptreact = { 'eslint' },
-            }
+            -- leaving this out for eslint seems to fix issue of errors when no eslint
+            -- config file but still allows linting when file is present
+            -- require('lint').linters_by_ft = {
+            --     javascript = { 'eslint' },
+            --     javascriptreact = { 'eslint' },
+            --     typescript = { 'eslint' },
+            --     typescriptreact = { 'eslint' },
+            -- }
 
+            -- autocommand that triggers linting
             local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
             vim.api.nvim_create_autocmd({ 'BufWritePost', 'InsertLeave' }, {
                 group = lint_group,
@@ -264,7 +273,7 @@ return {
             })
 
             -- manually trigger linting
-            vim.keymap.set('n', '<leader>l', function()
+            vim.keymap.set('n', '<leader><leader>l', function()
                 require('lint').try_lint()
             end, { silent = true })
         end,
