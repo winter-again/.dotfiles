@@ -147,7 +147,7 @@ client.placeholder      #000000 #000000 #c0caf5 #000000   #000000
 focus_follows_mouse no
 
 # keyboard settings
-bindsym $mod+Shift+x exec --no-startup-id ~/.local/bin/keyboard_settings.sh
+bindsym $mod+Shift+x exec --no-startup-id ~/.local/bin/keyboard-settings.sh
 # touchpad
 exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1
 exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Natural Scrolling Enabled" 1

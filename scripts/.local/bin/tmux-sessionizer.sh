@@ -8,7 +8,7 @@ else
         ~/Documents/Bansal_lab \
         ~/Documents/projects \
         ~/Documents/projects/nvim-dev \
-        --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
+        --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --no-preview)
 fi
 
 if [[ -z $selected ]]; then
