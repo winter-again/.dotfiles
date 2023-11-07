@@ -167,6 +167,8 @@ exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 exec_always --no-startup-id picom -b --config ~/.config/picom/picom.conf
 # polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+# make ws1 use tabbed layout by default
+for_window [workspace=$ws1] layout tabbed
 # send apps to specific workspace
 assign [class="Slack"] $ws8
 assign [class="obsidian"] $ws9
