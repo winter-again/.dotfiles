@@ -93,11 +93,19 @@ source /usr/share/nvm/init-nvm.sh # since using AUR pkg
 # functions
 ff() {
     local dir
-    dir=$(fd . \
-        ~/Documents/Bansal_lab \
-        ~/Documents/projects \
-        ~/Documents/projects/nvim-dev \
-        --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --no-preview)
+    if [[ -z "${TMUX}" ]]; then
+        dir=$(fd . \
+            ~/Documents/Bansal_lab \
+            ~/Documents/projects \
+            ~/Documents/projects/nvim-dev \
+            --min-depth 1 --max-depth 1 --type d | fzf --prompt=" Directory: " --no-preview)
+    else
+        dir=$(fd . \
+            ~/Documents/Bansal_lab \
+            ~/Documents/projects \
+            ~/Documents/projects/nvim-dev \
+            --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Directory: " --no-preview)
+    fi
     cd "$dir"
 }
 tt() {
@@ -110,7 +118,11 @@ ww() {
 # use fd and fzf to jump to dirs in .dotfiles
 dot() {
     local dir
-    dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf-tmux -p --no-preview)
+    if [[ -z "${TMUX}" ]]; then
+        dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf --prompt="󱗿 Dotfiles: " --no-preview)
+    else
+        dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf-tmux --prompt="󱗿 Dotfiles: " -p --no-preview)
+    fi
     cd "$dir"
 }
 dots() {
@@ -118,10 +130,7 @@ dots() {
 }
 # for Obsidian vault
 obs() {
-    if [ $(pwd) != "~/Documents/andrew-obsidian/" ]
-    then
-        cd ~/Documents/andrew-obsidian
-    fi
+    cd ~/Documents/andrew-obsidian
     git status
 }
 # show journalctl for rclone backup service
@@ -129,12 +138,12 @@ bk() {
     journalctl -u rclone_backup.service -f -n 30
 }
 # https://github.com/junegunn/fzf/wiki/Examples#changing-directory
-cdf() {
-    local dir
-    dir=$(find ${1:-.} -path '*/\.*' -prune \
-        -o -type d -print 2> /dev/null | fzf +m) &&
-    cd "$dir"
-}
+# cdf() {
+#     local dir
+#     dir=$(find ${1:-.} -path '*/\.*' -prune \
+#         -o -type d -print 2> /dev/null | fzf +m) &&
+#     cd "$dir"
+# }
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"

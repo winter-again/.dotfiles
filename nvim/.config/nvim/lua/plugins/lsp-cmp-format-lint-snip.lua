@@ -35,8 +35,6 @@ return {
                     'bashls',
                     'cssls',
                     'dockerls',
-                    -- 'emmet_ls',
-                    'emmet_language_server',
                     'eslint',
                     'gopls',
                     'html',
@@ -113,11 +111,11 @@ return {
                 -- default handler called for each installed server
                 function(server_name)
                     require('lspconfig')[server_name].setup({
-                        capabilties = lsp_capabilties,
+                        capabilties = lsp_capabilities,
                         on_attach = on_attach,
                     })
                 end,
-                -- override default handler by server
+                -- override default handler per server
                 ['cssls'] = function()
                     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
                     require('lspconfig')['cssls'].setup({
@@ -149,7 +147,7 @@ return {
                 end,
                 ['lua_ls'] = function()
                     require('lspconfig')['lua_ls'].setup({
-                        capabilities = lsp_capabilties,
+                        capabilities = lsp_capabilities,
                         on_attach = on_attach,
                         settings = {
                             Lua = {
@@ -286,10 +284,13 @@ return {
             --     typescript = { 'eslint' },
             --     typescriptreact = { 'eslint' },
             -- }
+            require('lint').linters_by_ft = {
+                markdown = {}, -- disables default linting
+            }
 
             -- autocommand that triggers linting
             local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
-            vim.api.nvim_create_autocmd({ 'BufWritePost', 'InsertLeave' }, {
+            vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
                 group = lint_group,
                 callback = function()
                     require('lint').try_lint()
@@ -313,7 +314,18 @@ return {
                 require('luasnip.loaders.from_vscode').lazy_load()
             end,
         },
-        config = true,
+        config = function()
+            require('luasnip').setup({
+                update_events = { 'TextChanged', 'TextChangedI' },
+            })
+
+            vim.keymap.set({ 'i', 's' }, '<C-n>', function()
+                require('luasnip').jump(1)
+            end, { silent = true })
+            vim.keymap.set({ 'i', 's' }, '<C-p>', function()
+                require('luasnip').jump(-1)
+            end, { silent = true })
+        end,
     },
     {
         'hrsh7th/nvim-cmp',

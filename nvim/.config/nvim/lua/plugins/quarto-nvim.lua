@@ -1,6 +1,6 @@
 return {
     'quarto-dev/quarto-nvim',
-    version = '0.13.2',
+    -- version = '0.13.2',
     dependencies = {
         'jmbuhr/otter.nvim',
         'hrsh7th/nvim-cmp',

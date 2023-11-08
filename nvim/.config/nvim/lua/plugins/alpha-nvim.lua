@@ -22,19 +22,19 @@ return {
             return '󱛡 ' .. date_time .. ' | ' .. version_info .. ' | ' .. ' ' .. plugins_tot .. ' plugins'
         end
 
-        local function buttons()
-            return {
-                dashboard.button('SPC pv', '󰙅  Toggle file tree'),
-                -- dashboard.button('SPC fr', '  Recent files'),
-                dashboard.button('SPC pr', '  Restore last local session'),
-                -- dashboard.button('SPC fp', '  Find session'),
-                dashboard.button('SPC ff', '  Find file'),
-                dashboard.button('SPC fs', '  Find string in cwd'),
-            }
-        end
+        -- local function buttons()
+        --     return {
+        --         dashboard.button('SPC pv', '󰙅  Toggle file tree'),
+        --         -- dashboard.button('SPC fr', '  Recent files'),
+        --         dashboard.button('SPC pr', '  Restore last local session'),
+        --         -- dashboard.button('SPC fp', '  Find session'),
+        --         dashboard.button('SPC ff', '  Find file'),
+        --         dashboard.button('SPC fs', '  Find string in cwd'),
+        --     }
+        -- end
 
         dashboard.section.header.val = header()
-        dashboard.section.buttons.val = buttons()
+        -- dashboard.section.buttons.val = buttons()
 
         dashboard.config.layout = {
             { type = 'padding', val = 3 },

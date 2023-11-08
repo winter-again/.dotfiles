@@ -38,12 +38,5 @@ require('andrew.keymaps')
 require('andrew.globals')
 require('andrew.autocmds')
 
--- currently no definition for Rmd files in iron.nvim
--- require('iron.fts').rmd = {
---     r = {
---         command = { 'R' },
---     },
--- }
-
 vim.cmd('colorscheme tokyonight') -- default colorscheme
 Transp()

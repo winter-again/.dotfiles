@@ -28,7 +28,6 @@ local function get_lsp()
             end
         end
         local output = table.concat(names, ',')
-        -- output = string.format('%s]', output)
         return output
     end
 end
@@ -55,6 +54,19 @@ local function display_lsp_venv()
     local lsp_status = get_lsp()
     local formatter = get_conform()
     return lsp_status .. formatter .. venv_name
+end
+
+-- basic way to display loading prog of LSP
+local function display_lsp_prog()
+    local lsp = vim.lsp.util.get_progress_messages()[1]
+    if lsp then
+        local name = lsp.name or ''
+        local msg = lsp.message or ''
+        local pctg = lsp.percentage or 0
+        return string.format('%%<%s: %s (%s%%%%)', name, msg, pctg)
+    else
+        return ''
+    end
 end
 
 -- use gitsigns as the diff source below
