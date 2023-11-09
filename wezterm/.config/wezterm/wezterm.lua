@@ -63,13 +63,13 @@ config.window_padding = {
 -- }
 -- always spawn new tab in home dir w/ shortcut; however, doesn't get honored when clicking new tab button?
 config.keys = {
-    {
-        key = 'N',
-        mods = 'CTRL|SHIFT',
-        action = wezterm.action.SpawnCommandInNewTab({
-            cwd = wezterm.home_dir,
-        }),
-    },
+    -- {
+    --     key = 'N',
+    --     mods = 'CTRL|SHIFT',
+    --     action = wezterm.action.SpawnCommandInNewTab({
+    --         cwd = wezterm.home_dir,
+    --     }),
+    -- },
     { key = 'O', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay },
     -- tab navigation
     -- { key = 'Q', mods = 'CTRL|SHIFT', action = wezterm.action({ ActivateTab = 0 }) },
@@ -77,26 +77,26 @@ config.keys = {
     -- { key = 'E', mods = 'CTRL|SHIFT', action = wezterm.action({ ActivateTab = 2 }) },
     -- { key = 'R', mods = 'CTRL|SHIFT', action = wezterm.action({ ActivateTab = 3 }) },
     -- tab navigation but cycling
-    { key = '{', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
-    { key = '}', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(1) },
+    -- { key = '{', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
+    -- { key = '}', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(1) },
     -- create splits
-    { key = '|', mods = 'CTRL|SHIFT', action = wezterm.action({ SplitHorizontal = { domain = 'CurrentPaneDomain' } }) },
-    { key = '_', mods = 'CTRL|SHIFT', action = wezterm.action({ SplitVertical = { domain = 'CurrentPaneDomain' } }) },
+    -- { key = '|', mods = 'CTRL|SHIFT', action = wezterm.action({ SplitHorizontal = { domain = 'CurrentPaneDomain' } }) },
+    -- { key = '_', mods = 'CTRL|SHIFT', action = wezterm.action({ SplitVertical = { domain = 'CurrentPaneDomain' } }) },
     -- pane navigation rebinds
-    { key = 'H', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Left') },
-    { key = 'J', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Down') },
-    { key = 'K', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Up') },
-    { key = 'L', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Right') },
+    -- { key = 'H', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Left') },
+    -- { key = 'J', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Down') },
+    -- { key = 'K', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Up') },
+    -- { key = 'L', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Right') },
     -- resize panes
-    { key = 'LeftArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Left', 2 }) },
-    { key = 'RightArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Right', 2 }) },
-    { key = 'UpArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Up', 2 }) },
-    { key = 'DownArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Down', 2 }) },
-    { key = 'M', mods = 'CTRL|SHIFT', action = wezterm.action.ToggleFullScreen },
+    -- { key = 'LeftArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Left', 2 }) },
+    -- { key = 'RightArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Right', 2 }) },
+    -- { key = 'UpArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Up', 2 }) },
+    -- { key = 'DownArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Down', 2 }) },
+    -- { key = 'M', mods = 'CTRL|SHIFT', action = wezterm.action.ToggleFullScreen },
     -- workaround to get Ctrl-/ to work if using tmux
     -- or when term isn't recognizing in general
     -- paired with comment keymap that is defined using "_" instead of "/"
-    { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
+    -- { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
 }
 
 local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')

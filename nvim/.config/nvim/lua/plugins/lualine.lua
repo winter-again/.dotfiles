@@ -97,7 +97,11 @@ return {
                 lualine_b = {
                     -- reuse info from gitsigns
                     { 'b:gitsigns_head', icon = '' },
-                    { 'diff', source = diff_source, symbols = { added = ' ', modified = ' ', removed = ' ' } },
+                    {
+                        'diff',
+                        source = diff_source,
+                        symbols = { added = ' ', modified = ' ', removed = ' ' },
+                    },
                     'diagnostics',
                 },
                 lualine_c = { { 'filename', path = 1 } },

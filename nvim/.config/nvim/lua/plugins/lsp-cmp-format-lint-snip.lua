@@ -27,6 +27,7 @@ return {
                     },
                 },
             })
+
             -- (2)
             require('mason-lspconfig').setup({
                 ensure_installed = {
@@ -50,18 +51,19 @@ return {
                 },
                 automatic_installation = false,
             })
+
             -- (3)
             require('mason-tool-installer').setup({
                 auto_update = true,
                 debounce_hours = 24,
                 ensure_installed = {
                     'black',
-                    'eslint_d',
                     'isort',
                     'prettierd',
                     'stylua',
                 },
             })
+
             -- (4) see docs: https://github.com/williamboman/mason-lspconfig.nvim/blob/09be3766669bfbabbe2863c624749d8da392c916/doc/mason-lspconfig.txt#L157
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -83,7 +85,7 @@ return {
                     vim.keymap.set('n', keys, func, { buffer = bufnr, silent = true, desc = desc })
                 end
                 nmap('K', vim.lsp.buf.hover, 'Hover docs')
-                nmap('<C-k>', vim.lsp.buf.signature_help, 'Sig. help')
+                -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Sig. help')
                 nmap('<leader><leader>rn', vim.lsp.buf.rename, 'LSP rename') -- default rename
                 -- nmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
 
@@ -97,16 +99,10 @@ return {
                 nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
             end
 
-            -- global floating window borders:
-            local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
-            function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-                opts = opts or {}
-                opts.border = 'rounded'
-                return orig_util_open_float_prev(contents, syntax, opts, ...)
-            end
-
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+            -- handlers should be a table where keys are lspconfig server name and values are setup function
+            -- pass default handler by providing func w/ no key
             local handlers = {
                 -- default handler called for each installed server
                 function(server_name)
@@ -173,14 +169,17 @@ return {
                     })
                 end,
             }
-            -- handlers should be a table where keys are lspconfig server name and values are setup function
-            -- pass default handler by providing func w/ no key
             require('mason-lspconfig').setup_handlers(handlers)
 
             -- lspconfig appearance and behavior
-            -- require('lspconfig.ui.windows').default_options.border = 'rounded'
-            -- modify diagnostic sign icons
-            -- I think lowercase name is for statusline and uppercase is for actual sign column?
+            -- global floating window borders:
+            local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
+            function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+                opts = opts or {}
+                opts.border = 'rounded'
+                return orig_util_open_float_prev(contents, syntax, opts, ...)
+            end
+
             local sign_icons = {
                 Error = '',
                 error = '',
@@ -199,15 +198,15 @@ return {
             local function diagn_format(diagnostic)
                 return string.format(
                     '%s [%s]  %s',
-                    diagnostic.message,
-                    diagnostic.source,
-                    diagnostic.code or diagnostic.user_data
+                    diagnostic.message or '',
+                    diagnostic.source or '',
+                    diagnostic.code or diagnostic.user_data or ''
                 )
             end
             vim.diagnostic.config({
                 virtual_text = {
                     spacing = 4,
-                    prefix = '●',
+                    prefix = '',
                     format = diagn_format,
                 },
                 float = {
@@ -221,110 +220,6 @@ return {
                 update_in_insert = false,
                 severity_sort = true,
             })
-        end,
-    },
-    {
-        'stevearc/conform.nvim',
-        -- event = { 'BufReadPre', 'BufNewFile' },
-        event = { 'BufWritePre' },
-        cmd = { 'ConformInfo' },
-        config = function()
-            require('conform').setup({
-                formatters_by_ft = {
-                    css = { 'prettierd' },
-                    html = { 'prettierd' },
-                    javascript = { 'prettierd' },
-                    javascriptreact = { 'prettierd' },
-                    json = { 'prettierd' },
-                    lua = { 'stylua' },
-                    python = { 'isort', 'black' }, -- run sequentially
-                    typescript = { 'prettierd' },
-                    typescriptreact = { 'pretterd' },
-                },
-                format_on_save = function(bufnr)
-                    if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-                        return
-                    end
-                    return { timeout_ms = 500, lsp_fallback = true }
-                end,
-            })
-
-            vim.keymap.set('n', '<leader><leader>fm', function()
-                require('conform').format({ async = true, lsp_fallback = true })
-            end, { silent = true })
-            -- user commands for toggling autoformatting on save
-            vim.api.nvim_create_user_command('FormatDisable', function(args)
-                if args.bang then
-                    -- FormatDisable! will disable formatting just for this buffer
-                    vim.b.disable_autoformat = true
-                else
-                    vim.g.disable_autoformat = true
-                end
-            end, {
-                desc = 'Disable autoformat-on-save',
-                bang = true,
-            })
-            vim.api.nvim_create_user_command('FormatEnable', function()
-                vim.b.disable_autoformat = false
-                vim.g.disable_autoformat = false
-            end, {
-                desc = 'Re-enable autoformat-on-save',
-            })
-        end,
-    },
-    {
-        'mfussenegger/nvim-lint',
-        event = { 'BufReadPre', 'BufNewFile' },
-        config = function()
-            -- leaving this out for eslint seems to fix issue of errors when no eslint
-            -- config file but still allows linting when file is present
-            -- require('lint').linters_by_ft = {
-            --     javascript = { 'eslint' },
-            --     javascriptreact = { 'eslint' },
-            --     typescript = { 'eslint' },
-            --     typescriptreact = { 'eslint' },
-            -- }
-            require('lint').linters_by_ft = {
-                markdown = {}, -- disables default linting
-            }
-
-            -- autocommand that triggers linting
-            local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
-            vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-                group = lint_group,
-                callback = function()
-                    require('lint').try_lint()
-                end,
-            })
-
-            -- manually trigger linting
-            vim.keymap.set('n', '<leader><leader>l', function()
-                require('lint').try_lint()
-            end, { silent = true })
-        end,
-    },
-    {
-        'L3MON4D3/LuaSnip', -- snippet engine
-        version = '2.*',
-        -- ensure friendly-snippets is a dep
-        -- lazy_load to speed up startup time
-        dependencies = {
-            'rafamadriz/friendly-snippets',
-            config = function()
-                require('luasnip.loaders.from_vscode').lazy_load()
-            end,
-        },
-        config = function()
-            require('luasnip').setup({
-                update_events = { 'TextChanged', 'TextChangedI' },
-            })
-
-            vim.keymap.set({ 'i', 's' }, '<C-n>', function()
-                require('luasnip').jump(1)
-            end, { silent = true })
-            vim.keymap.set({ 'i', 's' }, '<C-p>', function()
-                require('luasnip').jump(-1)
-            end, { silent = true })
         end,
     },
     {
@@ -448,6 +343,110 @@ return {
             -- automatically insert parentheses after cmp selection (functions/method items)
             local cmp_autopairs = require('nvim-autopairs.completion.cmp')
             cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+        end,
+    },
+    {
+        'stevearc/conform.nvim',
+        event = { 'BufWritePre' },
+        cmd = { 'ConformInfo' },
+        config = function()
+            require('conform').setup({
+                formatters_by_ft = {
+                    css = { 'prettierd' },
+                    html = { 'prettierd' },
+                    javascript = { 'prettierd' },
+                    javascriptreact = { 'prettierd' },
+                    json = { 'prettierd' },
+                    lua = { 'stylua' },
+                    python = { 'isort', 'black' }, -- run sequentially
+                    typescript = { 'prettierd' },
+                    typescriptreact = { 'pretterd' },
+                },
+                format_on_save = function(bufnr)
+                    if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                        return
+                    end
+                    return { timeout_ms = 500, lsp_fallback = true }
+                end,
+            })
+
+            vim.keymap.set('n', '<leader><leader>fm', function()
+                require('conform').format({ async = true, lsp_fallback = true })
+            end, { silent = true })
+            -- user commands for toggling autoformatting on save
+            vim.api.nvim_create_user_command('FormatDisable', function(args)
+                if args.bang then
+                    -- FormatDisable! will disable formatting just for this buffer
+                    vim.b.disable_autoformat = true
+                else
+                    vim.g.disable_autoformat = true
+                end
+            end, {
+                desc = 'Disable autoformat-on-save',
+                bang = true,
+            })
+            vim.api.nvim_create_user_command('FormatEnable', function()
+                vim.b.disable_autoformat = false
+                vim.g.disable_autoformat = false
+            end, {
+                desc = 'Re-enable autoformat-on-save',
+            })
+        end,
+    },
+    {
+        'mfussenegger/nvim-lint',
+        event = { 'BufReadPre', 'BufNewFile' },
+        config = function()
+            -- leaving this out for eslint seems to fix issue of errors when no eslint
+            -- config file but still allows linting when file is present
+            -- I guess defaults do the handling
+            -- require('lint').linters_by_ft = {
+            --     javascript = { 'eslint' },
+            --     javascriptreact = { 'eslint' },
+            --     typescript = { 'eslint' },
+            --     typescriptreact = { 'eslint' },
+            -- }
+            require('lint').linters_by_ft = {
+                markdown = {}, -- disables default linting
+            }
+
+            -- autocommand that triggers linting
+            local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
+            vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+                group = lint_group,
+                callback = function()
+                    require('lint').try_lint()
+                end,
+            })
+
+            -- manually trigger linting
+            vim.keymap.set('n', '<leader><leader>l', function()
+                require('lint').try_lint()
+            end, { silent = true })
+        end,
+    },
+    {
+        'L3MON4D3/LuaSnip',
+        version = '2.*',
+        -- ensure friendly-snippets is a dep
+        -- lazy_load to speed up startup time
+        dependencies = {
+            'rafamadriz/friendly-snippets',
+            config = function()
+                require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+        },
+        config = function()
+            require('luasnip').setup({
+                update_events = { 'TextChanged', 'TextChangedI' },
+            })
+
+            vim.keymap.set({ 'i', 's' }, '<C-n>', function()
+                require('luasnip').jump(1)
+            end, { silent = true })
+            vim.keymap.set({ 'i', 's' }, '<C-p>', function()
+                require('luasnip').jump(-1)
+            end, { silent = true })
         end,
     },
 }
