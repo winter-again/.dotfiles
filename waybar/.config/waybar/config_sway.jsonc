@@ -1,0 +1,164 @@
+{
+    "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 26, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "sway/workspaces",
+        // "custom/media",
+        "mpris"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "cpu",
+        "memory",
+        "temperature",
+        "network",
+        "battery",
+        // "bluetooth",
+        "tray"
+    ],
+    "sway/workspaces": {
+        "all-outputs": false,
+        "format": "{name}"
+    },
+    // still same issue as mpris where no title or artist info on start until next song
+    "custom/media": {
+        "format": "custom: {icon} {}",
+        "return-type": "json",
+        "format-icons": {
+            "Playing": "<span font='16' rise='-2000'> 󰓇</span> ",
+            "Paused": "<span font='16' rise='-2000'> 󰓇</span> "
+        },
+        "max-length": 70,
+        "exec": "playerctl --player=spotify metadata --format '{\"text\": \"{{markup_escape(title)}} | {{artist}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+        "on-click": "playerctl play-pause"
+    },
+    // seems like the problem is that playerctl metadata has no valid info
+    // on fresh start of Spotify
+    "mpris": {
+        "player": "spotify",
+        "interval": 1,
+        // can specify icon color in span too
+        "format": "<span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
+        // "format-playing": "<span font='16' rise='-2000'> 󰓇</span> {artist} | {title}",
+        // "format-paused": "<span font='16' rise='-2000'> 󰓇</span> {artist} | {title}",
+        // "format-stopped": "<span font='16' rise='-2000'>󰓇</span>",
+        "title-len": 30,
+        "max-length": 70,
+        "tooltip-format": "{album} [{position}/{length}]",
+        "on-middle-click": "",
+        "on-right-click": "",
+        "escape": true
+    },
+    "tray": {
+        "icon-size": 14,
+        "spacing": 10
+    },
+    "clock": {
+        "timezone": "America/New_York",
+        "format": "{:%Y-%m-%d (%b) | %a %I:%M %p}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "on-click-right": "mode",
+            "format": {
+                "months": "<span color='#7aa2f7'><b>{}</b></span>",
+                "days": "<span color='#c0caf5'><b>{}</b></span>",
+                "weeks": "<span color='#7dcfff'><b>W{}</b></span>",
+                "weekdays": "<span color='#9d7cd8'><b>{}</b></span>",
+                "today": "<span color='#db4b4b'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+    "cpu": {
+        "format": "<span font='16' rise='-2000'></span> {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "<span font='16' rise='-2000'></span> {}%"
+    },
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+        "input-filename": "temp1_input",
+        "critical-threshold": 80,
+        "format": " {temperatureF}°F"
+    },
+    "battery": {
+        "bat": "BAT0",
+        "interval": 60,
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}% | {time}",
+        "format-plugged": "{capacity}%",
+        "format-icons": [
+            "󰁺",
+            "󰁼",
+            "󰁾",
+            "󰂀",
+            "󰁹"
+        ]
+    },
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {essid} ({signalStrength}%)",
+        "format-ethernet": "<span font='16' rise='-2000'>󰈀</span> {bandwidthTotalBytes}",
+        "tooltip-format-wifi": "󰖩 {essid}",
+        "tooltip-format-ethernet": "󰈀 {ifname}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "󰈂"
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "<span font='16' rise='-2000'>{icon}</span> {volume}%",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": " ",
+            "headset": "",
+            "phone": " ",
+            "portable": " ",
+            "car": " ",
+            "default": [
+                " ",
+                " ",
+                " "
+            ]
+        },
+        "on-click": "pamixer" // fix this...
+    },
+    "bluetooth": {
+        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+        "format": " {status}",
+        "format-disabled": "", // an empty format will hide the module
+        "format-connected": " {num_connections} connected",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+    }
+}
