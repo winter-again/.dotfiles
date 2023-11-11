@@ -13,7 +13,7 @@ return {
                     name
                 )
             end
-            vim.keymap.set('n', '<leader><leader>' .. key, bg_call, { silent = false })
+            vim.keymap.set('n', '<leader><leader>' .. key, bg_call, { silent = true })
         end
 
         bg_map('default', '0')
