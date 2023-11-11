@@ -4,6 +4,7 @@ clock
 datestr=%Y-%m-%d (%b)
 timestr=%l:%M %p
 indicator
+indicator-radius=100
 inside-color=1a1b26
 inside-clear-color=9d7cd8
 inside-ver-color=1a1b26
