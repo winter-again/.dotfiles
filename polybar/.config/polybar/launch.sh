@@ -11,7 +11,7 @@ echo "thermal-zone = $therm_zone" > ~/.config/polybar/thermal_zone
 # launch bar(s)
 # this should deploy 2 bars if both monitors connected
 # and one laptop bar if neither are connected
-if [[ $(xrandr -q | grep "DP-3-1 connected") ]] && [[ $(xrandr -q | grep "DP-3-2 connected") ]]; then
+if [[ $(xrandr -q | grep "DP-1-1 connected") ]] && [[ $(xrandr -q | grep "DP-1-2 connected") ]]; then
     # MONITOR=DP-3-1 polybar --reload --config=$HOME/.config/polybar/config.ini bar_primary &
     # MONITOR=DP-3-2 polybar --reload --config=$HOME/.config/polybar/config.ini bar_secondary &
     polybar --reload --config=$HOME/.config/polybar/config.ini bar_primary &

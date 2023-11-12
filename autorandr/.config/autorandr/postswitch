@@ -5,7 +5,7 @@ i3-msg "restart"
 # $HOME/.config/polybar/launch.sh
 # i3-msg restart # below condition being false means laptop is docked; restart of i3 should distribute workspaces as defined in config
 # if undocked move all workspaces to laptop
-if [[ $(xrandr -q | grep "DP-3-1 disconnected") ]] && [[ $(xrandr -q | grep "DP-3-2 disconnected") ]]; then
+if [[ $(xrandr -q | grep "DP-1-1 disconnected") ]] && [[ $(xrandr -q | grep "DP-1-2 disconnected") ]]; then
     # i3-msg '[workspace="^(1|2|3|4|5|6|7|8|9|10)"] move workspace to output eDP-1;'
     i3-msg '[class=".*"] move workspace to output eDP-1'
 fi

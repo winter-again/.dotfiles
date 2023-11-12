@@ -91,9 +91,12 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+Left move workspace to output left
 bindsym $mod+Shift+Right move workspace to output right
 # assign some workspaces to specific screens
+# seems like xrandr output sometimes changes
 set $laptop_disp eDP-1
-set $primary_mon DP-3-1
-set $secondary_mon DP-3-2
+# set $primary_mon DP-3-1
+# set $secondary_mon DP-3-2
+set $primary_mon DP-1-1
+set $secondary_mon DP-1-2
 # first available output will be used
 # so give laptop as fallback
 workspace 1 output $primary_mon $laptop_disp
@@ -148,6 +151,9 @@ focus_follows_mouse no
 
 # keyboard settings
 bindsym $mod+Shift+x exec --no-startup-id ~/.local/bin/keyboard-settings.sh
+# mouse/touchpad accel
+exec_always --no-startup-id xinput set-prop "SteelSeries SteelSeries Rival 300 Gaming Mouse" "libinput Accel Speed" 0.35
+exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Accel Speed" 0.2
 # touchpad
 exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1
 exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Natural Scrolling Enabled" 1
