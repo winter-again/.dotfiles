@@ -1,0 +1,324 @@
+#!/usr/bin/env bash
+
+APIKEY=`cat $HOME/.owm-key`
+# if you leave these empty location will be picked based on your ip-adres
+CITY_NAME=`cat $HOME/.owm-loc`
+COUNTRY_CODE='US'
+# Desired output language
+LANG="en"
+UNITS="imperial"
+
+# color settings ______________________________________________________________
+
+color_cloud="#7aa2f7"
+color_thunder="#e0af68"
+color_light_rain="#7dcfff"
+color_heavy_rain="#3d59a1"
+color_snow="#c0caf5"
+color_fog="#c0caf5"
+color_tornado="#c0caf5"
+color_sun="#e0af68"
+color_moon="#9d7cd8"
+color_err="#f7768e"
+color_wind="#7dcfff"
+color_cold="#c0caf5"
+color_hot="#db4b4b"
+color_normal_temp="#c0caf5"
+
+# leave "" if you want the default polybar color
+color_text=""
+# polybar settings ____________________________________________________________
+
+# font for the weather icons
+weather_font_code=4
+
+# font for the thermometer icon
+temp_font_code=2
+
+# wind settings _______________________________________________________________
+
+# display info about the wind or not. yes/no
+display_wind="yes"
+
+# show beaufort level in windicon
+beauforticon="no"
+
+# display in knots. yes/no
+knots="no"
+
+# how many decimals after the floating point
+decimals=0
+
+# min. wind force required to display wind info (it depends on what
+# measurement unit you have set: knots, m/s or mph). set to 0 if you always
+# want to display wind info. it's ignored if display_wind is false.
+
+min_wind=25
+
+# display the numeric wind force or not. if not, only the wind icon will
+# appear. yes/no
+
+display_force="yes"
+
+# display the wind unit if wind force is displayed. yes/no
+display_wind_unit="yes"
+
+# thermometer settings ________________________________________________________
+
+# when the thermometer icon turns red
+hot_temp=85
+
+# when the thermometer icon turns blue
+cold_temp=40
+
+# other settings ______________________________________________________________
+
+# display the weather description. yes/no
+display_label="yes"
+
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+if [ "$color_text" != "" ]; then
+    color_text_begin="%{f$color_text}"
+    color_text_end="%{f-}"
+fi
+if [ -z "$city_name" ]; then
+    ip=`curl -s ifconfig.me`  # == ip
+    ipcurl=$(curl -s https://ipinfo.io/$ip)
+    city_name=$(echo $ipcurl | jq -r ".city")
+    country_code=$(echo $ipcurl | jq -r ".country")
+fi
+
+response=""
+error=0
+err_msg=""
+if [ $units = "kelvin" ]; then
+    unit_url=""
+else
+    unit_url="&units=$units"
+fi
+url="api.openweathermap.org/data/2.5/weather?appid=$apikey$unit_url&lang=$lang&q=$(echo $city_name| sed 's/ /%20/g'),${country_code}"
+
+function getdata {
+    error=0
+    # for logging purposes
+    # echo " " >> "$home/.weather.log"
+    # echo `date`" ################################" >> "$home/.weather.log"
+    response=`curl -s $url`
+    code="$?"
+    if [ "$1" = "-d" ]; then
+        echo $response
+        echo ""
+    fi
+    # echo "response: $response" >> "$home/.weather.log"
+    responsecode=0
+    if [ $code -eq 0 ]; then
+        responsecode=`echo $response | jq .cod`
+    fi
+    if [ $code -ne 0 ] || [ ${responsecode:=429} -ne 200 ]; then
+        if [ $code -ne 0 ]; then
+            err_msg="curl error $code"
+            # echo "curl error $code" >> "$home/.weather.log"
+        else
+            err_msg="conn. err. $responsecode"
+            # echo "api error $responsecode" >> "$home/.weather.log"
+        fi
+        error=1
+    # else
+    #     echo "$response" > "$home/.weather-last"
+    #     echo `date +%s` >> "$home/.weather-last"
+    fi
+}
+function seticons {
+    if [ $wid -le 232 ]; then
+        #thunderstorm
+        icon_color=$color_thunder
+        if [ $date -ge $sunrise -a $date -le $sunset ]; then
+            icon=""
+        else
+            icon=""
+        fi
+    elif [ $wid -le 311 ]; then
+        #light drizzle
+        icon_color=$color_light_rain
+        if [ $date -ge $sunrise -a $date -le $sunset ]; then
+            ICON=""
+        else
+            ICON=""
+        fi
+    elif [ $WID -le 321 ]; then
+        #Heavy drizzle
+        ICON_COLOR=$COLOR_HEAVY_RAIN
+        if [ $DATE -ge $SUNRISE -a $DATE -le $SUNSET ]; then
+            ICON=""
+        else
+            ICON=""
+        fi
+    elif [ $WID -le 531 ]; then
+        #Rain
+        ICON_COLOR=$COLOR_HEAVY_RAIN
+        if [ $DATE -ge $SUNRISE -a $DATE -le $SUNSET ]; then
+            ICON=""
+        else
+            ICON=""
+        fi
+    elif [ $WID -le 622 ]; then
+        #Snow
+        ICON_COLOR=$COLOR_SNOW
+        ICON=""
+    elif [ $WID -le 771 ]; then
+        #Fog
+        ICON_COLOR=$COLOR_FOG
+        ICON=""
+    elif [ $WID -eq 781 ]; then
+        #Tornado
+        ICON_COLOR=$COLOR_TORNADO
+        ICON=""
+    elif [ $WID -eq 800 ]; then
+        #Clear sky
+        if [ $DATE -ge $SUNRISE -a $DATE -le $SUNSET ]; then
+            ICON_COLOR=$COLOR_SUN
+            ICON=""
+        else
+            ICON_COLOR=$COLOR_MOON
+            ICON=""
+        fi
+    elif [ $WID -eq 801 ]; then
+        # Few clouds
+        if [ $DATE -ge $SUNRISE -a $DATE -le $SUNSET ]; then
+            ICON_COLOR=$COLOR_SUN
+            ICON=""
+        else
+            ICON_COLOR=$COLOR_MOON
+            ICON=""
+        fi
+    elif [ $WID -le 804 ]; then
+        # Overcast
+        ICON_COLOR=$COLOR_CLOUD
+        ICON=""
+    else
+        ICON_COLOR=$COLOR_ERR
+        ICON=""
+    fi
+    WIND=""
+    WINDFORCE=`echo "$RESPONSE" | jq .wind.speed`
+    WINDICON=""
+    if [ $BEAUFORTICON == "yes" ];then
+        WINDFORCE2=`echo "scale=$DECIMALS;$WINDFORCE * 3.6 / 1" | bc`
+        if [ $WINDFORCE2 -le 1 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 1 ] && [ $WINDFORCE2 -le 5 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 5 ] && [ $WINDFORCE2 -le 11 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 11 ] && [ $WINDFORCE2 -le 19 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 19 ] && [ $WINDFORCE2 -le 28 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 28 ] && [ $WINDFORCE2 -le 38 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 38 ] && [ $WINDFORCE2 -le 49 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 49 ] && [ $WINDFORCE2 -le 61 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 61 ] && [ $WINDFORCE2 -le 74 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 74 ] && [ $WINDFORCE2 -le 88 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 88 ] && [ $WINDFORCE2 -le 102 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 102 ] && [ $WINDFORCE2 -le 117 ]; then
+            WINDICON=""
+        elif [ $WINDFORCE2 -gt 117 ]; then
+            WINDICON=""
+        fi
+    fi
+    if [ $KNOTS = "yes" ]; then
+        case $UNITS in
+            "imperial") 
+                # The division by one is necessary because scale works only for divisions. bc is stupid.
+                WINDFORCE=`echo "scale=$DECIMALS;$WINDFORCE * 0.8689762419 / 1" | bc`
+                ;;
+            *)
+                WINDFORCE=`echo "scale=$DECIMALS;$WINDFORCE * 1.943844 / 1" | bc`
+                ;;
+        esac
+    else
+        if [ $UNITS != "imperial" ]; then
+            # Conversion from m/s to km/h
+            WINDFORCE=`echo "scale=$DECIMALS;$WINDFORCE * 3.6 / 1" | bc`
+        else
+            WINDFORCE=`echo "scale=$DECIMALS;$WINDFORCE / 1" | bc`
+        fi
+    fi
+    if [ "$DISPLAY_WIND" = "yes" ] && [ `echo "$WINDFORCE >= $MIN_WIND" |bc -l` -eq 1 ]; then
+        WIND="%{T$WEATHER_FONT_CODE}%{F$COLOR_WIND}$WINDICON %{F-}%{T-}"
+        if [ $DISPLAY_FORCE = "yes" ]; then
+            WIND="$WIND $COLOR_TEXT_BEGIN$WINDFORCE$COLOR_TEXT_END"
+            if [ $DISPLAY_WIND_UNIT = "yes" ]; then
+                if [ $KNOTS = "yes" ]; then
+                    WIND="$WIND ${COLOR_TEXT_BEGIN}kn$COLOR_TEXT_END"
+                elif [ $UNITS = "imperial" ]; then
+                    WIND="$WIND ${COLOR_TEXT_BEGIN}mph$COLOR_TEXT_END"
+                else
+                    WIND="$WIND ${COLOR_TEXT_BEGIN}km/h$COLOR_TEXT_END"
+                fi
+            fi
+        fi
+        WIND="$WIND |"
+    fi
+    if [ "$UNITS" = "metric" ]; then
+        TEMP_ICON="󰔄"
+    elif [ "$UNITS" = "imperial" ]; then
+        TEMP_ICON="󰔅"
+    else
+        TEMP_ICON="󰔆"
+    fi
+    
+    TEMP=`echo "$TEMP" | cut -d "." -f 1`
+    
+    if [ "$TEMP" -le $COLD_TEMP ]; then
+        TEMP="%{F$COLOR_COLD}%{T$TEMP_FONT_CODE}%{T-}%{F-} $COLOR_TEXT_BEGIN$TEMP%{T$TEMP_FONT_CODE}$TEMP_ICON%{T-}$COLOR_TEXT_END"
+    elif [ `echo "$TEMP >= $HOT_TEMP" | bc` -eq 1 ]; then
+        TEMP="%{F$COLOR_HOT}%{T$TEMP_FONT_CODE}%{T-}%{F-} $COLOR_TEXT_BEGIN$TEMP%{T$TEMP_FONT_CODE}$TEMP_ICON%{T-}$COLOR_TEXT_END"
+    else
+        TEMP="%{F$COLOR_NORMAL_TEMP}%{T$TEMP_FONT_CODE}%{T-}%{F-} $COLOR_TEXT_BEGIN$TEMP%{T$TEMP_FONT_CODE}$TEMP_ICON%{T-}$COLOR_TEXT_END"
+    fi
+}
+
+function outputCompact {
+    # OUTPUT="$WIND %{T$WEATHER_FONT_CODE}%{F$ICON_COLOR}$ICON%{F-}%{T-}  $ERR_MSG$COLOR_TEXT_BEGIN$DESCRIPTION$COLOR_TEXT_END| $TEMP"
+    # echo "Output: $OUTPUT" >> "$HOME/.weather.log"
+    # echo "$OUTPUT"
+    # waybar expects JSON
+    # end up using only some of the info
+    # got rid of icons
+    if [[ -n $WIND ]]; then
+        printf '{"text": "%s %s| %s󰔅", "class": "custom-weather"}' "$WIND" "$DESCRIPTION" "$TEMP"
+    else
+        printf '{"text": "%s| %s󰔅", "class": "custom-weather"}' "$DESCRIPTION" "$TEMP"
+    fi
+}
+
+getData $1
+if [ $ERROR -eq 0 ]; then
+    MAIN=`echo $RESPONSE | jq .weather[0].main`
+    WID=`echo $RESPONSE | jq .weather[0].id`
+    DESC=`echo $RESPONSE | jq .weather[0].description`
+    SUNRISE=`echo $RESPONSE | jq .sys.sunrise`
+    SUNSET=`echo $RESPONSE | jq .sys.sunset`
+    DATE=`date +%s`
+    WIND=""
+    TEMP=`echo $RESPONSE | jq .main.temp`
+    if [ $DISPLAY_LABEL = "yes" ]; then
+        DESCRIPTION=`echo "$RESPONSE" | jq .weather[0].description | tr -d '"' | awk '{for (i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1'`" "
+    else
+        DESCRIPTION=""
+    fi
+    PRESSURE=`echo $RESPONSE | jq .main.pressure`
+    HUMIDITY=`echo $RESPONSE | jq .main.humidity`
+    # setIcons
+    outputCompact
+else
+    echo " "
+fi

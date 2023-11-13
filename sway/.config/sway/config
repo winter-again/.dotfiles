@@ -16,12 +16,6 @@ set $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output eDP-1 disable
-# following the same conventions from hyprland.conf
-output DP-4 pos 1500 0 res 3840x2160 scale 2
-output DP-5 pos 3420 0 res 3840x2160 scale 2
-# focus monitor on launch
-focus output DP-4
 output * bg #16161e solid_color
 #
 # Example configuration:
@@ -66,7 +60,7 @@ input "type:keyboard" {
 
 input "type:pointer" {
     accel_profile "flat"
-    pointer_accel 0.3
+    pointer_accel 0.25
 }
 
 input "type:touchpad" {
@@ -78,6 +72,12 @@ input "type:touchpad" {
 set $laptop_disp "eDP-1"
 set $primary_mon "DP-4"
 set $secondary_mon "DP-5"
+output $laptop_disp disable
+# following the same conventions from hyprland.conf
+output $primary_mon pos 1500 0 res 3840x2160 scale 2
+output $secondary_mon pos 3420 0 res 3840x2160 scale 2
+# focus monitor on launch
+focus output $primary_mon
 # first available output will be used
 # so give laptop as fallback
 workspace 1 output $primary_mon $laptop_disp
