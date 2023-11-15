@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -12,24 +13,14 @@ SAVEHIST=1000000
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_ignore_space # ignore commands that start with space
+
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
+
 export SHELL=/bin/zsh
 export EDITOR="nvim"
-export VISUAL="nvim"
 export PATH="$HOME/.local/bin:$PATH" # for zoxide and others
-
-# zap
-#[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
-#plug "zsh-users/zsh-autosuggestions"
-## plug "marlonrichert/zsh-autocomplete"
-#plug "zsh-users/zsh-syntax-highlighting"
-#plug "hlissner/zsh-autopair"
-## plug "jeffreytse/zsh-vi-mode"
-## plug "zsh-users/zsh-history-substring-search"
-#plug "zsh-users/zsh-completions"
-#plug "zap-zsh/completions"
 
 # aliases
 alias nvim-min="NVIM_APPNAME=nvim_min nvim"
@@ -45,6 +36,8 @@ alias grep="grep --color=auto"
 alias tv="tidy-viewer"
 alias keys="bash ~/.local/bin/keyboard-settings.sh"
 alias R="R --no-save" # never prompt to save workspace image
+# for starting rstudio with flags for Wayland
+alias rstd="/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland &"
 
 # git aliases
 alias gs="git status"
@@ -137,13 +130,7 @@ obs() {
 bk() {
     journalctl -u rclone_backup.service -f -n 30
 }
-# https://github.com/junegunn/fzf/wiki/Examples#changing-directory
-# cdf() {
-#     local dir
-#     dir=$(find ${1:-.} -path '*/\.*' -prune \
-#         -o -type d -print 2> /dev/null | fzf +m) &&
-#     cd "$dir"
-# }
+
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -162,7 +149,6 @@ export PATH=$PATH:$HOME/go/bin # loc of installed binaries
 # eval "$(starship init zsh)"
 
 # p10k
-# source ~/powerlevel10k/powerlevel10k.zsh-theme
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

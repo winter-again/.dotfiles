@@ -10,7 +10,7 @@ local opt = vim.opt
 -- not setting + having transparent bg makes just the transparent background show
 opt.pumblend = 35
 opt.wildignore = '__pycache__'
-opt.wildignore:append({'*.pyc', '*pycache*'})
+opt.wildignore:append({ '*.pyc', '*pycache*' })
 
 opt.mouse = 'a' -- enable mouse mode always
 opt.equalalways = false -- don't reset window sizes after closing one
