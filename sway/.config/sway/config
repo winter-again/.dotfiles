@@ -36,8 +36,8 @@ set $secondary_mon "BNQ BenQ LCD E2H03452SL0"
 
 output $laptop_disp disable
 # following the same conventions from hyprland.conf
-output $primary_mon pos 1500 0 res 3840x2160 scale 2
-output $secondary_mon pos 3420 0 res 3840x2160 scale 2
+output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
+output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
 # focus monitor on launch
 focus output $primary_mon
 # first available output will be used
@@ -195,6 +195,8 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # execs
+exec_always pkill kanshi; exec kanshi
+exec dunst -config ~/.config/dunst/dunstrc_hypr
 exec waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
 # exec swaybg -c #16161e
 exec nm-applet
