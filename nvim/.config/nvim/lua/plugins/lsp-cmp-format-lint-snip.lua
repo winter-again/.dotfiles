@@ -61,6 +61,7 @@ return {
                     'isort',
                     'prettierd',
                     'stylua',
+                    'yamlfix',
                 },
             })
 
