@@ -104,6 +104,10 @@ tooltip {
     border-radius: 10px;
 }
 
+#custom-weather {
+    margin-right: 40px;
+}
+
 #window,
 #workspaces {
     margin: 0 4px;
