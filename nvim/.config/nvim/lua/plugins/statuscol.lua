@@ -10,7 +10,7 @@ return {
                 { text = { builtin.foldfunc }, click = 'v:lua.ScFa' }, -- fold column replacement
                 -- diagnostics
                 {
-                    sign = { name = { '.*' }, maxwidth = 2, auto = false },
+                    sign = { name = { '.*' }, colwidth = 2, maxwidth = 2, auto = false },
                     click = 'v:lua.ScSa',
                 },
                 -- default line nums

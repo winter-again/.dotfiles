@@ -38,7 +38,7 @@ opt.wrap = false -- no line wrapping
 opt.incsearch = true -- show search result while typing the search term
 opt.termguicolors = true -- nice colors
 opt.scrolloff = 4 -- always keep at least this number of lines above/below the cursor when scrolling
-opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show
+-- opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show
 -- vim.opt.clipboard = 'unnamedplus' -- makes all yanking use clipboard
 opt.updatetime = 1000 -- faster updatetime for triggering plugins; default is 4000 ms
 -- settings for which-key plugin
