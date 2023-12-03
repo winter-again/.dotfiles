@@ -44,6 +44,7 @@ return {
                     'marksman',
                     'pyright',
                     'r_language_server',
+                    -- 'ruff_lsp',
                     'sqlls',
                     'taplo',
                     'tsserver',
@@ -359,6 +360,8 @@ return {
                     javascriptreact = { 'prettierd' },
                     json = { 'prettierd' },
                     lua = { 'stylua' },
+                    -- if using ruff_lsp I think can just leave this out and it should fallback
+                    -- to ruff_lsp
                     python = { 'isort', 'black' }, -- run sequentially
                     typescript = { 'prettierd' },
                     typescriptreact = { 'pretterd' },

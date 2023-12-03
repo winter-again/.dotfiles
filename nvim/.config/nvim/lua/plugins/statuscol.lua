@@ -15,7 +15,7 @@ return {
                 },
                 -- default line nums
                 {
-                    text = { builtin.lnumfunc, ' ' }, -- use ' ' for padding
+                    text = { builtin.lnumfunc, ' ' },
                     condition = { true, builtin.not_empty },
                     click = 'v:lua.ScLa',
                 },
