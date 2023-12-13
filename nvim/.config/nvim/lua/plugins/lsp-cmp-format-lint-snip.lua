@@ -246,7 +246,7 @@ return {
                     format = diagn_format,
                 },
                 signs = true,
-                underline = false,
+                underline = true,
                 update_in_insert = false, -- update diagnostics while in Insert mode
                 severity_sort = true,
             })
