@@ -7,7 +7,7 @@ else
     selected=$(fd . \
         ~/Documents/Bansal-lab \
         ~/Documents/code \
-        ~/Documents/nvim-dev \
+        ~/Documents/code/nvim-dev \
         --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Session: " --no-preview)
 fi
 
