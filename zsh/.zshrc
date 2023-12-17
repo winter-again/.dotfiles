@@ -128,7 +128,7 @@ obs() {
 }
 # show journalctl for rclone backup service
 bk() {
-    journalctl -u rclone_backup.service -f -n 30
+    journalctl --user -u rclone_backup.service -f -n 30
 }
 
 # pyenv
