@@ -38,5 +38,5 @@ require('andrew.keymaps')
 require('andrew.globals')
 require('andrew.autocmds')
 
-vim.cmd('colorscheme kanagawa') -- default colorscheme
+vim.cmd('colorscheme tokyonight') -- default colorscheme
 Transp()

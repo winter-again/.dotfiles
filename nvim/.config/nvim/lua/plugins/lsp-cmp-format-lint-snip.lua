@@ -175,6 +175,20 @@ return {
                         },
                     })
                 end,
+                ['tailwindcss'] = function()
+                    require('lspconfig')['tailwindcss'].setup({
+                        capabilities = lsp_capabilities,
+                        -- only run LSP if tailwind config files present
+                        root_dir = function(fname)
+                            local root_pattern = require('lspconfig').util.root_pattern(
+                                'tailwind.config.cjs',
+                                'tailwind.config.js',
+                                'postcss.config.js'
+                            )
+                            return root_pattern(fname)
+                        end,
+                    })
+                end,
                 -- ['ruff_lsp'] = function()
                 --     require('lspconfig')['ruff_lsp'].setup({
                 --         capabilities = lsp_capabilities,
