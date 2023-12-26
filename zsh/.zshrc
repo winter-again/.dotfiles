@@ -123,7 +123,7 @@ dots() {
 }
 # for Obsidian vault
 obs() {
-    cd ~/Documents/andrew-obsidian
+    cd ~/Documents/obsidian-vault
     git status
 }
 # show journalctl for rclone backup service

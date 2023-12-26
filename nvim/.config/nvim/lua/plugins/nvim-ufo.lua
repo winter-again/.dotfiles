@@ -17,6 +17,7 @@ return {
             end
         end)
         -- handler function for customizing the virtual text displayed by fold line
+        -- https://github.com/kevinhwang91/nvim-ufo#customize-fold-text
         local handler = function(virtText, lnum, endLnum, width, truncate)
             local newVirtText = {}
             local suffix = (' 󰁂 %d '):format(endLnum - lnum)
@@ -45,14 +46,8 @@ return {
             return newVirtText
         end
         require('ufo').setup({
-            preview = {
-                mappings = {
-                    scrollU = '<C-b>',
-                    scrollD = '<C-f>',
-                },
-            },
-            provider_selector = function()
-                return { 'lsp', 'indent' }
+            provider_selector = function(bufnr, filetype, buftype)
+                return { 'treesitter', 'indent' }
             end,
             fold_virt_text_handler = handler,
         })
