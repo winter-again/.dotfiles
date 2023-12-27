@@ -1,12 +1,16 @@
 font pango:Hack Nerd Font Mono 10
-# Use Mod1 for Alt.
-set $mod Mod1
-set $left h
-set $down j
-set $up k
-set $right l
-set $term wezterm
-set $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
+# minimize borders
+default_border pixel 2
+default_floating_border pixel 2
+#                       border  bg      text    indic   child_border
+client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9ece6a
+client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261   #3b4261
+client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26   #1a1b26
+client.urgent           #f7768e #f7768e #1a1b26 #f7768e   #f7768e
+client.placeholder      #000000 #000000 #c0caf5 #000000   #000000
+
+floating_modifier $mod normal
+focus_follows_mouse no
 
 input "type:keyboard" {
     xkb_layout us
@@ -26,13 +30,33 @@ input "type:touchpad" {
 }
 
 output * bg #16161e solid_color
-# assign some workspaces to specific screens
-set $laptop_disp "eDP-1"
-# set $primary_mon "DP-6"
-# set $secondary_mon "DP-7"
-# seems like the output names above change on boot/suspend etc...
-set $primary_mon "BNQ BenQ LCD 93J02490SL0"
-set $secondary_mon "BNQ BenQ LCD E2H03452SL0"
+
+set {
+    $mod Mod1
+    $left h
+    $down j
+    $up k
+    $right l
+    $term wezterm
+    $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
+    $laptop_disp "eDP-1"
+    # seems like the output names above change on boot/suspend etc...
+    $primary_mon "BNQ BenQ LCD 93J02490SL0"
+    $secondary_mon "BNQ BenQ LCD E2H03452SL0"
+    # set $primary_mon "DP-6"
+    # set $secondary_mon "DP-7"
+    # workspaces
+    $ws1 "1"
+    $ws2 "2"
+    $ws3 "3"
+    $ws4 "4"
+    $ws5 "5"
+    $ws6 "6"
+    $ws7 "7"
+    $ws8 "8"
+    $ws9 "9"
+    $ws10 "10"
+}
 
 # I think kanshi config replaces this
 # output $laptop_disp disable
@@ -54,38 +78,89 @@ workspace 8 output $secondary_mon $laptop_disp
 workspace 9 output $secondary_mon $laptop_disp
 workspace 10 output $secondary_mon $laptop_disp
 
-### Key bindings
-# Start a terminal
-bindsym $mod+Return exec $term
-# open Nemo
-bindsym $mod+n exec nemo
-# Kill focused window
-bindsym $mod+Shift+q kill
-# Start your launcher
-bindsym $mod+m exec $menu
-# Drag floating windows by holding down $mod and left mouse button.
-# Resize them with right mouse button + $mod.
-# Despite the name, also works for non-floating windows.
-# Change normal to inverse to use left mouse button for resizing and right
-# mouse button for dragging.
-floating_modifier $mod normal
-# Reload the configuration file
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+r exec killall waybar && waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
-# Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-# power menu
-bindsym $mod+Shift+p exec ~/.config/wofi/power-menu-sway.sh
-# suspend/lock
-# exec swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
-exec swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
-bindsym $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
-bindsym $mod+Shift+period exec systemctl suspend
-# screenshot to clipboard
-bindsym $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
-# open Obsidian
-bindsym $mod+o exec obsidian
+# keybinds
+bindsym {
+    $mod+Return exec $term
+    $mod+n exec nemo
+    $mod+Shift+q kill
+    $mod+m exec $menu
+    # reload config file
+    $mod+Shift+c reload
+    $mod+Shift+r exec killall waybar && waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
+    # Exit sway (logs you out of your Wayland session)
+    $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    # power menu
+    $mod+Shift+p exec ~/.config/wofi/power-menu-sway.sh
+    $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
+    $mod+Shift+period exec systemctl suspend
+    # suspend/lock
+    # exec swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
+    # screenshot to clipboard
+    $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
+    # open Obsidian
+    $mod+o exec obsidian
 
+    $mod+$left focus left
+    $mod+$down focus down
+    $mod+$up focus up
+    $mod+$right focus right
+    $mod+Left focus left
+    $mod+Down focus down
+    $mod+Up focus up
+    $mod+Right focus right
+
+    $mod+Shift+$left move left
+    $mod+Shift+$down move down
+    $mod+Shift+$up move up
+    $mod+Shift+$right move right
+    $mod+Shift+Left move left
+    $mod+Shift+Down move down
+    $mod+Shift+Up move up
+    $mod+Shift+Right move right
+
+    $mod+1 workspace number $ws1
+    $mod+2 workspace number $ws2
+    $mod+3 workspace number $ws3
+    $mod+4 workspace number $ws4
+    $mod+5 workspace number $ws5
+    $mod+6 workspace number $ws6
+    $mod+7 workspace number $ws7
+    $mod+8 workspace number $ws8
+    $mod+9 workspace number $ws9
+    $mod+0 workspace number $ws10
+
+    $mod+Shift+1 move container to workspace number $ws1
+    $mod+Shift+2 move container to workspace number $ws2
+    $mod+Shift+3 move container to workspace number $ws3
+    $mod+Shift+4 move container to workspace number $ws4
+    $mod+Shift+5 move container to workspace number $ws5
+    $mod+Shift+6 move container to workspace number $ws6
+    $mod+Shift+7 move container to workspace number $ws7
+    $mod+Shift+8 move container to workspace number $ws8
+    $mod+Shift+9 move container to workspace number $ws9
+    $mod+Shift+0 move container to workspace number $ws10
+    $mod+y split h
+    $mod+x split v
+
+    $mod+s layout stacking
+    $mod+t layout tabbed
+    $mod+e layout toggle split
+    # Make the current focus fullscreen
+    $mod+f fullscreen
+    # Toggle the current focus between tiling and floating mode
+    $mod+Shift+space floating toggle
+    # Swap focus between the tiling area and the floating area
+    $mod+space focus mode_toggle
+    # Move focus to the parent container
+    $mod+a focus parent
+    # Move the currently focused window to the scratchpad
+    $mod+Shift+minus move scratchpad
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    $mod+minus scratchpad show
+
+    $mod+r mode "resize"
+}
 # media keys
 bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
@@ -96,88 +171,8 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
-# Move your focus around
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
-# Or use $mod+[up|down|left|right]
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-# Move the focused window with the same, but add Shift
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
-# Ditto, with arrow keys
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-# Workspaces:
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
-# Switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
-# Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
-bindsym $mod+y split h
-bindsym $mod+x split v
-# Switch the current container between different layout styles
-bindsym $mod+s layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+e layout toggle split
-# Make the current focus fullscreen
-bindsym $mod+f fullscreen
-# Toggle the current focus between tiling and floating mode
-bindsym $mod+Shift+space floating toggle
-# Swap focus between the tiling area and the floating area
-bindsym $mod+space focus mode_toggle
-# Move focus to the parent container
-bindsym $mod+a focus parent
-#
-# Scratchpad:
-#
-# Sway has a "scratchpad", which is a bag of holding for windows.
-# You can send windows there and get them back later.
 
-# Move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
-#
 # Resizing containers:
-#
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
@@ -198,35 +193,26 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
 
 # execs
 exec_always pkill kanshi; exec kanshi
-# exec dunst -config ~/.config/dunst/dunstrc_hypr
-exec mako
-exec waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
-# exec swaybg -c #16161e
-exec nm-applet
-# for xwayland
-# exec xrdb -load ~/.Xresources
-exec spotify-launcher
+exec {
+    swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
+    # exec dunst -config ~/.config/dunst/dunstrc_hypr
+    mako
+    waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
+    nm-applet
+    # for xwayland
+    # xrdb -load ~/.Xresources
+    spotify-launcher
+}
+
 for_window [class="Spotify"] move window to workspace $ws7
 # use app_id instead of class if Wayland
 assign [app_id="Slack"] $ws8
 assign [app_id="obsidian"] $ws9 
 assign [class="discord"] $ws10
-for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
-for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
-
-# minimize borders
-default_border pixel 2
-default_floating_border pixel 2
-#                       border  bg      text    indic   child_border
-client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9ece6a
-client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261   #3b4261
-client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26   #1a1b26
-client.urgent           #f7768e #f7768e #1a1b26 #f7768e   #f7768e
-client.placeholder      #000000 #000000 #c0caf5 #000000   #000000
-focus_follows_mouse no
+# for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
+# for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
 
 include /etc/sway/config.d/*
