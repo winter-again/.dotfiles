@@ -23,7 +23,6 @@ local lazy_opts = {
         notify = false,
     },
     dev = {
-        -- directory for local plugin dev
         path = '~/Documents/code/nvim-dev',
     },
     install = {
@@ -38,5 +37,6 @@ require('andrew.keymaps')
 require('andrew.globals')
 require('andrew.autocmds')
 
+vim.opt.background = 'dark'
 vim.cmd('colorscheme tokyonight') -- default colorscheme
 Transp()

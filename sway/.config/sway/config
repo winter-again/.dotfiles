@@ -9,8 +9,6 @@ client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26   #1a1b26
 client.urgent           #f7768e #f7768e #1a1b26 #f7768e   #f7768e
 client.placeholder      #000000 #000000 #c0caf5 #000000   #000000
 
-floating_modifier $mod normal
-focus_follows_mouse no
 
 input "type:keyboard" {
     xkb_layout us
@@ -58,6 +56,9 @@ set {
     $ws10 "10"
 }
 
+floating_modifier $mod normal
+focus_follows_mouse no
+
 # I think kanshi config replaces this
 # output $laptop_disp disable
 # following the same conventions from hyprland.conf
@@ -81,14 +82,15 @@ workspace 10 output $secondary_mon $laptop_disp
 # keybinds
 bindsym {
     $mod+Return exec $term
-    $mod+n exec nemo
     $mod+Shift+q kill
     $mod+m exec $menu
     # reload config file
-    $mod+Shift+c reload
-    $mod+Shift+r exec killall waybar && waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
+    $mod+Shift+r reload
+    $mod+Shift+w exec killall waybar && waybar
     # Exit sway (logs you out of your Wayland session)
-    $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Y' 'swaymsg exit'
+    # swaync toggle
+    $mod+n exec swaync-client -t -sw
     # power menu
     $mod+Shift+p exec ~/.config/wofi/power-menu-sway.sh
     $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
@@ -148,7 +150,7 @@ bindsym {
     # Make the current focus fullscreen
     $mod+f fullscreen
     # Toggle the current focus between tiling and floating mode
-    $mod+Shift+space floating toggle
+    $mod+Shift+f floating toggle
     # Swap focus between the tiling area and the floating area
     $mod+space focus mode_toggle
     # Move focus to the parent container
@@ -199,8 +201,10 @@ exec_always pkill kanshi; exec kanshi
 exec {
     swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
     # exec dunst -config ~/.config/dunst/dunstrc_hypr
-    mako
-    waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
+    # mako
+    # replace mako with swaync
+    swaync
+    waybar
     nm-applet
     # for xwayland
     # xrdb -load ~/.Xresources

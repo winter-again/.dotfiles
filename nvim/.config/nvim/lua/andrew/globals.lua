@@ -38,12 +38,23 @@ Transp = function()
         'Normal',
         'NormalNC', -- unfocused windows
         -- 'NormalFloat', -- affects docs pop-up
-        -- 'Float',
+        'Float',
         'FloatTitle',
+        'FloatBorder',
         'SignColumn',
         'FoldColumn',
+        'TelescopeBorder',
     }
     for _, hl in pairs(highlights) do
         vim.api.nvim_set_hl(0, hl, { bg = 'none' })
+    end
+end
+
+Toggle_light_dark = function()
+    local curr_set = vim.api.nvim_get_option('background')
+    if curr_set == 'dark' then
+        vim.opt.background = 'light'
+    else
+        vim.opt.background = 'dark'
     end
 end

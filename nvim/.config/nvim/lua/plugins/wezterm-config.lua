@@ -17,14 +17,15 @@ return {
         end
 
         bg_map('default', '0')
-        bg_map('1')
-        bg_map('2')
-        bg_map('3')
-        bg_map('4')
-        bg_map('5')
-        bg_map('6')
-        bg_map('7')
-        bg_map('8')
+        bg_map('1') -- tokyonight, catppuccin
+        bg_map('2') -- gruvbox
+        bg_map('3') -- tokyonight, kanagawa, catppuccin
+        bg_map('4') -- tokyonight, kanagawa
+        bg_map('5') -- tokyonight, kanagawa, gruvbox
+        bg_map('6') -- rose-pine
+        bg_map('7') -- rose-pine
+        bg_map('8') -- gruvbox, rose-pine
+        bg_map('9') -- tokyonight, catppuccin, kanagawa
 
         -- vim.keymap.set(
         --     'n',
