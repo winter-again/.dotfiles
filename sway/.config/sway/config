@@ -27,6 +27,7 @@ input "type:touchpad" {
     natural_scroll enabled
 }
 
+# tokyonight bg_dark
 output * bg #16161e solid_color
 
 set {
@@ -92,7 +93,7 @@ bindsym {
     # swaync toggle
     $mod+n exec swaync-client -t -sw
     # power menu
-    $mod+Shift+p exec ~/.config/wofi/power-menu-sway.sh
+    $mod+Shift+p exec ~/.config/wofi/power-menu.sh
     $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
     $mod+Shift+period exec systemctl suspend
     # suspend/lock

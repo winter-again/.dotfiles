@@ -1,2 +1,6 @@
+width=25%
+halign=fill
+matching=fuzzy
+insensitive=true
 key_up=Control_L-p
 key_down=Control_L-n

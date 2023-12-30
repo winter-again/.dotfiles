@@ -1,37 +1,46 @@
 window {
     margin: 5px;
-    background-color: #16161e;
+    background-color: #1a1b26;
     font: Hack Nerd Font Mono;
     font-size: 20px;
-    border: 5px solid #9d7cd8;
+    border: 2px solid #9d7cd8;
     border-radius: 10px;
 }
 
-#input {
-    margin: 5px;
-    background-color: #16161e;
-    color: #c0caf5;
-}
-
-/* holds entries */
-#inner-box {
-    background-color: transparent;
-}
-
+/* contains everything */
 #outer-box {
     margin: 5px;
     background-color: transparent;
 }
 
+/* search bar */
+#input {
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #16161e;
+    color: #c0caf5;
+}
+
+/* scroll window holding inner-box of results */
+#scroll {
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #16161e;
+}
+
+/* holds results entries */
+#inner-box {
+    background-color: transparent;
+    /* border: 1px solid red; */
+}
+
+.entry {
+    background: transparent;
+}
+
 #entry:selected {
     background-color: #292e42;
     border-radius: 10px;
-}
-
-/* scroll window holding inner-box*/
-#scroll {
-    border-radius: 10px;
-    background-color: #16161e;
 }
 
 #text {
