@@ -184,4 +184,8 @@ return {
         'mcchrish/zenbones.nvim',
         dependencies = { 'rktjmp/lush.nvim' },
     },
+    {
+        'winter-again/winter-again.nvim',
+        dev = true,
+    },
 }

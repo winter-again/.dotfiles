@@ -68,6 +68,7 @@ vim.keymap.set('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>') -- delete buffer wi
 vim.keymap.set('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }) -- set here since plugin only loaded on command
 
 vim.keymap.set('n', '<leader><leader>c', '<cmd>close<CR>', opts) -- close window
-vim.keymap.set('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>') -- save and exec a Lua file
-vim.keymap.set('n', '<leader><leader>t', '<cmd>lua Transp()<CR>') -- set transparency
-vim.keymap.set('n', '<leader><leader>d', '<cmd>lua Toggle_light_dark()<CR>')
+vim.keymap.set('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>', opts) -- save and exec a Lua file
+vim.keymap.set('n', '<leader><leader>t', '<cmd>lua Transp()<CR>', opts) -- set transparency
+vim.keymap.set('n', '<leader><leader>d', '<cmd>lua Toggle_light_dark()<CR>', opts)
+vim.keymap.set('n', '<leader><leader>r', '<cmd>lua R("winter-again.nvim")<CR>', opts)

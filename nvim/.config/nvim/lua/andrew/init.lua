@@ -38,5 +38,5 @@ require('andrew.globals')
 require('andrew.autocmds')
 
 vim.opt.background = 'dark'
-vim.cmd('colorscheme tokyonight') -- default colorscheme
-Transp()
+vim.cmd('colorscheme winter-again') -- default colorscheme
+-- Transp()
