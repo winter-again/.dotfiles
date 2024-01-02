@@ -18,12 +18,13 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 
+export TERM=wezterm # for undercurl supp
 export SHELL=/bin/zsh
 export EDITOR="nvim"
 export PATH="$HOME/.local/bin:$PATH" # for zoxide and others
 
 # aliases
-alias nvim-min="NVIM_APPNAME=nvim_min nvim"
+# alias nvim-min="NVIM_APPNAME=nvim_min nvim" # alt nvim config
 
 # some taken from zap-zsh proj (https://github.com/zap-zsh)
 alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls

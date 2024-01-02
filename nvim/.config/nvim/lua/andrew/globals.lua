@@ -36,9 +36,6 @@ function Save_exec()
     vim.cmd('luafile %')
 end
 
--- transparency
--- TODO: I think need to fix this so that not every
--- prop is overwritten
 function Transp()
     local highlights = {
         'Normal',
@@ -52,7 +49,9 @@ function Transp()
         'TelescopeBorder',
     }
     for _, hl in pairs(highlights) do
-        vim.api.nvim_set_hl(0, hl, { bg = 'none' })
+        local curr_hl = vim.api.nvim_get_hl(0, { name = hl })
+        local new_hl = vim.tbl_extend('force', curr_hl, { bg = 'none' })
+        vim.api.nvim_set_hl(0, hl, new_hl)
     end
 end
 

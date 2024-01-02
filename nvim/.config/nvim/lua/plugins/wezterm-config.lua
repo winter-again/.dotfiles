@@ -26,16 +26,5 @@ return {
         bg_map('7') -- rose-pine
         bg_map('8') -- gruvbox, rose-pine
         bg_map('9') -- tokyonight, catppuccin, kanagawa
-
-        -- vim.keymap.set(
-        --     'n',
-        --     '<leader><leader>g',
-        --     ':lua require("wezterm-config").set_wezterm_user_var("profile_colors", "colors_1")<CR>'
-        -- )
-        -- vim.keymap.set(
-        --     'n',
-        --     '<leader><leader>b',
-        --     ':lua require("wezterm-config").set_wezterm_user_var("profile_colors", "colors_2")<CR>'
-        -- )
     end,
 }
