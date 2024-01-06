@@ -33,11 +33,11 @@ local lazy_opts = {
 -- any file in lua/plugins/*.lua will be merged into the main plugin spec
 require('lazy').setup('plugins', lazy_opts)
 require('andrew.settings')
-require('andrew.keymaps')
 require('andrew.globals')
+require('andrew.keymaps')
 require('andrew.autocmds')
 
 vim.opt.background = 'dark'
 -- vim.cmd('colorscheme winter-again') -- default colorscheme
 vim.cmd('colorscheme tokyonight')
-Transp()
+vim.cmd('Transp')

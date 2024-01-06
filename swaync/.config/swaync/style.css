@@ -55,13 +55,6 @@
     margin: 0;
 }
 
-/* not sure what this is for */
-/* .notification-default-action { */
-/*     margin: 0; */
-/*     padding: 0; */
-/*     border-radius: 10px; */
-/* } */
-
 /* button to dismiss notif */
 .close-button {
     background: @noti-close-bg;
@@ -80,38 +73,47 @@
     border: none;
 }
 
-/* not sure what this is for */
+/* box around main notif when there's an action? */
+.notification-default-action {
+    border: none;
+    background: transparent;
+}
+
+/* action button on notif */
+/* seems to be another box behind the main notif box */
+.notification-default-action,
 .notification-action {
-    border: 2px solid #34548a;
-    border-top: none;
+    /* background: @noti-bg-hover; */
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
     border-radius: 5px;
 }
 
-/* seems to be another box behind the main notif box */
-.notification-default-action {
-    background: transparent;
-    box-shadow: none;
+.notification-action {
+    background: @noti-bg-hover;
 }
 
-/* upon hovering a notif box */
-/* .notification-default-action:hover, */
-/* .notification-action:hover { */
-/*     color: @tokyo-blue; */
-/* } */
+.notification-default-action:hover,
+.notification-action:hover {
+    background: @noti-bg-darker;
+    color: @tokyo-blue;
+}
 
-/* .notification-default-action:not(:only-child) { */
-/*     border-bottom-left-radius: 7px; */
-/*     border-bottom-right-radius: 7px; */
-/* } */
+/* when alt actions are visible */
+.notification-default-action:not(:only-child) {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
 
 .notification-action:first-child {
-    border-bottom-left-radius: 10px;
-    background: red;
+    border-bottom-left-radius: 5px;
 }
 
 .notification-action:last-child {
-    border-bottom-right-radius: 10px;
-    background: yellow;
+    border-bottom-right-radius: 5px;
 }
 
 /* unsure */
@@ -155,6 +157,7 @@
 .summary {
     font-size: 16px;
     font-weight: 700;
+    margin-bottom: 10px;
     background: transparent;
     color: @text-color;
     text-shadow: none;
@@ -167,7 +170,7 @@
     background: transparent;
     color: @text-color;
     text-shadow: none;
-    margin-right: 18px;
+    margin-right: 10px;
 }
 
 /* notif content */

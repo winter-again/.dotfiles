@@ -7,8 +7,6 @@ client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9ece6a
 client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261   #3b4261
 client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26   #1a1b26
 client.urgent           #f7768e #f7768e #1a1b26 #f7768e   #f7768e
-client.placeholder      #000000 #000000 #c0caf5 #000000   #000000
-
 
 input "type:keyboard" {
     xkb_layout us
@@ -96,8 +94,6 @@ bindsym {
     $mod+Shift+p exec ~/.config/wofi/power-menu.sh
     $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
     $mod+Shift+period exec systemctl suspend
-    # suspend/lock
-    # exec swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
     # screenshot to clipboard
     $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
     # open Obsidian
@@ -201,21 +197,23 @@ mode "resize" {
 exec_always pkill kanshi; exec kanshi
 exec {
     swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
-    # exec dunst -config ~/.config/dunst/dunstrc_hypr
+    # swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
     # mako
     # replace mako with swaync
     swaync
     waybar
     nm-applet
+    solaar -w hide
+    spotify-launcher
     # for xwayland
     # xrdb -load ~/.Xresources
-    spotify-launcher
 }
 
+# spotify is stubborn
 for_window [class="Spotify"] move window to workspace $ws7
 # use app_id instead of class if Wayland
 assign [app_id="Slack"] $ws8
-assign [app_id="obsidian"] $ws9 
+# assign [app_id="obsidian"] $ws9 
 assign [class="discord"] $ws10
 # for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 # for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700

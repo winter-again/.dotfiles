@@ -57,17 +57,17 @@ local function display_lsp_venv()
 end
 
 -- basic way to display loading prog of LSP
-local function display_lsp_prog()
-    local lsp = vim.lsp.util.get_progress_messages()[1]
-    if lsp then
-        local name = lsp.name or ''
-        local msg = lsp.message or ''
-        local pctg = lsp.percentage or 0
-        return string.format('%%<%s: %s (%s%%%%)', name, msg, pctg)
-    else
-        return ''
-    end
-end
+-- local function display_lsp_prog()
+--     local lsp = vim.lsp.util.get_progress_messages()[1]
+--     if lsp then
+--         local name = lsp.name or ''
+--         local msg = lsp.message or ''
+--         local pctg = lsp.percentage or 0
+--         return string.format('%%<%s: %s (%s%%%%)', name, msg, pctg)
+--     else
+--         return ''
+--     end
+-- end
 
 -- use gitsigns as the diff source below
 local function diff_source()
@@ -96,7 +96,10 @@ return {
                 lualine_a = { 'mode' },
                 lualine_b = {
                     -- reuse info from gitsigns
-                    { 'b:gitsigns_head', icon = '' },
+                    {
+                        'b:gitsigns_head',
+                        icon = '',
+                    },
                     {
                         'diff',
                         source = diff_source,

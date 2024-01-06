@@ -5,7 +5,7 @@ title = ""
 # Add a footer to your tv. Example 'footer info' [default: NA ("")]
 footer = ""
 # The upper (maximum) width of columns. [default: 20]
-upper_column_width = 20
+upper_column_width = 35
 # The minimum width of columns. Must be 2 or larger. [default: 2]
 lower_column_width = 2
 # head number of rows to output <row-display> [default: 25]

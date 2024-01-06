@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-API_KEY=$(cat $HOME/.owm-key)
-CITY=$(cat $HOME/.owm-loc)
+source ~/.owm
 COUNTRY="US"
 UNITS="imperial"
 WIND_THRESH=25

@@ -24,14 +24,12 @@ return {
                 show_server_name = true,
             },
         })
-        local nmap = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { desc = desc, silent = true })
-        end
+        vim.keymap.set('n', '<leader>gf', '<cmd>Lspsaga finder<CR>', { silent = true, desc = 'LSP finder' })
         -- finder that shows defn, ref, and implementation
-        nmap('gf', '<cmd>Lspsaga finder<CR>', 'LSP finder')
+        -- nmap('<leader>gf', '<cmd>Lspsaga finder<CR>', 'LSP finder')
         -- rename all references to symbol under cursor
-        nmap('<leader>rn', '<cmd>Lspsaga rename<CR>', 'Rename in file')
+        vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<CR>', { silent = true, desc = 'Rename in file' })
         -- code action
-        nmap('<leader>ca', '<cmd>Lspsaga code_action<CR>', 'Code action')
+        vim.keymap.set('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', { silent = true, desc = 'Code action' })
     end,
 }
