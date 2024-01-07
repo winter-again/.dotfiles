@@ -41,7 +41,6 @@ return {
             require('mini.surround').setup()
         end,
     },
-    -- alt to nvim-tree
     {
         'echasnovski/mini.files',
         enabled = false,

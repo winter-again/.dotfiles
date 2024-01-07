@@ -6,7 +6,6 @@
     "spacing": 2, // Gaps between modules
     "modules-left": [
         "sway/workspaces",
-        // "custom/media",
         "mpris"
     ],
     "modules-center": [
@@ -36,20 +35,7 @@
         "interval": 960,
         "exec": "~/.config/waybar/scripts/weather.sh"
     },
-    // still same issue as mpris where no title or artist info on start until next song
-    "custom/media": {
-        "format": "custom: {icon} {}",
-        "return-type": "json",
-        "format-icons": {
-            "Playing": "<span font='16' rise='-2000'> 󰓇</span> ",
-            "Paused": "<span font='16' rise='-2000'> 󰓇</span> "
-        },
-        "max-length": 70,
-        "exec": "playerctl --player=spotify metadata --format '{\"text\": \"{{markup_escape(title)}} | {{artist}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
-        "on-click": "playerctl play-pause"
-    },
-    // seems like the problem is that playerctl metadata has no valid info
-    // on fresh start of Spotify
+    // seems like the problem is that playerctl metadata has no valid info on fresh start of Spotify
     "mpris": {
         "player": "spotify",
         "interval": 1,

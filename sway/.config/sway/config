@@ -209,8 +209,10 @@ exec {
     # xrdb -load ~/.Xresources
 }
 
-# spotify is stubborn
-for_window [class="Spotify"] move window to workspace $ws7
+# spotify is stubborn if on X
+# for_window [class="Spotify"] move window to workspace $ws7
+# assign spotify on Wayland; seems to work
+assign [title="^Spotify"] $ws7
 # use app_id instead of class if Wayland
 assign [app_id="Slack"] $ws8
 assign [app_id="obsidian"] $ws4 

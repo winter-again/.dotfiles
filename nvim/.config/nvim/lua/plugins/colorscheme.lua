@@ -16,6 +16,8 @@ return {
                     colors.border = colors.fg_dark
                 end,
                 on_highlights = function(highlights, colors)
+                    highlights['WinBar'] = { fg = colors.fg, bg = colors.bg_dark }
+                    -- highlights['WinBarNC'] = { fg = colors.fg_gutter, bg = colors.bg_dark }
                     highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
                     highlights['LineNr'] = { fg = '#696d87' } -- line number color
                     highlights['CursorLineNr'] = { fg = colors.fg } -- cursor line number color

@@ -1,8 +1,18 @@
-local hl_group = vim.api.nvim_create_augroup('WinterAgain', { clear = true })
+local au_grp = vim.api.nvim_create_augroup('WinterAgain', { clear = true })
+
+-- set winbar highlights on any colorscheme set/change
+vim.api.nvim_create_autocmd('ColorScheme', {
+    group = au_grp,
+    pattern = '*',
+    callback = function()
+        vim.api.nvim_set_hl(0, 'WinBar', { fg = '#c0caf5', bg = '#16161e' })
+        vim.api.nvim_set_hl(0, 'WinBarNC', { fg = '#c0caf5', bg = '#16161e' })
+    end,
+})
 
 -- highlight the text you just yanked (visual cue)
 vim.api.nvim_create_autocmd('TextYankPost', {
-    group = hl_group,
+    group = au_grp,
     pattern = '*',
     callback = function()
         vim.highlight.on_yank()
@@ -12,7 +22,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- from lazyvim
 -- auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-    group = hl_group,
+    group = au_grp,
     callback = function(event)
         if event.match:match('^%w%w+://') then
             return
