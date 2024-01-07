@@ -1,36 +1,38 @@
 #!/usr/bin/env bash
 
 cd ~
-
+# XDG spec
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=sway
+export XDG_CURRENT_DESKTOP=sway # supp to help with Firefox screensharing
+# for some Java-based apps to launch/display properly; unsure if I really need it
 export _JAVA_AWT_WM_NONREPARENTING=1
+# theming
+# some apps ref XCURSOR_SIZE like in xwayland
 export XCURSOR_SIZE=24
 export GTK_THEME=Tokyonight-Dark-BL
+export WLR_NO_HARDWARE_CURSORS=1 # in case the cursor is invisible; might be Nvidia only
 # use Wayland for Qt apps
-export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORM=wayland # make Qt apps use Wayland backend
 export QT_WAYLAND_DISABLE_WINDOWDECORATION="1" # disables Qt client-side decorations
 # detect integrated GPU and set var for Sway
+# not entirely sure this is needed
 val=$(udevadm info -a -n /dev/dri/card1 | grep boot_vga | rev | cut -c 2)
 export WLR_DRM_DEVICES="/dev/dri/card$val"
-# export GDK_SCALE=2
-
-export XDG_CURRENT_DESKTOP=sway
-export XDG_SESSION_DESKTOP=sway
-
-# Firefox
+# Firefox w/ Wayland (https://wiki.archlinux.org/title/Firefox#Wayland)
 export MOZ_ENABLE_WAYLAND=1
-
-# NVIDIA
-export LIBVA_DRIVER_NAME=nvidia
-export XDG_SESSION_TYPE=wayland
-
-# apparently this one can cause Firefox crashes
-# seems to have fixed things and Zoom screensharing within Firefox works
-# export GBM_BACKEND=nvidia-drm
-
-# and this can cause probs with Zoom screen sharing
-# still have crashes on screen share
+# NVIDIA-specific
+# from Arch wiki (https://wiki.archlinux.org/title/Hardware_video_acceleration)
+# and also in the Hyprland wiki
+# but maybe it should be Intel instead? e.g., "i965" or "iHD"
+export LIBVA_DRIVER_NAME=nvidia # hardware accel on NVIDIA GPUs
+# force GBM backend; from Arch and Hyprland wikis
+# https://wiki.archlinux.org/title/Wayland#Requirements
+# seems to cause Firefox to crash on certain sites (as mentioned in Hyprland wiki)
+# export GBM_BACKEND=nvidia-drm 
+# this might cause probs w/ Zoom screen sharing? Hyprland wiki says it might
+# cause Discord problems with screensharing or windows not showing
+# so maybe affects Zoom screensharing
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
-
-export WLR_NO_HARDWARE_CURSORS=1
 
 exec sway --unsupported-gpu
