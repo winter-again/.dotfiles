@@ -6,6 +6,7 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
 #######################
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
@@ -83,7 +84,7 @@ export FZF_CTRL_R_OPTS="
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-source /usr/share/nvm/init-nvm.sh # since using AUR pkg
+source /usr/share/nvm/init-nvm.sh # use this instead since using AUR pkg
 
 # functions
 ff() {
@@ -109,6 +110,10 @@ tt() {
 # change wezterm bg on the fly
 ww() {
     ~/.local/bin/wezterm-bg-config.sh
+}
+# wezterm logs appear here
+wez_logs() {
+    cd /run/user/1000/wezterm
 }
 # use fd and fzf to jump to dirs in .dotfiles
 dot() {

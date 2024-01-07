@@ -77,38 +77,45 @@ return {
             -- require('telescope').load_extension('harpoon')
 
             local builtin = require('telescope.builtin')
+            local opts = { silent = true }
             -- use '<leader>ff' to find among ALL files; respects .gitignore
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, { silent = true })
+            vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
             -- use '<leader>fg' to find among git files; again respects .gitignore
-            vim.keymap.set('n', '<leader>fgc', builtin.git_commits, { silent = true })
-            vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, { silent = true })
-            vim.keymap.set('n', '<leader>fgs', builtin.git_status, { silent = true })
+            vim.keymap.set('n', '<leader>fgc', builtin.git_commits, opts)
+            vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, opts)
+            vim.keymap.set('n', '<leader>fgs', builtin.git_status, opts)
+            -- treesitter symbols
+            vim.keymap.set('n', '<leader>ft', builtin.treesitter, opts)
             -- search for string in current working dir
-            vim.keymap.set('n', '<leader>fs', builtin.live_grep, { silent = true })
+            vim.keymap.set('n', '<leader>fs', builtin.live_grep, opts)
             -- search within current buffer
-            vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, { silent = true })
+            vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, opts)
             -- search registers
-            vim.keymap.set('n', '<leader>fr', builtin.registers, { silent = true })
+            vim.keymap.set('n', '<leader>fr', builtin.registers, opts)
             -- search open buffers in current neovim instance
-            vim.keymap.set('n', '<leader>fl', builtin.buffers, { silent = true })
+            vim.keymap.set('n', '<leader>fl', builtin.buffers, opts)
             -- search diagnostics for current buffer
             vim.keymap.set('n', '<leader>fd', function()
                 builtin.diagnostics({ bufnr = 0 })
-            end, { silent = true })
+            end, opts)
             -- search diagnostics for entire workspace
-            vim.keymap.set('n', '<leader>fD', builtin.diagnostics, { silent = true })
+            vim.keymap.set('n', '<leader>fD', builtin.diagnostics, opts)
             -- search keymaps
-            vim.keymap.set('n', '<leader>fk', builtin.keymaps, { silent = true })
+            vim.keymap.set('n', '<leader>fk', builtin.keymaps, opts)
             -- search highlights
-            vim.keymap.set('n', '<leader>fh', builtin.highlights, { silent = true })
+            vim.keymap.set('n', '<leader>fh', builtin.highlights, opts)
             -- search colorscheme
-            vim.keymap.set('n', '<leader>fc', builtin.colorscheme, { silent = true })
-            --search jumplist
-            vim.keymap.set('n', '<leader>fj', builtin.jumplist, { silent = true })
+            vim.keymap.set('n', '<leader>fc', builtin.colorscheme, opts)
+            -- autocommnds
+            vim.keymap.set('n', '<leader>fa', builtin.autocommands, opts)
+            -- search jumplist
+            vim.keymap.set('n', '<leader>fj', builtin.jumplist, opts)
+            -- quickfix list
+            vim.keymap.set('n', '<leader>fq', builtin.quickfix, opts)
             -- extensions
-            vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', { silent = true })
-            vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', { silent = true })
-            vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', { silent = true })
+            vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', opts)
+            vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', opts)
+            vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', opts)
         end,
     },
 }

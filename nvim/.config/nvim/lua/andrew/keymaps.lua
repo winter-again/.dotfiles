@@ -11,21 +11,18 @@ Map('n', '<Up>', ':resize +2<CR>', opts, 'Window longer')
 Map('n', '<Down>', ':resize -2<CR>', opts, 'Window shorter')
 Map('n', '<Left>', ':vertical resize -2<CR>', opts, 'Window thinner')
 Map('n', '<Right>', ':vertical resize +2<CR>', opts, 'Window wider')
--- below now handled by mini-move plugin
--- move highlighted selection up/down and should autoindent as needed
--- for example, into/out of if statements or loops
--- indent highlighted selection but stay in visual mode so it can continuously move the text
--- vim.keymap.set("v", "<", "<gv", opts)
--- vim.keymap.set("v", ">", ">gv", opts)
--- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)
--- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
+-- move highlighted selection around and autoindent as needed
+Map('v', 'H', '<gv', opts)
+Map('v', 'L', '>gv', opts)
+Map('v', 'J', ":m '>+1<CR>gv=gv", opts)
+Map('v', 'K', ":m '<-2<CR>gv=gv", opts)
 -- J in normal mode appends line below to your current line + a space
 -- this remap keeps cursor in place instead of sending it to end of line
 Map('n', 'J', 'mzJ`z', opts, 'Append line below to current line w/ space')
-Map('n', '<C-d>', '<C-d>zz', opts, 'No dizziness from page jump')
-Map('n', '<C-u>', '<C-u>zz', opts, 'No dizziness from page jump')
-Map('n', 'n', 'nzzzv', opts, 'Center search hit')
-Map('n', 'N', 'Nzzzv', opts, 'Center search hit')
+Map('n', '<C-d>', '<C-d>zz', opts, 'Move down w/o dizziness')
+Map('n', '<C-u>', '<C-u>zz', opts, 'Move up w/o dizziness')
+Map('n', 'n', 'nzzzv', opts, 'Center next search result')
+Map('n', 'N', 'Nzzzv', opts, 'Center previous search result')
 -- keep cursor at the bottom of selection after yanking it
 -- vim.keymap.set('v', 'y', 'ygv<esc>', opts)
 Map('x', '<leader>p', '"_dP', opts, 'Paste w/o losing')

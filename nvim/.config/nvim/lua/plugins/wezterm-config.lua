@@ -3,7 +3,7 @@ return {
     -- dev = true,
     config = function()
         local wezterm_config = require('wezterm-config')
-        local function bg_colorscheme(bg)
+        local function set_bg_colorscheme(bg)
             local mapper = {
                 ['catppuccin'] = { 'bg_3' },
                 ['gruvbox'] = { 'bg_2' },
@@ -23,34 +23,43 @@ return {
             Transp()
         end
 
-        local function bg_map(name, key)
-            key = key or name
-            if name == 'default' then
+        local function bg_map(bg_profile, key, only_bg)
+            -- only_bg = only_bg or true
+            if only_bg == true then
+                -- set just the bg
                 vim.keymap.set('n', '<leader><leader>' .. key, function()
-                    wezterm_config.set_wezterm_user_var('profile_background', name)
-                end)
+                    wezterm_config.set_wezterm_user_var('profile_background', bg_profile)
+                end, { silent = true, desc = 'Set Wezterm background to ' .. bg_profile .. ' profile' })
             else
-                -- old:
-                -- vim.keymap.set('n', '<leader><leader>' .. key, function()
-                --     wezterm_config.set_wezterm_user_var('profile_background', 'bg_' .. key)
-                -- end, { silent = true })
-
                 -- set colorscheme and background together
                 vim.keymap.set('n', '<leader><leader>' .. key, function()
-                    bg_colorscheme('bg_' .. key)
-                end)
+                    set_bg_colorscheme(bg_profile)
+                end, {
+                    silent = true,
+                    desc = 'Set Wezterm background to ' .. bg_profile .. ' profile + Neovim colorscheme',
+                })
             end
         end
 
-        bg_map('default', '0')
-        bg_map('1')
-        bg_map('2')
-        bg_map('3')
-        bg_map('4')
-        bg_map('5')
-        bg_map('6')
-        bg_map('7')
-        bg_map('8')
-        bg_map('9')
+        bg_map('default', '0', true)
+        bg_map('bg_1', '1', false)
+        bg_map('bg_2', '2', false)
+        bg_map('bg_3', '3', true)
+        bg_map('bg_4', '4', false)
+        bg_map('bg_5', '5', false)
+        bg_map('bg_6', '6', false)
+        bg_map('bg_7', '7', false)
+        bg_map('bg_8', '8', false)
+        bg_map('bg_9', '9', false)
+
+        vim.keymap.set('n', '<leader><leader>f1', function()
+            wezterm_config.set_wezterm_user_var('profile_font', 'font_1')
+        end, { silent = true, desc = 'Set Wezterm font font_1' })
+        vim.keymap.set('n', '<leader><leader>f2', function()
+            wezterm_config.set_wezterm_user_var('profile_font', 'font_2')
+        end, { silent = true, desc = 'Set Wezterm font font_2' })
+        vim.keymap.set('n', '<leader><leader>f3', function()
+            wezterm_config.set_wezterm_user_var('profile_font', 'font_3')
+        end, { silent = true, desc = 'Set Wezterm font font_3' })
     end,
 }
