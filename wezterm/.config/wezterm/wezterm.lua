@@ -44,7 +44,6 @@ config.background = utils.set_bg()
 -- config.xcursor_theme = 'Bibata-Modern-Ice'
 config.xcursor_theme = 'capitaine-cursors-light'
 config.xcursor_size = 32 -- this works fine
-
 config.font = profile_data.font.font_2
 config.font_size = 12.0
 -- config.use_cap_height_to_scale_fallback_fonts = true -- try to auto-scale fallback font heights
