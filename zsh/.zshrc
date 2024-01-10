@@ -10,7 +10,6 @@ fi
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # laod p10k itself
 #######################
 
-
 export HISTFILE=~/.zsh_history
 export HISTSIZE=1000000
 export SAVEHIST=1000000 # num of commands stored
@@ -21,6 +20,10 @@ export TERM=wezterm # for undercurl supp
 export SHELL=/bin/zsh
 export EDITOR="nvim"
 export VISUAL="nvim"
+export PATH="$HOME/.local/bin:$PATH"
+# export MANPAGER="sh -c 'col -bx | bat -l man -p'" # bat for colorizing pager for man
+export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
+export MANROFFOPT="-P -c" # simple colors
 
 # Java for pyspark
 export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
@@ -30,7 +33,6 @@ export GOPATH=$HOME/go # should already be default
 export GOBIN="$GOPATH/bin" # should also be default
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin # loc of installed binaries
-# export PATH="$HOME/.local/bin:$PATH" # for zoxide and others; don't think needed
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -144,14 +146,17 @@ export FZF_CTRL_R_OPTS="
     --color header:italic
     --header 'CTRL-Y to copy command to clipboard'"
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
+# nvm - removed b/c too slow
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm
+# source /usr/share/nvm/init-nvm.sh # from Arch wiki
+
+# fnm
+eval "$(fnm env --use-on-cd)"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" # from pyenv section on zsh
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm
-source /usr/share/nvm/init-nvm.sh # from Arch wiki
 eval "$(pyenv init -)"
 
 unsetopt beep autocd
