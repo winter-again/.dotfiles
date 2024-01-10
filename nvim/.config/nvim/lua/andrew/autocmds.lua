@@ -1,15 +1,5 @@
 local au_grp = vim.api.nvim_create_augroup('WinterAgain', { clear = true })
 
--- set winbar highlights on any colorscheme set/change
-vim.api.nvim_create_autocmd('ColorScheme', {
-    group = au_grp,
-    pattern = '*',
-    callback = function()
-        vim.api.nvim_set_hl(0, 'WinBar', { fg = '#c0caf5', bg = '#16161e' })
-        vim.api.nvim_set_hl(0, 'WinBarNC', { fg = '#c0caf5', bg = '#16161e' })
-    end,
-})
-
 -- highlight the text you just yanked (visual cue)
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = au_grp,

@@ -5,11 +5,11 @@ return {
         local wezterm_config = require('wezterm-config')
         local function set_bg_colorscheme(bg)
             local mapper = {
-                ['catppuccin'] = { 'bg_3' },
+                -- ['catppuccin'] = { 'bg_3' },
                 ['gruvbox'] = { 'bg_2' },
-                ['kanagawa'] = { 'bg_9' },
-                ['rose-pine'] = { 'bg_6', 'bg_7', 'bg_8' },
-                ['tokyonight'] = { 'bg_1', 'bg_4', 'bg_5' },
+                ['kanagawa'] = { 'bg_5', 'bg_9' },
+                ['rose-pine'] = { 'bg_4', 'bg_6', 'bg_7', 'bg_8' },
+                ['tokyonight'] = { 'bg_1', 'bg_3', 'bg_6' },
             }
             for colorscheme, bgs in pairs(mapper) do
                 for _, b in ipairs(bgs) do
@@ -24,7 +24,7 @@ return {
         end
 
         local function bg_map(bg_profile, key, only_bg)
-            -- only_bg = only_bg or true
+            -- only_bg = only_bg or true -- why doesn't this work as expected/before? I thought the truthiness worked out
             if only_bg == true then
                 -- set just the bg
                 vim.keymap.set('n', '<leader><leader>' .. key, function()
@@ -44,7 +44,7 @@ return {
         bg_map('default', '0', true)
         bg_map('bg_1', '1', false)
         bg_map('bg_2', '2', false)
-        bg_map('bg_3', '3', true)
+        bg_map('bg_3', '3', false)
         bg_map('bg_4', '4', false)
         bg_map('bg_5', '5', false)
         bg_map('bg_6', '6', false)

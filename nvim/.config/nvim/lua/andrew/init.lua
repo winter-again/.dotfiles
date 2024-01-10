@@ -22,6 +22,10 @@ local lazy_opts = {
         enabled = true,
         notify = false,
     },
+    checker = {
+        enabled = true,
+        notify = false,
+    },
     dev = {
         path = '~/Documents/code/nvim-dev',
     },
@@ -29,16 +33,15 @@ local lazy_opts = {
         colorscheme = { 'tokyonight' }, -- try to load one of these colorschemes when starting an installation during startup
     },
 }
-
-require('andrew.globals')
 require('andrew.settings')
 require('andrew.autocmds')
+require('andrew.globals')
+require('andrew.keymaps')
 -- get plugin specs from their individual files in the plugins directory
 -- any file in lua/plugins/*.lua will be merged into the main plugin spec
 require('lazy').setup('plugins', lazy_opts)
-require('andrew.keymaps') -- some of the keymaps defined here rely on plugins
 
 vim.opt.background = 'dark'
 -- vim.cmd('colorscheme winter-again')
-vim.cmd('colorscheme tokyonight')
+vim.cmd('colorscheme rose-pine')
 vim.cmd('Transp')

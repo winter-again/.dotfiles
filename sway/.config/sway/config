@@ -1,12 +1,23 @@
 font pango:Hack Nerd Font Mono 10
-# minimize borders
+# font pango:JetBrains Mono 10
 default_border pixel 2
 default_floating_border pixel 2
-#                       border  bg      text    indic   child_border
-client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9ece6a
-client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261   #3b4261
-client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26   #1a1b26
-client.urgent           #f7768e #f7768e #1a1b26 #f7768e   #f7768e
+titlebar_padding 2
+titlebar_border_thickness 0
+# covers just in sway
+# seat0 is the default seat; seat * would apply to all
+# seat seat0 xcursor_theme phinger-cursors-light 32
+seat seat0 xcursor_theme capitaine-cursors-light 32
+# colors:
+# title bar border
+# title bar background
+# title bar text
+# new view indic
+# view border (entire window)
+client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9d7cd8 #7aa2f7
+client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261 #3b4261
+client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26 #1a1b26
+client.urgent           #f7768e #f7768e #1a1b26 #f7768e #f7768e
 
 input "type:keyboard" {
     xkb_layout us
@@ -58,13 +69,14 @@ set {
 floating_modifier $mod normal
 focus_follows_mouse no
 
-# I think kanshi config replaces this
-# output $laptop_disp disable
+# seems like we have to set this so that layout is correct on Sway start
+# not great since this assumes docked config; I guess could just manually trigger reload
+output $laptop_disp disable
 # following the same conventions from hyprland.conf
-# output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
-# output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
+output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
+output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
 # focus monitor on launch
-# focus output $primary_mon
+focus output $primary_mon
 # first available output will be used
 # so give laptop as fallback
 workspace 1 output $primary_mon $laptop_disp

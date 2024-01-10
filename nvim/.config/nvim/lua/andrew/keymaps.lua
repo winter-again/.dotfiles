@@ -23,17 +23,17 @@ Map('n', '<C-d>', '<C-d>zz', opts, 'Move down w/o dizziness')
 Map('n', '<C-u>', '<C-u>zz', opts, 'Move up w/o dizziness')
 Map('n', 'n', 'nzzzv', opts, 'Center next search result')
 Map('n', 'N', 'Nzzzv', opts, 'Center previous search result')
--- keep cursor at the bottom of selection after yanking it
--- vim.keymap.set('v', 'y', 'ygv<esc>', opts)
-Map('x', '<leader>p', '"_dP', opts, 'Paste w/o losing')
-Map({ 'n', 'v' }, '<leader>y', '"+y', opts, 'Yank w/o losing')
+Map('v', 'y', 'ygv<esc>', opts, 'Keep cursor at end of sel after yank')
+Map('n', '<leader>y', '"+y', opts, 'Yank w/o losing')
+Map('v', '<leader>y', '"+ygv<esc>', opts, 'Keep cursor at end of sel after special yank')
 Map('n', '<leader>Y', '"+Y', opts, 'Yank line w/o losing')
--- delete into clipboard
--- vim.keymap.set({'n', 'v'}, '<leader>d', '"+d')
--- vim.keymap.set({'n', 'v'}, '<leader>D', '"+D')
+Map('x', '<leader>p', '"_dP', opts, 'Paste w/o losing')
 -- paste from clipboard
 -- vim.keymap.set('n', '<leader>p', '"+p')
 -- vim.keymap.set('n', '<leader>P', '"+P')
+-- delete into clipboard
+-- vim.keymap.set({'n', 'v'}, '<leader>d', '"+d')
+-- vim.keymap.set({'n', 'v'}, '<leader>D', '"+D')
 Map({ 'n', 'v' }, '<leader>d', '"_d', opts, 'Delete to black hole register')
 Map('n', 'Q', '<nop>', opts, 'Disable Q')
 -- replace all for the word cursor is on; just delete and start typing the replacement text
@@ -46,10 +46,11 @@ Map('n', '<C-a>', 'gg<S-v>G', opts, 'Select all')
 Map('n', '<Tab>', '<cmd>bnext<CR>', opts, 'Next buffer')
 Map('n', '<S-Tab>', '<cmd>bprev<CR>', opts, 'Previous buffer')
 Map('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>', opts, 'Delete buffer w/o closing window')
+-- nav quickfix list
+Map('n', '<leader>qn', '<cmd>cnext<CR>zz', opts, 'Next quickfixlist')
+Map('n', '<leader>qp', '<cmd>cprev<CR>zz', opts, 'Prev quickfixlist')
 -- with Netrw disabled, use this to follow hyperlinks
 -- vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
--- special
-Map('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }, 'Toggle nvim-tree') -- set here since the plugin is loaded on this command
 Map('n', '<leader><leader>c', '<cmd>close<CR>', opts, 'Close window w/o accidentally quitting')
 Map('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>', opts, 'Save and exec Lua file')
 Map('n', '<leader><leader>t', '<cmd>Transp<CR>', opts, 'Turn on transparency')

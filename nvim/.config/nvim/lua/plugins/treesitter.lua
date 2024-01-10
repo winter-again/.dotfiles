@@ -53,17 +53,34 @@ return {
                 textobjects = {
                     select = {
                         enable = true,
-                        lookahead = true,
+                        -- lookahead = true,
                         keymaps = {
-                            ['af'] = { query = '@function.outer', desc = 'Select outer part of function' },
-                            ['if'] = { query = '@function.inner', desc = 'Select inner part of function' },
-                            ['ac'] = { query = '@class.outer', desc = 'Select outer part of class' },
-                            ['ic'] = { query = '@class.inner', desc = 'Select inner part of class' },
+                            ['af'] = { query = '@function.outer', desc = 'Select around function' },
+                            ['if'] = { query = '@function.inner', desc = 'Select inside function' },
+                            ['ac'] = { query = '@class.outer', desc = 'Select around class' },
+                            ['ic'] = { query = '@class.inner', desc = 'Select inside class' },
+                            -- trying to capture markdown fenced code blocks/content
+                            -- seems to behave incorrectly when there's a Python function defn in the block
+                            -- 'vib' fails to include the function defn. line
+                            -- or at least it behaves strangely dep on cursor loc in the block...
+                            ['ab'] = { query = '@block.outer', desc = 'Select around code block' },
+                            ['ib'] = { query = '@block.inner', desc = 'Select inside code block' },
+                        },
+                    },
+                    move = {
+                        enable = true,
+                        goto_next_start = {
+                            [']b'] = '@block.inner',
+                        },
+                        goto_previous_start = {
+                            ['[b'] = '@block.inner',
                         },
                     },
                 },
                 additional_vim_regex_highlighting = false,
             })
+            Map('n', '<leader>tsp', '<cmd>InspectTree<CR>', { silent = true }, 'Show parsed syntax tree')
+            Map('n', '<leader>tsh', '<cmd>Inspect<CR>', { silent = true }, 'Show highlight groups under cursor')
         end,
     },
     {

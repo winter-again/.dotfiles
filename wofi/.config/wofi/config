@@ -1,6 +1,6 @@
 width=25%
 halign=fill
-matching=fuzzy
+matching=contains
 insensitive=true
 key_up=Control_L-p
 key_down=Control_L-n

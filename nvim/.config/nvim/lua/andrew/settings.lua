@@ -12,7 +12,6 @@ opt.winbar = '%{%v:lua.Winbar()%}'
 -- opt.pumblend = 35
 opt.wildignore = '__pycache__'
 opt.wildignore:append({ '*.pyc', '*pycache*' })
-
 opt.mouse = 'a' -- enable mouse mode always
 opt.equalalways = false -- don't reset window sizes after closing one
 opt.showmode = false -- don't show mode in status line
@@ -39,7 +38,6 @@ opt.wrap = false -- no line wrapping
 opt.incsearch = true -- show search result while typing the search term
 opt.termguicolors = true -- nice colors
 opt.scrolloff = 4 -- always keep at least this number of lines above/below the cursor when scrolling
--- opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show
 -- vim.opt.clipboard = 'unnamedplus' -- makes all yanking use clipboard
 opt.updatetime = 1000 -- faster updatetime for triggering plugins; default is 4000 ms
 -- settings for which-key plugin
@@ -48,11 +46,14 @@ opt.laststatus = 3 -- global statusline
 -- menuone = use menu also when there is only one match
 -- noselect = don't preselect
 opt.completeopt = 'menuone,noselect'
+-- opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show; does statuscol conflict with this?
 -- settings for folding, which is handled by nvim-ufo plugin
-opt.foldcolumn = '1'
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-opt.foldenable = true
-opt.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
+opt.foldenable = false
+-- opt.foldmethod = 'manual'
+-- opt.foldcolumn = '1'
+-- opt.foldlevel = 99
+-- opt.foldlevelstart = 99
+-- opt.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
+opt.fillchars:append({ eob = ' ' })
 -- what gets saved in sessions
 opt.sessionoptions = 'buffers,curdir,folds,globals,winpos,winsize'
