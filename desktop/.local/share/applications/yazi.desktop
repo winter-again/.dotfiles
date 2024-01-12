@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=yazi
+Type=Application
+Exec=wezterm start --always-new-process -- /usr/bin/yazi
