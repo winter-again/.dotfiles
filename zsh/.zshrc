@@ -50,7 +50,7 @@ alias rm="rm -i"
 alias grep="grep --color=auto"
 alias tv="tidy-viewer"
 alias keys="bash ~/.local/bin/keyboard-settings.sh"
-alias neofetch="fastfetch"
+alias ffetch="fastfetch"
 alias R="R --no-save" # never prompt to save workspace image
 # for starting rstudio with flags for Wayland; shouldn't need this now that the .desktop file works
 # alias rstd="/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland &"
@@ -126,7 +126,8 @@ bk() {
 # fzf
 source /usr/share/fzf/key-bindings.zsh # fzf keybinds
 source /usr/share/fzf/completion.zsh # fzf fuzzy completion
-export FZF_DEFAULT_OPTS="--height 50% --layout=reverse --border=rounded --preview 'bat --theme=base16 --color=always {}' --preview-window '50%'
+export FZF_DEFAULT_OPTS="--height 50% --layout=reverse
+    --border=rounded --preview 'bat --theme=base16 --color=always {}' --preview-window '50%' --preview-window noborder
     --color=fg:#c0caf5,bg:#1a1b26,hl:#bb9af7
 	--color=fg+:#c0caf5,bg+:#292e42,hl+:#7dcfff
 	--color=info:#ff9e64,prompt:#7dcfff,pointer:#c0caf5

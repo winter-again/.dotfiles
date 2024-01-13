@@ -80,7 +80,7 @@ tooltip {
 
 #mpris {
     color: #1db954;
-    margin-left: 60px;
+    margin-left: 100px;
 }
 
 #custom-media {
@@ -104,7 +104,7 @@ tooltip {
 }
 
 #custom-weather {
-    margin-right: 40px;
+    margin-right: 12px;
 }
 
 #window,
