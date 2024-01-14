@@ -160,8 +160,8 @@ export FZF_DEFAULT_OPTS="--height 40%
     --preview 'bat --theme=base16 --color always {}'
     --no-separator
     --preview-window '50%'
-    --color=fg:#c0caf5,bg:-1,hl:#9d7cd8
-	--color=fg+:#c0caf5,bg+:#283457,hl+:#7dcfff
+    --color=fg:#c0caf5,bg:-1,hl:underline:#9d7cd8 \
+    --color=fg+:#c0caf5,bg+:#283457,hl+:underline:#7dcfff \
 	--color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5
 	--color=marker:#9ece6a,spinner:#9ece6a
     --color=gutter:-1,border:#7aa2f7,header:-1
