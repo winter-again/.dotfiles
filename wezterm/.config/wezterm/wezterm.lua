@@ -1,4 +1,7 @@
 local wezterm = require('wezterm')
+local profile_data = require('profile_data')
+local utils = require('utils')
+
 local config = {}
 
 -- trying this since it's technically using the dGPU now; unsure of whether one is clearly better
@@ -36,9 +39,7 @@ config.colors = {
     },
 }
 
-local profile_data = require('profile_data')
-local utils = require('utils')
-config.background = utils.set_bg(7)
+config.background = utils.set_bg('7_1')
 
 -- this needs explicit setting if not the default
 -- config.xcursor_theme = 'Bibata-Modern-Ice'
