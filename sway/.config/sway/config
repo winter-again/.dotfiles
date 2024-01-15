@@ -104,7 +104,8 @@ bindsym {
     $mod+n exec swaync-client -t -sw
     # power menu
     $mod+Shift+p exec ~/.config/wofi/power-menu.sh
-    $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
+    # $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
+    $mod+Shift+comma exec gtklock -s ~/.config/gtklock/style.css -t '%Y %b %d - %I:%m %p'
     $mod+Shift+period exec systemctl suspend
     # screenshot to clipboard
     $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
