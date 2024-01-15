@@ -83,12 +83,21 @@ tooltip {
     margin-left: 100px;
 }
 
-#custom-media {
+#custom-spotify {
     color: #1db954;
-    margin-left: 60px;
+    margin-left: 100px;
 }
 
+#custom-spotify.paused {
+    color: #c0caf5;
+}
+
+/* #custom-weather_wttr { */
+/*     margin-left: 100px; */
+/* } */
+
 #custom-weather,
+/* #custom-weather_wttr, */
 #clock,
 #battery,
 #cpu,
