@@ -19,22 +19,16 @@ return {
                 .. version.patch
             local plugins_tot = lazy_stats.count -- total number of plugins
 
-            local Checker = require('lazy.manage.checker')
-            local updates = 0
-            if require('lazy.status').has_updates() == true then
-                updates = #Checker.updated
-            end
+            -- local Checker = require('lazy.manage.checker')
+            -- local updates = 0
+            -- if require('lazy.status').has_updates() == true then
+            --     updates = #Checker.updated
+            -- end
 
-            return '󱛡 '
-                .. date_time
-                .. ' | '
-                .. version_info
-                .. ' | '
-                .. ' '
-                .. plugins_tot
-                .. ' plugins ['
-                .. updates
-                .. ']'
+            return '󱛡 ' .. date_time .. ' | ' .. version_info .. ' | ' .. ' ' .. plugins_tot
+            -- .. ' plugins ['
+            -- .. updates
+            -- .. ']'
         end
 
         -- local function buttons()
