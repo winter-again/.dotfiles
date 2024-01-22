@@ -221,7 +221,7 @@ exec {
     nm-applet
     solaar -w hide
     spotify-launcher
-    # for xwayland
+    # for xwayland, maybe also for nsxiv
     # xrdb -load ~/.Xresources
 }
 
