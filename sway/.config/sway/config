@@ -37,6 +37,7 @@ input "type:touchpad" {
 }
 
 # tokyonight bg_dark
+# I guess this needs swaybg to work
 output * bg #16161e solid_color
 
 set {

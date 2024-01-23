@@ -187,6 +187,9 @@ export FZF_CTRL_R_OPTS="
 # source /usr/share/nvm/init-nvm.sh # from Arch wiki
 
 # fnm
+# `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
+# `--version-file-strategy=recursive` might also make sense; default is local
+# using both = auto use/install the right Node version when going into proj subdirs and moving between proj
 eval "$(fnm env --use-on-cd)"
 
 # pyenv

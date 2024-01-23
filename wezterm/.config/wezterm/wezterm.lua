@@ -1,5 +1,5 @@
 local wezterm = require('wezterm')
-local profile_data = require('profile_data')
+local profile_data = require('lua.profile_data')
 local utils = require('utils')
 
 local config = {}
@@ -8,6 +8,7 @@ local config = {}
 -- local gpus = wezterm.gui.enumerate_gpus()
 -- config.webgpu_preferred_adapter = gpus[2]
 -- config.front_end = 'WebGpu'
+-- config.warn_about_missing_glyphs = false
 config.front_end = 'OpenGL'
 config.audible_bell = 'Disabled'
 config.default_prog = { '/usr/bin/zsh' }
@@ -39,18 +40,12 @@ config.colors = {
     },
 }
 
-config.background = utils.set_bg('5')
-
+config.background = utils.set_bg('7')
 -- this needs explicit setting if not the default
--- config.xcursor_theme = 'Bibata-Modern-Ice'
 config.xcursor_theme = 'capitaine-cursors-light'
 config.xcursor_size = 32 -- this works fine
-config.font = profile_data.font.font_4
+config.font = utils.set_font('1')
 config.font_size = 12.0
--- config.use_cap_height_to_scale_fallback_fonts = true -- try to auto-scale fallback font heights
--- config.font = profile_data.font.font_2.font
--- config.font_size = profile_data.font.font_2.font_size
--- config.font, config.font_size = utils.set_font('font_1')
 
 config.hide_tab_bar_if_only_one_tab = true
 config.freetype_load_flags = 'NO_HINTING' -- use this to keep curly braces {} nicely aligned

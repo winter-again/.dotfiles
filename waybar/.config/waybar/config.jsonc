@@ -38,8 +38,8 @@
         "format": "<span font='12' rise='100'>{status_icon}</span> <span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
         "tooltip-format": "Album: \"{album}\" [{position} / {length}]",
         "status-icons": {
-            "playing": "⏸",
-            "paused": "▶"
+            "playing": "󰏤",
+            "paused": "󰐊"
         },
         // max len for title before truncating
         "title-len": 50,
@@ -54,8 +54,8 @@
         "max-length": 50,
         "escape": true, // this seems crucial for displaying
         // "format-icons": {
-        //     "Playing": "⏸",
-        //     "Paused": "▶"
+        //     "Playing": "󰏤",
+        //     "Paused": "󰐊"
         // },
         "on-click": "playerctl --player=spotify play-pause",
         "on-click-right": "pkill spotify",
