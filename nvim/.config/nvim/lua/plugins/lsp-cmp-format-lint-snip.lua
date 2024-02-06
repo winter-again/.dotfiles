@@ -59,6 +59,7 @@ return {
                 debounce_hours = 24,
                 ensure_installed = {
                     'black',
+                    'flake8',
                     'isort',
                     'prettierd',
                     'sqlfluff',
@@ -465,7 +466,8 @@ return {
                 javascriptreact = { 'eslint' },
                 typescript = { 'eslint' },
                 typescriptreact = { 'eslint' },
-                markdown = {}, -- disables default linting
+                markdown = {}, -- disables default linting?
+                -- python = { 'flake8' },
             }
 
             -- autocommand that triggers linting

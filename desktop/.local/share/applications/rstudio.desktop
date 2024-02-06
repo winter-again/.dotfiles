@@ -1,5 +1,6 @@
 [Desktop Entry]
-Exec=/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland %F
+# Exec=/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland %F
+Exec=/usr/lib/rstudio/rstudio --disable-gpu --ozone-platform-hint=auto %F
 Icon=rstudio
 Type=Application
 Terminal=false
