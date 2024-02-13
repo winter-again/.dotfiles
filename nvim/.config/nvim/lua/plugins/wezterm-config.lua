@@ -1,13 +1,10 @@
 return {
     'winter-again/wezterm-config.nvim',
     -- dev = true,
+    branch = 'read-profile-data-directly',
     config = function()
-        -- NOTE:
-        -- this adds to rtp and lets us pull in modules under ~/.config/wezterm/lua/
-        -- any bad consequences of this?
         local wezterm_config = require('wezterm-config')
-        local wezterm_path = vim.fn.stdpath('config'):gsub('nvim', 'wezterm') -- not the most general way of doing this...
-        vim.opt.rtp:append(wezterm_path)
+        wezterm_config.setup({})
         local profile_data = require('profile_data')
 
         vim.api.nvim_create_user_command('Bg', function(opts)

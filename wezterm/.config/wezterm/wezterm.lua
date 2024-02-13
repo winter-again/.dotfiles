@@ -41,7 +41,7 @@ config.colors = {
     },
 }
 
-config.background = utils.set_bg('7')
+config.background = utils.set_bg('10')
 -- this needs explicit setting if not the default
 config.xcursor_theme = 'capitaine-cursors-light'
 config.xcursor_size = 32 -- this works fine
