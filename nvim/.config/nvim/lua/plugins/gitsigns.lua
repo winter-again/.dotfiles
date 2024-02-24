@@ -56,7 +56,7 @@ return {
                 vim.keymap.set('n', '<leader>ghp', gs.preview_hunk, opts)
             end,
             preview_config = {
-                border = 'rounded',
+                border = 'none',
             },
         })
     end,

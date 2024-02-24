@@ -1,7 +1,6 @@
 return {
     'winter-again/wezterm-config.nvim',
     -- dev = true,
-    branch = 'read-profile-data-directly',
     config = function()
         local wezterm_config = require('wezterm-config')
         wezterm_config.setup({})
@@ -26,7 +25,7 @@ return {
         local function set_bg_colorscheme(bg)
             local mapper = {
                 ['tokyonight'] = { 'bg_1', 'bg_4' },
-                ['rose-pine'] = { 'bg_5', 'bg_5_1', 'bg_6', 'bg_7', 'bg_7_1', 'bg_9', 'bg_10' },
+                ['rose-pine'] = { 'bg_5', 'bg_5_1', 'bg_6', 'bg_7', 'bg_7_1', 'bg_9', 'bg_10', 'bg_10_1', 'bg_11' },
                 ['catppuccin'] = { 'bg_3' },
                 ['kanagawa'] = { 'bg_8' },
                 ['gruvbox'] = { 'bg_2' },

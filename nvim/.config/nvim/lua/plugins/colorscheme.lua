@@ -17,7 +17,7 @@ return {
                 end,
                 on_highlights = function(highlights, colors)
                     highlights['WinBar'] = { bg = 'none', italic = true }
-                    highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
+                    -- highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
                     highlights['LineNr'] = { fg = '#696d87' } -- line number color
                     highlights['CursorLineNr'] = { fg = colors.fg } -- cursor line number color
                     highlights['TelescopeSelection'] = { bg = colors.bg_visual }
@@ -57,7 +57,7 @@ return {
                     local theme = colors.theme
                     return {
                         WinSeparator = { fg = theme.ui.nontext },
-                        Visual = { reverse = true },
+                        -- Visual = { reverse = true },
                         Winbar = { bg = 'none', italic = true },
                         WinbarNC = { bg = 'none', italic = true },
                         DiagnosticUnderlineError = { underdotted = true },
@@ -84,7 +84,7 @@ return {
                         TreesitterContextLineNumber = { bg = 'none' },
                         WinSeparator = { fg = colors.surface2 },
                         LineNr = { fg = colors.surface2 },
-                        Visual = { reverse = true },
+                        -- Visual = { reverse = true },
                         WinBar = { bg = 'none', italic = true },
                         DiagnosticUnderlineError = { underdotted = true },
                         DiagnosticUnderlineWarn = { underdotted = true },
@@ -139,7 +139,7 @@ return {
                 },
                 highlight_groups = {
                     TreesitterContext = { bg = 'foam', blend = 10 },
-                    Visual = { reverse = true },
+                    -- Visual = { reverse = true },
                     WinBar = { bg = 'none', italic = true },
                     WinSeparator = { fg = 'muted', bg = 'none' },
                     -- for transparency, otherwise bg remains in signcolumn
@@ -210,7 +210,7 @@ return {
             require('nordic').setup({
                 override = {
                     WinSeparator = { fg = palette.white0, bg = 'none' },
-                    Visual = { reverse = true },
+                    -- Visual = { reverse = true },
                     GitSignsAdd = { bg = 'none' },
                     GitSignsDelete = { bg = 'none' },
                     GitSignsChange = { bg = 'none' },

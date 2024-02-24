@@ -16,7 +16,7 @@ vim.g.maplocalleader = ' '
 -- config lazy.nvim itself
 local lazy_opts = {
     ui = {
-        border = 'rounded',
+        border = 'none',
     },
     change_detection = {
         enabled = true,
