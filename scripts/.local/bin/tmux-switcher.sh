@@ -18,7 +18,7 @@ tmux_switcher() {
             --no-multi \
             -p 80%,60% \
             --prompt=" Sessions: " \
-            --header $'\e[1;34m<tab>\e[m: common dirs / \e[1;34m<shift-tab>\e[m: sessions' \
+            --header $'\e[1;34m<tab>\e[m: common dirs / \e[1;34m<shift-tab>\e[m: sessions /\n\e[1;34m<ctrl-k>\e[m: kill session' \
             --bind "tab:change-preview-window(hidden)+change-prompt( Common dirs: )+reload(fd . ~/Documents/Bansal-lab ~/Documents/code ~/Documents/code/nvim-dev --min-depth 1 --max-depth 1 --type d)" \
             --bind "shift-tab:preview(~/.local/bin/tmux-switcher-preview.sh {})+change-prompt( Sessions)+reload(tmux list-sessions -F '#{session_name}')" \
             --bind "ctrl-k:execute(tmux kill-session -t {})+reload(tmux list-sessions -F '#{session_name}')" \
