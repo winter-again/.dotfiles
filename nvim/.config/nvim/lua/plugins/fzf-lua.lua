@@ -1,13 +1,18 @@
 return {
     'ibhagwan/fzf-lua',
-    keys = { '<leader>fzf', '<leader>fk', '<leader>fc' },
+    keys = {
+        '<leader>ff',
+        '<leader>fzf',
+        '<leader>fk',
+        '<leader>fc',
+    },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-        require('fzf-lua').setup({
-            -- 'telescope',
-        })
+        local actions = require('fzf-lua.actions')
+        require('fzf-lua').setup({})
         local opts = { silent = true }
-        Map('n', '<leader>fzf', '<cmd>lua require("fzf-lua").files()<CR>', opts, 'fzf-lua')
+        -- Map('n', '<leader>fzf', '<cmd>lua require("fzf-lua").files()<CR>', opts, 'fzf-lua')
+        Map('n', '<leader>ff', '<cmd>lua require("fzf-lua").files()<CR>', opts, 'fzf-lua')
         Map('n', '<leader>fzl', '<cmd>lua require("fzf-lua").buffers()<CR>', opts, 'fzf-lua')
         Map('n', '<leader>fzs', function()
             require('fzf-lua').live_grep_glob({

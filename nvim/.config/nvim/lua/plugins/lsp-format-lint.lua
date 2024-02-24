@@ -15,7 +15,6 @@ return {
             -- 3) mason-tool-installer.nvim
             -- 4) lspconfig server setup -> I opt to use something from mason-lspconfig instead
             require('neodev').setup() -- neodev needs to be setup BEFORE lspconfig
-            -- (1)
             require('mason').setup({
                 ui = {
                     -- border = 'solid',
@@ -26,8 +25,6 @@ return {
                     },
                 },
             })
-
-            -- (2)
             require('mason-lspconfig').setup({
                 ensure_installed = {
                     'ansiblels',
@@ -52,8 +49,6 @@ return {
                 },
                 automatic_installation = false,
             })
-
-            -- (3)
             require('mason-tool-installer').setup({
                 auto_update = true,
                 debounce_hours = 24,
@@ -67,7 +62,6 @@ return {
                     -- 'yamlfix',
                 },
             })
-
             -- (4) see docs: https://github.com/williamboman/mason-lspconfig.nvim/blob/09be3766669bfbabbe2863c624749d8da392c916/doc/mason-lspconfig.txt#L157
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()

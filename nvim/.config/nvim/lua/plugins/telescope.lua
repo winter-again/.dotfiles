@@ -27,6 +27,22 @@ return {
             table.insert(vimgrep_arguments, '--glob')
             table.insert(vimgrep_arguments, '!**/node_modules/*')
 
+            -- workaround for opening multiple files
+            -- from: https://github.com/nvim-telescope/telescope.nvim/issues/1048#issuecomment-1679797700
+            local function select_one_or_multi(prompt_bufnr)
+                local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+                local multi = picker:get_multi_selection()
+                if not vim.tbl_isempty(multi) then
+                    require('telescope.actions').close(prompt_bufnr)
+                    for _, j in pairs(multi) do
+                        if j.path ~= nil then
+                            vim.cmd(string.format('%s %s', 'edit', j.path))
+                        end
+                    end
+                else
+                    require('telescope.actions').select_default(prompt_bufnr)
+                end
+            end
             require('telescope').setup({
                 defaults = {
                     vimgrep_arguments = vimgrep_arguments,
@@ -34,6 +50,11 @@ return {
                     layout_config = {
                         horizontal = {
                             prompt_position = 'top',
+                        },
+                    },
+                    mappings = {
+                        i = {
+                            ['<CR>'] = select_one_or_multi,
                         },
                     },
                 },
@@ -79,7 +100,7 @@ return {
             local builtin = require('telescope.builtin')
             local opts = { silent = true }
             -- use '<leader>ff' to find among ALL files; respects .gitignore
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
+            -- vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
             -- use '<leader>fg' to find among git files; again respects .gitignore
             vim.keymap.set('n', '<leader>fgc', builtin.git_commits, opts)
             vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, opts)
