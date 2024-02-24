@@ -41,7 +41,6 @@ require('andrew.keymaps')
 -- any file in lua/plugins/*.lua will be merged into the main plugin spec
 require('lazy').setup('plugins', lazy_opts)
 
-vim.opt.background = 'dark'
 -- vim.cmd('colorscheme winter-again')
-vim.cmd('colorscheme rose-pine')
+vim.cmd('colorscheme catppuccin')
 vim.cmd('Transp')

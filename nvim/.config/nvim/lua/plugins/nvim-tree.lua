@@ -11,6 +11,7 @@ return {
             hijack_netrw = true,
             hijack_cursor = true, -- keep cursor on first letter of file when moving
             view = {
+                -- side = 'right',
                 -- preserve_window_proportions = true,
                 float = {
                     enable = true,
@@ -19,7 +20,9 @@ return {
                         relative = 'editor',
                         border = 'rounded',
                         width = 30,
-                        height = 50,
+                        height = 40,
+                        row = 0,
+                        col = 170, -- on right side; otherwise default is 1 for left side
                     },
                 },
             },

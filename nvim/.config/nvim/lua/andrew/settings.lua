@@ -4,6 +4,7 @@
 
 local opt = vim.opt
 
+opt.background = 'dark'
 -- opt.guicursor = '' -- disable cursor change on mode change
 opt.winbar = '%{%v:lua.Winbar()%}'
 -- (pseudo)transparency for cmp menu (0 = fully opaque, 100 = fully transparent)
