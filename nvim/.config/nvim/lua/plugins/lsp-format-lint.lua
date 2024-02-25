@@ -86,11 +86,19 @@ return {
                     vim.diagnostic.open_float({ scope = 'line' })
                 end, opts, 'Get line diagnostics')
                 Map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Telescope LSP defns.')
+                Map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
                 Map('n', 'gr', require('telescope.builtin').lsp_references, opts, 'Telescope LSP refs.')
-                Map('n', 'gi', require('telescope.builtin').lsp_implementations, opts, 'Telescope find impls.')
-                Map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up
+                Map('n', 'gI', require('telescope.builtin').lsp_implementations, opts, 'Telescope find impls.')
                 Map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, opts, 'Telescope type defns.')
                 Map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, opts, 'Telescope doc symbols')
+                Map(
+                    'n',
+                    '<leader>ws',
+                    require('telescope.builtin').lsp_dynamic_workspace_symbols,
+                    opts,
+                    'Telescope workspace symbols'
+                )
+                Map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up from LspSaga
                 Map(
                     'n',
                     '<leader>ws',
@@ -158,7 +166,11 @@ return {
                                     globals = { 'vim' },
                                 },
                                 workspace = {
-                                    library = vim.api.nvim_get_runtime_file('', true),
+                                    -- library = vim.api.nvim_get_runtime_file('', true),
+                                    library = {
+                                        '${3rd}/luv/library',
+                                        unpack(vim.api.nvim_get_runtime_file('', true)),
+                                    },
                                     checkThirdParty = false,
                                 },
                                 telemetry = {
@@ -180,6 +192,7 @@ return {
                             local root_pattern = require('lspconfig').util.root_pattern(
                                 'tailwind.config.cjs',
                                 'tailwind.config.js',
+                                'tailwind.config.mjs',
                                 'postcss.config.js'
                             )
                             return root_pattern(fname)
