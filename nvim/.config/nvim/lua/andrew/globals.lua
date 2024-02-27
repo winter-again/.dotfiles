@@ -75,7 +75,10 @@ function Winbar()
         return '- [' .. vim.fn.wordcount().words .. ' W]'
     end
 
-    local file_path = vim.api.nvim_eval_statusline('%f', {}).str
+    -- %f = path, as typed ore relative to current dir
+    -- %n = buf number
+    local file_path_bufnr = vim.api.nvim_eval_statusline('%f - [%n]', {}).str
+    -- %m = modified flag, text is '[+]' and '[-]' if modifiable is off
     local mod = vim.api.nvim_eval_statusline('%m', {}).str
     local buftype = vim.bo.filetype
     local exclude = {
@@ -86,7 +89,7 @@ function Winbar()
         return ''
     end
     if buftype == 'markdown' then
-        return string.format('%s %s %s', file_path, word_count(), mod)
+        return string.format('%s %s %s', file_path_bufnr, word_count(), mod)
     end
-    return string.format('%s %s', file_path, mod)
+    return string.format('%s %s', file_path_bufnr, mod)
 end

@@ -98,6 +98,11 @@ ww() {
 # wezterm logs appear here
 wez_logs() {
     cd /run/user/1000/wezterm
+    ls
+}
+wez_plugins() {
+    cd ~/.local/share/wezterm/plugins
+    ls
 }
 dots() {
     cd ~/.dotfiles
