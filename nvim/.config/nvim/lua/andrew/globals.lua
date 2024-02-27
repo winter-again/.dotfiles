@@ -1,19 +1,24 @@
--- helpful for displaying Lua table contents (from TJ)
-function P(v)
-    print(vim.print(v))
-    return v
+---Pretty print Lua table and its id (from TJ)
+---@param tbl table
+---@return table
+function P(tbl)
+    print(vim.print(tbl))
+    return tbl
 end
 
+---Make lazy.nvim reload given plugin
+---@param plugin string
 function R(plugin)
     vim.cmd('Lazy reload ' .. plugin)
 end
 
--- save and execute lua file for quick iterating
+---Save and execute lua file for quick iterating
 function Save_exec()
     vim.cmd('silent! write')
     vim.cmd('luafile %')
 end
 
+---Set custom transparency settings
 function Transp()
     local highlights = {
         'Normal',
@@ -48,16 +53,27 @@ vim.api.nvim_create_user_command('ToggleLightDark', function()
     Toggle_light_dark()
 end, { desc = 'Toggle light/dark mode' })
 
+---Convenience function for setting a highlight group in current buf
+---@param group string
+---@param hl table
 function Hl(group, hl)
     vim.api.nvim_set_hl(0, group, hl)
 end
 
+---Convenience function for setting keymap with a description
+---@param mode string
+---@param lhs string
+---@param rhs string | function
+---@param opts table
+---@param desc string
 function Map(mode, lhs, rhs, opts, desc)
     opts = opts or {}
     opts.desc = desc
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+---Custom function for setting winbar info
+---@return string
 function Winbar()
     -- https://github.com/chrisgrieser/.config/blob/8af1841ba24f7c81c513e12f853b52f530ef5b37/nvim/lua/plugins/lualine.lua
     -- local function Sel_count()

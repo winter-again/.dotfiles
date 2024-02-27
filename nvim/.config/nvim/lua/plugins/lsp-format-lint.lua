@@ -58,6 +58,7 @@ return {
                     'isort',
                     'prettierd',
                     'sqlfluff',
+                    'selene',
                     'stylua',
                     -- 'yamlfix',
                 },
@@ -369,6 +370,7 @@ return {
         event = { 'BufReadPre', 'BufNewFile' },
         config = function()
             require('lint').linters_by_ft = {
+                lua = { 'selene' },
                 javascript = { 'eslint' },
                 javascriptreact = { 'eslint' },
                 typescript = { 'eslint' },

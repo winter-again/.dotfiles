@@ -151,6 +151,10 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     -- otherwise empty table
     local overrides = window:get_config_overrides() or {}
     -- START of where user would use wezterm plugin API
+    -- NOTE: this is a workaround for when value is still a profile_data background table key
+    if string.find(value, 'bg_') then
+        value = wezterm.json_encode(profile_data.background[value])
+    end
     overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
     -- utils.log_overrides(value, overrides)
     -- END
