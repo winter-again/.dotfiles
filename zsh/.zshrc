@@ -18,6 +18,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export PATH="$HOME/.local/bin:$PATH"
+# for custom nvim install location
+# export PATH="$HOME/neovim/bin:$PATH"
 export TERM=wezterm # for undercurl supp
 export SHELL=/bin/zsh
 export EDITOR="nvim"

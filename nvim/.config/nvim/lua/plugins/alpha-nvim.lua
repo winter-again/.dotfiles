@@ -4,53 +4,37 @@ return {
     config = function()
         local alpha = require('alpha')
         local dashboard = require('alpha.themes.dashboard')
-        local lazy_stats = require('lazy').stats()
-        local devicons = require('nvim-web-devicons')
-
         local function header()
-            local date_time = os.date('%Y-%m-%d (%a) %I:%M %p')
             local version = vim.version()
-            local version_info = devicons.get_icon_by_filetype('vim')
-                .. ' v'
-                .. version.major
-                .. '.'
-                .. version.minor
-                .. '.'
-                .. version.patch
-            local plugins_tot = lazy_stats.count -- total number of plugins
-
-            -- local Checker = require('lazy.manage.checker')
-            -- local updates = 0
-            -- if require('lazy.status').has_updates() == true then
-            --     updates = #Checker.updated
-            -- end
-
-            return '󱛡 ' .. date_time .. ' | ' .. version_info .. ' | ' .. ' ' .. plugins_tot
-            -- .. ' plugins ['
-            -- .. updates
-            -- .. ']'
+            local version_info = string.format(
+                ' v%s.%s.%s-%s+%s',
+                version.major,
+                version.minor,
+                version.patch,
+                version.prerelease,
+                version.build
+            )
+            return { version_info }
         end
-
-        -- local function buttons()
-        --     return {
-        --         dashboard.button('SPC pv', '󰙅  Toggle file tree'),
-        --         -- dashboard.button('SPC fr', '  Recent files'),
-        --         dashboard.button('SPC pr', '  Restore last local session'),
-        --         -- dashboard.button('SPC fp', '  Find session'),
-        --         dashboard.button('SPC ff', '  Find file'),
-        --         dashboard.button('SPC fs', '  Find string in cwd'),
-        --     }
-        -- end
-
         dashboard.section.header.val = header()
-        -- dashboard.section.buttons.val = buttons()
-
         dashboard.config.layout = {
             { type = 'padding', val = 3 },
             dashboard.section.header,
-            { type = 'padding', val = 5 },
-            -- dashboard.section.buttons,
+            { type = 'padding', val = 1 },
+            dashboard.section.footer,
         }
         alpha.setup(dashboard.opts)
+
+        -- print lazy.nvim stats to alpha buffer
+        vim.api.nvim_create_autocmd('User', {
+            group = vim.api.nvim_create_augroup('WinterAgain', { clear = false }),
+            callback = function()
+                local stats = require('lazy').stats()
+                local ms = math.floor(stats.startuptime * 100) / 100
+                dashboard.section.footer.val =
+                    string.format(' Loaded %d / %d plugins in %.3f ms', stats.loaded, stats.count, ms)
+                vim.cmd([[AlphaRedraw]])
+            end,
+        })
     end,
 }

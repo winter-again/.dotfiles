@@ -2,7 +2,7 @@
 
 tokyonight_fg="#c0caf5"
 tokyonight_blue="#7aa2f7"
-tokyonight_purple="#9D7CD8"
+tokyonight_purple="#9d7cd8"
 
 default=("default") # hard-coded value
 grep_res=$(cat ~/.dotfiles/wezterm/.config/wezterm/lua/profile_data.lua | grep -oE "bg_[0-9]+(_[0-9]+)?")

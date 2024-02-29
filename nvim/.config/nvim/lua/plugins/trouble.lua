@@ -5,8 +5,21 @@ return {
         require('trouble').setup({
             use_diagnostic_signs = true,
         })
-        vim.keymap.set('n', '<leader>tt', '<cmd>TroubleToggle<CR>', { silent = true })
-        vim.keymap.set('n', '<leader>tw', '<cmd>TroubleToggle workspace_diagnostics<CR>', { silent = true })
-        vim.keymap.set('n', '<leader>td', '<cmd>TroubleToggle document_diagnostics<CR>', { silent = true })
+        local opts = { silent = true }
+        Map('n', '<leader>tt', '<cmd>TroubleToggle<CR>', opts, 'Toggle Trouble')
+        Map(
+            'n',
+            '<leader>tw',
+            '<cmd>TroubleToggle workspace_diagnostics<CR>',
+            opts,
+            'Toggle Trouble workspace diagnostics'
+        )
+        Map(
+            'n',
+            '<leader>td',
+            '<cmd>TroubleToggle document_diagnostics<CR>',
+            opts,
+            'Toggle Trouble document diagnostics'
+        )
     end,
 }
