@@ -70,10 +70,10 @@ return {
                     move = {
                         enable = true,
                         goto_next_start = {
-                            [']b'] = '@block.inner',
+                            [']b'] = '@block.outer',
                         },
                         goto_previous_start = {
-                            ['[b'] = '@block.inner',
+                            ['[b'] = '@block.outer',
                         },
                     },
                 },

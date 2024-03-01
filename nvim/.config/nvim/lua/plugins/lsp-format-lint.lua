@@ -332,6 +332,11 @@ return {
                     python = { 'isort', 'black' }, -- run sequentially
                     typescript = { 'prettierd' },
                     typescriptreact = { 'pretterd' },
+                    sql = { 'sqlfluff' },
+                    -- 'injected' allows formatting of code fence blocks
+                    -- could even have it in python to format sql inside of queries
+                    -- see: https://github.com/stevearc/conform.nvim/blob/c36fc6492be27108395443a67bcbd2b3280f29c5/doc/advanced_topics.md
+                    -- markdown = { 'injected' },
                 },
                 format_on_save = function(bufnr)
                     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
