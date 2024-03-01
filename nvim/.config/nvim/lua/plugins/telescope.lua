@@ -49,6 +49,35 @@ return {
                     require('telescope.actions').select_default(prompt_bufnr)
                 end
             end
+
+            -- from:
+            -- https://github.com/nvim-telescope/telescope.nvim/issues/2874#issuecomment-1900967890
+            -- use <C-h> to toggle finding on .gitignore'd files
+            local function my_ff(opts, no_ignore)
+                opts = opts or {}
+                no_ignore = vim.F.if_nil(no_ignore, false)
+                opts.attach_mappings = function(_, map)
+                    map({ 'n', 'i' }, '<C-h>', function(prompt_bufnr) -- <C-h> to toggle modes
+                        local prompt = require('telescope.actions.state').get_current_line()
+                        require('telescope.actions').close(prompt_bufnr)
+                        no_ignore = not no_ignore
+                        my_ff({ default_text = prompt }, no_ignore)
+                    end)
+                    return true
+                end
+
+                if no_ignore then
+                    opts.no_ignore = true
+                    opts.hidden = true
+                    opts.prompt_title = 'Find Files <ALL>'
+                    require('telescope.builtin').find_files(opts)
+                else
+                    opts.prompt_title = 'Find Files'
+                    require('telescope.builtin').find_files(opts)
+                end
+            end
+
+            -- local fb_actions = require('telescope._extensions.file_browser.actions')
             require('telescope').setup({
                 defaults = {
                     vimgrep_arguments = vimgrep_arguments,
@@ -89,15 +118,26 @@ return {
                         side_by_side = true,
                         layout_strategy = 'vertical',
                         layout_config = {
-                            preview_height = 0.8,
+                            preview_height = 0.5,
                         },
                     },
                     file_browser = {
                         hijack_netrw = true,
+                        -- hidden = { file_browser = true, folder_browser = true },
+                        respect_gitignore = false,
+                        depth = 4,
+                        autodepth = 4,
+                        -- mappings = {
+                        --     -- defaults; just for ref
+                        --     ['i'] = {
+                        --         ['<C-h'] = fb_actions.toggle_hidden,
+                        --     },
+                        -- },
                     },
                 },
             })
             require('telescope').load_extension('fzf')
+            require('telescope').load_extension('ui-select')
             require('telescope').load_extension('undo')
             require('telescope').load_extension('persisted')
             require('telescope').load_extension('file_browser')
@@ -108,8 +148,9 @@ return {
             -- use '<leader>ff' to find among ALL files; respects .gitignore
             -- vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
             -- use '<leader>fg' to find among git files; again respects .gitignore
-            vim.keymap.set('n', '<leader>fgc', builtin.git_commits, opts)
-            vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, opts)
+            vim.keymap.set('n', '<leader>fmf', my_ff, opts)
+            vim.keymap.set('n', '<leader>fc', builtin.git_commits, opts)
+            vim.keymap.set('n', '<leader>fb', builtin.git_bcommits, opts)
             vim.keymap.set('n', '<leader>fgs', builtin.git_status, opts)
             -- treesitter symbols
             vim.keymap.set('n', '<leader>ft', builtin.treesitter, opts)

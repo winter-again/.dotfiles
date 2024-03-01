@@ -1,6 +1,5 @@
 return {
     'nvim-tree/nvim-tree.lua',
-    -- keys = '<leader>pv',
     lazy = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     version = '*',
@@ -20,7 +19,7 @@ return {
         require('nvim-tree').setup({
             -- disable_netrw = false and hijack_netrw = true should mean netrw
             -- can be used for following links as usual but not for its file browsing functionality
-            disable_netrw = false,
+            disable_netrw = true,
             hijack_netrw = true,
             hijack_cursor = true, -- keep cursor on first letter of file when moving
             view = {

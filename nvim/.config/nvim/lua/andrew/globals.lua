@@ -61,7 +61,7 @@ function Hl(group, hl)
 end
 
 ---Convenience function for setting keymap with a description
----@param mode string
+---@param mode string | table
 ---@param lhs string
 ---@param rhs string | function
 ---@param opts table
@@ -101,7 +101,7 @@ function Winbar()
         'NvimTree',
         'alpha',
     }
-    if vim.tbl_contains(exclude, buftype) then
+    if vim.list_contains(exclude, buftype) then
         return ''
     end
     if buftype == 'markdown' then
