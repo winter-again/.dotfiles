@@ -11,7 +11,6 @@ end
 local function get_lsp()
     local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
     local clients = vim.lsp.get_clients()
-    -- TODO: can rpelace with vim.tbl_isemtpy()?
     if vim.tbl_isempty(clients) then
         return 'None active'
     else
@@ -78,7 +77,18 @@ return {
                         source = diff_source,
                         symbols = { added = ' ', modified = ' ', removed = ' ' },
                     },
-                    'diagnostics',
+                    {
+                        'diagnostics',
+                        sources = { 'nvim_lsp' },
+                        sections = { 'error', 'warn', 'info', 'hint' },
+                        -- lualine has its own default icons
+                        symbols = {
+                            error = ' ',
+                            warn = ' ',
+                            hint = ' ', -- default = 󰌶
+                            info = ' ',
+                        },
+                    },
                 },
                 lualine_c = { { 'filename', path = 1 } },
                 lualine_x = { 'encoding', 'filetype', { display_lsp_venv, icon = { ' LSP:' } } },

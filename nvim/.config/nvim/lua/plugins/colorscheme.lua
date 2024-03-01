@@ -93,6 +93,7 @@ return {
                         DiagnosticUnderlineInfo = { underdotted = true },
                         DiagnosticUnderlineHint = { underdotted = true },
                         ['@lsp.type.unresolvedReference'] = { underdotted = true },
+                        RenameMatch = { link = 'Search' },
                     }
                 end,
                 integrations = {

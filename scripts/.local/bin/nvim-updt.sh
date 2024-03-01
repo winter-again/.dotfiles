@@ -48,7 +48,7 @@ if [[ $tag_choice == "stable" ]] && [[ $current_stable != $latest_stable ]]; the
     git pull
     git checkout stable
     make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install
-elif [[ $tag_choice == "nightly" ]] && [[ $current_nightly != $current_nightly ]]; then
+elif [[ $tag_choice == "nightly" ]] && [[ $current_nightly != $latest_nightly ]]; then
     git pull
     git checkout nightly
     make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install
