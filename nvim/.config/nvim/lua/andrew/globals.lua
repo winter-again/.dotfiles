@@ -91,9 +91,19 @@ function Winbar()
         return '- [' .. vim.fn.wordcount().words .. ' W]'
     end
 
+    -- TODO: can prob clean up the logic here
     -- %f = path, as typed ore relative to current dir
     -- %n = buf number
-    local file_path_bufnr = vim.api.nvim_eval_statusline('%f - [%n]', {}).str
+    -- %R = the readonly flag "RO"
+    local bufnr = vim.api.nvim_get_current_buf()
+    local file_path_bufnr
+    if vim.bo[bufnr].readonly then
+        file_path_bufnr = vim.api.nvim_eval_statusline('%f - [%n] %R', {}).str
+        file_path_bufnr = file_path_bufnr:gsub('RO', '󰌾')
+    else
+        file_path_bufnr = vim.api.nvim_eval_statusline('%f - [%n]', {}).str
+    end
+
     -- %m = modified flag, text is '[+]' and '[-]' if modifiable is off
     local mod = vim.api.nvim_eval_statusline('%m', {}).str
     local buftype = vim.bo.filetype
