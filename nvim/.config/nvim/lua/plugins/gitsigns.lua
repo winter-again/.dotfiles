@@ -15,9 +15,9 @@ return {
                     opts.buffer = bufnr
                     vim.keymap.set(mode, l, r, opts)
                 end
-                map('n', ']c', function()
+                map('n', ']h', function()
                     if vim.wo.diff then
-                        return ']c'
+                        return ']h'
                     end
                     vim.schedule(function()
                         gs.next_hunk()
@@ -25,9 +25,9 @@ return {
                     return '<Ignore>'
                 end, { expr = true })
 
-                map('n', '[c', function()
+                map('n', '[h', function()
                     if vim.wo.diff then
-                        return '[c'
+                        return '[h'
                     end
                     vim.schedule(function()
                         gs.prev_hunk()
@@ -38,7 +38,7 @@ return {
                 local opts = { silent = true }
                 vim.keymap.set('n', '<leader>gb', gs.toggle_current_line_blame, opts)
                 -- diff: working tree vs. index
-                vim.keymap.set('n', '<leader>gd', gs.diffthis, opts)
+                -- vim.keymap.set('n', '<leader>gd', gs.diffthis, opts)
                 -- diff: working tree vs. the last commit
                 vim.keymap.set('n', '<leader>gD', function()
                     gs.diffthis('~')

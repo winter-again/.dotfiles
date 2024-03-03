@@ -42,6 +42,7 @@ require('andrew.keymaps')
 require('lazy').setup('plugins', lazy_opts)
 
 -- vim.cmd('colorscheme winter-again')
--- vim.cmd('colorscheme catppuccin')
 vim.cmd('colorscheme tokyonight')
+-- vim.cmd('colorscheme catppuccin')
+-- vim.cmd('colorscheme rose-pine')
 vim.cmd('Transp')
