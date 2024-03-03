@@ -111,8 +111,6 @@ return {
                     vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
                 end, opts, 'Toggle inlay hints for current buf')
             end
-            local bar = 'bar'
-            print(bar)
 
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
@@ -299,6 +297,7 @@ return {
     {
         'glepnir/lspsaga.nvim',
         -- enabled = false,
+        dev = true,
         event = 'LspAttach',
         dependencies = {
             'nvim-tree/nvim-web-devicons',
@@ -308,6 +307,22 @@ return {
             require('lspsaga').setup({
                 ui = {
                     -- border = 'rounded',
+                },
+                finder = {
+                    filter = {
+                        ['textDocument/references'] = function(client_id, result)
+                            -- NOTE: `result` here is { { range = {} } }
+                            -- with mod I'm making it { range = {...} } itself
+                            -- test func should show only results from scratch.lua this uri when searching
+                            -- Winbar() refs
+                            -- if result.uri == 'file:///home/andrew/.dotfiles/scratch.lua' then
+                            --     return true
+                            -- else
+                            --     return false
+                            -- end
+                            return true
+                        end,
+                    },
                 },
                 symbol_in_winbar = {
                     enable = false,

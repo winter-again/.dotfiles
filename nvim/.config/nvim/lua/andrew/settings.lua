@@ -8,13 +8,13 @@ vim.g.loaded_netrwPlugin = 1
 
 local opt = vim.opt
 
-opt.background = 'dark'
+-- opt.guicursor = '' -- disable cursor change on mode change
 -- opt.splitright = true -- new window to the right of current
 -- opt.splitbelow = true -- new window below the current
+opt.background = 'dark'
 opt.inccommand = 'split' -- preview substitutions live
--- opt.guicursor = '' -- disable cursor change on mode change
 opt.winbar = '%{%v:lua.Winbar()%}'
--- (pseudo)transparency for cmp menu (0 = fully opaque, 100 = fully transparent)
+-- (pseudo)transparency for cmp menu and I guess wildmenu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice
 -- note: setting it means cmp menu has highlight but can see text behind
 -- not setting + having transparent bg makes just the transparent background show

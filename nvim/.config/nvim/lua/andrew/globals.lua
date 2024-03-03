@@ -12,10 +12,23 @@ function R(plugin)
     vim.cmd('Lazy reload ' .. plugin)
 end
 
----Save and execute lua file for quick iterating
+--Save and execute cursor line for Lua file
+function Save_exec_line()
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+    if ft == 'lua' then
+        vim.cmd('silent! write')
+        local cursor_line = vim.fn.getline('.')
+        vim.cmd('lua ' .. cursor_line)
+    end
+end
+
+---Save and execute Lua file for quick iterating
 function Save_exec()
-    vim.cmd('silent! write')
-    vim.cmd('luafile %')
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+    if ft == 'lua' then
+        vim.cmd('silent! write')
+        vim.cmd('luafile %')
+    end
 end
 
 ---Set custom transparency settings
@@ -30,6 +43,7 @@ function Transp()
         'SignColumn',
         'FoldColumn',
         'TelescopeBorder',
+        -- 'Pmenu', -- this is only reasonable if we have a border set
     }
     for _, hl in pairs(highlights) do
         local curr_hl = vim.api.nvim_get_hl(0, { name = hl })
@@ -42,7 +56,7 @@ vim.api.nvim_create_user_command('Transparent', function()
 end, { desc = 'Make nvim transparent' })
 
 function Toggle_light_dark()
-    local curr_set = vim.api.nvim_get_option('background')
+    local curr_set = vim.api.nvim_get_option_value('background')
     if curr_set == 'dark' then
         vim.opt.background = 'light'
     else
@@ -75,47 +89,34 @@ end
 ---Custom function for setting winbar info
 ---@return string
 function Winbar()
-    -- https://github.com/chrisgrieser/.config/blob/8af1841ba24f7c81c513e12f853b52f530ef5b37/nvim/lua/plugins/lualine.lua
-    -- local function Sel_count()
-    --     local is_visual = vim.fn.mode():find('[Vv]')
-    --     if not is_visual then
-    --         return ''
-    --     end
-    --     local starts = vim.fn.line('v')
-    --     local ends = vim.fn.line('.')
-    --     local lines = starts <= ends and ends - starts + 1 or starts - ends + 1
-    --     return ' ' .. tostring(lines) .. 'L ' .. tostring(vim.fn.wordcount().visual_chars) .. 'C'
-    -- end
-
     local function word_count()
-        return '- [' .. vim.fn.wordcount().words .. ' W]'
+        return string.format('(%s W)', vim.fn.wordcount().words)
     end
 
-    -- TODO: can prob clean up the logic here
+    -- local path = vim.api.nvim_buf_get_name(0):gsub(os.getenv('HOME'), '~')
+    local path = vim.api.nvim_eval_statusline('%f', {}).str
     -- %f = path, as typed ore relative to current dir
     -- %n = buf number
     -- %R = the readonly flag "RO"
-    local bufnr = vim.api.nvim_get_current_buf()
-    local file_path_bufnr
-    if vim.bo[bufnr].readonly then
-        file_path_bufnr = vim.api.nvim_eval_statusline('%f - [%n] %R', {}).str
-        file_path_bufnr = file_path_bufnr:gsub('RO', '󰌾')
-    else
-        file_path_bufnr = vim.api.nvim_eval_statusline('%f - [%n]', {}).str
+    local bufnr = vim.api.nvim_eval_statusline('%n', {}).str
+    local modif = vim.api.nvim_eval_statusline('%m', {}).str
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+    local read_only = vim.api.nvim_get_option_value('readonly', { buf = 0 })
+
+    local winbar = string.format('%s - [%d] %s', path, bufnr, modif)
+    if ft == 'markdown' then
+        winbar = string.format('%s%s', winbar, word_count())
+    end
+    if read_only == true then
+        winbar = winbar .. '󰌾'
     end
 
-    -- %m = modified flag, text is '[+]' and '[-]' if modifiable is off
-    local mod = vim.api.nvim_eval_statusline('%m', {}).str
-    local buftype = vim.bo.filetype
     local exclude = {
         'NvimTree',
         'alpha',
     }
-    if vim.list_contains(exclude, buftype) then
+    if vim.list_contains(exclude, ft) then
         return ''
     end
-    if buftype == 'markdown' then
-        return string.format('%s %s %s', file_path_bufnr, word_count(), mod)
-    end
-    return string.format('%s %s', file_path_bufnr, mod)
+    return winbar
 end
