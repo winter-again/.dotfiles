@@ -39,7 +39,15 @@ require('winteragain.globals')
 require('winteragain.keymaps')
 -- get plugin specs from their individual files in the plugins directory
 -- any file in lua/plugins/*.lua will be merged into the main plugin spec
-require('lazy').setup('plugins', lazy_opts)
+-- require('lazy').setup('plugins', lazy_opts)
+
+-- to load subdirs of lua/plugins
+-- have to import the dirs
+require('lazy').setup({
+    { import = 'plugins' },
+    { import = 'plugins.lsp' },
+    { import = 'plugins.git' },
+}, lazy_opts)
 
 -- vim.cmd('colorscheme winter-again')
 vim.cmd('colorscheme tokyonight')
