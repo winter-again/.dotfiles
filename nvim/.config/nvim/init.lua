@@ -3,9 +3,9 @@ if vim.g.vscode then
     -- load in just my settings and keymaps in VSCode
     -- not sure if this is completely safe because sets are in the same file
     print('Using Neovim in VS Code.')
-    require('andrew.settings')
-    require('andrew.keymaps')
+    require('winteragain.settings')
+    require('winteragain.keymaps')
 else
     -- ordinary Neovim config
-    require('andrew')
+    require('winteragain')
 end

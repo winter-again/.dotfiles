@@ -27,6 +27,8 @@ config.default_prog = { '/usr/bin/zsh' }
 config.default_cwd = wezterm.home_dir
 config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
 config.check_for_updates = false
+-- setting this here also causes partial line problems
+-- config.term = 'wezterm' -- https://wezfurlong.org/wezterm/config/lua/config/term.html
 
 config.background = utils.set_bg('10')
 config.font = utils.set_font('1')

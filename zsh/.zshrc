@@ -20,8 +20,10 @@ export XDG_DATA_HOME=$HOME/.local/share
 export PATH="$HOME/.local/bin:$PATH"
 # for custom nvim install location
 # export PATH="$HOME/neovim/bin:$PATH"
-export TERM=wezterm # for undercurl supp
 export SHELL=/bin/zsh
+# for wezterm undercurl supp, but it seems to cause partial line issues?
+# without it underlines look ok??
+# export TERM=wezterm
 export EDITOR="nvim"
 export VISUAL="nvim"
 # export MANPAGER="sh -c 'col -bx | bat -l man -p'" # bat for colorizing pager for man
