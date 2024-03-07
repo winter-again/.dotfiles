@@ -23,6 +23,7 @@ return {
     },
     {
         'echasnovski/mini.splitjoin',
+        enabled = false,
         version = false,
         event = { 'BufReadPost', 'BufNewFile' },
         config = function()
@@ -35,6 +36,7 @@ return {
     },
     {
         'echasnovski/mini.surround',
+        enabled = false,
         version = false,
         event = { 'BufReadPost', 'BufNewFile' },
         config = function()
