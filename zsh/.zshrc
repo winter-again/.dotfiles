@@ -56,6 +56,8 @@ alias tv="tidy-viewer"
 alias keys="bash ~/.local/bin/keyboard-settings.sh"
 alias ffetch="fastfetch"
 alias R="R --no-save" # never prompt to save workspace image
+alias act="source .venv/bin/activate"
+alias de="deactivate"
 # for starting rstudio with flags for Wayland; shouldn't need this now that the .desktop file works
 # alias rstd="/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland &"
 alias yz="yazi"
