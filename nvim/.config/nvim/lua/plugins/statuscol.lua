@@ -4,6 +4,7 @@ return {
     config = function()
         local builtin = require('statuscol.builtin')
         require('statuscol').setup({
+            -- ft_ignore = { 'undotree' },
             relculright = true, -- align the current line number with rest of col
             segments = {
                 -- for getting annotate.nvim extmarks to show

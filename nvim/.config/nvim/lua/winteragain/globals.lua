@@ -105,7 +105,7 @@ function Winbar()
 
     local winbar = string.format('%s - [%d] %s', path, bufnr, modif)
     if ft == 'markdown' then
-        winbar = string.format('%s%s', winbar, word_count())
+        winbar = string.format('%s - [%d] %s %s', path, bufnr, word_count(), modif)
     end
     if read_only == true then
         winbar = winbar .. ' 󰌾'
