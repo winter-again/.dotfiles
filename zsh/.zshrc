@@ -11,9 +11,9 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # load p10k
 #######################
 
 # zmodload zsh/zprof # profiler
-export HISTFILE=~/.zsh_history
-export HISTSIZE=1000000
-export SAVEHIST=1000000 # num of commands stored
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=100000000
+export SAVEHIST=$HISTSIZE # num of commands stored
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
@@ -37,9 +37,9 @@ export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 # if GOBIN set, binaries installed there
 # if GOPATH set binaries installed into bin dir of first dir in GOPATH
 # these are default locs:
-export GOPATH=$HOME/go
+export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
-# export PATH=$PATH:/usr/local/go/bin
+# export PATH=$PATH:/usr/local/go/bin # from go install directions but I think we're using ~/.go/bin
 # for convenience; adds ~/go/bin to path
 export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # for convenience
 
@@ -114,7 +114,7 @@ wez-logs() {
     cd /run/user/1000/wezterm
     ls
 }
-wez-plugins() {
+wez-plug() {
     cd ~/.local/share/wezterm/plugins
     ls
 }

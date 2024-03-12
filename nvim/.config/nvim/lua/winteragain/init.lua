@@ -49,6 +49,15 @@ require('lazy').setup({
     { import = 'plugins.git' },
 }, lazy_opts)
 
+-- workaround for some kind of highlighting in .mdx files
+vim.filetype.add({
+    extension = {
+        mdx = 'markdown.mdx',
+    },
+    filename = {},
+    pattern = {},
+})
+
 -- vim.cmd('colorscheme winter-again')
 -- vim.cmd('colorscheme tokyonight')
 vim.cmd('colorscheme catppuccin')
