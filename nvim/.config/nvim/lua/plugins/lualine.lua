@@ -90,7 +90,13 @@ return {
                         },
                     },
                 },
-                lualine_c = { { 'filename', path = 1 } },
+                lualine_c = {
+                    {
+                        'filename',
+                        file_status = true,
+                        path = 3,
+                    },
+                },
                 lualine_x = { 'encoding', 'filetype', { display_lsp_venv, icon = { ' LSP:' } } },
                 lualine_y = { 'progress' },
                 lualine_z = { 'location' },

@@ -94,21 +94,21 @@ function Winbar()
     end
 
     -- local path = vim.api.nvim_buf_get_name(0):gsub(os.getenv('HOME'), '~')
-    local path = vim.api.nvim_eval_statusline('%f', {}).str
     -- %f = path, as typed ore relative to current dir
     -- %n = buf number
-    -- %R = the readonly flag "RO"
-    local bufnr = vim.api.nvim_eval_statusline('%n', {}).str
-    local modif = vim.api.nvim_eval_statusline('%m', {}).str
+    -- %r = the readonly flag "[RO]"
+    -- %m = modified flag "[+]"
+    local base = vim.api.nvim_eval_statusline('%f - [%n]', {}).str
+    local mod = vim.api.nvim_eval_statusline('%m', {}).str
     local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
     local read_only = vim.api.nvim_get_option_value('readonly', { buf = 0 })
 
-    local winbar = string.format('%s - [%d] %s', path, bufnr, modif)
+    local winbar = string.format('%s %s', base, mod)
     if ft == 'markdown' then
-        winbar = string.format('%s - [%d] %s %s', path, bufnr, word_count(), modif)
+        winbar = string.format('%s %s %s', base, word_count(), mod)
     end
     if read_only == true then
-        winbar = winbar .. ' 󰌾'
+        winbar = base .. ' 󰌾'
     end
 
     local exclude = {
