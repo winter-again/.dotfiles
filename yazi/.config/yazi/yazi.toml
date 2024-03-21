@@ -17,18 +17,18 @@ ueberzug_scale = 1
 ueberzug_offset = [0, 0, 0, 0]
 
 [opener]
-edit = [{ exec = 'nvim "$@"', block = true, for = "linux" }]
-open = [{ exec = 'xdg-open "$@"', desc = "Open", for = "linux" }]
+edit = [{ run = 'nvim "$@"', block = true, for = "linux" }]
+open = [{ run = 'xdg-open "$@"', desc = "Open", for = "linux" }]
 reveal = [
-    { exec = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "linux" },
+    { run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "linux" },
 ]
-extract = [{ exec = 'unar "$1"', desc = "Extract here", for = "linux" }]
+extract = [{ run = 'unar "$1"', desc = "Extract here", for = "linux" }]
 play = [
-    { exec = 'mpv "$@"', orphan = true, for = "linux" },
-    { exec = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "linux" },
+    { run = 'mpv "$@"', orphan = true, for = "linux" },
+    { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "linux" },
 ]
 image = [
-    { exec = 'nsxiv "$@"', orphan = true, desc = "Open image", for = "linux" },
+    { run = 'nsxiv "$@"', orphan = true, desc = "Open image", for = "linux" },
 ]
 
 [open]
