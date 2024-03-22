@@ -116,7 +116,7 @@ bindsym {
     # open Obsidian
     $mod+o exec obsidian --ozone-platform-hint=auto
     # pick color and copy to clipboard; send simple noti too
-    $mod+i exec hyprpicker -azn | xargs -I {} notify-send "hyprpicker" "<b>{}</b>"
+    # $mod+i exec hyprpicker -azn | xargs -I {} notify-send "hyprpicker" "<b>{}</b>"
 
     $mod+$left focus left
     $mod+$down focus down
