@@ -208,6 +208,7 @@ return {
                     -- remove capabilities that ruff can provide
                     require('lspconfig')['pyright'].setup({
                         -- https://github.com/astral-sh/ruff-lsp/issues/384
+                        -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
                         -- not sure about this...
                         capabilities = (function()
                             local capabilities = vim.lsp.protocol.make_client_capabilities()

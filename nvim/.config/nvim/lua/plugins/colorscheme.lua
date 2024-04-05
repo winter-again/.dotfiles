@@ -186,6 +186,35 @@ return {
         end,
     },
     {
+        'ramojus/mellifluous.nvim',
+        lazy = false,
+        config = function()
+            require('mellifluous').setup({
+                -- options are
+                -- mellifluous (ok)
+                -- alduin (ok)
+                -- mountain (ok)
+                -- tender (no)
+                -- kanagawa_dragon (ok)
+                color_set = 'mountain',
+                transparent_background = {
+                    enabled = true,
+                    floating_windows = true,
+                    telescope = true,
+                    file_tree = true,
+                    cursor_line = true,
+                    status_line = false,
+                },
+
+                plugins = {
+                    neo_tree = {
+                        enabled = false,
+                    },
+                },
+            })
+        end,
+    },
+    {
         'winter-again/winter-again.nvim',
         dev = true,
     },
@@ -202,10 +231,12 @@ return {
     },
     {
         'savq/melange-nvim',
+        enabled = false,
         lazy = false,
     },
     {
         'AlexvZyl/nordic.nvim',
+        enabled = false,
         lazy = false,
         config = function()
             local palette = require('nordic.colors')
