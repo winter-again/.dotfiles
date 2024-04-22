@@ -1,0 +1,28 @@
+font = /usr/share/fonts/TTF/JetBrainsMonoNL-Regular.ttf
+font-size = 16
+hint-font = false
+
+prompt-text = "❯ "
+hide-cursor = false
+text-cursor = false
+history = true
+require-match = true
+
+width = 30%
+height = 500
+border-width = 2
+outline-width = 0
+corner-radius = 5
+padding-left = 30
+padding-top = 20
+prompt-padding = 5
+result-spacing = 5
+
+text-color = #c0caf5
+selection-color = #7aa2f7
+selection-background-padding = 5
+selection-background-corner-radius = 5
+background-color = #16161e
+prompt-color = #9d7cd8
+border-color = #9d7cd8
+selection-background = #292e42

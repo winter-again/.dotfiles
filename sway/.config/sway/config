@@ -47,7 +47,8 @@ set {
     $up k
     $right l
     $term wezterm
-    $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
+    # $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
+    $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
     # seems like the output names above change on boot/suspend etc...
     $primary_mon "BNQ BenQ LCD 93J02490SL0"
@@ -105,7 +106,8 @@ bindsym {
     # swaync toggle
     $mod+n exec swaync-client -t -sw
     # power menu
-    $mod+Shift+p exec ~/.config/wofi/power-menu.sh
+    # $mod+Shift+p exec ~/.config/wofi/power-menu.sh
+    $mod+Shift+p exec ~/.config/tofi/power-menu.sh
     # $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
     $mod+Shift+comma exec gtklock -t '%I:%m %p'
     $mod+Shift+period exec systemctl suspend

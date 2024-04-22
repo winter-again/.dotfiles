@@ -1,12 +1,11 @@
 {
-    "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "layer": "top", // Waybar at topmost layer
+    "position": "top", // Waybar position (top|bottom|left|right)
     "height": 26, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
     "spacing": 2, // Gaps between modules
+    "fixed-center": true,
     "modules-left": [
         "sway/workspaces",
-        // "mpris"
         "custom/spotify"
     ],
     "modules-center": [
@@ -20,34 +19,16 @@
         "temperature",
         "network",
         "battery",
-        // "bluetooth",
         "tray"
     ],
     "sway/workspaces": {
         "all-outputs": false,
-        "format": "{name}"
-    },
-    // seems like the problem is that playerctl metadata has no valid info on fresh start of Spotify
-    "mpris": {
-        "player": "spotify",
-        "ignored-players": [
-            "firefox"
-        ],
-        "interval": 1,
-        "format": "<span font='12' rise='100'>{status_icon}</span> <span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
-        "tooltip-format": "Album: \"{album}\" [{position} / {length}]",
-        "status-icons": {
-            "playing": "󰏤",
-            "paused": "󰐊"
-        },
-        // max len for title before truncating
-        "title-len": 50,
-        // "max-length": 70,
-        "on-middle-click": "",
-        "on-right-click": ""
+        "format": "{name}",
+        "disable-scroll-wraparound": true
     },
     "custom/spotify": {
-        "format": "<span font='16' rise='-2000'>󰓇</span> {}",
+        // "format": "<span font='16' rise='-2000'>󰓇</span> {}",
+        "format": "󰓇 {}",
         "return-type": "json",
         "max-length": 50,
         "escape": true,
@@ -58,36 +39,15 @@
         "exec": "~/.config/waybar/scripts/spotify.sh",
         "exec-if": "pgrep spotify"
     },
-    "custom/weather": {
-        "format": "{icon} {}",
-        "format-icons": [
-            "<span font='16' rise='-2000'>󰅟</span>"
-        ],
-        "return-type": "json",
-        "interval": 900, // 15 min
-        "exec": "~/.config/waybar/scripts/weather.sh"
-    },
-    "custom/weather_wttr": {
-        "exec": "~/.config/waybar/scripts/weather-wttr.sh Berlin+Germany",
-        "return-type": "json",
-        "format": "{}",
-        "tooltip": true,
-        "interval": 3600
-    },
-    "tray": {
-        "icon-size": 14,
-        "spacing": 10
-    },
     "clock": {
         "timezone": "America/New_York",
-        "format": "{:%Y-%m-%d (%b) | %a %I:%M %p}",
+        "format": "{:%a %Y-%m-%d (%b) | %I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
             "mode-mon-col": 3,
             "weeks-pos": "right",
             "on-scroll": 1,
-            "on-click-right": "mode",
             "format": {
                 "months": "<span color='#7aa2f7'><b>{}</b></span>",
                 "days": "<span color='#c0caf5'><b>{}</b></span>",
@@ -98,18 +58,48 @@
         },
         "actions": {
             "on-click-right": "mode",
-            "on-click-forward": "tz_up",
-            "on-click-backward": "tz_down",
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
         }
     },
+    "custom/weather": {
+        "format": "{icon} {}",
+        "format-icons": [
+            // "<span font='16' rise='-2000'>󰅟</span>",
+            "󰅟"
+        ],
+        "return-type": "json",
+        "interval": 900, // 15 min
+        "exec": "~/.config/waybar/scripts/weather.sh"
+    },
+    "pulseaudio": {
+        // "format": "<span font='16' rise='-2000'>{icon}</span> {volume}%",
+        // "format-muted": "<span font='16' rise='-2000'>󰝟</span> {volume}%",
+        // "format-bluetooth": "<span font='16' rise='-2000'>{icon}</span> {format_source} {volume}%",
+        // "format-bluetooth-muted": "󰝟 {icon} {format_source}",
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 {volume}%",
+        "format-bluetooth": "{icon} {format_source} {volume}%",
+        "format-bluetooth-muted": "󰝟 {icon} {format_source}",
+        // "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "default": [
+                " ",
+                " ",
+                " "
+            ]
+        },
+        "on-click": "pavucontrol"
+    },
     "cpu": {
-        "format": "<span font='16' rise='-2000'></span> {usage}%",
+        // "format": "<span font='16' rise='-2000'></span> {usage}%",
+        "format": " {usage}%",
         "tooltip": false
     },
     "memory": {
-        "format": "<span font='16' rise='-2000'></span> {}%"
+        // "format": "<span font='16' rise='-2000'></span> {}%"
+        "format": " {}%"
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -120,6 +110,17 @@
         // "format": " {temperatureF}F"
         "format": " {temperatureC}C",
         "tooltip-format": "{temperatureF}F"
+    },
+    "network": {
+        "interval": 10,
+        // "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {signalStrength}%",
+        // "format-ethernet": "<span font='16' rise='-2000'>󰈀</span> {bandwidthTotalBytes}",
+        "format-wifi": "󰖩 {signalStrength}%",
+        "format-ethernet": "󰈀 {bandwidthTotalBytes}",
+        "tooltip-format-wifi": "󰖩 {essid}",
+        "tooltip-format-ethernet": "󰈀 {ifname}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "󰈂"
     },
     "battery": {
         "bat": "BAT0",
@@ -140,30 +141,9 @@
             "󰁹"
         ]
     },
-    "network": {
-        "interval": 10,
-        "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {signalStrength}%",
-        "format-ethernet": "<span font='16' rise='-2000'>󰈀</span> {bandwidthTotalBytes}",
-        "tooltip-format-wifi": "󰖩 {essid}",
-        "tooltip-format-ethernet": "󰈀 {ifname}  {bandwidthUpBytes}  {bandwidthDownBytes}",
-        "format-linked": "{ifname} (No IP)",
-        "format-disconnected": "󰈂"
-    },
-    "pulseaudio": {
-        "format": "<span font='16' rise='-2000'>{icon}</span> {volume}%",
-        "format-muted": "<span font='16' rise='-2000'>󰝟</span> {volume}%",
-        "format-bluetooth": "<span font='16' rise='-2000'>{icon}</span> {format_source} {volume}%",
-        "format-bluetooth-muted": "󰝟 {icon} {format_source}",
-        // "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "default": [
-                " ",
-                " ",
-                " "
-            ]
-        },
-        "on-click": "pavucontrol" // fix this...
+    "tray": {
+        "icon-size": 14,
+        "spacing": 4
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
