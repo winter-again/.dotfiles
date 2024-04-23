@@ -27,6 +27,11 @@ tooltip {
     min-width: 1.8rem;
 }
 
+#workspaces button.visible {
+    color: #16161e;
+    background: #9d7cd8;
+}
+
 #workspaces button.focused {
     color: #16161e;
     background: #7aa2f7;
@@ -39,11 +44,6 @@ tooltip {
 #workspaces button:hover {
     background: #292e42;
     box-shadow: none;
-}
-
-#workspaces button.visible {
-    color: #16161e;
-    background: #9d7cd8;
 }
 
 #workspaces button.urgent {
