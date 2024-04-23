@@ -1,5 +1,5 @@
 daemonize
-font=Hack Nerd Font Mono
+font=JetBrains Mono
 clock
 datestr=%Y-%m-%d (%b)
 timestr=%l:%M %p
