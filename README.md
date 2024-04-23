@@ -1,8 +1,8 @@
 # .dotfiles
 
-- [sway](https://swaywm.org/)
-- [Wezterm](https://wezfurlong.org/wezterm/install/linux.html)
+- [sway](https://github.com/swaywm/sway)
+- [Wezterm](https://github.com/wez/wezterm)
 - [tmux](https://github.com/tmux/tmux)
 - [zsh](https://www.zsh.org/)
 - [powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [Neovim](https://github.com/neovim/neovim) (build from source)
+- [Neovim](https://github.com/neovim/neovim)

@@ -5,7 +5,7 @@
     border: none;
     font-size: 14px;
     padding: 0px 0px;
-    margin: 0px 0px 1px 0px;
+    margin: 1px 0px 1px 0px;
 }
 
 window#waybar {
@@ -78,7 +78,7 @@ tooltip {
 }
 
 #custom-weather {
-    margin-right: 120px;
+    margin-right: 100px;
 }
 
 #window,
