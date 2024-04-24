@@ -5,7 +5,7 @@
     border: none;
     font-size: 14px;
     padding: 0px 0px;
-    margin: 1px 0px 1px 0px;
+    margin: 0px 0px 1px 0px;
 }
 
 window#waybar {
@@ -18,17 +18,24 @@ window#waybar {
 tooltip {
     color: #c0caf5;
     background: #292e42;
+    border-radius: 5px;
 }
 
 #workspaces button {
     color: #c0caf5;
     background: transparent;
     border-radius: 5px;
-    min-width: 1.8rem;
+    min-width: 1.6rem;
+    /* to avoid sizing change for urgent workspace's border */
+    border: 2px solid transparent;
 }
 
 #workspaces button.visible {
     color: #16161e;
+    background: #9d7cd8;
+}
+
+#workspaces button.visible:hover {
     background: #9d7cd8;
 }
 
@@ -47,7 +54,6 @@ tooltip {
 }
 
 #workspaces button.urgent {
-    background: transparent;
     border: 2px solid #db4b4b;
 }
 
@@ -78,7 +84,7 @@ tooltip {
 }
 
 #custom-weather {
-    margin-right: 100px;
+    margin-right: 80px;
 }
 
 #window,
