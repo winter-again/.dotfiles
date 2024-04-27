@@ -27,7 +27,7 @@ tooltip {
     border-radius: 5px;
     min-width: 1.6rem;
     /* to avoid sizing change for urgent workspace's border */
-    border: 2px solid transparent;
+    /* border: 2px solid transparent; */
 }
 
 #workspaces button.visible {
@@ -54,12 +54,13 @@ tooltip {
 }
 
 #workspaces button.urgent {
-    border: 2px solid #db4b4b;
+    /* border: 2px solid #db4b4b; */
+    color: #db4b4b;
 }
 
 #custom-spotify {
     color: #1db954;
-    margin-left: 100px;
+    margin-left: 120px;
 }
 
 #custom-spotify.paused {
@@ -103,15 +104,17 @@ tooltip {
 }
 
 #temperature.critical {
-    border: 2px solid #db4b4b;
+    /* border: 2px solid #db4b4b; */
+    color: #db4b4b;
 }
 
 #network.disconnected {
-    border: 2px solid #db4b4b;
+    /* border: 2px solid #db4b4b; */
+    color: #db4b4b;
 }
 
 #battery.critical:not(.charging) {
-    background-color: #db4b4b;
+    color: #db4b4b;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
