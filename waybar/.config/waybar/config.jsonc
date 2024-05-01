@@ -41,7 +41,8 @@
     },
     "clock": {
         "timezone": "America/New_York",
-        "format": "{:%a %Y-%m-%d (%b) | %I:%M %p}",
+        // "format": "{:%a %Y-%m-%d (%b) | %I:%M %p}",
+        "format": "{:%a %Y-%m-%d | %I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",

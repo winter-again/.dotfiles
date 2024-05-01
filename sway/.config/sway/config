@@ -3,7 +3,7 @@ font pango:JetBrains Mono 10
 default_border pixel 2
 default_floating_border pixel 2
 titlebar_padding 2
-titlebar_border_thickness 0
+titlebar_border_thickness 2
 # covers just in sway
 # seat0 is the default seat; seat * would apply to all
 # seat seat0 xcursor_theme phinger-cursors-light 32
@@ -16,7 +16,7 @@ seat seat0 xcursor_theme capitaine-cursors-light 32
 # view border (entire window)
 client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9d7cd8 #7aa2f7
 client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261 #3b4261
-client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26 #1a1b26
+client.unfocused        #3b4261 #1a1b26 #c0caf5 #1a1b26 #1a1b26
 client.urgent           #f7768e #f7768e #1a1b26 #f7768e #f7768e
 
 input "type:keyboard" {
@@ -235,7 +235,7 @@ exec {
 # assign spotify on Wayland; seems to work
 assign [title="^Spotify"] $ws7
 # use app_id instead of class if Wayland
-assign [app_id="Slack"] $ws8
+assign [app_id="Slack"] $ws1
 assign [class="Slack"] $ws8
 assign [app_id="obsidian"] $ws4 
 assign [app_id="discord"] $ws10
