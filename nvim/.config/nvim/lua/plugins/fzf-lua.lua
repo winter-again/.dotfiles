@@ -1,5 +1,7 @@
 return {
-    'https://gitlab.com/ibhagwan/fzf-lua',
+    -- 'https://gitlab.com/ibhagwan/fzf-lua',
+    'ibhagwan/fzf-lua',
+    enabled = false,
     keys = {
         '<leader>ff',
         '<leader>fzf',
