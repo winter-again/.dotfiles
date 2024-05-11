@@ -160,7 +160,7 @@ return {
 
             local builtin = require('telescope.builtin')
             local opts = { silent = true }
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
+            -- Map('n', '<leader>ff', builtin.find_files, opts, 'Search files')
             Map('n', '<leader>fn', function()
                 builtin.find_files({ cwd = vim.fn.stdpath('config') })
             end, opts, 'Search nvim config')
