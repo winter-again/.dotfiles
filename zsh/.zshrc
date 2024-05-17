@@ -239,6 +239,7 @@ zstyle ':completion:*' file-sort modification # ordering of names (mod time)
 zstyle ':completion:*' rehash true
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)

@@ -26,21 +26,29 @@ return {
             },
         })
         -- add some specific keymaps
-        Map('n', 'cir', 'i```{r}<cr>```<esc>O<esc>', { silent = true }, 'Insert R code chunk and enter in insert mode')
-        Map(
+        vim.keymap.set(
+            'n',
+            'cir',
+            'i```{r}<cr>```<esc>O<esc>',
+            { silent = true, desc = 'Insert R code chunk and enter in insert mode' }
+        )
+        vim.keymap.set(
             'n',
             'cip',
             'i```{python}<cr>```<esc>O<esc>',
-            { silent = true },
-            'Insert Python code chunk and enter in insert mode'
+            { silent = true, desc = 'Insert Python code chunk and enter in insert mode' }
         )
-        Map('n', '<leader>qp', ":lua require('quarto').quartoPreview()<cr>", { silent = true }, 'Quarto preview')
-        Map(
+        vim.keymap.set(
+            'n',
+            '<leader>qp',
+            ":lua require('quarto').quartoPreview()<cr>",
+            { silent = true, desc = 'Quarto preview' }
+        )
+        vim.keymap.set(
             'n',
             '<leader>qq',
             ":lua require('quarto').quartoClosePreview()<cr>",
-            { silent = true },
-            'Close Quarto preview'
+            { silent = true, desc = 'Close Quarto preview' }
         )
     end,
 }

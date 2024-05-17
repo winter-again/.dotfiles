@@ -73,42 +73,47 @@ return {
             --     lineFoldingOnly = true,
             -- }
 
-            -- global keymaps
-            Map('n', '[d', vim.diagnostic.goto_prev, { silent = true }, 'Go to previous diagnostic message')
-            Map('n', ']d', vim.diagnostic.goto_next, { silent = true }, 'Go to next diagnostic message')
+            -- common keymaps
+            local map = function(mode, lhs, rhs, opts, desc)
+                opts = opts or {}
+                opts.desc = desc
+                vim.keymap.set(mode, lhs, rhs, opts)
+            end
+            map('n', '[d', vim.diagnostic.goto_prev, { silent = true }, 'Go to previous diagnostic message')
+            map('n', ']d', vim.diagnostic.goto_next, { silent = true }, 'Go to next diagnostic message')
             -- keymaps defined on attach
             local function on_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }
-                Map('n', 'K', vim.lsp.buf.hover, opts, 'Hover docs')
-                Map('n', 'gs', function()
+                map('n', 'K', vim.lsp.buf.hover, opts, 'Hover docs')
+                map('n', 'gs', function()
                     vim.diagnostic.open_float({ scope = 'cursor' })
                 end, opts, 'Get cursor diagnostics')
-                Map('n', 'gl', function()
+                map('n', 'gl', function()
                     vim.diagnostic.open_float({ scope = 'line' })
                 end, opts, 'Get line diagnostics')
-                Map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Telescope LSP defns.')
-                Map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
-                Map('n', 'gr', require('telescope.builtin').lsp_references, opts, 'Telescope LSP refs.')
-                Map('n', 'gI', require('telescope.builtin').lsp_implementations, opts, 'Telescope find impls.')
-                Map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, opts, 'Telescope type defns.')
-                Map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, opts, 'Telescope doc symbols')
-                Map(
+                map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Telescope LSP defns.')
+                map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
+                map('n', 'gr', require('telescope.builtin').lsp_references, opts, 'Telescope LSP refs.')
+                map('n', 'gI', require('telescope.builtin').lsp_implementations, opts, 'Telescope find impls.')
+                map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, opts, 'Telescope type defns.')
+                map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, opts, 'Telescope doc symbols')
+                map(
                     'n',
                     '<leader>ws',
                     require('telescope.builtin').lsp_dynamic_workspace_symbols,
                     opts,
                     'Telescope workspace symbols'
                 )
-                Map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up from LspSaga
-                Map(
+                map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up from LspSaga
+                map(
                     'n',
                     '<leader>ws',
                     require('telescope.builtin').lsp_dynamic_workspace_symbols,
                     opts,
                     'Telescope workspace symbols'
                 )
-                Map('n', '<leader>ih', function()
-                    vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+                map('n', '<leader>ih', function()
+                    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
                 end, opts, 'Toggle inlay hints for current buf')
             end
 
@@ -392,12 +397,22 @@ return {
                 },
             })
             -- finder that shows defn, ref, and implementation
-            Map('n', '<leader>gf', '<cmd>Lspsaga finder<CR>', { silent = true }, 'LspSaga finder')
+            vim.keymap.set('n', '<leader>gf', '<cmd>Lspsaga finder<CR>', { silent = true, desc = 'LspSaga finder' })
             -- rename all references to symbol under cursor
-            Map('n', '<leader>rn', '<cmd>Lspsaga rename<CR>', { silent = true }, 'LspSaga rename')
+            vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<CR>', { silent = true, desc = 'LspSaga rename' })
             -- code action
-            Map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', { silent = true }, 'LspSaga code action')
-            Map('n', '<leader>gd', '<cmd>Lspsaga peek_definition<CR>', { silent = true }, 'LspSaga peek defn')
+            vim.keymap.set(
+                'n',
+                '<leader>ca',
+                '<cmd>Lspsaga code_action<CR>',
+                { silent = true, desc = 'LspSaga code action' }
+            )
+            vim.keymap.set(
+                'n',
+                '<leader>gd',
+                '<cmd>Lspsaga peek_definition<CR>',
+                { silent = true, desc = 'LspSaga peek defn' }
+            )
         end,
     },
     -- {
@@ -465,9 +480,9 @@ return {
             })
 
             -- manually trigger formatting
-            Map('n', '<leader><leader>fm', function()
+            vim.keymap.set('n', '<leader><leader>fm', function()
                 require('conform').format({ async = true, lsp_fallback = true })
-            end, { silent = true }, 'Manually format buffer with conform.nvim')
+            end, { silent = true, desc = 'Manually format buffer with conform.nvim' })
             -- user commands for toggling autoformatting on save
             vim.api.nvim_create_user_command('FormatDisable', function(args)
                 if args.bang then
@@ -515,9 +530,9 @@ return {
             })
 
             -- manually trigger linting
-            Map('n', '<leader><leader>l', function()
+            vim.keymap.set('n', '<leader><leader>l', function()
                 require('lint').try_lint()
-            end, { silent = true }, 'Manually trigger nvim-lint')
+            end, { silent = true, desc = 'Manually trigger nvim-lint' })
         end,
     },
 }

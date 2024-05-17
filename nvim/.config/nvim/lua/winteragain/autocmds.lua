@@ -41,13 +41,13 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'WinLeave' }, {
 })
 
 -- disable treesitter context in .md files if having issues
--- vim.api.nvim_create_autocmd('FileType', {
---     group = au_group,
---     pattern = { 'markdown' },
---     callback = function()
---         require('treesitter-context').disable()
---     end,
--- })
+vim.api.nvim_create_autocmd('FileType', {
+    group = au_group,
+    pattern = { 'markdown' },
+    callback = function()
+        require('treesitter-context').disable()
+    end,
+})
 
 -- modify automatic formatting to not continue comments when you hit Enter
 -- setting it with autocmd otherwise ftplugin overrides it

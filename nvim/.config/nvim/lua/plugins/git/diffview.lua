@@ -3,7 +3,7 @@ return {
     -- event = { 'BufReadPost', 'BufNewFile' },
     keys = { '<space>dv' },
     config = function()
-        Map('n', '<leader>dv', '<cmd>DiffviewOpen<CR>', { silent = true }, 'Open Diffview')
-        Map('n', '<leader>df', '<cmd>DiffviewFileHistory<CR>', { silent = true }, 'Open Diffview')
+        vim.keymap.set('n', '<leader>dv', '<cmd>DiffviewOpen<CR>', { silent = true, desc = 'Open Diffview' })
+        vim.keymap.set('n', '<leader>df', '<cmd>DiffviewFileHistory<CR>', { silent = true, desc = 'Open Diffview' })
     end,
 }
