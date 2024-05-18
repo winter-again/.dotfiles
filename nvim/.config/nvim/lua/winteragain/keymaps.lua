@@ -73,4 +73,4 @@ map('n', '<leader><leader>t', '<cmd>Transp<CR>', opts, 'Turn on transparency')
 map('n', '<leader><leader>m', '<cmd>ToggleLightDark<CR>', opts, 'Toggle light/dark mode')
 map('n', '<leader><leader>r', '<cmd>lua R("winter-again.nvim")<CR>', opts, 'Reload this plugin')
 map('n', '<leader>pr', '<cmd>lua require("persistence").load()<CR>', opts, 'Load session for dir') -- session for current dir and current branch
-map('t', '<esc><esc>', '<c-\\><c-n>', opts, 'Escape terminal mode')
+-- map('t', '<esc><esc>', '<c-\\><c-n>', opts, 'Escape terminal mode') -- seems to conflict with fzf-lua

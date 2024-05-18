@@ -34,6 +34,29 @@ local lazy_opts = {
         colorscheme = { 'tokyonight' }, -- try to load one of these colorschemes when starting an installation during startup
     },
 }
+
+-- ft edits
+-- incl. workaround for some kind of highlighting in .mdx files
+-- based on: https://phelipetls.github.io/posts/mdx-syntax-highlight-treesitter-nvim/
+vim.filetype.add({
+    -- based on extension
+    extension = {
+        mdx = 'mdx',
+        log = 'log',
+        conf = 'conf',
+        env = 'dotenv',
+    },
+    -- based on entire filename
+    filename = {
+        ['.env'] = 'dotenv',
+        ['env'] = 'dotenv',
+        ['tsconfig.json'] = 'jsonc',
+    },
+    pattern = {},
+})
+-- use markdown parser for mdx files
+vim.treesitter.language.register('markdown', { 'mdx' })
+
 -- NOTE: consider moving these "default" things to plugin/ dir
 -- (automatically sourced after lazy config loaded)
 -- advantage of current way is that I have finer control
@@ -54,17 +77,9 @@ require('lazy').setup({
     { import = 'plugins.git' },
 }, lazy_opts)
 
--- workaround for some kind of highlighting in .mdx files
-vim.filetype.add({
-    extension = {
-        mdx = 'markdown.mdx',
-    },
-    filename = {},
-    pattern = {},
-})
-
--- vim.cmd('colorscheme winter-again')
 -- vim.cmd('colorscheme tokyonight')
 vim.cmd('colorscheme catppuccin')
 -- vim.cmd('colorscheme rose-pine')
+-- vim.cmd('colorscheme kanagawa')
+-- vim.cmd('colorscheme winter-again')
 vim.cmd('Transp')
