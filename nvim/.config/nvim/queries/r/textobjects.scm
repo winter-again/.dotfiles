@@ -1,5 +1,3 @@
-; use extends to to mark queries that should take precedence?
-; don't seem to need if the queries are here instead of after/
 (left_assignment
     name: (identifier)
     value: (function_definition

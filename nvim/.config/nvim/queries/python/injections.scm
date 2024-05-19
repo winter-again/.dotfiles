@@ -1,3 +1,4 @@
+;; extends
 ; Inject into python SQL queries in multiline strings, assigned to var
 ; specifically when variable name contains "query"
 ; this also makes it so that SQL queries inside of python that is

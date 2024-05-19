@@ -62,11 +62,12 @@ map('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>', opts, 'Delete buffer w/o closi
 map('n', '<leader>qn', '<cmd>cnext<CR>zz', opts, 'Next quickfixlist')
 map('n', '<leader>qp', '<cmd>cprev<CR>zz', opts, 'Prev quickfixlist')
 -- with Netrw disabled, use this to follow hyperlinks
+-- v0.10 now has as default
 -- map('n', 'gx', '<cmd>silent !xdg-open <cfile><CR>', opts, 'Open link')
 -- <cfile> is replaced with path name under cursor
-map('n', 'gx', function()
-    vim.ui.open(vim.fn.expand('<cfile>'))
-end, opts, 'Open link')
+-- map('n', 'gx', function()
+--     vim.ui.open(vim.fn.expand('<cfile>'))
+-- end, opts, 'Open link')
 map('n', '<leader>x', Save_exec_line, opts, 'Save and exec current line of Lua file')
 map('n', '<leader><leader>x', Save_exec, opts, 'Save and exec Lua file')
 map('n', '<leader><leader>t', '<cmd>Transp<CR>', opts, 'Turn on transparency')

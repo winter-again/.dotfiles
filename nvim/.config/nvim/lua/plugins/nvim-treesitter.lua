@@ -9,7 +9,6 @@ return {
         },
         config = function()
             require('nvim-treesitter.configs').setup({
-                -- first 5 are advised to always be installed
                 ensure_installed = {
                     'astro',
                     'bash',

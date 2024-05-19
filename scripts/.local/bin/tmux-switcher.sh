@@ -22,7 +22,7 @@ tmux_switcher() {
             --bind "tab:change-preview-window(hidden)+change-prompt( Common dirs: )+reload(fd . ~/Documents/Bansal-lab ~/Documents/code ~/Documents/code/nvim-dev --min-depth 1 --max-depth 1 --type d)" \
             --bind "shift-tab:preview(~/.local/bin/tmux-switcher-preview.sh {})+change-prompt( Sessions)+reload(tmux list-sessions -F '#{session_name}')" \
             --bind "ctrl-k:execute(tmux kill-session -t {})+reload(tmux list-sessions -F '#{session_name}')" \
-            --preview "~/.local/bin/tmux-switcher-preview.sh {}" \
+            --preview "$HOME/.local/bin/tmux-switcher-preview.sh {}" \
             --preview-window "right:65%" \
             --preview-window "border-left" \
             --preview-label "Currently active pane" \
@@ -48,13 +48,13 @@ tmux_switcher() {
     # is it actually fine to do a the [[ -d ... ]] check?
     if [[ $selection == *"/"* ]]; then
         session_name=$(basename "$selection" | tr . _) # clean name
-        if ! tmux has-session -t $session_name 2> /dev/null; then
-            tmux new-session -d -s $session_name -c $selection
+        if ! tmux has-session -t "$session_name" 2> /dev/null; then
+            tmux new-session -d -s "$session_name" -c "$selection"
         fi
     else
         session_name=$selection
     fi
-    tmux switch-client -t $session_name
+    tmux switch-client -t "$session_name"
 }
 
 tmux_switcher

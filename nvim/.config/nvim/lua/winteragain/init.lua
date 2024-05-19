@@ -73,7 +73,7 @@ require('winteragain.keymaps')
 -- have to import the dirs
 require('lazy').setup({
     { import = 'plugins' },
-    { import = 'plugins.lsp' },
+    { import = 'plugins.lsp-format-lint' },
     { import = 'plugins.git' },
 }, lazy_opts)
 

@@ -63,27 +63,19 @@ return {
                     -- 'yamlfix',
                 },
             })
-            -- (4) see docs: https://github.com/williamboman/mason-lspconfig.nvim/blob/09be3766669bfbabbe2863c624749d8da392c916/doc/mason-lspconfig.txt#L157
-            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
-            -- for nvim-ufo
-            -- lsp_capabilities.textDocument.foldingRange = {
-            --     dynamicRegistration = false,
-            --     lineFoldingOnly = true,
-            -- }
-
-            -- common keymaps
+            -- keymaps
             local map = function(mode, lhs, rhs, opts, desc)
                 opts = opts or {}
                 opts.desc = desc
                 vim.keymap.set(mode, lhs, rhs, opts)
             end
+            -- default in v0.10
             map('n', '[d', vim.diagnostic.goto_prev, { silent = true }, 'Go to previous diagnostic message')
             map('n', ']d', vim.diagnostic.goto_next, { silent = true }, 'Go to next diagnostic message')
             -- keymaps defined on attach
             local function on_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }
+                -- default in v0.10
                 map('n', 'K', vim.lsp.buf.hover, opts, 'Hover docs')
                 map('n', 'gs', function()
                     vim.diagnostic.open_float({ scope = 'cursor' })
@@ -114,8 +106,13 @@ return {
                 )
                 map('n', '<leader>ih', function()
                     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-                end, opts, 'Toggle inlay hints for current buf')
+                end, opts, 'Toggle inlay hints')
             end
+
+            -- (4) see docs: https://github.com/williamboman/mason-lspconfig.nvim/blob/09be3766669bfbabbe2863c624749d8da392c916/doc/mason-lspconfig.txt#L157
+            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
+            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
 
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
@@ -415,124 +412,22 @@ return {
             )
         end,
     },
-    -- {
-    --     'nvimtools/none-ls.nvim',
-    --     dependencies = { 'nvim-lua/plenary.nvim', 'nvimtools/none-ls-extras.nvim' },
-    --     config = function()
-    --         local null_ls = require('null-ls')
-    --         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-    --         null_ls.setup({
-    --             sources = {
-    --                 null_ls.builtins.formatting.stylua,
-    --                 -- null_ls.builtins.formatting.black,
-    --                 -- null_ls.builtins.formatting.isort,
-    --                 null_ls.builtins.formatting.prettierd,
-    --                 require('none-ls.diagnostics.ruff'),
-    --                 require('none-ls.formatting.ruff_format'),
-    --             },
-    --             on_attach = function(client, bufnr)
-    --                 if client.supports_method('textDocument/formatting') then
-    --                     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    --                     vim.api.nvim_create_autocmd('BufWritePre', {
-    --                         group = augroup,
-    --                         buffer = bufnr,
-    --                         callback = function()
-    --                             vim.lsp.buf.format({ async = false })
-    --                         end,
-    --                     })
-    --                 end
-    --             end,
-    --         })
-    --     end,
-    -- },
     {
-        'stevearc/conform.nvim',
-        event = { 'BufWritePre' },
-        cmd = { 'ConformInfo' },
+        'j-hui/fidget.nvim',
         config = function()
-            require('conform').setup({
-                formatters_by_ft = {
-                    css = { 'prettierd' },
-                    html = { 'prettierd' },
-                    javascript = { 'prettierd' },
-                    javascriptreact = { 'prettierd' },
-                    -- astro = { 'prettierd' },
-                    -- disabling to let jsonls handle formatting
-                    -- so we don't have to constantly set overrides in a .prettierrc.json
-                    -- json = { 'prettierd' },
-                    lua = { 'stylua' },
-                    -- trying ruff_lsp instead
-                    -- python = { 'black' },
-                    typescript = { 'prettierd' },
-                    typescriptreact = { 'prettierd' },
-                    -- sql = { 'sqlfluff' },
-                    -- 'injected' allows formatting of code fence blocks
-                    -- could even have it in python to format sql inside of queries
-                    -- see: https://github.com/stevearc/conform.nvim/blob/c36fc6492be27108395443a67bcbd2b3280f29c5/doc/advanced_topics.md
-                    -- markdown = { 'injected' },
+            require('fidget').setup({
+                notification = {
+                    window = {
+                        normal_hl = 'Comment',
+                        winblend = 0,
+                    },
                 },
-                format_on_save = function(bufnr)
-                    if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-                        return
-                    end
-                    return { timeout_ms = 500, lsp_fallback = true }
-                end,
+                integration = {
+                    ['nvim-tree'] = {
+                        enable = false, -- don't need since nvim-tree is kept on left
+                    },
+                },
             })
-
-            -- manually trigger formatting
-            vim.keymap.set('n', '<leader><leader>fm', function()
-                require('conform').format({ async = true, lsp_fallback = true })
-            end, { silent = true, desc = 'Manually format buffer with conform.nvim' })
-            -- user commands for toggling autoformatting on save
-            vim.api.nvim_create_user_command('FormatDisable', function(args)
-                if args.bang then
-                    -- FormatDisable! will disable formatting just for this buffer
-                    vim.b.disable_autoformat = true
-                else
-                    vim.g.disable_autoformat = true
-                end
-            end, {
-                desc = 'Disable autoformat-on-save',
-                bang = true,
-            })
-            vim.api.nvim_create_user_command('FormatEnable', function()
-                vim.b.disable_autoformat = false
-                vim.g.disable_autoformat = false
-            end, {
-                desc = 'Re-enable autoformat-on-save',
-            })
-        end,
-    },
-    {
-        'mfussenegger/nvim-lint',
-        event = { 'BufReadPre', 'BufNewFile' },
-        config = function()
-            require('lint').linters_by_ft = {
-                lua = { 'selene' },
-                javascript = { 'eslint' },
-                javascriptreact = { 'eslint' },
-                typescript = { 'eslint' },
-                typescriptreact = { 'eslint' },
-                markdown = {}, -- disables default linting?
-                -- python = { 'flake8' },
-            }
-
-            -- autocommand that triggers linting
-            local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
-            vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-                group = lint_group,
-                callback = function()
-                    -- ignore command-not-found errors, e.g., for eslint when no config file
-                    -- see: https://github.com/mfussenegger/nvim-lint/issues/272
-                    -- and: https://github.com/mfussenegger/nvim-lint/issues/454
-                    require('lint').try_lint(nil, { ignore_errors = true })
-                end,
-            })
-
-            -- manually trigger linting
-            vim.keymap.set('n', '<leader><leader>l', function()
-                require('lint').try_lint()
-            end, { silent = true, desc = 'Manually trigger nvim-lint' })
         end,
     },
 }

@@ -38,14 +38,14 @@ selected_name=$(basename "$selected" | tr . _) # need to sub . for _ b/c of tmux
 # start tmux itself it isn't already running
 # w/ selected session
 if [[ -z $TMUX ]] && [[ $TMUX_RUNNING -eq 0 ]]; then
-    tmux new-session -s $selected_name -c $selected
+    tmux new-session -s "$selected_name" -c "$selected"
     exit 0
 fi
 
 # create session if it doesn't exist
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected
+if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+    tmux new-session -ds "$selected_name" -c "$selected"
 fi
 
 # switch session if it exists
-tmux switch-client -t $selected_name
+tmux switch-client -t "$selected_name"

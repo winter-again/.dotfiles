@@ -8,4 +8,4 @@ get_preview_contents() {
     tmux capture-pane -ep -t "${active_pane_id}"
 }
 
-get_preview_contents $1
+get_preview_contents "$1"
