@@ -9,9 +9,9 @@ return {
             append_wezterm_to_rtp = true,
         })
         local profile_data = require('profile_data')
-        local reload = require('plenary.reload').reload_module
+        -- local reload = require('plenary.reload').reload_module
 
-        local map = function(mode, lhs, rhs, opts, desc)
+        local function map(mode, lhs, rhs, opts, desc)
             opts = opts or {}
             opts.desc = desc
             vim.keymap.set(mode, lhs, rhs, opts)
