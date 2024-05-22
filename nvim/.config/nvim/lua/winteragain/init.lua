@@ -77,9 +77,21 @@ require('lazy').setup({
     { import = 'plugins.git' },
 }, lazy_opts)
 
--- vim.cmd('colorscheme tokyonight')
-vim.cmd('colorscheme catppuccin')
--- vim.cmd('colorscheme rose-pine')
--- vim.cmd('colorscheme kanagawa')
--- vim.cmd('colorscheme winter-again')
-vim.cmd('Transp')
+---Set colorscheme and transparent background
+---@param cs_idx number
+local function colorize(cs_idx)
+    -- top colorschemes
+    local colorschemes = {
+        'tokyonight',
+        'catppuccin',
+        'rose-pine',
+        'kanagawa',
+        'mellifluous',
+        'boo',
+        'winter-again',
+    }
+    vim.cmd('colorscheme ' .. colorschemes[cs_idx])
+    vim.cmd('Transp')
+end
+
+colorize(2)

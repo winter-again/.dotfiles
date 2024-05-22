@@ -10,9 +10,11 @@ return {
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-nvim-lsp-signature-help',
         'hrsh7th/cmp-nvim-lsp-document-symbol',
+        'saadparwaiz1/cmp_luasnip', -- snippet cmp integration
+        'onsails/lspkind.nvim', -- completion menu icons
         {
             'L3MON4D3/LuaSnip',
-            version = '2.*',
+            version = 'v2.*',
             build = (function()
                 -- build step needed for optional regex support in snipppets
                 if vim.fn.executable('make') == 0 then
@@ -40,9 +42,6 @@ return {
                 end, { silent = true, desc = 'Jump to next snippet node' })
             end,
         },
-        'saadparwaiz1/cmp_luasnip', -- snippet cmp integration
-        'onsails/lspkind.nvim', -- completion menu icons
-        'chrisgrieser/cmp-nerdfont',
     },
     config = function()
         local cmp = require('cmp')
@@ -95,7 +94,6 @@ return {
                 { name = 'path' },
                 { name = 'buffer', max_item_count = 4 },
                 { name = 'nvim_lsp_signature_help' },
-                { name = 'nerdfont' },
                 { name = 'otter' },
             }),
             -- copied from TJ; currently no docs so would have to read source for explanation

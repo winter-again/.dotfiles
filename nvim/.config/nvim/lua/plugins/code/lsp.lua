@@ -12,7 +12,7 @@ return {
             -- NOTE: seems neodev no longer needed
             -- see: https://github.com/neovim/neovim/pull/24592
 
-            -- require('neodev').setup() -- neodev needs to be setup BEFORE lspconfig
+            -- require('neodev').setup() -- neodev needs to be set up BEFORE lspconfig
 
             -- NOTE: must set up these plugins in specific order:
             -- 1) mason.nvim
@@ -152,6 +152,10 @@ return {
                                 runtime = {
                                     version = 'LuaJIT',
                                 },
+                                -- seems like don't need
+                                -- diagnostics = {
+                                --     globals = { 'vim' },
+                                -- },
                                 workspace = {
                                     checkThirdParty = false,
                                     library = {
@@ -163,7 +167,8 @@ return {
                                     enable = false,
                                 },
                                 hint = {
-                                    enabled = true,
+                                    enable = true,
+                                    arrayIndex = 'Disable',
                                 },
                             })
                         end,

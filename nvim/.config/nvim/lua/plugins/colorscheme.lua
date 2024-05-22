@@ -188,6 +188,7 @@ return {
     {
         'ramojus/mellifluous.nvim',
         lazy = false,
+        priority = 995,
         config = function()
             require('mellifluous').setup({
                 -- options are
@@ -202,17 +203,21 @@ return {
                     floating_windows = true,
                     telescope = true,
                     file_tree = true,
-                    cursor_line = true,
+                    cursor_line = false,
                     status_line = false,
                 },
-
                 plugins = {
                     neo_tree = {
                         enabled = false,
                     },
+                    startify = false,
                 },
             })
         end,
+    },
+    {
+        'savq/melange-nvim',
+        lazy = false,
     },
     {
         'winter-again/winter-again.nvim',
@@ -230,13 +235,7 @@ return {
         branch = 'fix-indent-blankline',
     },
     {
-        'savq/melange-nvim',
-        enabled = false,
-        lazy = false,
-    },
-    {
         'AlexvZyl/nordic.nvim',
-        enabled = false,
         lazy = false,
         config = function()
             local palette = require('nordic.colors')
@@ -257,20 +256,18 @@ return {
     -- distinguish code over just colors
     {
         'mcchrish/zenbones.nvim',
+        lazy = false,
         dependencies = { 'rktjmp/lush.nvim' },
     },
     {
         'rockerBOO/boo-colorscheme-nvim',
+        lazy = false,
         config = function()
             require('boo-colorscheme').use({
                 italic = true,
                 theme = 'boo',
             })
         end,
-    },
-    {
-        'EdenEast/nightfox.nvim',
-        lazy = false,
     },
     {
         'nyoom-engineering/oxocarbon.nvim',

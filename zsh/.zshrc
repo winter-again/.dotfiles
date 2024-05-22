@@ -41,7 +41,7 @@ export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 # export PATH=$PATH:/usr/local/go/bin # from go install directions but I think we're using ~/.go/bin
 # for convenience; adds ~/go/bin to path
-export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # for convenience
+export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
