@@ -27,18 +27,28 @@ return {
             dependencies = {
                 'rafamadriz/friendly-snippets',
                 config = function()
-                    require('luasnip.loaders.from_vscode').lazy_load()
+                    -- require('luasnip.loaders.from_vscode').lazy_load()
                 end,
             },
             config = function()
-                require('luasnip').setup({
+                local ls = require('luasnip')
+                require('luasnip.loaders.from_lua').load({
+                    paths = { '~/.config/nvim/lua/winteragain/snippets' },
+                })
+                ls.setup({
                     update_events = { 'TextChanged', 'TextChangedI' },
                 })
+
+                -- vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+                --     if ls.expand_or_jumpable() then
+                --         ls.expand_or_jump()
+                --     end
+                -- end)
                 vim.keymap.set({ 'i', 's' }, '<C-h>', function()
-                    require('luasnip').jump(-1)
+                    ls.jump(-1)
                 end, { silent = true, desc = 'Jump to previous snippet node' })
                 vim.keymap.set({ 'i', 's' }, '<C-l>', function()
-                    require('luasnip').jump(1)
+                    ls.jump(1)
                 end, { silent = true, desc = 'Jump to next snippet node' })
             end,
         },
@@ -167,6 +177,9 @@ return {
             }, {
                 { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
             }),
+        })
+        cmp.setup.filetype('DressingInput', {
+            sources = cmp.config.sources({ { name = 'omni' } }),
         })
     end,
 }

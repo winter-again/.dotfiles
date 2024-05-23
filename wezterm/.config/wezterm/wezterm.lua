@@ -25,13 +25,12 @@ config.front_end = 'OpenGL'
 config.audible_bell = 'Disabled'
 config.default_prog = { '/usr/bin/zsh' }
 config.default_cwd = wezterm.home_dir
--- config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
-config.color_scheme = 'Catppuccin Mocha'
+config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
 config.check_for_updates = false
 -- setting this here also causes partial line problems
 -- config.term = 'wezterm' -- https://wezfurlong.org/wezterm/config/lua/config/term.html
 
-config.background = utils.set_bg('15_2')
+config.background = utils.set_bg('15_4')
 config.font = utils.set_font('1')
 config.font_size = 12.0
 -- this needs explicit setting if not the default
