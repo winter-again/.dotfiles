@@ -1,10 +1,8 @@
 local wezterm = require('wezterm')
--- local profile_data = require('lua.profile_data')
 local utils = require('utils')
 
--- allows working w/ current release and nightly
 local config = {}
-
+-- allows working w/ current release and nightly:
 -- WARNING: seems like using wezterm.config_builder()
 -- breaks things with wezterm-config.nvim but only inside of tmux
 -- logs show that the user vars that wezterm shell integration defines are invalid?
@@ -25,14 +23,20 @@ config.front_end = 'OpenGL'
 config.audible_bell = 'Disabled'
 config.default_prog = { '/usr/bin/zsh' }
 config.default_cwd = wezterm.home_dir
-config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
 config.check_for_updates = false
 -- setting this here also causes partial line problems
 -- config.term = 'wezterm' -- https://wezfurlong.org/wezterm/config/lua/config/term.html
 
-config.background = utils.set_bg('15_4')
-config.font = utils.set_font('1')
-config.font_size = 12.0
+-- local color_schemes = {
+--     'Tokyo Night',
+--     'Catppuccin Mocha',
+--     'Kanagawa (Gogh)',
+--     'rose-pine',
+-- }
+config.color_scheme = 'Tokyo Night' -- builtin colorscheme (Folke ver)
+config.background = utils.set_bg('15_7')
+config.font, config.font_size = utils.set_font_properties('Zed')
+-- config.font_size = 12.0
 -- this needs explicit setting if not the default
 config.xcursor_theme = 'capitaine-cursors-light'
 config.xcursor_size = 32 -- this works fine
@@ -160,11 +164,11 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     window:set_config_overrides(overrides)
 end)
 
-wezterm.on('send-txt-to-pane', function(window, pane, name, value)
-    -- this works
-    local msg = 'Hi, mom. This is a custom message.'
-    utils.send_text(pane, msg)
-end)
+-- wezterm.on('send-txt-to-pane', function(window, pane, name, value)
+--     -- this works
+--     local msg = 'Hi, mom. This is a custom message.'
+--     utils.send_text(pane, msg)
+-- end)
 
 wezterm.on('clear-overrides', function(window, pane)
     window:set_config_overrides({})

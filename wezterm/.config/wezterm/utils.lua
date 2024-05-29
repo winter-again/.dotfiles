@@ -14,12 +14,19 @@ end
 -- so that we can specify font and font size together in a single table
 -- in profile_data.lua? is it even worth it?
 
----@param font_name string
----@return table
-function M.set_font(font_name)
-    local font_key = 'font_' .. font_name
-    local font = wezterm.font(profile_data.font[font_key])
-    return font
+---@param font_alias string
+---@return table, number
+function M.set_font_properties(font_alias)
+    local font
+    local font_size
+    for k, v in pairs(profile_data.font) do
+        if k == font_alias then
+            font = v.font
+            font_size = v.font_size
+            break
+        end
+    end
+    return wezterm.font(font), font_size
 end
 
 ---@param config table

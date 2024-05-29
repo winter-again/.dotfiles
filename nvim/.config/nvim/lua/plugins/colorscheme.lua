@@ -198,11 +198,22 @@ return {
                 -- tender (no)
                 -- kanagawa_dragon (ok)
                 color_set = 'mountain',
+                mellifluous = {
+                    neutral = false,
+                    bg_contrast = 'hard',
+                },
+                highlight_overrides = {
+                    dark = function(highlighter, colors)
+                        highlighter.set('Visual', { bg = '#45475a' })
+                        highlighter.set('TreesitterContext', { bg = '#45475a' })
+                        highlighter.set('CursorLineNr', { fg = colors.purple })
+                    end,
+                },
                 transparent_background = {
                     enabled = true,
-                    floating_windows = true,
-                    telescope = true,
-                    file_tree = true,
+                    floating_windows = false,
+                    telescope = false,
+                    file_tree = false,
                     cursor_line = false,
                     status_line = false,
                 },

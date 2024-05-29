@@ -94,4 +94,4 @@ local function colorize(cs_idx)
     vim.cmd('Transp')
 end
 
-colorize(2)
+colorize(5)
