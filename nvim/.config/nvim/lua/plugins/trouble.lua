@@ -3,20 +3,39 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
         require('trouble').setup({
-            use_diagnostic_signs = true,
+            open_no_results = true,
+            modes = {
+                symbols = {
+                    win = { position = 'bottom' },
+                },
+                lsp = {
+                    win = { position = 'bottom' },
+                },
+            },
         })
-        vim.keymap.set('n', '<leader>tt', '<cmd>TroubleToggle<CR>', { silent = true, desc = 'Toggle Trouble' })
         vim.keymap.set(
             'n',
-            '<leader>tw',
-            '<cmd>TroubleToggle workspace_diagnostics<CR>',
-            { silent = true, desc = 'Toggle Trouble workspace diagnostics' }
+            '<leader>tt',
+            '<cmd>Trouble diagnostics toggle<CR>',
+            { silent = true, desc = 'Toggle Trouble diagnostics' }
         )
         vim.keymap.set(
             'n',
-            '<leader>td',
-            '<cmd>TroubleToggle document_diagnostics<CR>',
+            '<leader>tb',
+            '<cmd>Trouble diagnostics toggle filter.buf=0<CR>',
             { silent = true, desc = 'Toggle Trouble document diagnostics' }
         )
+        vim.keymap.set(
+            'n',
+            '<leader>ts',
+            '<cmd>Trouble symbols toggle<CR>',
+            { silent = true, desc = 'Trouble symbols' }
+        )
+        -- vim.keymap.set(
+        --     'n',
+        --     '<leader>ttd',
+        --     '<cmd>Trouble lsp toggle<CR>',
+        --     { silent = true, desc = 'Trouble LSP references/defns' }
+        -- )
     end,
 }
