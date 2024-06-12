@@ -1,5 +1,6 @@
 # font pango:Hack Nerd Font Mono 10
-font pango:JetBrains Mono 10
+# font pango:JetBrains Mono 10
+font pango:ZedMono Nerd Font Mono 10
 default_border pixel 2
 default_floating_border pixel 2
 titlebar_padding 2
