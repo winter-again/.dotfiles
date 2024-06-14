@@ -18,10 +18,10 @@ ueberzug_offset = [0, 0, 0, 0]
 
 [opener]
 edit = [{ run = 'nvim "$@"', block = true, for = "linux" }]
-open = [{ run = 'xdg-open "$@"', desc = "Open", for = "linux" }]
-reveal = [
-    { run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "linux" },
-]
+open = [{ run = 'xdg-open "$@"', orphan = true, desc = "Open", for = "linux" }]
+# reveal = [
+#     { run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "linux" },
+# ]
 extract = [{ run = 'unar "$1"', desc = "Extract here", for = "linux" }]
 play = [
     { run = 'mpv "$@"', orphan = true, for = "linux" },
