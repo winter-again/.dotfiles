@@ -35,6 +35,7 @@ return {
                     'ansiblels',
                     'astro',
                     'bashls',
+                    'clangd',
                     'cssls',
                     'css_variables',
                     'dockerls',
@@ -46,7 +47,8 @@ return {
                     'marksman',
                     'pyright',
                     'r_language_server',
-                    'ruff_lsp',
+                    'ruff',
+                    -- 'ruff_lsp',
                     'sqlls',
                     'tailwindcss',
                     'taplo',
@@ -202,29 +204,6 @@ return {
                         end,
                     })
                 end,
-                ['pyright'] = function()
-                    -- remove capabilities that ruff can provide
-                    require('lspconfig')['pyright'].setup({
-                        -- https://github.com/astral-sh/ruff-lsp/issues/384
-                        -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-                        -- not sure about this...
-                        capabilities = (function()
-                            local capabilities = vim.lsp.protocol.make_client_capabilities()
-                            capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
-                            return capabilities
-                        end)(),
-                        settings = {
-                            pyright = {
-                                disableOrganizeImports = true,
-                            },
-                            -- python = {
-                            --     analysis = {
-                            --         ignore = { '*' },
-                            --     },
-                            -- },
-                        },
-                    })
-                end,
                 ['taplo'] = function()
                     require('lspconfig')['taplo'].setup({
                         capabilities = lsp_capabilities,
@@ -236,35 +215,62 @@ return {
                         end,
                     })
                 end,
-                ['ruff_lsp'] = function()
-                    require('lspconfig')['ruff_lsp'].setup({
+                ['clangd'] = function()
+                    require('lspconfig')['clangd'].setup({
                         capabilities = lsp_capabilities,
                         on_attach = function(client, bufnr)
-                            if client.name == 'ruff_lsp' then
-                                -- let pyright handle hovering
+                            -- disable autoformatting
+                            if client.name == 'clangd' then
+                                client.server_capabilities.documentFormattingProvider = false
+                            end
+                        end,
+                    })
+                end,
+                ['pyright'] = function()
+                    -- remove capabilities that ruff can provide
+                    require('lspconfig')['pyright'].setup({
+                        -- https://github.com/astral-sh/ruff-lsp/issues/384
+                        -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+                        -- not sure about this...
+                        -- capabilities = (function()
+                        --     local capabilities = vim.lsp.protocol.make_client_capabilities()
+                        --     capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+                        --     return capabilities
+                        -- end)(),
+                        -- settings = {
+                        --     pyright = {
+                        --         disableOrganizeImports = true,
+                        --     },
+                        -- python = {
+                        --     analysis = {
+                        --         ignore = { '*' },
+                        --     },
+                        -- },
+                        -- },
+                        -- ruff not ruff-lsp:
+                        settings = {
+                            pyright = {
+                                disableOrganizeImports = true,
+                            },
+                            python = {
+                                analysis = {
+                                    ignore = { '*' },
+                                },
+                            },
+                        },
+                    })
+                end,
+                ['ruff'] = function()
+                    require('lspconfig')['ruff'].setup({
+                        capabilities = lsp_capabilities,
+                        on_attach = function(client, bufnr)
+                            if client.name == 'ruff' then
                                 client.server_capabilities.hoverProvider = false
                             end
                             on_attach(client, bufnr)
-                            -- autocommand for sorting imports with ruff via its code action
-                            -- using ruff-lsp code actions instead of the ruff commands as you would
-                            -- with none-ls solution
-                            -- https://github.com/astral-sh/ruff-lsp/issues/95 (for snippet below)
-                            -- https://github.com/astral-sh/ruff-lsp/issues/119
                             local group = vim.api.nvim_create_augroup('RuffSortImportsOnSave', { clear = true })
-                            -- vim.api.nvim_create_autocmd('BufWritePre', {
-                            --     group = group,
-                            --     buffer = bufnr,
-                            --     callback = function()
-                            --         vim.lsp.buf.code_action({
-                            --             context = { only = { 'source.organizeImports' } },
-                            --             apply = true,
-                            --         })
-                            --         vim.wait(100)
-                            --     end,
-                            -- })
-                            -- adapted from: https://github.com/astral-sh/ruff-lsp/issues/295
-                            local ruff_lsp_client =
-                                require('lspconfig.util').get_active_client_by_name(bufnr, 'ruff_lsp')
+                            local ruff_lsp_client = require('lspconfig.util').get_active_client_by_name(bufnr, 'ruff')
+                            P(ruff_lsp_client)
                             local request = function(method, params)
                                 ruff_lsp_client.request(method, params, nil, bufnr)
                             end
@@ -280,12 +286,66 @@ return {
                                 group = group,
                                 buffer = bufnr,
                                 callback = function()
-                                    sort_imports()
+                                    vim.lsp.buf.code_action({
+                                        context = { only = { 'source.organizeImports' } },
+                                        apply = true,
+                                    })
                                     vim.wait(100)
                                 end,
                             })
                         end,
                     })
+                end,
+                ['ruff_lsp'] = function()
+                    -- require('lspconfig')['ruff_lsp'].setup({
+                    --     capabilities = lsp_capabilities,
+                    --     on_attach = function(client, bufnr)
+                    --         if client.name == 'ruff_lsp' then
+                    --             -- let pyright handle hovering
+                    --             client.server_capabilities.hoverProvider = false
+                    --         end
+                    --         on_attach(client, bufnr)
+                    --         -- autocommand for sorting imports with ruff via its code action
+                    --         -- using ruff-lsp code actions instead of the ruff commands as you would
+                    --         -- with none-ls solution
+                    --         -- https://github.com/astral-sh/ruff-lsp/issues/95 (for snippet below)
+                    --         -- https://github.com/astral-sh/ruff-lsp/issues/119
+                    --         local group = vim.api.nvim_create_augroup('RuffSortImportsOnSave', { clear = true })
+                    --         -- vim.api.nvim_create_autocmd('BufWritePre', {
+                    --         --     group = group,
+                    --         --     buffer = bufnr,
+                    --         --     callback = function()
+                    --         --         vim.lsp.buf.code_action({
+                    --         --             context = { only = { 'source.organizeImports' } },
+                    --         --             apply = true,
+                    --         --         })
+                    --         --         vim.wait(100)
+                    --         --     end,
+                    --         -- })
+                    --         -- adapted from: https://github.com/astral-sh/ruff-lsp/issues/295
+                    --         local ruff_lsp_client =
+                    --             require('lspconfig.util').get_active_client_by_name(bufnr, 'ruff_lsp')
+                    --         local request = function(method, params)
+                    --             ruff_lsp_client.request(method, params, nil, bufnr)
+                    --         end
+                    --         local sort_imports = function()
+                    --             request('workspace/executeCommand', {
+                    --                 command = 'ruff.applyOrganizeImports',
+                    --                 arguments = {
+                    --                     { uri = vim.uri_from_bufnr(bufnr) },
+                    --                 },
+                    --             })
+                    --         end
+                    --         vim.api.nvim_create_autocmd('BufWritePre', {
+                    --             group = group,
+                    --             buffer = bufnr,
+                    --             callback = function()
+                    --                 sort_imports()
+                    --                 vim.wait(100)
+                    --             end,
+                    --         })
+                    --     end,
+                    -- })
                 end,
             }
             require('mason-lspconfig').setup_handlers(handlers)

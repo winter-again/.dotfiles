@@ -204,7 +204,9 @@ return {
                 },
                 highlight_overrides = {
                     dark = function(highlighter, colors)
-                        highlighter.set('Visual', { bg = '#45475a' })
+                        -- highlighter.set('Visual', { bg = '#45475a' })
+                        highlighter.set('Visual', { reverse = true })
+                        -- highlighter.set('MatchParen', { reverse = true })
                         highlighter.set('TreesitterContext', { bg = '#45475a' })
                         highlighter.set('CursorLineNr', { fg = colors.purple })
                     end,
