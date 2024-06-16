@@ -1,6 +1,8 @@
 .player {
     padding: 10px;
-    min-width: 300px;
+    min-width: 350px;
+    font-family: JetBrains Mono;
+    font-size: 0.8em;
 }
 
 .player .img {
