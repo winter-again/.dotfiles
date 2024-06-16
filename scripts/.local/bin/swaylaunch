@@ -1,41 +1,94 @@
 #!/usr/bin/env bash
 
 cd ~ || exit
-# XDG spec
+
+# session
+# also see some of these in greetd wiki:
+# https://man.sr.ht/~kennylevinsen/greetd/#how-to-set-xdg_session_typewayland
 export XDG_SESSION_TYPE=wayland
 export XDG_SESSION_DESKTOP=sway
-export XDG_CURRENT_DESKTOP=sway # supp to help with Firefox screensharing
-# for some Java-based apps to launch/display properly; unsure if I really need it
-export _JAVA_AWT_WM_NONREPARENTING=1
-# theming
-# some apps ref to these XCURSOR_* vars
-export XCURSOR_THEME=capitaine-cursors-light
-export XCURSOR_SIZE=32
-export GTK_THEME=Tokyonight-Dark-BL
-export WLR_NO_HARDWARE_CURSORS=1 # in case the cursor is invisible; might be Nvidia only
-# use Wayland for Qt apps
-export QT_QPA_PLATFORM=wayland # make Qt apps use Wayland backend
-export QT_QPA_PLATFORMTHEME=qt5ct # pick theme from qt5ct
-# export QT_STYLE_OVERRIDE=kvantum # not sure if this conflicts with qt5ct
-export QT_WAYLAND_DISABLE_WINDOWDECORATION=1 # disables Qt client-side decorations
-# detect integrated GPU and set var for Sway
-# not entirely sure this is needed
-val=$(udevadm info -a -n /dev/dri/card1 | grep boot_vga | rev | cut -c 2)
-export WLR_DRM_DEVICES="/dev/dri/card$val"
+# from Sway wiki (https://github.com/swaywm/sway/wiki)
+# some apps rely on XDG_CURRENT_DESKTOP being set
+# e.g., Firefox screensharing
+export XDG_CURRENT_DESKTOP=sway
+
 # Firefox w/ Wayland (https://wiki.archlinux.org/title/Firefox#Wayland)
 export MOZ_ENABLE_WAYLAND=1
-# NVIDIA-specific
+# also installed intel-media-driver for Firefox VA-API:
+# https://bbs.archlinux.org/viewtopic.php?id=288764
+# NOTE: try
+# from Arch wiki:
+# though Firefox should auto-choose the correct GPU for VA-API
+# hardware accel
+# to save power on multi-GPU systems
+export MOZ_DRM_DEVICE=/dev/dri/card1
+
+# also from Sway wiki
+# for some Java-based apps to launch/display properly
+# otherwise blank screen
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# should make most Electron apps run w/ Wayland w/o the individual flags in desktop files
+# export ELECTRON_OZONE_PLATFORM_HINT=auto
+
+# appearance
+# some apps ref to these XCURSOR_* vars
+# NOTE: try not spec these -> ok; they still seem to be set
+# export XCURSOR_THEME=capitaine-cursors-light
+# export XCURSOR_SIZE=32
+# fine for setting GTK theme but limited since no env vars for icons/cursor
+# for those, use gsettings instead (I do this so maybe that's why it's fine)
+# export GTK_THEME=Tokyonight-Dark-BL
+
+# Qt
+export QT_QPA_PLATFORM=wayland # make Qt apps use Wayland backend; shouldn't be necessary
+export QT_QPA_PLATFORMTHEME=qt5ct # pick theme from qt5ct
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1 # disables Qt client-side decorations
+
+# ----
+# from Sway wiki
+# wlroots will choose a card for you
+# otherwise, use integrated GPU since that's likely what we want for Sway
+# not sure this is needed
+# curr version in wiki:
+# export WLR_DRM_DEVICES=/dev/dri/card1
+# could also use:
+# first used for actual rendering and buffers copied to second card
+# export WLR_DRM_DEVICES=/dev/dri/card0:/dev/dri/card1
+
+# old ver is only in Reddit posts:
+# https://www.reddit.com/r/swaywm/comments/16wkoad/how_to_use_discrete_gpu_only/
+# https://www.reddit.com/r/swaywm/comments/x4c02l/help_needed_gdm_dual_gpu_polkit_authentication/
+# this should be setting the iGPU automatically
+# val=$(udevadm info -a -n /dev/dri/card1 | grep boot_vga | rev | cut -c 2)
+# export WLR_DRM_DEVICES="/dev/dri/card$val"
+# ----
+
+# in case cursor invis w/ proprietary NVIDIA drivers
+# NOTE: try not spec -> ok
+# export WLR_NO_HARDWARE_CURSORS=1
+
+# ----
+# NVIDIA
+# driver for VA-API
 # from Arch wiki (https://wiki.archlinux.org/title/Hardware_video_acceleration)
 # and also in the Hyprland wiki
 # but maybe it should be Intel instead? e.g., "i965" or "iHD"
-export LIBVA_DRIVER_NAME=nvidia # hardware accel on NVIDIA GPUs
+# installed drivers at /usr/lib/dri/
+# NOTE: try not spec -> ok; set to nothing and VA-API seems to work on Firefox
+# export LIBVA_DRIVER_NAME=nvidia
+
 # force GBM backend; from Arch and Hyprland wikis
 # https://wiki.archlinux.org/title/Wayland#Requirements
-# seems to cause Firefox to crash on certain sites (as mentioned in Hyprland wiki)
+# causes Firefox to crash on certain sites and issues w/ Zoom screensharing
+# mentioned in Hyprland wiki
 # export GBM_BACKEND=nvidia-drm 
+
 # this might cause probs w/ Zoom screen sharing? Hyprland wiki says it might
 # cause Discord problems with screensharing or windows not showing
 # so maybe affects Zoom screensharing
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
+# NOTE: try not spec -> ok
+# export __GLX_VENDOR_LIBRARY_NAME=nvidia
+# ----
 
-exec sway --unsupported-gpu
+exec sway --unsupported-gpu --debug --verbose 2> ~/sway.log

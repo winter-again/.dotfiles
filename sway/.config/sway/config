@@ -1,24 +1,35 @@
-# font pango:Hack Nerd Font Mono 10
-# font pango:JetBrains Mono 10
 font pango:ZedMono Nerd Font Mono 10
-default_border pixel 2
-default_floating_border pixel 2
-titlebar_padding 2
-titlebar_border_thickness 2
+# font pango:JetBrains Mono 10
+# font pango:Hack Nerd Font Mono 10
+
+default_border pixel 1
+default_floating_border pixel 1
+titlebar_padding 1
+titlebar_border_thickness 1
+
+# from Arch wiki:
 # covers just in sway
 # seat0 is the default seat; seat * would apply to all
 # seat seat0 xcursor_theme phinger-cursors-light 32
 seat seat0 xcursor_theme capitaine-cursors-light 32
-# colors:
-# title bar border
-# title bar background
-# title bar text
-# new view indic
-# view border (entire window)
-client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9d7cd8 #7aa2f7
+
+# this needs swaybg to work
+output * bg #16161e solid_color
+
+# (1) bar: title bar border
+# (2) background: title bar background
+# (3) text: title bar text
+# (4) indicator: color for indicator of where new view will open
+# (5) child_border: border around the view itself (the entire window/container; the actual border)
+
+# window that has focus 
+client.focused          #7aa2f7 #7aa2f7 #16161e #9d7cd8 #7aa2f7
+# the most recently focused view within a container that isn't focused
 client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261 #3b4261
-client.unfocused        #3b4261 #1a1b26 #c0caf5 #1a1b26 #1a1b26
-client.urgent           #f7768e #f7768e #1a1b26 #f7768e #f7768e
+# any view that doesn't have focus
+client.unfocused        #3b4261 #16161e #c0caf5 #16161e #16161e
+# a view with urgency hint
+client.urgent           #f7768e #f7768e #16161e #f7768e #f7768e
 
 input "type:keyboard" {
     xkb_layout us
@@ -29,17 +40,13 @@ input "type:keyboard" {
 
 input "type:pointer" {
     accel_profile "flat"
-    pointer_accel 0.25
+    pointer_accel 0.3
 }
 
 input "type:touchpad" {
     tap enabled
     natural_scroll enabled
 }
-
-# tokyonight bg_dark
-# I guess this needs swaybg to work
-output * bg #16161e solid_color
 
 set {
     $mod Mod1
@@ -81,6 +88,7 @@ output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
 # output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
 # focus monitor on launch
 focus output $primary_mon
+
 # first available output will be used
 # so give laptop as fallback
 workspace 1 output $primary_mon $laptop_disp
@@ -88,11 +96,13 @@ workspace 2 output $primary_mon $laptop_disp
 workspace 3 output $primary_mon $laptop_disp
 workspace 4 output $primary_mon $laptop_disp
 workspace 5 output $primary_mon $laptop_disp
+
 workspace 6 output $secondary_mon $laptop_disp
 workspace 7 output $secondary_mon $laptop_disp
 workspace 8 output $secondary_mon $laptop_disp
 workspace 9 output $secondary_mon $laptop_disp
 workspace 10 output $secondary_mon $laptop_disp
+
 # workspace 6 output $primary_mon $laptop_disp
 # workspace 7 output $primary_mon $laptop_disp
 # workspace 8 output $primary_mon $laptop_disp
@@ -169,6 +179,11 @@ bindsym {
     $mod+Shift+9 move container to workspace number $ws9
     $mod+Shift+0 move container to workspace number $ws10
 
+    $mod+comma focus left
+    $mod+semicolon focus right
+    # $mod+comma focus prev
+    # $mod+semicolon focus right
+
     $mod+y split h
     $mod+x split v
     $mod+s layout stacking
@@ -183,11 +198,10 @@ bindsym {
     # Move focus to the parent container
     $mod+a focus parent
     # Move the currently focused window to the scratchpad
-    $mod+Shift+minus move scratchpad
+    # $mod+Shift+minus move scratchpad
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     $mod+minus scratchpad show
-
     $mod+r mode "resize"
 }
 # media keys
@@ -225,32 +239,40 @@ mode "resize" {
 
 # execs
 exec_always pkill kanshi; exec kanshi
-# exec_always pkill mako; exec mako
 exec {
-# swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
-    # swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
-    swayidle -w before-sleep 'gtklock -d -t "%I:%m %p"'
-    mako
-    # swaync
     waybar
     nm-applet
     solaar -w hide
-    spotify-launcher
+    mako
+    # swaync
+    # spotify-launcher
+    # swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
+    # swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
+    swayidle -w before-sleep 'gtklock -d -t "%I:%m %p"'
+
     # for xwayland, maybe also for nsxiv
     # xrdb -load ~/.Xresources
 }
+
+# use app_id instead of class if Wayland
+assign [app_id="Slack"] $ws1
+# force Slack to use stacking layout
+for_window [app_id="Slack"] layout stacking
+# assign [class="Slack"] $ws1
+
+assign [app_id="obsidian"] $ws4 
 
 # spotify is stubborn if on X
 # for_window [class="Spotify"] move window to workspace $ws7
 # assign spotify on Wayland; seems to work
 assign [title="^Spotify"] $ws7
-# use app_id instead of class if Wayland
-assign [app_id="Slack"] $ws1
-assign [class="Slack"] $ws8
-assign [app_id="obsidian"] $ws4 
+
 assign [app_id="discord"] $ws10
-assign [class="discord"] $ws10
+# assign [class="discord"] $ws10
+
 # for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 # for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
+
+exec /home/andrew/.local/bin/sway_startup
 
 include /etc/sway/config.d/*
