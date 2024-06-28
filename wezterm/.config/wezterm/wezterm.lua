@@ -83,20 +83,20 @@ config.hide_tab_bar_if_only_one_tab = true
 -- config.use_fancy_tab_bar = true -- default
 -- config.show_tab_index_in_tab_bar = true
 -- mouse and keys
--- config.bypass_mouse_reporting_modifiers = 'CTRL' -- use CTRL to bypass app mouse repoorting (for hyperlinks)
+config.bypass_mouse_reporting_modifiers = 'CTRL' -- use CTRL to bypass app mouse repoorting (for hyperlinks)
 -- https://wezfurlong.org/wezterm/config/mouse.html#configuring-mouse-assignments
--- config.mouse_bindings = {
---     {
---         event = { Up = { streak = 1, button = 'Left' } },
---         modds = 'CTRL',
---         action = wezterm.action.OpenLinkAtMouseCursor,
---     },
---     {
---         event = { Down = { streak = 1, button = 'Left' } },
---         mods = 'CTRL',
---         action = wezterm.action.Nop,
---     },
--- }
+config.mouse_bindings = {
+    {
+        event = { Up = { streak = 1, button = 'Left' } },
+        modds = 'CTRL',
+        action = wezterm.action.OpenLinkAtMouseCursor,
+    },
+    {
+        event = { Down = { streak = 1, button = 'Left' } },
+        mods = 'CTRL',
+        action = wezterm.action.Nop,
+    },
+}
 
 config.leader = { key = 'm', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {

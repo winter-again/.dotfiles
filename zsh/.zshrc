@@ -63,9 +63,6 @@ alias ffetch="fastfetch"
 alias R="R --no-save" # never prompt to save workspace image
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
-alias jn="jupyter notebook"
-# for starting rstudio with flags for Wayland; shouldn't need this now that the .desktop file works
-# alias rstd="/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland &"
 alias yz="yazi"
 alias fd="fd --hidden --color never"
 # git aliases
@@ -102,6 +99,10 @@ ff() {
     fi
     cd "$dir"
 }
+# mkdir -p and cd automatically
+mkd() {
+    [[ "$1" ]] && mkdir -p "$1" && cd "$1"
+}
 # tt() {
 #     ~/.local/bin/tmux-sessionizer.sh
 # }
@@ -117,7 +118,7 @@ wez-logs() {
     cd /run/user/1000/wezterm
     ls
 }
-wez-plug() {
+wez-plugs() {
     cd ~/.local/share/wezterm/plugins
     ls
 }
@@ -173,8 +174,8 @@ export FZF_DEFAULT_OPTS="--height 40%
     --preview-window '50%'
     --color=fg:#c0caf5,bg:-1,hl:underline:#9d7cd8 \
     --color=fg+:#c0caf5,bg+:#283457,hl+:underline:#7dcfff \
-	--color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5
-	--color=marker:#9ece6a,spinner:#9ece6a
+    --color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5
+    --color=marker:#9ece6a,spinner:#9ece6a
     --color=gutter:-1,border:#7aa2f7,header:-1
     --color=preview-fg:#c0caf5,preview-bg:-1"
 # use fd, follow symlinks, include hidden files, respect .gitignore (https://github.com/junegunn/fzf#respecting-gitignore)
@@ -207,8 +208,6 @@ eval "$(fnm env --use-on-cd)"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" # from pyenv section on zsh
 eval "$(pyenv init -)"
-
-# pdm
 
 unsetopt beep autocd
 setopt hist_ignore_all_dups # delete old even if new one is dup
