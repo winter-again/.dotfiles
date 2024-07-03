@@ -8,6 +8,10 @@ return {
             virtual_symbol = '󱓻',
             enable_named_colors = true,
             enable_tailwind = true,
+            formatting = {
+                -- colors in cmp?
+                format = require('nvim-highlight-colors').format,
+            },
         })
     end,
 }
