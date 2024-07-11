@@ -135,7 +135,7 @@ bindsym {
     # using satty
     # $mod+c exec grim -g "$(slurp -d)" - | satty --filename - --fullscreen --early-exit
     # open Obsidian
-    # $mod+o exec obsidian --ozone-platform-hint=auto
+    $mod+o exec obsidian --ozone-platform-hint=auto --disable-gpu
     # pick color and copy to clipboard; send simple noti too
     # $mod+i exec hyprpicker -azn | xargs -I {} notify-send "hyprpicker" "<b>{}</b>"
 

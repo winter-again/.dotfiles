@@ -31,6 +31,7 @@ return {
             '<cmd>Trouble symbols toggle<CR>',
             { silent = true, desc = 'Trouble symbols' }
         )
+        vim.keymap.set('n', '<leader>ls', '<cmd>Trouble qflist toggle<CR>', { silent = true, desc = 'Trouble qflist' })
         -- vim.keymap.set(
         --     'n',
         --     '<leader>ttd',

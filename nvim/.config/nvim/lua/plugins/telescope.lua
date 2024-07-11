@@ -90,6 +90,7 @@ return {
             -- end
 
             -- local fb_actions = require('telescope._extensions.file_browser.actions')
+            local actions = require('telescope.actions')
             require('telescope').setup({
                 defaults = {
                     vimgrep_arguments = vimgrep_arguments,
@@ -99,11 +100,12 @@ return {
                             prompt_position = 'top',
                         },
                     },
-                    -- mappings = {
-                    --     i = {
-                    --         ['<CR>'] = select_one_or_multi,
-                    --     },
-                    -- },
+                    mappings = {
+                        i = {
+                            ['<M-q>'] = false,
+                            ['<C-s>'] = actions.send_selected_to_qflist,
+                        },
+                    },
                 },
                 pickers = {
                     find_files = {
