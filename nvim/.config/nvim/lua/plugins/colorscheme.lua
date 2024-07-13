@@ -1,5 +1,49 @@
 return {
     {
+        'ramojus/mellifluous.nvim',
+        lazy = false,
+        priority = 995,
+        config = function()
+            require('mellifluous').setup({
+                -- options are
+                -- mellifluous (ok)
+                -- alduin (ok)
+                -- mountain (ok)
+                -- tender (no)
+                -- kanagawa_dragon (ok)
+                color_set = 'mountain',
+                mellifluous = {
+                    neutral = false,
+                    bg_contrast = 'hard',
+                },
+                highlight_overrides = {
+                    dark = function(highlighter, colors)
+                        -- highlighter.set('Visual', { bg = '#45475a' })
+                        highlighter.set('Visual', { reverse = true })
+                        -- highlighter.set('MatchParen', { reverse = true })
+                        highlighter.set('TreesitterContext', { bg = '#45475a' })
+                        highlighter.set('CursorLineNr', { fg = colors.purple })
+                        highlighter.set('TelescopeMatching', { fg = colors.purple })
+                    end,
+                },
+                transparent_background = {
+                    enabled = true,
+                    floating_windows = false,
+                    telescope = false,
+                    file_tree = false,
+                    cursor_line = false,
+                    status_line = false,
+                },
+                plugins = {
+                    neo_tree = {
+                        enabled = false,
+                    },
+                    startify = false,
+                },
+            })
+        end,
+    },
+    {
         'folke/tokyonight.nvim',
         lazy = false, -- ensure main colorscheme loaded on start up
         priority = 1000, -- ensure colorscheme loaded before all other start up plugins
@@ -182,49 +226,6 @@ return {
                     WinBarNC = { bg = 'none', italic = true },
                 },
                 transparent_mode = true,
-            })
-        end,
-    },
-    {
-        'ramojus/mellifluous.nvim',
-        lazy = false,
-        priority = 995,
-        config = function()
-            require('mellifluous').setup({
-                -- options are
-                -- mellifluous (ok)
-                -- alduin (ok)
-                -- mountain (ok)
-                -- tender (no)
-                -- kanagawa_dragon (ok)
-                color_set = 'mountain',
-                mellifluous = {
-                    neutral = false,
-                    bg_contrast = 'hard',
-                },
-                highlight_overrides = {
-                    dark = function(highlighter, colors)
-                        -- highlighter.set('Visual', { bg = '#45475a' })
-                        highlighter.set('Visual', { reverse = true })
-                        -- highlighter.set('MatchParen', { reverse = true })
-                        highlighter.set('TreesitterContext', { bg = '#45475a' })
-                        highlighter.set('CursorLineNr', { fg = colors.purple })
-                    end,
-                },
-                transparent_background = {
-                    enabled = true,
-                    floating_windows = false,
-                    telescope = false,
-                    file_tree = false,
-                    cursor_line = false,
-                    status_line = false,
-                },
-                plugins = {
-                    neo_tree = {
-                        enabled = false,
-                    },
-                    startify = false,
-                },
             })
         end,
     },

@@ -52,6 +52,11 @@ local function diff_source()
     end
 end
 
+local function qflist()
+    local qfl = vim.fn.getqflist()
+    return #qfl
+end
+
 return {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
@@ -97,11 +102,16 @@ return {
                         path = 3,
                     },
                 },
-                lualine_x = { 'encoding', 'filetype', { display_lsp_venv, icon = { ' LSP:' } } },
+                lualine_x = {
+                    'encoding',
+                    'filetype',
+                    { display_lsp_venv, icon = { ' LSP:' } },
+                    { qflist, icon = { 'QF:' } },
+                },
                 lualine_y = { 'progress' },
                 lualine_z = { 'location' },
             },
-            extensions = { 'nvim-tree', 'fugitive' },
+            extensions = { 'nvim-tree', 'fugitive', 'quickfix', 'trouble' },
         })
     end,
 }

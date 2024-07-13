@@ -428,7 +428,7 @@ return {
     },
     {
         'glepnir/lspsaga.nvim',
-        dev = true,
+        dev = false,
         event = 'LspAttach',
         dependencies = {
             'nvim-tree/nvim-web-devicons',
