@@ -164,9 +164,9 @@ return {
                     --     git_command = { 'git', 'log', '--oneline', '--decorate', '--all', '.' },
                     -- },
                     undo = {
-                        use_delta = false,
+                        use_delta = true,
                         -- use_delta must be true to use side_by_side
-                        side_by_side = false,
+                        side_by_side = false, -- may contradict .gitconfig delta settings
                         layout_strategy = 'vertical',
                         layout_config = {
                             preview_height = 0.6,
