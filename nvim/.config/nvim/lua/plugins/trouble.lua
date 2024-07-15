@@ -6,7 +6,7 @@ return {
             require('trouble').setup({
                 open_no_results = true,
                 preview = {
-                    -- show qflist preview as right side split
+                    -- show preview as right side split inside of the trouble window
                     type = 'split',
                     relative = 'win',
                     position = 'right',

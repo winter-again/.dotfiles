@@ -9,9 +9,9 @@ local config = {}
 -- opened issue here: https://github.com/wez/wezterm/issues/5078#issue-2153349617
 --
 -- allows working w/ current release and nightly:
--- if wezterm.config_builder then
---     config = wezterm.config_builder() -- allows better logging of warnings and errors
--- end
+if wezterm.config_builder then
+    config = wezterm.config_builder() -- allows better logging of warnings and errors
+end
 
 -- trying this since it's technically using the dGPU now; unsure of whether one is clearly better
 -- local gpus = wezterm.gui.enumerate_gpus()
@@ -172,19 +172,41 @@ config.keys = {
 -- otherwise check `/run/user/1000/wezterm/plugins/`
 -- only http or local filesystem repos are allowed
 local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
--- local wezterm_config_nvim = require('wezterm_config_plug')
 -- local wezterm_config_nvim = wezterm.plugin.require('/home/andrew/Documents/code/nvim-dev/wezterm-config.nvim')
+-- local wezterm_config_nvim = require('wezterm_config_plug')
 
 -- callbacks
 wezterm.on('user-var-changed', function(window, pane, name, value)
-    -- get copy of the currently set overrides if they exist
-    -- otherwise empty table
     local overrides = window:get_config_overrides() or {}
-    -- START of where user would use wezterm plugin API
+    -- print('OVERRIDES PRE:')
+    -- print(overrides)
+    -- print('USER VAR NAME:')
+    -- print(name)
+
+    -- NOTE: still triggered for user vars not overridden from nvim
+    -- and those won't be JSON
+    -- if not wezterm_config_nvim.is_shell_integ_user_var(name) then
+    -- print('RAW VALUE:')
+    -- print(value)
+
+    local parsed_val = wezterm.json_parse(value)
+    -- local ok, parsed_val = pcall(wezterm.json_parse, value)
+    local parsed_val_type = type(parsed_val)
+    print(string.format('PARSED DATA: %s = %s (type: %s)', name, parsed_val, parsed_val_type))
+    print(parsed_val)
+
     overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
-    -- utils.log_overrides(value, overrides)
-    -- END
+
+    -- print('OVERRIDES POST:')
+    -- print(overrides)
+
     window:set_config_overrides(overrides)
+end)
+
+wezterm.on('clear-overrides', function(window, pane)
+    window:set_config_overrides({})
+    -- NOTE: timeout doesn't actually work
+    window:toast_notification('wezterm', 'Config overrides cleared', nil, 2000)
 end)
 
 -- wezterm.on('send-txt-to-pane', function(window, pane, name, value)
@@ -192,10 +214,5 @@ end)
 --     local msg = 'Hi, mom. This is a custom message.'
 --     utils.send_text(pane, msg)
 -- end)
-
-wezterm.on('clear-overrides', function(window, pane)
-    window:set_config_overrides({})
-    window:toast_notification('wezterm', 'Config overrides cleared', nil, 2000)
-end)
 
 return config

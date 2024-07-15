@@ -247,4 +247,5 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 eval "$(zoxide init zsh)" # zoxide; keep at end
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # keep at end
+source ~/.config/wezterm/wezterm.sh
 # zprof
