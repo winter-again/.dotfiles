@@ -82,6 +82,17 @@ return {
 
             local actions = require('telescope.actions')
             local fb_actions = require('telescope._extensions.file_browser.actions')
+
+            -- NOTE: define custom action for opening Trouble qflist buffer
+            local transform_mod = require('telescope.actions.mt').transform_mod
+            local trouble = require('trouble')
+            local mod = {
+                open_trouble_qflist = function(prompt_bufnr)
+                    trouble.open('qflist')
+                end,
+            }
+            mod = transform_mod(mod)
+
             require('telescope').setup({
                 defaults = {
                     border = false,
@@ -111,9 +122,9 @@ return {
                     },
                     mappings = {
                         i = {
-                            ['<C-q'] = actions.send_to_qflist, -- default
+                            ['<C-q>'] = actions.send_to_qflist + mod.open_trouble_qflist,
                             ['<M-q>'] = false,
-                            ['<C-s>'] = actions.send_selected_to_qflist,
+                            ['<C-s>'] = actions.send_selected_to_qflist + mod.open_trouble_qflist,
                             ['<CR>'] = select_one_or_multi,
                         },
                     },

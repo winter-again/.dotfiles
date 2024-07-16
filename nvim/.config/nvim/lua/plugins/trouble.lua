@@ -5,6 +5,7 @@ return {
         config = function()
             require('trouble').setup({
                 open_no_results = true,
+                -- won't follow if preview specified
                 preview = {
                     -- show preview as right side split inside of the trouble window
                     type = 'split',

@@ -1,19 +1,22 @@
 return {
-    -- problems with statuscol:
-    -- {
-    --     enabled = false,
-    --     'mbbill/undotree',
-    -- },
     {
-        'jiaoshijie/undotree',
-        dependencies = 'nvim-lua/plenary.nvim',
+        'mbbill/undotree',
+        enabled = true,
         config = function()
-            require('undotree').setup({
-                window = {
-                    winblend = 1,
-                },
-            })
-            vim.keymap.set('n', '<leader>ut', require('undotree').toggle, { silent = true, desc = 'Toggle undotree' })
+            vim.keymap.set('n', '<leader>ut', '<cmd>UndotreeToggle<CR>', { silent = true, desc = 'Toggle undo tree' })
         end,
     },
+    -- {
+    --     'jiaoshijie/undotree',
+    --     enabled = false,
+    --     dependencies = 'nvim-lua/plenary.nvim',
+    --     config = function()
+    --         require('undotree').setup({
+    --             window = {
+    --                 winblend = 1,
+    --             },
+    --         })
+    --         vim.keymap.set('n', '<leader>ut', require('undotree').toggle, { silent = true, desc = 'Toggle undotree' })
+    --     end,
+    -- },
 }
