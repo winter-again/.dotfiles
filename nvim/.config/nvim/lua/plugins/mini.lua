@@ -95,4 +95,12 @@ return {
             vim.keymap.set('n', '<leader>ll', '<cmd>lua MiniFiles.open()<CR>')
         end,
     },
+    {
+        'echasnovski/mini.doc',
+        enabled = false,
+        version = false,
+        config = function()
+            require('mini.doc').setup()
+        end,
+    },
 }
