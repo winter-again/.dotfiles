@@ -5,20 +5,36 @@ return {
         config = function()
             require('trouble').setup({
                 open_no_results = true,
-                -- won't follow if preview specified
-                preview = {
-                    -- show preview as right side split inside of the trouble window
-                    type = 'split',
-                    relative = 'win',
-                    position = 'right',
-                    size = 0.5,
-                },
                 modes = {
-                    symbols = {
+                    diagnostics = {
                         win = { position = 'bottom' },
+                        preview = {
+                            type = 'split',
+                            relative = 'win',
+                            position = 'right',
+                            size = 0.5,
+                        },
+                    },
+                    symbols = {
+                        win = { position = 'right', size = 0.25 },
+                        preview = {
+                            type = 'split',
+                            relative = 'win',
+                            position = 'bottom',
+                            size = 0.5,
+                        },
                     },
                     lsp = {
                         win = { position = 'bottom' },
+                    },
+                    qflist = {
+                        win = { position = 'bottom' },
+                        preview = {
+                            type = 'split',
+                            relative = 'win',
+                            position = 'right',
+                            size = 0.5,
+                        },
                     },
                 },
             })
