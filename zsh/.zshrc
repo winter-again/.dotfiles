@@ -167,17 +167,28 @@ gbs() {
 # fzf
 source /usr/share/fzf/key-bindings.zsh # fzf keybinds
 source /usr/share/fzf/completion.zsh # fzf fuzzy completion
+# export FZF_DEFAULT_OPTS="--height 40%
+#     --layout reverse
+#     --preview 'bat --theme=base16 --color always {}'
+#     --no-separator
+#     --preview-window '50%'
+#     --color=fg:#c0caf5,bg:-1,hl:underline:#9d7cd8 \
+#     --color=fg+:#c0caf5,bg+:#283457,hl+:underline:#7dcfff \
+#     --color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5
+#     --color=marker:#9ece6a,spinner:#9ece6a
+#     --color=gutter:-1,border:#7aa2f7,header:-1
+#     --color=preview-fg:#c0caf5,preview-bg:-1"
 export FZF_DEFAULT_OPTS="--height 40%
     --layout reverse
     --preview 'bat --theme=base16 --color always {}'
     --no-separator
     --preview-window '50%'
-    --color=fg:#c0caf5,bg:-1,hl:underline:#9d7cd8 \
-    --color=fg+:#c0caf5,bg+:#283457,hl+:underline:#7dcfff \
-    --color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5
-    --color=marker:#9ece6a,spinner:#9ece6a
-    --color=gutter:-1,border:#7aa2f7,header:-1
-    --color=preview-fg:#c0caf5,preview-bg:-1"
+    --color=fg:#f0f0f0,bg:-1,hl:underline:#8f8aac \
+    --color=fg+:#f0f0f0,bg+:#262626,hl+:underline:#8a98ac \
+    --color=info:#c6a679,prompt:#8f8aac,pointer:#f0f0f0
+    --color=marker:#8aac8b,spinner:#8aac8b
+    --color=gutter:-1,border:#8a98ac,header:-1
+    --color=preview-fg:#f0f0f0,preview-bg:-1"
 # use fd, follow symlinks, include hidden files, respect .gitignore (https://github.com/junegunn/fzf#respecting-gitignore)
 export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND" # search cwd and output to stdout
