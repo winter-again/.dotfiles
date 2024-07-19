@@ -1,3 +1,21 @@
+/* tokyo night */
+/* @define-color primary #7aa2f7; */
+/* @define-color secondary #9d7cd8; */
+/* @define-color fg #c0caf5; */
+/* @define-color bg #292e42; */
+/* @define-color bg-dark #16161e; */
+/* @define-color urgent #f7768e; */
+
+/* mountain */
+@define-color primary #8f8aac;
+@define-color secondary #8a98ac;
+@define-color fg #cacaca;
+@define-color bg #191919;
+@define-color bg-dark #0f0f0f;
+@define-color urgent #ac8a8c;
+
+@define-color spotify #1db954;
+
 * {
     font-family:
         ZedMono Nerd Font,
@@ -9,20 +27,20 @@
 }
 
 window#waybar {
-    background-color: #16161e;
-    color: #c0caf5;
+    background-color: @bg-dark;
+    color: @fg;
     transition-property: background-color;
     transition-duration: 0.5s;
 }
 
 tooltip {
-    color: #c0caf5;
-    background: #292e42;
+    color: @fg;
+    background: @bg;
     border-radius: 5px;
 }
 
 #workspaces button {
-    color: #c0caf5;
+    color: @fg;
     background: transparent;
     border-radius: 5px;
     min-width: 1.6rem;
@@ -31,39 +49,39 @@ tooltip {
 }
 
 #workspaces button.visible {
-    color: #16161e;
-    background: #9d7cd8;
+    color: @bg-dark;
+    background: @secondary;
 }
 
 #workspaces button.visible:hover {
-    background: #9d7cd8;
+    background: @seconary;
 }
 
 #workspaces button.focused {
-    color: #16161e;
-    background: #7aa2f7;
+    color: @bg-dark;
+    background: @primary;
 }
 
 #workspaces button.focused:hover {
-    background: #7aa2f7;
+    background: @primary;
 }
 
 #workspaces button:hover {
-    background: #292e42;
+    background: @bg;
     box-shadow: none;
 }
 
 #workspaces button.urgent {
-    color: #f7768e;
+    color: @urgent;
 }
 
 #custom-spotify {
-    color: #1db954;
+    color: @spotify;
     margin-left: 120px;
 }
 
 #custom-spotify.paused {
-    color: #c0caf5;
+    color: @fg;
 }
 
 #custom-weather,
@@ -76,7 +94,7 @@ tooltip {
 #network,
 #pulseaudio,
 #tray {
-    color: #c0caf5;
+    color: @fg;
     background: transparent;
     padding: 0px;
     border-radius: 5px;
@@ -103,15 +121,15 @@ tooltip {
 }
 
 #temperature.critical {
-    color: #f7768e;
+    color: @urgent;
 }
 
 #network.disconnected {
-    color: #f7768e;
+    color: @urgent;
 }
 
 #battery.critical:not(.charging) {
-    color: #f7768e;
+    color: @urgent;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -121,9 +139,9 @@ tooltip {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    box-shadow: inset 0 -3px #f7768e;
+    box-shadow: inset 0 -3px @urgent;
 }
 
 label:focus {
-    background-color: #16161e;
+    background-color: @bg-dark;
 }

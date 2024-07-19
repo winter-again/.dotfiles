@@ -18,11 +18,21 @@ padding-top = 20
 prompt-padding = 5
 result-spacing = 5
 
-text-color = #c0caf5
-selection-color = #7aa2f7
 selection-background-padding = 5
 selection-background-corner-radius = 5
-background-color = #16161e
-prompt-color = #9d7cd8
-border-color = #9d7cd8
+
+# tokyo night
+# text-color = #c0caf5
+# selection-color = #7aa2f7
+# background-color = #16161e
+# prompt-color = #9d7cd8
+# border-color = #9d7cd8
+# selection-background = #292e42
+
+# mountain
+text-color = #cacaca
+selection-color = #8a98ac
+background-color = #0f0f0f
+prompt-color = #8f8aac
+border-color = #8f8aac
 selection-background = #292e42
