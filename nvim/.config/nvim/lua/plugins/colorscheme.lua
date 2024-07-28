@@ -25,7 +25,9 @@ return {
                         highlighter.set('TelescopeMatching', { fg = colors.purple })
                         highlighter.set('TelescopeMatching', { fg = colors.purple })
                         highlighter.set('@lsp.type.property', { fg = colors.cyan }) -- e.g., fg and cyan
+                        highlighter.set('@property', { fg = colors.cyan }) -- e.g., fg and cyan
                         highlighter.set('@lsp.type.parameter', { fg = colors.yellow }) -- e.g., "highlighter" in highlighter.set
+                        highlighter.set('@parameter', { fg = colors.yellow }) -- e.g., "highlighter" in highlighter.set
                         highlighter.set('TroubleNormal', { bg = 'none' })
                         highlighter.set('TroubleNormalNc', { bg = 'none' })
                     end,
