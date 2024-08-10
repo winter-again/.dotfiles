@@ -23,7 +23,6 @@ return {
                         highlighter.set('TreesitterContext', { bg = '#191919' })
                         highlighter.set('CursorLineNr', { fg = colors.purple })
                         highlighter.set('TelescopeMatching', { fg = colors.purple })
-                        highlighter.set('TelescopeMatching', { fg = colors.purple })
                         highlighter.set('@lsp.type.property', { fg = colors.cyan }) -- e.g., fg and cyan
                         highlighter.set('@property', { fg = colors.cyan }) -- e.g., fg and cyan
                         highlighter.set('@lsp.type.parameter', { fg = colors.yellow }) -- e.g., "highlighter" in highlighter.set

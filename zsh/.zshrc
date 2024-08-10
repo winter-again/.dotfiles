@@ -17,9 +17,6 @@ export SAVEHIST=$HISTSIZE # num of commands stored
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
-export PATH="$HOME/.local/bin:$PATH"
-# for custom nvim install location
-# export PATH="$HOME/neovim/bin:$PATH"
 export SHELL=/bin/zsh
 # for wezterm undercurl supp, but it seems to cause partial line issues?
 # without it underlines look ok??
@@ -29,19 +26,24 @@ export VISUAL="nvim"
 # export MANPAGER="sh -c 'col -bx | bat -l man -p'" # bat for colorizing pager for man
 export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export MANROFFOPT="-P -c" # simple colors
-
 # Java for pyspark
 export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
+export PATH="$HOME/.local/bin:$PATH"
+# for custom nvim install location
+# export PATH="$HOME/neovim/bin:$PATH"
+
 # Go
-# if GOBIN set, binaries installed there
-# if GOPATH set binaries installed into bin dir of first dir in GOPATH
-# these are default locs:
+# GOPATH default is already $HOME/go
 export GOPATH="$HOME/go"
+# if GOBIN set, binaries installed there (not set by default)
+# otherwise, install to $GOPATH/bin
 export GOBIN="$GOPATH/bin"
-# export PATH=$PATH:/usr/local/go/bin # from go install directions but I think we're using ~/.go/bin
+# export PATH=$PATH:/usr/local/go/bin # from go install directions, but instead we're using ~/.go/bin
+
 # for convenience; adds ~/go/bin to path
-export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
+export PATH="$PATH:$(go env GOBIN)"
+# export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # only necessary if they differ
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
