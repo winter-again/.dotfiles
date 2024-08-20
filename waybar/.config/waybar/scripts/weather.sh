@@ -11,6 +11,7 @@ WIND_THRESH=12 # m/s
 # WIND_SYMBOL="mph"
 WIND_SYMBOL="m/s"
 
+# NOTE: current weather data API
 # url="https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=${UNITS}&lang=en&q=$(echo $CITY | sed 's/ /%20/g'),${COUNTRY}"
 url="https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&id=${CITY_ID}&units=${UNITS}&lang=en"
 resp=$(curl -s $url)
