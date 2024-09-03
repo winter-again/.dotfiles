@@ -300,4 +300,8 @@ return {
             })
         end,
     },
+    {
+        'hachy/eva01.vim',
+        lazy = false,
+    },
 }
