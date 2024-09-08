@@ -6,7 +6,6 @@ return {
             require('conform').setup({
                 formatters_by_ft = {
                     lua = { 'stylua' },
-                    -- trying ruff_lsp instead
                     -- python = { 'isort', 'black' },
                     go = { 'goimports', 'gofmt' },
                     html = { 'prettierd' },
