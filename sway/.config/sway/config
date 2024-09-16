@@ -150,7 +150,6 @@ bindsym {
     $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Y' 'swaymsg exit'
     # swaync toggle
     # $mod+n exec swaync-client -t -sw
-    $mod+n exec ags -t mpris
     # power menu
     # $mod+Shift+p exec ~/.config/wofi/power-menu.sh
     $mod+Shift+p exec ~/.config/tofi/power-menu.sh
