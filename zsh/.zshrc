@@ -134,7 +134,7 @@ obs() {
 }
 # show journalctl for rclone backup service
 bk() {
-    journalctl --user -u rclone_backup.service -f -n 30
+    journalctl --user -fu rclone_backup.service -n 30
 }
 
 # from fzf community
