@@ -9,6 +9,7 @@ return {
     },
     dev = false,
     ft = 'quarto',
+    enabled = false,
     config = function()
         require('quarto').setup({
             closePreviewOnExit = true,

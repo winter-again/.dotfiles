@@ -6,5 +6,6 @@ return {
         },
         dev = true,
         config = true,
+        enabled = false,
     },
 }
