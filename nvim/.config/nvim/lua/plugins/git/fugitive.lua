@@ -1,7 +1,7 @@
 return {
-    'tpope/vim-fugitive',
-    event = { 'BufReadPost', 'BufNewFile' },
+    "tpope/vim-fugitive",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
-        vim.keymap.set('n', '<leader>gs', vim.cmd.Git, { silent = true, desc = 'Open fugitive buffer' })
+        vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { silent = true, desc = "Open fugitive buffer" })
     end,
 }

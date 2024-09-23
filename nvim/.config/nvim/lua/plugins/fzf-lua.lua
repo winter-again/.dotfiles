@@ -1,14 +1,14 @@
 return {
-    'ibhagwan/fzf-lua',
+    "ibhagwan/fzf-lua",
     -- 'https://gitlab.com/ibhagwan/fzf-lua', -- Gitlab alt
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-        local fzf_lua = require('fzf-lua')
+        local fzf_lua = require("fzf-lua")
         fzf_lua.setup({
             -- open multiple files by marking w/ tab
             files = {
                 actions = {
-                    ['default'] = require('fzf-lua.actions').file_edit,
+                    ["default"] = require("fzf-lua.actions").file_edit,
                 },
             },
         })

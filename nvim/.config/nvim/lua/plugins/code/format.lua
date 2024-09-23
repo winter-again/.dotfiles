@@ -1,19 +1,19 @@
 return {
     {
-        'stevearc/conform.nvim',
-        event = { 'BufWritePre' },
+        "stevearc/conform.nvim",
+        event = { "BufWritePre" },
         config = function()
-            require('conform').setup({
+            require("conform").setup({
                 formatters_by_ft = {
-                    lua = { 'stylua' },
+                    lua = { "stylua" },
                     -- python = { 'isort', 'black' },
-                    go = { 'goimports', 'gofmt' },
-                    html = { 'prettierd' },
-                    css = { 'prettierd' },
-                    javascript = { 'prettierd' },
-                    javascriptreact = { 'prettierd' },
-                    typescript = { 'prettierd' },
-                    typescriptreact = { 'prettierd' },
+                    go = { "goimports", "gofmt" },
+                    html = { "prettierd" },
+                    css = { "prettierd" },
+                    javascript = { "prettierd" },
+                    javascriptreact = { "prettierd" },
+                    typescript = { "prettierd" },
+                    typescriptreact = { "prettierd" },
                     -- disabling to let jsonls handle formatting
                     -- so we don't have to constantly set overrides in a .prettierrc.json
                     -- json = { 'prettierd' },
@@ -32,12 +32,12 @@ return {
             })
 
             -- manually trigger formatting
-            vim.keymap.set('n', '<leader><leader>fm', function()
-                require('conform').format({ async = true, lsp_fallback = true })
-            end, { silent = true, desc = 'Manually format buffer with conform.nvim' })
+            vim.keymap.set("n", "<leader><leader>fm", function()
+                require("conform").format({ async = true, lsp_fallback = true })
+            end, { silent = true, desc = "Manually format buffer with conform.nvim" })
 
             -- user commands for toggling autoformatting on save
-            vim.api.nvim_create_user_command('FormatDisable', function(args)
+            vim.api.nvim_create_user_command("FormatDisable", function(args)
                 if args.bang then
                     -- FormatDisable! will disable formatting just for this buffer
                     vim.b.disable_autoformat = true
@@ -45,14 +45,14 @@ return {
                     vim.g.disable_autoformat = true
                 end
             end, {
-                desc = 'Disable autoformat-on-save',
+                desc = "Disable autoformat-on-save",
                 bang = true,
             })
-            vim.api.nvim_create_user_command('FormatEnable', function()
+            vim.api.nvim_create_user_command("FormatEnable", function()
                 vim.b.disable_autoformat = false
                 vim.g.disable_autoformat = false
             end, {
-                desc = 'Re-enable autoformat-on-save',
+                desc = "Re-enable autoformat-on-save",
             })
         end,
     },

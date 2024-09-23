@@ -1,11 +1,11 @@
 ---@diagnostic disable: missing-fields
 return {
     {
-        'neovim/nvim-lspconfig',
+        "neovim/nvim-lspconfig",
         dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-            'WhoIsSethDaniel/mason-tool-installer.nvim',
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
         },
         config = function()
             -- NOTE: must set up these plugins in specific order:
@@ -14,54 +14,54 @@ return {
             -- 3) mason-tool-installer.nvim
             -- 4) lspconfig server setup -> I opt to use something from mason-lspconfig instead of normal lspconfig
 
-            require('mason').setup({
+            require("mason").setup({
                 ui = {
                     -- border = 'solid',
                     icons = {
-                        package_installed = '✓',
-                        package_pending = '➜',
-                        package_uninstalled = '✗',
+                        package_installed = "✓",
+                        package_pending = "➜",
+                        package_uninstalled = "✗",
                     },
                 },
             })
-            require('mason-lspconfig').setup({
+            require("mason-lspconfig").setup({
                 ensure_installed = {
-                    'ansiblels',
-                    'astro',
-                    'bashls',
-                    'clangd',
-                    'cssls',
-                    'css_variables',
-                    'dockerls',
-                    'eslint',
-                    'gopls',
-                    'html',
-                    'jsonls',
-                    'lua_ls',
-                    'marksman',
-                    'pyright',
+                    "ansiblels",
+                    "astro",
+                    "bashls",
+                    "clangd",
+                    "cssls",
+                    "css_variables",
+                    "dockerls",
+                    "eslint",
+                    "gopls",
+                    "html",
+                    "jsonls",
+                    "lua_ls",
+                    "marksman",
+                    "pyright",
                     -- 'basedpyright',
-                    'r_language_server',
-                    'ruff', -- newer LS than ruff_lsp
-                    'sqlls',
-                    'tailwindcss',
-                    'taplo',
-                    'ts_ls',
-                    'yamlls',
+                    "r_language_server",
+                    "ruff", -- newer LS than ruff_lsp
+                    "sqlls",
+                    "tailwindcss",
+                    "taplo",
+                    "ts_ls",
+                    "yamlls",
                 },
                 automatic_installation = false,
             })
-            require('mason-tool-installer').setup({
+            require("mason-tool-installer").setup({
                 auto_update = true,
                 debounce_hours = 24,
                 ensure_installed = {
-                    'black',
-                    'isort',
-                    'prettierd',
-                    'sqlfluff',
-                    'selene',
-                    'stylua',
-                    'goimports',
+                    "black",
+                    "isort",
+                    "prettierd",
+                    "sqlfluff",
+                    "selene",
+                    "stylua",
+                    "goimports",
                 },
             })
             local function map(mode, lhs, rhs, opts, desc)
@@ -73,42 +73,42 @@ return {
             local function lsp_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }
                 -- default in v0.10
-                map('n', 'K', vim.lsp.buf.hover, opts, 'Hover docs')
-                map('n', 'gs', function()
-                    vim.diagnostic.open_float({ scope = 'cursor' })
-                end, opts, 'Get cursor diagnostics')
-                map('n', 'gl', function()
-                    vim.diagnostic.open_float({ scope = 'line' })
-                end, opts, 'Get line diagnostics')
+                map("n", "K", vim.lsp.buf.hover, opts, "Hover docs")
+                map("n", "gs", function()
+                    vim.diagnostic.open_float({ scope = "cursor" })
+                end, opts, "Get cursor diagnostics")
+                map("n", "gl", function()
+                    vim.diagnostic.open_float({ scope = "line" })
+                end, opts, "Get line diagnostics")
 
-                local ok_telescope, builtin = pcall(require, 'telescope.builtin')
-                local ok_fzf_lua, fzf_lua = pcall(require, 'fzf-lua')
+                local ok_telescope, builtin = pcall(require, "telescope.builtin")
+                local ok_fzf_lua, fzf_lua = pcall(require, "fzf-lua")
                 if ok_telescope then
-                    map('n', 'gd', builtin.lsp_definitions, opts, 'LSP definitions')
-                    map('n', 'gr', builtin.lsp_references, opts, 'LSP references')
-                    map('n', 'gI', builtin.lsp_implementations, opts, 'LSP implementations')
-                    map('n', '<leader>D', builtin.lsp_type_definitions, opts, 'LSP type defns.')
-                    map('n', '<leader>ds', builtin.lsp_document_symbols, opts, 'LSP doc. symbols')
-                    map('n', '<leader>ws', builtin.lsp_workspace_symbols, opts, 'LSP workspace symbols')
+                    map("n", "gd", builtin.lsp_definitions, opts, "LSP definitions")
+                    map("n", "gr", builtin.lsp_references, opts, "LSP references")
+                    map("n", "gI", builtin.lsp_implementations, opts, "LSP implementations")
+                    map("n", "<leader>D", builtin.lsp_type_definitions, opts, "LSP type defns.")
+                    map("n", "<leader>ds", builtin.lsp_document_symbols, opts, "LSP doc. symbols")
+                    map("n", "<leader>ws", builtin.lsp_workspace_symbols, opts, "LSP workspace symbols")
                 elseif ok_fzf_lua then
-                    print('Using fzf-lua for LSP keymaps')
-                    map('n', 'gd', fzf_lua.lsp_definitions, opts, 'LSP definitions')
-                    map('n', 'gr', fzf_lua.lsp_references, opts, 'LSP references')
-                    map('n', 'gI', fzf_lua.lsp_implementations, opts, 'LSP implementations')
-                    map('n', '<leader>D', fzf_lua.lsp_typedefs, opts, 'LSP type defns.')
-                    map('n', '<leader>ds', fzf_lua.lsp_document_symbols, opts, 'LSP doc. symbols')
-                    map('n', '<leader>ws', fzf_lua.lsp_live_workspace_symbols, opts, 'Workspace symbols')
+                    print("Using fzf-lua for LSP keymaps")
+                    map("n", "gd", fzf_lua.lsp_definitions, opts, "LSP definitions")
+                    map("n", "gr", fzf_lua.lsp_references, opts, "LSP references")
+                    map("n", "gI", fzf_lua.lsp_implementations, opts, "LSP implementations")
+                    map("n", "<leader>D", fzf_lua.lsp_typedefs, opts, "LSP type defns.")
+                    map("n", "<leader>ds", fzf_lua.lsp_document_symbols, opts, "LSP doc. symbols")
+                    map("n", "<leader>ws", fzf_lua.lsp_live_workspace_symbols, opts, "Workspace symbols")
                 else
-                    print('Neither telescope.nvim nor fzf-lua installed...')
+                    print("Neither telescope.nvim nor fzf-lua installed...")
                 end
 
-                map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
-                map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up from LspSaga
+                map("n", "gD", vim.lsp.buf.declaration, opts, "Go to declaration")
+                map("n", "<leader><leader>rn", vim.lsp.buf.rename, opts, "LSP default rename") -- default rename w/o fancy pop-up from LspSaga
 
                 if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-                    map('n', '<leader>ih', function()
+                    map("n", "<leader>ih", function()
                         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
-                    end, opts, 'Toggle inlay hints')
+                    end, opts, "Toggle inlay hints")
                 end
             end
 
@@ -121,7 +121,7 @@ return {
             -- also see: https://github.com/hrsh7th/cmp-nvim-lsp/issues/38#issuecomment-1815265121
             -- NOTE: snippetSupport = true in require('cmp_nvim_lsp').default_capabilities() so it's forced to true
             lsp_capabilities =
-                vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
+                vim.tbl_deep_extend("force", lsp_capabilities, require("cmp_nvim_lsp").default_capabilities())
 
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
@@ -130,24 +130,24 @@ return {
             local handlers = {
                 -- default handler called for each installed server
                 function(server_name)
-                    require('lspconfig')[server_name].setup({
+                    require("lspconfig")[server_name].setup({
                         capabilities = lsp_capabilities,
                         on_attach = lsp_attach,
                     })
                 end,
-                ['lua_ls'] = function()
-                    require('lspconfig')['lua_ls'].setup({
+                ["lua_ls"] = function()
+                    require("lspconfig")["lua_ls"].setup({
                         capabilities = lsp_capabilities,
                         on_attach = lsp_attach,
                         on_init = function(client)
                             local path = client.workspace_folders[1].name
-                            if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+                            if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
                                 return
                             end
 
-                            client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                            client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
                                 runtime = {
-                                    version = 'LuaJIT',
+                                    version = "LuaJIT",
                                 },
                                 -- seems like don't need
                                 -- diagnostics = {
@@ -157,7 +157,7 @@ return {
                                     checkThirdParty = false,
                                     library = {
                                         vim.env.VIMRUNTIME,
-                                        '${3rd}/luv/library', -- seems like I need this to access vim.uv stuff?
+                                        "${3rd}/luv/library", -- seems like I need this to access vim.uv stuff?
                                     },
                                 },
                                 telemetry = {
@@ -165,7 +165,7 @@ return {
                                 },
                                 hint = {
                                     enable = true,
-                                    arrayIndex = 'Disable',
+                                    arrayIndex = "Disable",
                                 },
                             })
                         end,
@@ -183,38 +183,38 @@ return {
                 --         -- on_attach = on_attach,
                 --     })
                 -- end,
-                ['tailwindcss'] = function()
-                    require('lspconfig')['tailwindcss'].setup({
+                ["tailwindcss"] = function()
+                    require("lspconfig")["tailwindcss"].setup({
                         capabilities = lsp_capabilities,
                         -- only run LSP if tailwind config files present
                         root_dir = function(fname)
-                            local root_pattern = require('lspconfig').util.root_pattern(
-                                'tailwind.config.cjs',
-                                'tailwind.config.js',
-                                'tailwind.config.mjs',
-                                'postcss.config.js'
+                            local root_pattern = require("lspconfig").util.root_pattern(
+                                "tailwind.config.cjs",
+                                "tailwind.config.js",
+                                "tailwind.config.mjs",
+                                "postcss.config.js"
                             )
                             return root_pattern(fname)
                         end,
                     })
                 end,
-                ['taplo'] = function()
-                    require('lspconfig')['taplo'].setup({
+                ["taplo"] = function()
+                    require("lspconfig")["taplo"].setup({
                         capabilities = lsp_capabilities,
                         on_attach = function(client, bufnr)
                             -- disable autoformatting
-                            if client.name == 'taplo' then
+                            if client.name == "taplo" then
                                 client.server_capabilities.documentFormattingProvider = false
                             end
                         end,
                     })
                 end,
-                ['clangd'] = function()
-                    require('lspconfig')['clangd'].setup({
+                ["clangd"] = function()
+                    require("lspconfig")["clangd"].setup({
                         capabilities = lsp_capabilities,
                         on_attach = function(client, bufnr)
                             -- disable autoformatting
-                            if client.name == 'clangd' then
+                            if client.name == "clangd" then
                                 client.server_capabilities.documentFormattingProvider = false
                             end
                         end,
@@ -222,7 +222,7 @@ return {
                 end,
                 -- works fine; seems more cluttered than Pyright, but might only be
                 -- for some proj because of the packages I use
-                ['basedpyright'] = function()
+                ["basedpyright"] = function()
                     -- require('lspconfig')['basedpyright'].setup({
                     --     on_attach = on_attach,
                     --     root_dir = require('lspconfig').util.root_pattern('.venv'),
@@ -241,10 +241,10 @@ return {
                     --     },
                     -- })
                 end,
-                ['pyright'] = function()
-                    require('lspconfig')['pyright'].setup({
+                ["pyright"] = function()
+                    require("lspconfig")["pyright"].setup({
                         on_attach = lsp_attach,
-                        root_dir = require('lspconfig').util.root_pattern('.venv'),
+                        root_dir = require("lspconfig").util.root_pattern(".venv"),
                         -- remove capabilities that ruff can provide
                         -- https://github.com/astral-sh/ruff-lsp/issues/384
                         -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
@@ -259,24 +259,24 @@ return {
                                     -- see: https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
                                     -- note that some of the Pyright stuff are "hints" and can't be easily removed
                                     diagnosticSeverityOverrides = {
-                                        reportUndefinedVariable = 'none',
+                                        reportUndefinedVariable = "none",
                                     },
                                 },
                             },
                         },
                     })
                 end,
-                ['ruff'] = function()
-                    local group = vim.api.nvim_create_augroup('RuffWithPyright', { clear = true })
-                    require('lspconfig')['ruff'].setup({
+                ["ruff"] = function()
+                    local group = vim.api.nvim_create_augroup("RuffWithPyright", { clear = true })
+                    require("lspconfig")["ruff"].setup({
                         -- organize imports autocmd
                         on_attach = function(client, bufnr)
-                            vim.api.nvim_create_autocmd('BufWritePre', {
+                            vim.api.nvim_create_autocmd("BufWritePre", {
                                 group = group,
                                 buffer = bufnr,
                                 callback = function()
                                     vim.lsp.buf.code_action({
-                                        context = { only = { 'source.organizeImports' } },
+                                        context = { only = { "source.organizeImports" } },
                                         apply = true,
                                     })
                                     vim.wait(100)
@@ -285,22 +285,22 @@ return {
                         end,
                     })
                     -- disable Ruff's hover to use Pyright instead; can't put this in on_attach
-                    vim.api.nvim_create_autocmd('LspAttach', {
+                    vim.api.nvim_create_autocmd("LspAttach", {
                         group = group,
                         callback = function(args)
                             local client = vim.lsp.get_client_by_id(args.data.client_id)
                             if client == nil then
                                 return
                             end
-                            if client.name == 'ruff' then
+                            if client.name == "ruff" then
                                 client.server_capabilities.hoverProvider = false
                             end
                         end,
-                        desc = 'LSP: disable Ruff hover capability',
+                        desc = "LSP: disable Ruff hover capability",
                     })
                 end,
             }
-            require('mason-lspconfig').setup_handlers(handlers)
+            require("mason-lspconfig").setup_handlers(handlers)
 
             -- lspconfig appearance and behavior
             -- global floating window borders by replacing the orig. function
@@ -315,34 +315,34 @@ return {
             -- custom signs for diagnostics
             -- trouble.nvim can pick these up
             local sign_icons = {
-                Error = '',
-                Warn = '',
-                Info = '',
-                Hint = '',
+                Error = "",
+                Warn = "",
+                Info = "",
+                Hint = "",
             }
             for type, icon in pairs(sign_icons) do
-                local hl = 'DiagnosticSign' .. type
+                local hl = "DiagnosticSign" .. type
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
             end
 
             local function diagn_format(diagnostic)
                 return string.format(
-                    '%s [%s]  %s',
-                    diagnostic.message or '',
-                    diagnostic.source or '',
-                    diagnostic.code or diagnostic.user_data or ''
+                    "%s [%s]  %s",
+                    diagnostic.message or "",
+                    diagnostic.source or "",
+                    diagnostic.code or diagnostic.user_data or ""
                 )
             end
             vim.diagnostic.config({
                 virtual_text = {
                     spacing = 4,
-                    prefix = '󱓻',
+                    prefix = "󱓻",
                     format = diagn_format,
                 },
                 float = {
                     -- border = 'rounded',
-                    prefix = '󰉹 ',
-                    suffix = '', -- get rid of the code that is shown by default since format func handles it
+                    prefix = "󰉹 ",
+                    suffix = "", -- get rid of the code that is shown by default since format func handles it
                     format = diagn_format,
                 },
                 signs = {
@@ -353,10 +353,10 @@ return {
                         [vim.diagnostic.severity.HINT] = sign_icons.Hint,
                     },
                     linehl = {
-                        [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+                        [vim.diagnostic.severity.ERROR] = "ErrorMsg",
                     },
                     numhl = {
-                        [vim.diagnostic.severity.WARN] = 'WarningMsg',
+                        [vim.diagnostic.severity.WARN] = "WarningMsg",
                     },
                 },
                 underline = true,
@@ -366,25 +366,25 @@ return {
         end,
     },
     {
-        'glepnir/lspsaga.nvim',
+        "glepnir/lspsaga.nvim",
         dev = false,
-        event = 'LspAttach',
+        event = "LspAttach",
         dependencies = {
-            'nvim-tree/nvim-web-devicons',
-            'nvim-treesitter/nvim-treesitter', -- need markdown and markdown_inline parsers
+            "nvim-tree/nvim-web-devicons",
+            "nvim-treesitter/nvim-treesitter", -- need markdown and markdown_inline parsers
         },
         config = function()
-            require('lspsaga').setup({
+            require("lspsaga").setup({
                 ui = {
                     -- border = 'rounded',
                 },
                 outline = {
-                    layout = 'normal',
+                    layout = "normal",
                     -- layout = 'float',
                 },
                 finder = {
                     filter = {
-                        ['textDocument/references'] = function(client_id, result)
+                        ["textDocument/references"] = function(client_id, result)
                             -- NOTE: `result` here is { { range = {} } }
                             -- with mod I'm making it { range = {...} } itself
                             -- test func should show only results from scratch.lua this uri when searching
@@ -405,44 +405,44 @@ return {
                     enable = false,
                 },
                 scroll_preview = {
-                    scroll_down = '<C-f>',
-                    scroll_up = '<C-b>',
+                    scroll_down = "<C-f>",
+                    scroll_up = "<C-b>",
                 },
                 code_action = {
                     show_server_name = true,
                 },
             })
             -- finder that shows defn, ref, and implementation
-            vim.keymap.set('n', '<leader>gf', '<cmd>Lspsaga finder<CR>', { silent = true, desc = 'LspSaga finder' })
+            vim.keymap.set("n", "<leader>gf", "<cmd>Lspsaga finder<CR>", { silent = true, desc = "LspSaga finder" })
             -- rename all references to symbol under cursor
-            vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<CR>', { silent = true, desc = 'LspSaga rename' })
+            vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true, desc = "LspSaga rename" })
             -- code action
             vim.keymap.set(
-                'n',
-                '<leader>ca',
-                '<cmd>Lspsaga code_action<CR>',
-                { silent = true, desc = 'LspSaga code action' }
+                "n",
+                "<leader>ca",
+                "<cmd>Lspsaga code_action<CR>",
+                { silent = true, desc = "LspSaga code action" }
             )
             vim.keymap.set(
-                'n',
-                '<leader>gd',
-                '<cmd>Lspsaga peek_definition<CR>',
-                { silent = true, desc = 'LspSaga peek defn' }
+                "n",
+                "<leader>gd",
+                "<cmd>Lspsaga peek_definition<CR>",
+                { silent = true, desc = "LspSaga peek defn" }
             )
         end,
     },
     {
-        'j-hui/fidget.nvim',
+        "j-hui/fidget.nvim",
         config = function()
-            require('fidget').setup({
+            require("fidget").setup({
                 notification = {
                     window = {
-                        normal_hl = 'Comment',
+                        normal_hl = "Comment",
                         winblend = 0,
                     },
                 },
                 integration = {
-                    ['nvim-tree'] = {
+                    ["nvim-tree"] = {
                         enable = false, -- don't need since nvim-tree is kept on left
                     },
                 },

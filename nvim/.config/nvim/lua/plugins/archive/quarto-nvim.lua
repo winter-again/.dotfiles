@@ -1,25 +1,25 @@
 return {
-    'quarto-dev/quarto-nvim',
+    "quarto-dev/quarto-nvim",
     -- version = '0.13.2',
     dependencies = {
-        'jmbuhr/otter.nvim',
-        'hrsh7th/nvim-cmp',
-        'neovim/nvim-lspconfig',
-        'nvim-treesitter/nvim-treesitter',
+        "jmbuhr/otter.nvim",
+        "hrsh7th/nvim-cmp",
+        "neovim/nvim-lspconfig",
+        "nvim-treesitter/nvim-treesitter",
     },
     dev = false,
-    ft = 'quarto',
+    ft = "quarto",
     enabled = false,
     config = function()
-        require('quarto').setup({
+        require("quarto").setup({
             closePreviewOnExit = true,
             lspFeatures = {
                 enabled = true,
-                languages = { 'r', 'python', 'julia' },
-                chunks = 'curly',
+                languages = { "r", "python", "julia" },
+                chunks = "curly",
                 diagnostics = {
                     enabled = true,
-                    triggers = { 'BufWritePost' },
+                    triggers = { "BufWritePost" },
                 },
                 completion = {
                     enabled = true,
@@ -28,28 +28,28 @@ return {
         })
         -- add some specific keymaps
         vim.keymap.set(
-            'n',
-            'cir',
-            'i```{r}<cr>```<esc>O<esc>',
-            { silent = true, desc = 'Insert R code chunk and enter in insert mode' }
+            "n",
+            "cir",
+            "i```{r}<cr>```<esc>O<esc>",
+            { silent = true, desc = "Insert R code chunk and enter in insert mode" }
         )
         vim.keymap.set(
-            'n',
-            'cip',
-            'i```{python}<cr>```<esc>O<esc>',
-            { silent = true, desc = 'Insert Python code chunk and enter in insert mode' }
+            "n",
+            "cip",
+            "i```{python}<cr>```<esc>O<esc>",
+            { silent = true, desc = "Insert Python code chunk and enter in insert mode" }
         )
         vim.keymap.set(
-            'n',
-            '<leader>qp',
+            "n",
+            "<leader>qp",
             ":lua require('quarto').quartoPreview()<cr>",
-            { silent = true, desc = 'Quarto preview' }
+            { silent = true, desc = "Quarto preview" }
         )
         vim.keymap.set(
-            'n',
-            '<leader>qq',
+            "n",
+            "<leader>qq",
             ":lua require('quarto').quartoClosePreview()<cr>",
-            { silent = true, desc = 'Close Quarto preview' }
+            { silent = true, desc = "Close Quarto preview" }
         )
     end,
 }

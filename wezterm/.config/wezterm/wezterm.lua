@@ -34,7 +34,7 @@ local color_schemes = {
     'rose-pine',
 }
 config.color_scheme = color_schemes[2]
-config.background = utils.set_bg('22_3')
+config.background = utils.set_bg('26')
 config.font, config.font_size = utils.set_font_properties('Zed')
 -- this needs explicit setting if not the default
 -- config.xcursor_theme = 'capitaine-cursors-light'
