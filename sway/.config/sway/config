@@ -11,7 +11,8 @@ titlebar_border_thickness 1
 # covers just in sway
 # seat0 is the default seat; seat * would apply to all
 # seat seat0 xcursor_theme phinger-cursors-light 32
-seat seat0 xcursor_theme capitaine-cursors-light 32
+# seat seat0 xcursor_theme capitaine-cursors-light 32
+seat seat0 xcursor_theme capitaine-cursors 32
 
 # (1) bar: title bar border
 # (2) background: title bar background
@@ -205,30 +206,42 @@ bindsym {
     $mod+Shift+9 move container to workspace number $ws9
     $mod+Shift+0 move container to workspace number $ws10
 
-    $mod+comma focus left
-    $mod+semicolon focus right
-    # $mod+comma focus prev
-    # $mod+semicolon focus right
+    $mod+plus gaps inner current plus 4
+    $mod+minus gaps inner current minus 4
 
     $mod+y split h
     $mod+x split v
     $mod+s layout stacking
     $mod+t layout tabbed
+    # Cycle through customizable set of layouts
+    # layout toggle split can act like a reset out of tabs/stack -> then just cycles through split layouts
     $mod+e layout toggle split
+    # using split instead of splitv and splith here means only the current split layout is considered
+    # rather than cycling through both possibilities
+    $mod+semicolon layout toggle split tabbed stacking
+    # Set split style of the current container and change layout; use for nested containers
+    $mod+Shift+s split h, layout stacking
+    $mod+Shift+t split h, layout tabbed
+
+    # not quite the right behavior
+    $mod+Shift+tab focus parent, focus prev
+    $mod+tab focus parent, focus next
+
     # Make the current focus fullscreen
     $mod+f fullscreen
     # Toggle the current focus between tiling and floating mode
-    $mod+z floating toggle
+    $mod+Shift+f floating toggle
     # Swap focus between the tiling area and the floating area
-    $mod+space focus mode_toggle
+    $mod+z focus mode_toggle
     # Move focus to the parent container
     $mod+a focus parent
+    $mod+r mode "resize"
+
     # Move the currently focused window to the scratchpad
-    # $mod+Shift+minus move scratchpad
+    $mod+Ctrl+s move scratchpad
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    $mod+minus scratchpad show
-    $mod+r mode "resize"
+    $mod+Ctrl+semicolon scratchpad show
 }
 # media keys
 bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%

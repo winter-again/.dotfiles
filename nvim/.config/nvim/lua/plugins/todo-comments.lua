@@ -3,6 +3,11 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         require("todo-comments").setup({
+            keywords = {
+                FIX = { alt = { "fix" } },
+                TODO = { alt = { "todo" } },
+                NOTE = { alt = { "note" } },
+            },
             search = {
                 commands = "rg",
                 args = {
@@ -22,5 +27,8 @@ return {
         vim.keymap.set("n", "[t", function()
             require("todo-comments").jump_next()
         end, { silent = true, desc = "Previous TODO comment" })
+        vim.keymap.set("n", "<leader>ft", function()
+            vim.cmd("TodoTelescope")
+        end, { silent = true, desc = "Search TODO-style comments" })
     end,
 }

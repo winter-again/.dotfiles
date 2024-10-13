@@ -224,7 +224,7 @@ return {
             -- search within current buffer
             map("n", "<leader>/", builtin.current_buffer_fuzzy_find, opts, "Search curr. buf")
             -- treesitter symbols
-            map("n", "<leader>ft", builtin.treesitter, opts, "Search treesitter symbols")
+            -- map("n", "<leader>ft", builtin.treesitter, opts, "Search treesitter symbols")
             map("n", "<leader>fn", function()
                 builtin.find_files({ cwd = vim.fn.stdpath("config") })
             end, opts, "Search nvim config")

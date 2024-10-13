@@ -1,5 +1,5 @@
-local wezterm = require('wezterm')
-local utils = require('utils')
+local wezterm = require("wezterm")
+local utils = require("utils")
 
 local config = {}
 -- WARNING: seems like using wezterm.config_builder()
@@ -19,23 +19,23 @@ end
 -- config.front_end = 'OpenGL' -- already the default
 config.warn_about_missing_glyphs = false
 -- config.enable_wayland = true -- already default
-config.audible_bell = 'Disabled'
+config.audible_bell = "Disabled"
 config.default_cwd = wezterm.home_dir
 config.check_for_updates = false
 -- setting this here also causes partial line problems
 -- config.term = 'wezterm' -- https://wezfurlong.org/wezterm/config/lua/config/term.html
 
 local color_schemes = {
-    'Tokyo Night',
+    "Tokyo Night",
     -- https://github.com/mountain-theme/Mountain/tree/48b5732a2368a0ff75081108a88c126ded5ab73d/Wezterm
-    'Mountain', -- seems close enough to mellifluous mountain
-    'Catppuccin Mocha',
-    'Kanagawa (Gogh)',
-    'rose-pine',
+    "Mountain", -- seems close enough to mellifluous mountain
+    "Catppuccin Mocha",
+    "Kanagawa (Gogh)",
+    "rose-pine",
 }
 config.color_scheme = color_schemes[2]
-config.background = utils.set_bg('26')
-config.font, config.font_size = utils.set_font_properties('Zed')
+config.background = utils.set_bg("28_1")
+config.font, config.font_size = utils.set_font_properties("Zed")
 -- this needs explicit setting if not the default
 -- config.xcursor_theme = 'capitaine-cursors-light'
 -- config.xcursor_size = 32 -- this works fine
@@ -84,41 +84,41 @@ config.hide_tab_bar_if_only_one_tab = true
 -- config.use_fancy_tab_bar = true -- default
 -- config.show_tab_index_in_tab_bar = true
 -- mouse and keys
-config.bypass_mouse_reporting_modifiers = 'CTRL' -- use CTRL to bypass app mouse repoorting (for hyperlinks)
+config.bypass_mouse_reporting_modifiers = "CTRL" -- use CTRL to bypass app mouse repoorting (for hyperlinks)
 -- https://wezfurlong.org/wezterm/config/mouse.html#configuring-mouse-assignments
 config.mouse_bindings = {
     {
-        event = { Up = { streak = 1, button = 'Left' } },
-        modds = 'CTRL',
+        event = { Up = { streak = 1, button = "Left" } },
+        modds = "CTRL",
         action = wezterm.action.OpenLinkAtMouseCursor,
     },
     {
-        event = { Down = { streak = 1, button = 'Left' } },
-        mods = 'CTRL',
+        event = { Down = { streak = 1, button = "Left" } },
+        mods = "CTRL",
         action = wezterm.action.Nop,
     },
 }
 
-config.leader = { key = 'm', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.leader = { key = "m", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-    { key = 'o', mods = 'LEADER', action = wezterm.action.ShowDebugOverlay },
-    { key = 'p', mods = 'LEADER', action = wezterm.action.PaneSelect({ alphabet = '123456789' }) },
+    { key = "o", mods = "LEADER", action = wezterm.action.ShowDebugOverlay },
+    { key = "p", mods = "LEADER", action = wezterm.action.PaneSelect({ alphabet = "123456789" }) },
     {
-        key = 'c',
-        mods = 'LEADER',
-        action = wezterm.action.EmitEvent('clear-overrides'),
+        key = "c",
+        mods = "LEADER",
+        action = wezterm.action.EmitEvent("clear-overrides"),
     },
     {
-        key = 's',
-        mods = 'LEADER',
-        action = wezterm.action.EmitEvent('send-txt-to-pane'),
+        key = "s",
+        mods = "LEADER",
+        action = wezterm.action.EmitEvent("send-txt-to-pane"),
     },
     {
-        key = 'u',
-        mods = 'LEADER',
+        key = "u",
+        mods = "LEADER",
         action = wezterm.action_callback(function(window, pane)
             wezterm.plugin.update_all()
-            window:toast_notification('wezterm', 'Updated plugins', nil, 2000)
+            window:toast_notification("wezterm", "Updated plugins", nil, 2000)
         end),
     },
 }
@@ -171,12 +171,12 @@ config.keys = {
 -- I think because I have `$XDG_RUNTIME_DIR` set, my plugins are in ~/.local/share/wezterm/plugins
 -- otherwise check `/run/user/1000/wezterm/plugins/`
 -- only http or local filesystem repos are allowed
-local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
+local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-again/wezterm-config.nvim")
 -- local wezterm_config_nvim = wezterm.plugin.require('/home/andrew/Documents/code/nvim-dev/wezterm-config.nvim')
 -- local wezterm_config_nvim = require('wezterm_config_plug')
 
 -- callbacks
-wezterm.on('user-var-changed', function(window, pane, name, value)
+wezterm.on("user-var-changed", function(window, pane, name, value)
     local overrides = window:get_config_overrides() or {}
     -- print('OVERRIDES PRE:')
     -- print(overrides)
@@ -192,7 +192,7 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     local parsed_val = wezterm.json_parse(value)
     -- local ok, parsed_val = pcall(wezterm.json_parse, value)
     local parsed_val_type = type(parsed_val)
-    print(string.format('PARSED DATA: %s = %s (type: %s)', name, parsed_val, parsed_val_type))
+    print(string.format("PARSED DATA: %s = %s (type: %s)", name, parsed_val, parsed_val_type))
     print(parsed_val)
 
     overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
@@ -203,10 +203,10 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     window:set_config_overrides(overrides)
 end)
 
-wezterm.on('clear-overrides', function(window, pane)
+wezterm.on("clear-overrides", function(window, pane)
     window:set_config_overrides({})
     -- NOTE: timeout doesn't actually work
-    window:toast_notification('wezterm', 'Config overrides cleared', nil, 2000)
+    window:toast_notification("wezterm", "Config overrides cleared", nil, 2000)
 end)
 
 -- wezterm.on('send-txt-to-pane', function(window, pane, name, value)
