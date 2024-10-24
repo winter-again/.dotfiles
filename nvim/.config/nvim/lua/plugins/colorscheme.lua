@@ -287,14 +287,15 @@ return {
         config = function()
             local palette = require("nordic.colors")
             require("nordic").setup({
-                override = {
-                    WinSeparator = { fg = palette.white0, bg = "none" },
+                transparent = { bg = true },
+                on_highlight = function(highlights, palette)
+                    highlights.WinSeparator = { fg = palette.white0, bg = "none" }
                     -- Visual = { reverse = true },
-                    GitSignsAdd = { bg = "none" },
-                    GitSignsDelete = { bg = "none" },
-                    GitSignsChange = { bg = "none" },
-                    FoldColumn = { bg = "none" },
-                },
+                    highlights.GitSignsAdd = { bg = "none" }
+                    highlights.GitSignsDelete = { bg = "none" }
+                    highlights.GitSignsChange = { bg = "none" }
+                    highlights.FoldColumn = { bg = "none" }
+                end,
             })
             require("nordic").load()
         end,
@@ -319,5 +320,67 @@ return {
     {
         "hachy/eva01.vim",
         lazy = false,
+    },
+    {
+        "cdmill/neomodern.nvim",
+        lazy = false,
+        config = function()
+            require("neomodern").setup({
+                theme = "roseprime",
+                transparent = true,
+                code_style = {
+                    functions = "bold",
+                    keywords = "bold",
+                    string = "none",
+                },
+            })
+            require("neomodern").load()
+        end,
+    },
+    {
+        "vague2k/vague.nvim",
+        lazy = false,
+        config = function()
+            require("vague").setup({
+                transparent = true,
+                style = {
+                    functions = "bold",
+                    keywords = "bold",
+                    strings = "none",
+                },
+            })
+        end,
+    },
+    {
+        "ilof2/posterpole.nvim",
+        lazy = false,
+        config = function()
+            require("posterpole").setup({
+                transparent = true,
+                colorless_bg = false, -- grayscale or not
+                dim_inactive = false, -- highlight inactive splits
+                brightness = 0, -- negative numbers - darker, positive - lighter
+                selected_tab_highlight = false, --highlight current selected tab
+                fg_saturation = 0, -- font saturation, gray colors become more brighter
+                bg_saturation = 0, -- background saturation
+            })
+        end,
+    },
+    {
+        "sho-87/kanagawa-paper.nvim",
+        lazy = false,
+        config = function()
+            require("kanagawa-paper").setup({
+                transparent = true,
+                dimInactive = false,
+                functionStyle = { bold = true },
+                keywordStyle = { bold = true },
+            })
+        end,
+    },
+    {
+        "slugbyte/lackluster.nvim",
+        lazy = false,
+        config = function() end,
     },
 }
