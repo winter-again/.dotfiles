@@ -3,3 +3,4 @@ wezterm/.config/wezterm/lua/profile_data.lua
 # wezterm/.config/wezterm/utils.lua
 scratch.lua
 flow/
+nvim/.config/nvim/scratch/
