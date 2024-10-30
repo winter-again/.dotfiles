@@ -53,7 +53,7 @@ overflow = "hidden"
   [[blocks.segments]]
   type = "executiontime"
   style = "plain"
-  template = " {{ .FormattedMs }}"
+  template = " {{ .FormattedMs }} "
   foreground ="p:green"
     
     [blocks.segments.properties]
