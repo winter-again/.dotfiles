@@ -1,7 +1,6 @@
-# "$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 version = 2
 final_space = true
-console_title_template = "{{ .Shell }} in {{ .Folder }}"
 
 [[blocks]]
 type = "prompt"
@@ -11,7 +10,7 @@ alignment = "left"
   type = "path"
   style = "plain"
   foreground = "p:purple"
-  template = "{{ if not .Writable }}󰌾 {{ end }}{{ .Path }}"
+  template = "<b>{{ if not .Writable }}󰌾 {{ end }}{{ .Path }}</b>"
 
     [blocks.segments.properties]
     style = "full"
@@ -35,7 +34,7 @@ alignment = "left"
 [[blocks]]
 type = "prompt"
 alignment = "right"
-overflow = "hidden"
+overflow = "hide"
 
   [[blocks.segments]]
   type = "go"
@@ -64,7 +63,7 @@ overflow = "hidden"
   type="time"
   style = "plain"
   template = " {{ .CurrentDate | date .Format }}"
-  foreground = "p:pink"
+  foreground = "p:blue"
 
     [blocks.segments.properties]
     time_format = "03:04:05 PM"
@@ -79,7 +78,7 @@ newline = true
   style = "plain"
   foreground = "p:blue"
   foreground_templates = ["{{ if gt .Code 0}}p:red{{end}}"]
-  template = ">" # or ❯
+  template = "<b>></b>" # or ❯
 
 # [transient_prompt]
 # foreground = "p:green"
