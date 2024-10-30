@@ -136,6 +136,17 @@ return {
                         on_attach = lsp_attach,
                     })
                 end,
+                ["gopls"] = function()
+                    require("lspconfig")["gopls"].setup({
+                        capabilities = lsp_capabilities,
+                        on_attach = lsp_attach,
+                        settings = {
+                            gopls = {
+                                semanticTokens = false,
+                            },
+                        },
+                    })
+                end,
                 ["lua_ls"] = function()
                     require("lspconfig")["lua_ls"].setup({
                         capabilities = lsp_capabilities,

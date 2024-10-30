@@ -3,11 +3,11 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # load prompt config
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # load p10k
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # load prompt config
+# source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # load p10k
 #######################
 
 # zmodload zsh/zprof # profiler
@@ -261,4 +261,5 @@ bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 eval "$(zoxide init zsh)" # zoxide; keep at end
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # keep at end
 source ~/.config/wezterm/wezterm.sh
+eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/omp_config.toml)"
 # zprof
