@@ -28,6 +28,7 @@ alignment = "left"
     [blocks.segments.properties]
     branch_icon = " "
     commit_icon = "@"
+    tag_icon = " "
     fetch_status = true
     source = "cli"
 

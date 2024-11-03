@@ -28,6 +28,8 @@ return {
                 "nvim-telescope/telescope-ui-select.nvim",
             },
         },
+        enabled = true,
+        keys = { "<leader>ff", "<leader>fs", "<leader>fl" },
         config = function()
             -- workaround for opening multiple files -- can use fzf-lua instead
             -- from:https://github.com/nvim-telescope/telescope.nvim/issues/1048#issuecomment-1679797700
@@ -55,7 +57,7 @@ return {
             end
 
             -- from https://github.com/nvim-telescope/telescope.nvim/issues/2874#issuecomment-1900967890
-            -- use <C-g> to toggle finding on .gitignore'd files
+            -- use <C-h> to toggle finding on .gitignore'd files
             local function custom_ff(opts, no_ignore)
                 opts = opts or {}
                 no_ignore = vim.F.if_nil(no_ignore, false)

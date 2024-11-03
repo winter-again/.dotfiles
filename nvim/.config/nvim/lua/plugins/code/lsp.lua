@@ -1,4 +1,4 @@
----@diagnostic disable: missing-fields
+-- -@diagnostic disable: missing-fields
 return {
     {
         "neovim/nvim-lspconfig",
@@ -104,7 +104,12 @@ return {
                 end
 
                 map("n", "gD", vim.lsp.buf.declaration, opts, "Go to declaration")
-                map("n", "<leader><leader>rn", vim.lsp.buf.rename, opts, "LSP default rename") -- default rename w/o fancy pop-up from LspSaga
+                map("n", "<leader>ca", vim.lsp.buf.code_action, opts, "Code actions")
+                -- map("n", "<leader>rn", vim.lsp.buf.rename, opts, "LSP default rename")
+                -- map("n", "<leader>rn", ":IncRename ", opts, "LSP incremental rename")
+                map("n", "<leader>rn", function()
+                    return ":IncRename " .. vim.fn.expand("<cword>")
+                end, { expr = true, silent = true }, "LSP incremental rename")
 
                 if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
                     map("n", "<leader>ih", function()
@@ -152,24 +157,31 @@ return {
                         capabilities = lsp_capabilities,
                         on_attach = lsp_attach,
                         on_init = function(client)
-                            local path = client.workspace_folders[1].name
-                            if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
-                                return
+                            if client.workspace_folders then
+                                local path = client.workspace_folders[1].name
+                                if
+                                    vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc")
+                                then
+                                    return
+                                end
                             end
 
                             client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
                                 runtime = {
-                                    version = "LuaJIT",
+                                    version = "LuaJIT", -- LuaJIT in case of nvim
                                 },
                                 -- seems like don't need
                                 -- diagnostics = {
-                                --     globals = { 'vim' },
+                                --     globals = { "vim" },
                                 -- },
+                                -- tell server about nvim runtime files
                                 workspace = {
                                     checkThirdParty = false,
                                     library = {
                                         vim.env.VIMRUNTIME,
-                                        "${3rd}/luv/library", -- seems like I need this to access vim.uv stuff?
+                                        "${3rd}/luv/library", -- seems like I need this to see vim.uv
+                                        "$XDG_DATA_HOME/nvim/lazy/lazy.nvim/lua",
+                                        "$XDG_DATA_HOME/nvim/lazy/nvim-cmp/lua",
                                     },
                                 },
                                 telemetry = {
@@ -378,7 +390,14 @@ return {
         end,
     },
     {
+        "smjonas/inc-rename.nvim",
+        config = function()
+            require("inc_rename").setup()
+        end,
+    },
+    {
         "glepnir/lspsaga.nvim",
+        enabled = false,
         dev = false,
         event = "LspAttach",
         dependencies = {
