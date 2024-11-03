@@ -1,3 +1,21 @@
+:root {
+    --mountain-purple: #8f8aac;
+
+    --focus-outline-color: var(--mountain-purple) !important;
+    --lwt-toolbarbutton-icon-fill-attention: var(--mountain-purple) !important;
+    --button-primary-bgcolor: var(--mountain-purple) !important;
+    --button-primary-hover-bgcolor: color-mix(
+        in srgb,
+        currentColor 12%,
+        var(--mountain-purple)
+    ) !important;
+    --button-primary-active-bgcolor: color-mix(
+        in srgb,
+        currentColor 17%,
+        var(--mountain-purple)
+    ) !important;
+    --button-primary-color: var(--mountain-purple) !important;
+}
 /* hide sidebery if native tabs are showing and vice versa
 uses the "zero width space" character shown below as the preface */
 #main-window #titlebar {

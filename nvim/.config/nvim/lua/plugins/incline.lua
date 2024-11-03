@@ -12,6 +12,9 @@ return {
                 margin = { vertical = 0, horizontal = 0 },
                 overlap = { winbar = true, borders = true },
             },
+            hide = {
+                cursorline = true, -- hide when cursor on same line
+            },
             render = function(props)
                 -- local function word_count()
                 --     return string.format("(%s W)", vim.fn.wordcount().words)
