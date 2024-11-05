@@ -1,6 +1,7 @@
 return {
     {
         "nvim-telescope/telescope-file-browser.nvim",
+        enabled = false,
         dependencies = {
             "nvim-telescope/telescope.nvim",
             "nvim-lua/plenary.nvim",
@@ -83,7 +84,7 @@ return {
             end
 
             local actions = require("telescope.actions")
-            local fb_actions = require("telescope._extensions.file_browser.actions")
+            -- local fb_actions = require("telescope._extensions.file_browser.actions")
 
             -- NOTE: define custom action for opening Trouble qflist buffer
             local transform_mod = require("telescope.actions.mt").transform_mod
@@ -162,18 +163,18 @@ return {
                         override_file_sorter = true,
                         case_mod = "smart_case",
                     },
-                    file_browser = {
-                        hijack_netrw = true,
-                        -- whether to show hidden files or not
-                        hidden = { file_browser = true, folder_browser = true },
-                        depth = 4,
-                        autodepth = 4,
-                        mappings = {
-                            ["i"] = {
-                                ["<C-h>"] = fb_actions.toggle_hidden,
-                            },
-                        },
-                    },
+                    -- file_browser = {
+                    --     hijack_netrw = true,
+                    --     -- whether to show hidden files or not
+                    --     hidden = { file_browser = true, folder_browser = true },
+                    --     depth = 4,
+                    --     autodepth = 4,
+                    --     mappings = {
+                    --         ["i"] = {
+                    --             ["<C-h>"] = fb_actions.toggle_hidden,
+                    --         },
+                    --     },
+                    -- },
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown(),
                     },
@@ -193,7 +194,7 @@ return {
             })
 
             require("telescope").load_extension("fzf")
-            require("telescope").load_extension("file_browser")
+            -- require("telescope").load_extension("file_browser")
             require("telescope").load_extension("ui-select")
             require("telescope").load_extension("undo")
             -- require('telescope').load_extension('git_diffs')
@@ -246,7 +247,7 @@ return {
 
             -- extensions
             map("n", "<leader>fu", "<cmd>Telescope undo<CR>", opts, "Telescope undo")
-            map("n", "<leader>fv", "<cmd>Telescope file_browser<CR>", opts, "Telescope file browser")
+            -- map("n", "<leader>fv", "<cmd>Telescope file_browser<CR>", opts, "Telescope file browser")
         end,
     },
 }

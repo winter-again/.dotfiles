@@ -8,7 +8,7 @@ vim.g.loaded_netrwPlugin = 1
 
 local opt = vim.opt
 
--- opt.guicursor = '' -- disable cursor change on mode change
+-- opt.guicursor = "" -- disable cursor change on mode change
 -- opt.splitright = true -- new window to the right of current
 -- opt.splitbelow = true -- new window below the current
 opt.background = "dark"
