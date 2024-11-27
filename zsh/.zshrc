@@ -25,9 +25,9 @@ export VISUAL="nvim"
 export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export MANROFFOPT="-P -c" # simple colors
 # Java for pyspark
-export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
+# export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
-export PATH="$HOME/.local/bin:$PATH"
+# export PATH="$HOME/.local/bin:$PATH"
 # for custom nvim install location
 # export PATH="$HOME/neovim/bin:$PATH"
 
@@ -39,12 +39,12 @@ export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 # export PATH=$PATH:/usr/local/go/bin # from go install directions, but instead we're using ~/.go/bin
 
-# for convenience; adds ~/go/bin to path
+# adds ~/go/bin to path for convenience
 export PATH="$PATH:$(go env GOBIN)"
 # export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # only necessary if they differ
 
-# Rust
-export PATH="$HOME/.cargo/bin:$PATH"
+# Rust - shouldn't need this if using rustup package from Arch repos
+# export PATH="$HOME/.cargo/bin:$PATH"
 
 # aliases
 # alias nvim-min="NVIM_APPNAME=nvim_min nvim" # alt nvim config
@@ -213,12 +213,12 @@ export FZF_CTRL_R_OPTS="
 # `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
 # `--version-file-strategy=recursive` might also make sense; default is local
 # using both = auto use/install the right Node version when going into proj subdirs and moving between proj
-# eval "$(fnm env --use-on-cd)"
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" # from pyenv section on zsh
-eval "$(pyenv init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" # from pyenv section on zsh
+# eval "$(pyenv init -)"
 
 unsetopt beep autocd
 setopt hist_ignore_all_dups # delete old even if new one is dup
@@ -262,6 +262,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 eval "$(zoxide init zsh)" # zoxide
-source ~/.config/wezterm/wezterm.sh
+# source ~/.config/wezterm/wezterm.sh
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/omp_config.toml)"
 # zprof
