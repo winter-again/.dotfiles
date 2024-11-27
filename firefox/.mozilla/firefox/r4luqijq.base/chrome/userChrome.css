@@ -18,23 +18,27 @@
 }
 /* hide sidebery if native tabs are showing and vice versa
 uses the "zero width space" character shown below as the preface */
-#main-window #titlebar {
+#main-window #TabsToolbar {
     overflow: hidden;
     transition: height 0.3s 0.3s !important;
 }
 /* Default state: Set initial height to enable animation */
-#main-window #titlebar {
+/* 
+Using #TabsToolbar (instead of #titlebar) with visibility: collapse;
+* */
+#main-window #TabsToolbar {
     height: 3em !important;
 }
-#main-window[uidensity="touch"] #titlebar {
+#main-window[uidensity="touch"] #TabsToolbar {
     height: 3.35em !important;
 }
-#main-window[uidensity="compact"] #titlebar {
+#main-window[uidensity="compact"] #TabsToolbar {
     height: 2.7em !important;
 }
 /* Hidden state: Hide native tabs strip */
-#main-window[titlepreface*="​"] #titlebar {
-    height: 0 !important;
+#main-window[titlepreface*="​"] #TabsToolbar {
+    /* height: 0 !important; */
+    visibility: collapse;
 }
 /* Hidden state: Fix z-index of active pinned tabs */
 #main-window[titlepreface*="​"] #tabbrowser-tabs {
