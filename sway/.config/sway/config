@@ -147,28 +147,23 @@ bindsym {
     $mod+Shift+q kill
     $mod+m exec $menu
     $mod+b exec $browser
+    $mod+o exec obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland
     # reload config file
     $mod+Shift+r reload
     # $mod+Shift+w exec killall waybar && waybar
     $mod+Shift+W exec killall -SIGUSR2 waybar
     # Exit sway (logs you out of your Wayland session)
-    $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Y' 'swaymsg exit'
+    $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
     # swaync toggle
     # $mod+n exec swaync-client -t -sw
     # power menu
     # $mod+Shift+p exec ~/.config/wofi/power-menu.sh
     $mod+Shift+p exec ~/.config/tofi/power-menu.sh
     # $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
-    $mod+Shift+comma exec gtklock -t '%I:%m %p'
+    $mod+Shift+comma exec gtklock
     $mod+Shift+period exec systemctl suspend
     # screenshot to clipboard
     $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
-    # using satty
-    # $mod+c exec grim -g "$(slurp -d)" - | satty --filename - --fullscreen --early-exit
-    # open Obsidian
-    $mod+o exec obsidian --ozone-platform-hint=auto --disable-gpu
-    # pick color and copy to clipboard; send simple noti too
-    # $mod+i exec hyprpicker -azn | xargs -I {} notify-send "hyprpicker" "<b>{}</b>"
 
     $mod+$left focus left
     $mod+$down focus down
@@ -248,15 +243,17 @@ bindsym {
     $mod+Ctrl+semicolon scratchpad show
 }
 # media keys
-bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
-bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
-bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym --locked XF86MonBrightnessUp exec brightnessctl set 10%+
-bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
+# using wpctl instead of pactl
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 2%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
+
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 10%+
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
 
 # Resizing containers:
 mode "resize" {
@@ -286,11 +283,7 @@ exec {
     nm-applet
     solaar -w hide
     mako
-    # swaync
-    # spotify-launcher
-    # swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
-    # swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
-    swayidle -w before-sleep 'gtklock -d -t "%I:%m %p"'
+    swayidle -w before-sleep 'gtklock -d'
 
     # for xwayland, maybe also for nsxiv
     # xrdb -load ~/.Xresources
@@ -315,6 +308,6 @@ assign [app_id="discord"] $ws10
 # for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 # for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
 
-exec /home/andrew/.local/bin/sway_startup
+# exec /home/andrew/.local/bin/sway_startup
 
 include /etc/sway/config.d/*
