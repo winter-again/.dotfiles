@@ -23,9 +23,6 @@ uses the "zero width space" character shown below as the preface */
     transition: height 0.3s 0.3s !important;
 }
 /* Default state: Set initial height to enable animation */
-/* 
-Using #TabsToolbar (instead of #titlebar) with visibility: collapse;
-* */
 #main-window #TabsToolbar {
     height: 3em !important;
 }

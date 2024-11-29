@@ -12,7 +12,7 @@ swaymsg -q "move window to workspace 2"
 
 swaymsg -q "workspace 3"
 # ~/.local/bin/sway-toolwait --nocheck --waitfor org.wezfurlong.wezterm -- wezterm start --always-new-process --cwd ~/.dotfiles -e tmux new -s "00"
-~/.local/bin/sway-toolwait --nocheck --waitfor org.wezfurlong.wezterm -- wezterm start --always-new-process --cwd ~/.dotfiles -e ~/go/bin/flow start
+~/.local/bin/sway-toolwait --nocheck --waitfor org.wezfurlong.wezterm -- wezterm start --always-new-process --cwd /home/andrew/.dotfiles -e /home/andrew/go/bin/flow start
 
 swaymsg -q "workspace 4"
 ~/.local/bin/sway-toolwait --nocheck --waitfor obsidian -- obsidian --disable-gpu --ozone-platform-hint=auto

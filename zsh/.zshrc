@@ -27,7 +27,7 @@ export MANROFFOPT="-P -c" # simple colors
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
-# export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
 # for custom nvim install location
 # export PATH="$HOME/neovim/bin:$PATH"
 
