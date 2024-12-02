@@ -60,7 +60,6 @@ alias tv="tidy-viewer"
 alias R="R --no-save" # never prompt to save workspace image
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
-alias yz="yazi"
 alias fd="fd --hidden --color never"
 # git aliases
 alias gs="git status"
@@ -82,7 +81,16 @@ alias gpush="git push"
 alias ggrep="git ls-files | grep -i"
 
 # functions
-ff() {
+# let yazi change dir
+function yz() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
+function ff() {
     local dir
     if [[ -z "${TMUX}" ]]; then
         dir=$(fd . \
@@ -100,7 +108,7 @@ ff() {
     cd "$dir"
 }
 # mkdir -p and cd automatically
-mkd() {
+function mkd() {
     [[ "$1" ]] && mkdir -p "$1" && cd "$1"
 }
 # tt() {
@@ -114,24 +122,24 @@ mkd() {
 #     ~/.local/bin/wezterm-bg
 # }
 # wezterm logs appear here
-wez-logs() {
+function wez-logs() {
     cd /run/user/1000/wezterm
     ls
 }
-wez-plugs() {
+function wez-plugs() {
     cd ~/.local/share/wezterm/plugins
     ls
 }
-dots() {
+function dots() {
     cd ~/.dotfiles
 }
 # for Obsidian vault
-obs() {
+function obs() {
     cd ~/Documents/obsidian-vault
     git status
 }
 # show journalctl for rclone backup service
-bk() {
+function bk() {
     journalctl --user -fu rclone_backup.service -n 30
 }
 
@@ -140,7 +148,7 @@ alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bo
 _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
 _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | delta'"
 # fcoc_preview - checkout git commit with previews
-fcoc_preview() {
+function fcoc_preview() {
   local commit
   commit=$( glNoGraph |
     fzf --no-sort --reverse --tiebreak=index --no-multi \
@@ -148,7 +156,7 @@ fcoc_preview() {
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
 # gshow - git commit browser with previews
-gshow() {
+function gshow() {
     glNoGraph |
         fzf --no-sort --reverse --tiebreak=index --no-multi \
             --ansi --preview="$_viewGitLogLine" \
@@ -157,7 +165,7 @@ gshow() {
                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
 }
 # checkout git branch
-gbs() {
+function gbs() {
     local branches branch
     branches=$(git --no-pager branch -vv) &&
     branch=$(echo "$branches" | fzf +m) &&

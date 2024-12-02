@@ -277,8 +277,9 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-exec_always pkill kanshi; exec kanshi
-# exec_always kill -1 $(pidof kanshi)
+# exec_always pkill kanshi; exec kanshi
+exec kanshi
+exec_always kill -1 $(pidof kanshi)
 exec {
     # kanshi
     waybar
@@ -287,6 +288,9 @@ exec {
     mako
     swayidle -w before-sleep 'gtklock -d'
     playerctld daemon
+
+    dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
+    gnome-keyring-daemon --start --components=secrets
 
     # for xwayland, maybe also for nsxiv
     # xrdb -load ~/.Xresources

@@ -108,7 +108,7 @@ Comment[zh_TW]=連線到網際網路
 StartupNotify=true
 StartupWMClass=brave-browser
 TryExec=brave
-Exec=brave --disable-gpu --ozone-platform-hint=auto %U
+Exec=brave --enable-features=UseOzonePlatform --ozone-platform=wayland --password-store=basic %U
 Terminal=false
 Icon=brave-desktop
 Type=Application
