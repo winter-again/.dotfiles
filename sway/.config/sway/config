@@ -61,8 +61,8 @@ output * bg $bg solid_color
 
 input "type:keyboard" {
     xkb_layout us
-    xkb_options caps:escape
-    # xkb_options ctrl:swapcaps
+    # xkb_options caps:escape
+    xkb_options ctrl:swapcaps
     # xkb_options caps:swapescape
     repeat_delay 200
     repeat_rate 40
@@ -284,13 +284,13 @@ exec {
     # kanshi
     waybar
     nm-applet
-    solaar -w hide
+    # solaar -w hide
     mako
     swayidle -w before-sleep 'gtklock -d'
-    playerctld daemon
+    # playerctld daemon
 
-    dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
-    gnome-keyring-daemon --start --components=secrets
+    # dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
+    # gnome-keyring-daemon --start --components=secrets
 
     # for xwayland, maybe also for nsxiv
     # xrdb -load ~/.Xresources
