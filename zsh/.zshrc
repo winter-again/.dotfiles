@@ -61,6 +61,7 @@ alias R="R --no-save" # never prompt to save workspace image
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
 alias fd="fd --hidden --color never"
+alias nc="ncmpcpp"
 # git aliases
 alias gs="git status"
 alias ga="git add"

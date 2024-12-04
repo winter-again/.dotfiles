@@ -3,8 +3,7 @@
 cd ~ || exit
 
 # session
-# also see some of these in greetd wiki:
-# https://man.sr.ht/~kennylevinsen/greetd/#how-to-set-xdg_session_typewayland
+# apparently needed for xdg-desktop-portal-wlr to work but supp to set in systemd user session
 export XDG_SESSION_TYPE=wayland
 export XDG_SESSION_DESKTOP=sway
 # from Sway wiki (https://github.com/swaywm/sway/wiki)
@@ -14,8 +13,6 @@ export XDG_CURRENT_DESKTOP=sway
 
 # Firefox w/ Wayland (https://wiki.archlinux.org/title/Firefox#Wayland)
 export MOZ_ENABLE_WAYLAND=1
-# also installed intel-media-driver for Firefox VA-API:
-# https://bbs.archlinux.org/viewtopic.php?id=288764
 # NOTE: try
 # from Arch wiki:
 # though Firefox should auto-choose the correct GPU for VA-API
