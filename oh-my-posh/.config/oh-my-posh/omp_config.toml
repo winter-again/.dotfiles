@@ -45,6 +45,12 @@ overflow = "hide"
   template = " {{ .Full }} "
 
   [[blocks.segments]]
+  type = "rust"
+  style = "plain"
+  template = "󱘗 {{ .Full }} "
+  foreground = "p:orange"
+
+  [[blocks.segments]]
   type = "python"
   style = "plain"
   template = " {{ .Venv }}({{ .Full }}) "

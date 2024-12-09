@@ -4,39 +4,41 @@
     --focus-outline-color: var(--mountain-purple) !important;
     --lwt-toolbarbutton-icon-fill-attention: var(--mountain-purple) !important;
     --button-primary-bgcolor: var(--mountain-purple) !important;
-    --button-primary-hover-bgcolor: color-mix(
-        in srgb,
-        currentColor 12%,
-        var(--mountain-purple)
-    ) !important;
-    --button-primary-active-bgcolor: color-mix(
-        in srgb,
-        currentColor 17%,
-        var(--mountain-purple)
-    ) !important;
+    --button-primary-hover-bgcolor: color-mix(in srgb,
+            currentColor 12%,
+            var(--mountain-purple)) !important;
+    --button-primary-active-bgcolor: color-mix(in srgb,
+            currentColor 17%,
+            var(--mountain-purple)) !important;
     --button-primary-color: var(--mountain-purple) !important;
 }
+
 /* hide sidebery if native tabs are showing and vice versa
 uses the "zero width space" character shown below as the preface */
 #main-window #TabsToolbar {
     overflow: hidden;
     transition: height 0.3s 0.3s !important;
 }
+
 /* Default state: Set initial height to enable animation */
 #main-window #TabsToolbar {
     height: 3em !important;
 }
+
 #main-window[uidensity="touch"] #TabsToolbar {
     height: 3.35em !important;
 }
+
 #main-window[uidensity="compact"] #TabsToolbar {
     height: 2.7em !important;
 }
+
 /* Hidden state: Hide native tabs strip */
 #main-window[titlepreface*="​"] #TabsToolbar {
     /* height: 0 !important; */
     visibility: collapse;
 }
+
 /* Hidden state: Fix z-index of active pinned tabs */
 #main-window[titlepreface*="​"] #tabbrowser-tabs {
     z-index: 0 !important;
@@ -47,7 +49,8 @@ uses the "zero width space" character shown below as the preface */
 #sidebar-box {
     --uc-sidebar-width: 44px;
     --uc-sidebar-hover-width: 200px;
-    --uc-autohide-sidebar-delay: 1ms; /* Waiting time before hiding sidebar */
+    --uc-autohide-sidebar-delay: 1ms;
+    /* Waiting time before hiding sidebar */
     position: relative;
     min-width: var(--uc-sidebar-width) !important;
     width: var(--uc-sidebar-width) !important;
@@ -58,14 +61,16 @@ uses the "zero width space" character shown below as the preface */
 #sidebar-box[positionend] {
     direction: rtl;
 }
-#sidebar-box[positionend] > * {
+
+#sidebar-box[positionend]>* {
     direction: ltr;
 }
 
 #sidebar-box[positionend]:-moz-locale-dir(rtl) {
     direction: ltr;
 }
-#sidebar-box[positionend]:-moz-locale-dir(rtl) > * {
+
+#sidebar-box[positionend]:-moz-locale-dir(rtl)>* {
     direction: rtl;
 }
 
@@ -82,10 +87,11 @@ uses the "zero width space" character shown below as the preface */
     will-change: min-width;
 }
 
-#sidebar-box:hover > #sidebar {
+#sidebar-box:hover>#sidebar {
     min-width: var(--uc-sidebar-hover-width) !important;
     transition-delay: 0ms !important;
 }
+
 /* end */
 
 /* hide sidebery when window is fullscreen */
@@ -106,10 +112,11 @@ hbox#nav-bar-customization-target {
 
 /* move status panel (tooltip when hovering a link) so sidebery doesn't cover on expand */
 /* not sure if necessary */
-#sidebar-box:not([positionend]):hover ~ #appcontent #statuspanel {
+#sidebar-box:not([positionend]):hover~#appcontent #statuspanel {
     inset-inline: auto 0px !important;
 }
-#sidebar-box:not([positionend]):hover ~ #appcontent #statuspanel-label {
+
+#sidebar-box:not([positionend]):hover~#appcontent #statuspanel-label {
     margin-inline: 0px !important;
     border-left-style: solid !important;
 }

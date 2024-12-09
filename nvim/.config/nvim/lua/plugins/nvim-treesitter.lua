@@ -33,6 +33,7 @@ return {
                     "r",
                     "rasi",
                     "regex",
+                    "rust",
                     "sql",
                     "toml",
                     "tsx",

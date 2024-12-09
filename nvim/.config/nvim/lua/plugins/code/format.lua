@@ -12,6 +12,7 @@ return {
                     css = { "prettierd" },
                     javascript = { "prettierd" },
                     javascriptreact = { "prettierd" },
+                    rust = { "rustfmt", lsp_format = "fallback" },
                     typescript = { "prettierd" },
                     typescriptreact = { "prettierd" },
                     -- disabling to let jsonls handle formatting
