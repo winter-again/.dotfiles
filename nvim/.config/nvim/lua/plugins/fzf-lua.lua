@@ -1,8 +1,9 @@
 return {
     "ibhagwan/fzf-lua",
-    enabled = false,
     -- 'https://gitlab.com/ibhagwan/fzf-lua', -- Gitlab alt
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    enabled = true,
+    keys = { "<leader>ff", "<leader>fs", "<leader>fl" },
     config = function()
         local fzf_lua = require("fzf-lua")
         fzf_lua.setup({
@@ -47,7 +48,7 @@ return {
         map("n", "<leader>fs", function()
             require("fzf-lua").live_grep_glob({
                 exec_empty_query = true,
-                cmd = "rg --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/*",
+                cmd = "rg --column --line-number --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/*",
             })
         end, opts, "Live grep")
         map("n", "<leader>/", fzf_lua.lgrep_curbuf, opts, "Find in current buffer")

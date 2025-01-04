@@ -12,6 +12,7 @@ return {
         dependencies = {
             "nvim-telescope/telescope.nvim",
         },
+        enabled = false,
     },
     {
         "nvim-telescope/telescope.nvim",
@@ -29,7 +30,7 @@ return {
                 "nvim-telescope/telescope-ui-select.nvim",
             },
         },
-        enabled = true,
+        enabled = false,
         keys = { "<leader>ff", "<leader>fs", "<leader>fl" },
         config = function()
             -- workaround for opening multiple files -- can use fzf-lua instead

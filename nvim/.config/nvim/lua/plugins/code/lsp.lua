@@ -86,6 +86,7 @@ return {
                 local ok_telescope, builtin = pcall(require, "telescope.builtin")
                 local ok_fzf_lua, fzf_lua = pcall(require, "fzf-lua")
                 if ok_telescope then
+                    print("Using telescope for LSP keymaps")
                     map("n", "gd", builtin.lsp_definitions, opts, "LSP definitions")
                     map("n", "gr", builtin.lsp_references, opts, "LSP references")
                     map("n", "gI", builtin.lsp_implementations, opts, "LSP implementations")
@@ -94,7 +95,9 @@ return {
                     map("n", "<leader>ws", builtin.lsp_workspace_symbols, opts, "LSP workspace symbols")
                 elseif ok_fzf_lua then
                     print("Using fzf-lua for LSP keymaps")
-                    map("n", "gd", fzf_lua.lsp_definitions, opts, "LSP definitions")
+                    map("n", "gd", function()
+                        fzf_lua.lsp_definitions({ jump_to_single_result = true })
+                    end, opts, "LSP definitions")
                     map("n", "gr", fzf_lua.lsp_references, opts, "LSP references")
                     map("n", "gI", fzf_lua.lsp_implementations, opts, "LSP implementations")
                     map("n", "<leader>D", fzf_lua.lsp_typedefs, opts, "LSP type defns.")
