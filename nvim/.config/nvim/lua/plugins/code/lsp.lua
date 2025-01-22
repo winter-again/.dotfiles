@@ -83,10 +83,31 @@ return {
                     vim.diagnostic.open_float({ scope = "line" })
                 end, opts, "Get line diagnostics")
 
+                if client.server_capabilities.documentHighlightProvider then
+                    map("n", "gc", function()
+                        if vim.g.doc_highlight then
+                            vim.lsp.buf.clear_references()
+                            vim.g.doc_highlight = false
+                        else
+                            vim.lsp.buf.document_highlight()
+                            vim.g.doc_highlight = true
+                        end
+                    end, opts, "Highlight symbol under cursor")
+                    -- local group = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true })
+                    -- vim.api.nvim_create_autocmd("CursorMoved", {
+                    --     group = group,
+                    --     buffer = bufnr,
+                    --     -- once = true,
+                    --     callback = function()
+                    --         vim.lsp.buf.clear_references()
+                    --     end,
+                    -- })
+                end
+
                 local ok_telescope, builtin = pcall(require, "telescope.builtin")
                 local ok_fzf_lua, fzf_lua = pcall(require, "fzf-lua")
                 if ok_telescope then
-                    print("Using telescope for LSP keymaps")
+                    -- print("Using telescope for LSP keymaps")
                     map("n", "gd", builtin.lsp_definitions, opts, "LSP definitions")
                     map("n", "gr", builtin.lsp_references, opts, "LSP references")
                     map("n", "gI", builtin.lsp_implementations, opts, "LSP implementations")
@@ -94,7 +115,7 @@ return {
                     map("n", "<leader>ds", builtin.lsp_document_symbols, opts, "LSP doc. symbols")
                     map("n", "<leader>ws", builtin.lsp_workspace_symbols, opts, "LSP workspace symbols")
                 elseif ok_fzf_lua then
-                    print("Using fzf-lua for LSP keymaps")
+                    -- print("Using fzf-lua for LSP keymaps")
                     map("n", "gd", function()
                         fzf_lua.lsp_definitions({ jump_to_single_result = true })
                     end, opts, "LSP definitions")
@@ -144,6 +165,26 @@ return {
                         capabilities = lsp_capabilities,
                         on_attach = lsp_attach,
                     })
+                end,
+                ["marksman"] = function()
+                    local cwd = vim.uv.cwd()
+                    if cwd == vim.fs.normalize("~/Documents/notebook") then
+                        require("lspconfig")["marksman"].setup({
+                            capabilities = lsp_capabilities,
+                            on_attach = function(client, bufnr)
+                                -- disable completion
+                                -- if client.name == "marksman" then
+                                client.server_capabilities.completionProvider = nil
+                                -- end
+                                lsp_attach(client, bufnr)
+                            end,
+                        })
+                    else
+                        require("lspconfig")["marksman"].setup({
+                            capabilities = lsp_capabilities,
+                            on_attach = lsp_attach,
+                        })
+                    end
                 end,
                 ["rust_analyzer"] = function()
                     require("lspconfig")["rust_analyzer"].setup({

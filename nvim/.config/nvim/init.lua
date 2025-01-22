@@ -74,7 +74,7 @@ else
             "kanagawa-paper",
             "posterpole",
             "lackluster-hack",
-            -- heavier constrast
+            -- heavier contrast
             "tokyonight",
             "catppuccin",
             "rose-pine",

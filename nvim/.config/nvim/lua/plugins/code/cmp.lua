@@ -83,7 +83,6 @@ return {
                         path = "[path]",
                         buffer = "[buf]",
                         cmdline = "[cmd]",
-                        otter = "[otter]",
                     },
                     maxwidth = 50,
                     ellipsis_char = "...",
@@ -104,7 +103,6 @@ return {
                 { name = "path" },
                 { name = "buffer", max_item_count = 4 },
                 { name = "nvim_lsp_signature_help" },
-                { name = "otter" },
             }),
             -- copied from TJ; currently no docs so would have to read source for explanation
             sorting = {

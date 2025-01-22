@@ -27,7 +27,7 @@ return {
             },
         })
         vim.keymap.set("n", "<leader>pv", require("oil").toggle_float, { desc = "Open Oil in floating window" })
-        vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory of current file in Oil" })
-        vim.keymap.set("n", "<leader>oh", "<cmd>split | Oil<CR>", { desc = "Open Oil in split" })
+        -- vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory of current file in Oil" })
+        vim.keymap.set("n", "<leader>ph", "<cmd>split | Oil<CR>", { desc = "Open Oil in split" })
     end,
 }
