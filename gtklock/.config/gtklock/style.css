@@ -1,30 +1,26 @@
 window {
     /* use full path */
-    background-image: url("/home/andrew/Pictures/wallpapers/tokyo-night-wallpaper.jpg");
+    /* background-image: url("/home/andrew/Pictures/wallpapers/tokyo-night-wallpaper.jpg"); */
+    background-image: url("/home/andrew/Pictures/wallpapers/Jackson-Pollock-One-Number-31-1950.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     /* background-color: #1a1b26; */
-    background-color: #0f0f0f;
+    background-color: #0f0f0f; /* used if image fails to load */
 }
 
 #window-box {
-    /* background: #1a1b26; */
     background: #0f0f0f;
     border-radius: 10px;
     padding: 10px;
     border-color: #8f8aac;
-    /* opacity: 0.8; */
 }
 
 #error-label {
-    /* color: #9d7cd8; */
     color: #ac8a8c;
 }
 
 #unlock-button {
-    /* color: #1a1b26; */
-    /* background: #7aa2f7; */
     color: #262626;
     background: #8f8aac;
 }
