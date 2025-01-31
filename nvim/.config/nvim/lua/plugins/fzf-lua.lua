@@ -5,6 +5,7 @@ return {
     keys = { "<leader>ff", "<leader>fs", "<leader>fl" },
     config = function()
         local fzf_lua = require("fzf-lua")
+        local actions = require("fzf-lua.actions")
         fzf_lua.setup({
             defaults = {
                 formatter = "path.dirname_first",
@@ -15,13 +16,14 @@ return {
             },
             -- NOTE: for fzf only; can override the env var defaults
             -- fzf_colors = {
-            --     ["hl"] = "#8f8aac",
-            --     ["hl+"] = "#8a98ac",
             -- },
-            -- open multiple files by marking w/ tab
             files = {
+                -- fd_opts = "--color=always --type f --type l --hidden --follow",
+                fd_opts = "--color=never --hidden --type f --type l --exclude .git",
                 actions = {
-                    ["default"] = require("fzf-lua.actions").file_edit,
+                    -- ["default"] = actions.file_edit,
+                    ["enter"] = actions.file_edit_or_qf,
+                    ["ctrl-g"] = actions.toggle_ignore,
                 },
             },
             grep = {
@@ -31,7 +33,7 @@ return {
                     dir_part = "FzfLuaNormal",
                     file_part = "FzfLuaFzfPrompt",
                 },
-                rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/* -e",
+                rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden --no-ignore --follow --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/* -e",
                 -- rg_glob = true,
             },
         })
