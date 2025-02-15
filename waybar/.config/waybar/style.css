@@ -36,13 +36,13 @@ window#waybar {
 tooltip {
     color: @fg;
     background: @bg;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 #workspaces button {
     color: @fg;
     background: transparent;
-    border-radius: 5px;
+    border-radius: 0px;
     min-width: 1.6rem;
     /* to avoid sizing change for urgent workspace's border */
     /* border: 2px solid transparent; */
