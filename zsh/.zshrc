@@ -145,13 +145,13 @@ function bk() {
 function mntbk() {
     exec 5>&1
     out=$(udisksctl mount -b /dev/sda1 2>&1 | tee /dev/fd/5)
-    notify-send "Mount backup drive" "$out"
+    notify-send "Mounted backup drive" "$out"
 }
 
 function umntbk() {
     exec 5>&1
     out=$(udisksctl unmount -b /dev/sda1 2>&1 | tee /dev/fd/5)
-    notify-send "Mount backup drive" "$out"
+    notify-send "Unmounted backup drive" "$out"
 }
 
 # from fzf community

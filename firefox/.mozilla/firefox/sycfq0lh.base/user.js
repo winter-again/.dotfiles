@@ -10,23 +10,22 @@
 /****************************************************************************
  * Betterfox                                                                *
  * "Ad meliora"                                                             *
- * version: 131                                                             *
+ * version: 135                                                             *
  * url: https://github.com/yokoffing/Betterfox                              *
-****************************************************************************/
+ ****************************************************************************/
 
 /****************************************************************************
  * SECTION: FASTFOX                                                         *
-****************************************************************************/
+ ****************************************************************************/
 /** GENERAL ***/
 user_pref("content.notify.interval", 100000);
 
 /** GFX ***/
-user_pref("gfx.canvas.accelerated.cache-items", 4096);
 user_pref("gfx.canvas.accelerated.cache-size", 512);
 user_pref("gfx.content.skia-font-cache-size", 20);
 
 /** DISK CACHE ***/
-user_pref("browser.cache.jsbc_compression_level", 3);
+user_pref("browser.cache.disk.enable", false);
 
 /** MEDIA CACHE ***/
 user_pref("media.memory_cache_max_size", 65536);
@@ -53,15 +52,20 @@ user_pref("network.predictor.enable-prefetch", false);
 
 /** EXPERIMENTAL ***/
 user_pref("layout.css.grid-template-masonry-value.enabled", true);
-user_pref("dom.enable_web_task_scheduling", true);
 
 /****************************************************************************
  * SECTION: SECUREFOX                                                       *
-****************************************************************************/
+ ****************************************************************************/
 /** TRACKING PROTECTION ***/
 user_pref("browser.contentblocking.category", "strict");
-user_pref("urlclassifier.trackingSkipURLs", "*.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com");
-user_pref("urlclassifier.features.socialtracking.skipURLs", "*.instagram.com, *.twitter.com, *.twimg.com");
+user_pref(
+    "urlclassifier.trackingSkipURLs",
+    "*.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com"
+);
+user_pref(
+    "urlclassifier.features.socialtracking.skipURLs",
+    "*.instagram.com, *.twitter.com, *.twimg.com"
+);
 user_pref("browser.download.start_downloads_in_tmp_dir", true);
 user_pref("browser.helperApps.deleteTempFileOnExit", true);
 user_pref("browser.uitour.enabled", false);
@@ -82,6 +86,7 @@ user_pref("browser.privatebrowsing.forceMediaMemoryCache", true);
 user_pref("browser.sessionstore.interval", 60000);
 
 /** SHUTDOWN & SANITIZING ***/
+user_pref("browser.privatebrowsing.resetPBM.enabled", true);
 user_pref("privacy.history.custom", true);
 
 /** SEARCH / URL BAR ***/
@@ -125,8 +130,8 @@ user_pref("browser.safebrowsing.downloads.remote.enabled", false);
 /** MOZILLA ***/
 user_pref("permissions.default.desktop-notification", 2);
 user_pref("permissions.default.geo", 2);
+user_pref("browser.search.update", false);
 user_pref("permissions.manager.defaultsUrl", "");
-user_pref("webchannel.allowObject.urlWhitelist", "");
 
 /** TELEMETRY ***/
 user_pref("datareporting.policy.dataSubmissionEnabled", false);
@@ -154,7 +159,6 @@ user_pref("app.normandy.api_url", "");
 /** CRASH REPORTS ***/
 user_pref("breakpad.reportURL", "");
 user_pref("browser.tabs.crashReporting.sendReport", false);
-user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
 
 /** DETECTION ***/
 user_pref("captivedetect.canonicalURL", "");
@@ -163,15 +167,21 @@ user_pref("network.connectivity-service.enabled", false);
 
 /****************************************************************************
  * SECTION: PESKYFOX                                                        *
-****************************************************************************/
+ ****************************************************************************/
 /** MOZILLA UI ***/
 user_pref("browser.privatebrowsing.vpnpromourl", "");
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("browser.discovery.enabled", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+user_pref(
+    "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",
+    false
+);
+user_pref(
+    "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features",
+    false
+);
 user_pref("browser.preferences.moreFromMozilla", false);
 user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.aboutwelcome.enabled", false);
@@ -181,7 +191,6 @@ user_pref("browser.profiles.enabled", true);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.privateWindowSeparation.enabled", false); // WINDOWS
-user_pref("browser.newtabpage.activity-stream.newtabWallpapers.v2.enabled", true);
 
 /** COOKIE BANNER HANDLING ***/
 user_pref("cookiebanners.service.mode", 1);
@@ -231,21 +240,24 @@ user_pref("permissions.default.geo", 0);
 user_pref("permissions.default.desktop-notification", 0);
 // show shortcuts on new tab page but remove sponsored stuff
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", true); // Shortcuts
+user_pref("browser.newtabpage.activity-stream.default.sites", ""); // remove default top sites
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // Sponsored shortcuts
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false); // Recommended by Pocket
 user_pref("browser.newtabpage.activity-stream.showSponsored", false); // Sponsored Stories
-user_pref("browser.newtabpage.activity-stream.default.sites", ""); // remove default top sites
+
+// get rid of weather widgets in new tab
+user_pref("browser.newtabpage.activity-stream.showWeather", false);
+
 // enable container tabs if you want to login to same site under diff acounts
+// also would install Multi-Account Containers extension
 // user_pref("privacy.userContext.enabled", true);
 
 // PREF: disable Firefox Sync
 user_pref("identity.fxaccounts.enabled", false);
-// PREF: disable Firefox View
-user_pref("browser.tabs.firefox-view", false);
-user_pref("browser.tabs.firefox-view-next", false); // [FF119+]
-user_pref("browser.tabs.firefox-view-newIcon", false);
+
 // PREF: disable the Firefox View tour from popping up
-user_pref("browser.firefox-view.feature-tour", "{\"screen\":\"\",\"complete\":true}");
+// can no longer disable FF view just remove icon
+user_pref("browser.firefox-view.feature-tour", '{"screen":"","complete":true}');
 
 // disable login manager
 user_pref("signon.rememberSignons", false);
@@ -253,24 +265,61 @@ user_pref("signon.rememberSignons", false);
 user_pref("extensions.formautofill.addresses.enabled", false);
 user_pref("extensions.formautofill.creditCards.enabled", false);
 
-// warn before loading a site that doesn't support https
+// PREF: enable HTTPS-Only Mode
+// Warn me before loading sites that don't support HTTPS
+// in both Normal and Private Browsing windows.
 user_pref("dom.security.https_only_mode", true);
 user_pref("dom.security.https_only_mode_error_page_user_suggestions", true);
 
-// enforce cert. pinning (link site to unique sec key to avoid visiting fraudulent site)
-user_pref("security.cert_pinning.enforcement_level", 2);
-
-// PREF: require safe SSL negotiation
-// [ERROR] SSL_ERROR_UNSAFE_NEGOTIATION
-user_pref("security.ssl.require_safe_negotiation", true);
-
 // PREF: set DoH provider
 // user_pref("network.trr.uri", "https://mozilla.cloudflare-dns.com/dns-query"); // default is none
-user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
-// user_pref("network.trr.uri", "https://dns.dnswarden.com/00000000000000000000048"); // Hagezi Light + TIF
-// DNS over HTTPS
+// user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
+// PREF: set DoH provider
+user_pref(
+    "network.trr.uri",
+    "https://dns.dnswarden.com/00000000000000000000048"
+); // Hagezi Light + TIF
+// PREF: enforce DNS-over-HTTPS (DoH)
+// increased protection option
 user_pref("network.trr.mode", 2); // use TRR first; if fails, use native resolver as fallback
 user_pref("network.trr.max-fails", 5);
+// max protection option
+// PREF: enforce DNS-over-HTTPS (DoH)
+// user_pref("network.trr.mode", 3);
+
+// PREF: ask where to save every file
+user_pref("browser.download.useDownloadDir", false);
+user_pref("browser.downloads.useDownloadDir", false);
+// PREF: ask whether to open or save new file types
+user_pref("browser.download.always_ask_before_handling_new_types", true);
+
+// PREF: display the installation prompt for all extensions
+user_pref("extensions.postDownloadThirdPartyPrompt", false);
+
+// PREF: enforce certificate pinning
+// [ERROR] MOZILLA_PKIX_ERROR_KEY_PINNING_FAILURE
+// 1 = allow user MiTM (such as your antivirus) (default)
+// 2 = strict
+user_pref("security.cert_pinning.enforcement_level", 2);
+
+// PREF: require safe negotiation
+// [ERROR] SSL_ERROR_UNSAFE_NEGOTIATION
+// [WARNING] Breaks ea.com login (Sep 2023).
+// Blocks connections to servers that don't support RFC 5746 [2]
+// as they're potentially vulnerable to a MiTM attack [3].
+// A server without RFC 5746 can be safe from the attack if it
+// disables renegotiations but the problem is that the browser can't
+// know that. Setting this pref to true is the only way for the
+// browser to ensure there will be no unsafe renegotiations on
+// the channel between the browser and the server.
+// [STATS] SSL Labs > Renegotiation Support (May 2024) reports over 99.7% of top sites have secure renegotiation [4].
+// [1] https://wiki.mozilla.org/Security:Renegotiation
+// [2] https://datatracker.ietf.org/doc/html/rfc5746
+// [3] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3555
+// [4] https://www.ssllabs.com/ssl-pulse/
+user_pref("security.ssl.require_safe_negotiation", true);
+
+/****************************************************************************/
 
 // not privacy-related:
 // disable media keys, picture-in-picture, and topbar menu keys
@@ -293,14 +342,6 @@ user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("widget.gtk.ignore-bogus-leave-notify", 1);
 // allow suggestions from bookmarks
 user_pref("browser.urlbar.suggest.bookmark", true);
-
-// get rid of weather widgets in new tab
-user_pref("browser.newtabpage.activity-stream.showWeather", false);
-// user_pref("browser.newtabpage.activity-stream.system.showWeather", false);
-
-// always prompt for location before downloading
-user_pref("browser.download.useDownloadDir", false);
-user_pref("browser.downloads.useDownloadDir", false);
 
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *

@@ -277,9 +277,9 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-# exec_always pkill kanshi; exec kanshi
-exec kanshi
-exec_always kill -1 $(pidof kanshi)
+exec_always pkill kanshi; exec kanshi
+# exec kanshi
+# exec_always kill -1 $(pidof kanshi)
 exec {
     waybar
     nm-applet

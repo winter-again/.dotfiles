@@ -117,7 +117,7 @@ return {
                 elseif ok_fzf_lua then
                     -- print("Using fzf-lua for LSP keymaps")
                     map("n", "gd", function()
-                        fzf_lua.lsp_definitions({ jump_to_single_result = true })
+                        fzf_lua.lsp_definitions({ jump1 = true })
                     end, opts, "LSP definitions")
                     map("n", "gr", fzf_lua.lsp_references, opts, "LSP references")
                     map("n", "gI", fzf_lua.lsp_implementations, opts, "LSP implementations")

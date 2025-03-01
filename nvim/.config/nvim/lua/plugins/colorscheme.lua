@@ -14,6 +14,7 @@ return {
                 -- },
                 hl_overrides = function(highlights, colors)
                     highlights["Visual"] = { bg = colors.cursor_line }
+                    highlights["QuickFixLine"] = { fg = colors.purple, bold = true }
                 end,
             })
         end,
