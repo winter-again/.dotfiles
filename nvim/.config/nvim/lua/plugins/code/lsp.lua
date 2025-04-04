@@ -136,7 +136,7 @@ return {
                     return ":IncRename " .. vim.fn.expand("<cword>")
                 end, { expr = true, silent = true }, "LSP incremental rename")
 
-                if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+                if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
                     map("n", "<leader>ih", function()
                         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
                     end, opts, "Toggle inlay hints")
@@ -173,9 +173,7 @@ return {
                             capabilities = lsp_capabilities,
                             on_attach = function(client, bufnr)
                                 -- disable completion
-                                -- if client.name == "marksman" then
                                 client.server_capabilities.completionProvider = nil
-                                -- end
                                 lsp_attach(client, bufnr)
                             end,
                         })

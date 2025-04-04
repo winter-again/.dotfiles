@@ -1,6 +1,13 @@
+local otter = require("otter")
+
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
 vim.opt_local.spelllang = "en_us"
+
+local cwd = vim.uv.cwd()
+if cwd ~= vim.fs.normalize("~/Documents/notebook") then
+    otter.activate({ "javascript" })
+end
 
 -- 1 makes concealed links look too long because it has to be a 1:1 conceal, meaning the "["
 -- is concealed with just a blank

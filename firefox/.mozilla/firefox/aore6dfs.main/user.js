@@ -340,11 +340,11 @@ user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
 user_pref("ui.key.menuAccessKeyFocuses", false);
 // compact tab bar
 user_pref("browser.uidensity", 1);
-// search highlighting
-user_pref("ui.textSelectAttentionBackground", "#9d7cd8");
-user_pref("findbar.highlightAll", true);
 // highlight all hits
-user_pref("ui.textHighlightBackground", "#565f89");
+user_pref("findbar.highlightAll", true);
+// search highlighting
+user_pref("ui.textSelectAttentionBackground", "#8f8aac");
+user_pref("ui.textHighlightBackground", "#767676");
 // allow userChrome.css customization
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 // VA-API hardware video accel
@@ -362,6 +362,13 @@ user_pref("browser.toolbars.bookmarks.visibility", "never");
  ****************************************************************************/
 // visit https://github.com/yokoffing/Betterfox/blob/main/Smoothfox.js
 // Enter your scrolling overrides below this line:
+// recommended for 60hz+ displays
+user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
+user_pref("general.smoothScroll", true); // DEFAULT
+user_pref("mousewheel.default.delta_multiplier_y", 275); // 250-400; adjust this number to your liking
+// Firefox Nightly only:
+// [1] https://bugzilla.mozilla.org/show_bug.cgi?id=1846935
+user_pref("general.smoothScroll.msdPhysics.enabled", false); // [FF122+ Nightly]
 
 /****************************************************************************
  * END: BETTERFOX                                                           *

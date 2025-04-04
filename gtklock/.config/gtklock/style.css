@@ -1,7 +1,8 @@
 window {
     /* use full path */
     /* background-image: url("/home/andrew/Pictures/wallpapers/tokyo-night-wallpaper.jpg"); */
-    background-image: url("/home/andrew/Pictures/wallpapers/Jackson-Pollock-One-Number-31-1950.jpg");
+    /* background-image: url("/home/andrew/Pictures/wallpapers/Jackson-Pollock-One-Number-31-1950.jpg"); */
+    background-image: url("/home/andrew/Pictures/wallpapers/Ivan_Konstantinovich-Aivazovsky-A-Moonlit-Night-at-Sea-1885.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
