@@ -8,7 +8,6 @@ return {
             javascriptreact = { "eslint" },
             typescript = { "eslint" },
             typescriptreact = { "eslint" },
-            -- markdown = {}, -- disables default linting?
         }
 
         -- autocommand that triggers linting

@@ -8,16 +8,16 @@ return {
                     lua = { "stylua" },
                     -- python = { 'isort', 'black' },
                     go = { "goimports", "gofmt" },
-                    html = { "prettierd" },
-                    css = { "prettierd" },
-                    javascript = { "prettierd" },
-                    javascriptreact = { "prettierd" },
+                    html = { "prettier" },
+                    css = { "prettier" },
+                    javascript = { "prettier" },
+                    javascriptreact = { "prettier" },
+                    typescript = { "prettier" },
+                    typescriptreact = { "prettier" },
                     rust = { "rustfmt", lsp_format = "fallback" },
-                    typescript = { "prettierd" },
-                    typescriptreact = { "prettierd" },
                     -- disabling to let jsonls handle formatting
                     -- so we don't have to constantly set overrides in a .prettierrc.json
-                    -- json = { 'prettierd' },
+                    -- json = { 'prettier' },
                     -- sql = { 'sqlfluff' },
                     -- 'injected' allows formatting of code fence blocks
                     -- could even have it in python to format sql inside of queries
