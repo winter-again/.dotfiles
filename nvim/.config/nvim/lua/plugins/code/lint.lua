@@ -8,6 +8,7 @@ return {
             javascriptreact = { "eslint" },
             typescript = { "eslint" },
             typescriptreact = { "eslint" },
+            sh = { "shellcheck" },
         }
 
         -- autocommand that triggers linting

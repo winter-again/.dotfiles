@@ -2,6 +2,8 @@ return {
     {
         "neovim/nvim-lspconfig",
         config = function()
+            local methods = vim.lsp.protocol.Methods
+
             --- Default on_attach function for common settings/keymaps
             ---@param client vim.lsp.Client
             ---@param bufnr integer
@@ -19,7 +21,6 @@ return {
                 end
 
                 local opts = { silent = true, buffer = bufnr }
-                local methods = vim.lsp.protocol.Methods
 
                 -- some of these became default keymaps
                 if client:supports_method(methods.textDocument_hover) then
@@ -43,7 +44,7 @@ return {
                     map({ "n", "v" }, "gca", vim.lsp.buf.code_action, opts, "Code actions")
                 end
 
-                -- NOTE: replaces cmp-nvim-lsp-signature-help but req keymap trigger
+                -- NOTE: replaces cmp-nvim-lsp-signature-help but req manual keymap trigger
                 if client:supports_method(methods.textDocument_signatureHelp) then
                     ---@diagnostic disable-next-line missing-parameter
                     map({ "i", "s" }, "<C-k>", function()
@@ -129,16 +130,18 @@ return {
                 return orig_util_open_float_prev(contents, syntax, opts, ...)
             end
 
+            -- see docs: https://neovim.io/doc/user/diagnostic.html
+
             -- custom signs for diagnostics
-            -- trouble.nvim can pick these up
-            local sign_icons = {
+            -- trouble.nvim can use too
+            local diagnostic_icons = {
                 Error = "",
                 Warn = "",
                 Info = "",
                 Hint = "",
             }
-            for type, icon in pairs(sign_icons) do
-                local hl = "DiagnosticSign" .. type
+            for severity, icon in pairs(diagnostic_icons) do
+                local hl = "DiagnosticSign" .. severity
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
             end
 
@@ -150,6 +153,7 @@ return {
                     diagnostic.code or diagnostic.user_data or ""
                 )
             end
+
             vim.diagnostic.config({
                 virtual_text = {
                     spacing = 4,
@@ -157,17 +161,24 @@ return {
                     format = diagn_format,
                 },
                 float = {
-                    -- border = 'rounded',
-                    prefix = "󰉹 ",
+                    -- border = "rounded",
+                    prefix = function(diagnostic, i, total)
+                        local severity_upper = vim.diagnostic.severity[diagnostic.severity]
+                        local severity = severity_upper:sub(1, 1) .. severity_upper:sub(2):lower()
+                        local prefix = string.format(" %s ", diagnostic_icons[severity])
+
+                        -- return prefix and optionally highlight group to use
+                        return prefix, "Diagnostic" .. severity
+                    end,
                     suffix = "", -- get rid of the code that is shown by default since format func handles it
                     format = diagn_format,
                 },
                 signs = {
                     text = {
-                        [vim.diagnostic.severity.ERROR] = sign_icons.Error,
-                        [vim.diagnostic.severity.WARN] = sign_icons.Warn,
-                        [vim.diagnostic.severity.INFO] = sign_icons.Info,
-                        [vim.diagnostic.severity.HINT] = sign_icons.Hint,
+                        [vim.diagnostic.severity.ERROR] = diagnostic_icons.Error,
+                        [vim.diagnostic.severity.WARN] = diagnostic_icons.Warn,
+                        [vim.diagnostic.severity.INFO] = diagnostic_icons.Info,
+                        [vim.diagnostic.severity.HINT] = diagnostic_icons.Hint,
                     },
                     linehl = {
                         [vim.diagnostic.severity.ERROR] = "ErrorMsg",
@@ -379,9 +390,33 @@ return {
 
             lspconfig["bashls"].setup({ capabilities = lsp_capabilities, on_attach = lsp_attach })
 
-            lspconfig["jsonls"].setup({ capabilities = lsp_capabilities, on_attach = lsp_attach })
-            lspconfig["taplo"].setup({ capabilities = lsp_capabilities, on_attach = lsp_attach })
-            lspconfig["yamlls"].setup({ capabilities = lsp_capabilities, on_attach = lsp_attach })
+            lspconfig["jsonls"].setup({
+                capabilities = lsp_capabilities,
+                on_attach = function(client, bufnr)
+                    -- NOTE: jsonls includes formatting capabilities
+                    -- client.server_capabilities.documentFormattingProvider = false
+                    lsp_attach(client, bufnr)
+                end,
+            })
+
+            lspconfig["taplo"].setup({
+                capabilities = lsp_capabilities,
+                on_attach = function(client, bufnr)
+                    -- NOTE: taplo includes formatting capabilities; disable it
+                    client.server_capabilities.documentFormattingProvider = false
+                    lsp_attach(client, bufnr)
+                end,
+            })
+
+            lspconfig["yamlls"].setup({
+                capabilities = lsp_capabilities,
+                on_attach = function(client, bufnr)
+                    -- NOTE: yamlls includes formatting capabilities; disable it, though
+                    -- it doesn't seem to work anyway?
+                    client.server_capabilities.documentFormattingProvider = false
+                    lsp_attach(client, bufnr)
+                end,
+            })
         end,
     },
     {
