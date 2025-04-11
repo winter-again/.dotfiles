@@ -11,14 +11,15 @@ export XDG_SESSION_DESKTOP=sway
 # e.g., Firefox screensharing
 export XDG_CURRENT_DESKTOP=sway
 
+# NOTE: disabling one or both fixed Firefox video issue
 # Firefox w/ Wayland (https://wiki.archlinux.org/title/Firefox#Wayland)
-export MOZ_ENABLE_WAYLAND=1
+# export MOZ_ENABLE_WAYLAND=1
 # NOTE: try
 # from Arch wiki:
 # though Firefox should auto-choose the correct GPU for VA-API
 # hardware accel
 # to save power on multi-GPU systems
-export MOZ_DRM_DEVICE=/dev/dri/card1
+# export MOZ_DRM_DEVICE=/dev/dri/card1
 
 # also from Sway wiki
 # for some Java-based apps to launch/display properly

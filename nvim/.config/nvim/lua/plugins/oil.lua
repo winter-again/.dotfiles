@@ -15,19 +15,39 @@ return {
                 show_hidden = true,
             },
             float = {
-                max_width = 50,
-                max_height = 600,
-                win_options = { winblend = 30 },
+                padding = 0,
+                -- max_width = 50,
+                max_height = 16,
+                border = "none",
+                -- win_options = { winblend = 20 },
+                preview_split = "right",
                 override = function(conf)
                     conf.relative = "editor"
-                    conf.row = 0
-                    conf.col = 159
+                    conf.row = 200
+                    conf.col = 0
+
                     return conf
                 end,
             },
         })
-        vim.keymap.set("n", "<leader>pv", require("oil").toggle_float, { desc = "Open Oil in floating window" })
+
+        local map = require("winteragain.globals").map
+
+        map("n", "<leader>pv", require("oil").toggle_float, nil, "Open Oil in floating window")
         -- vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory of current file in Oil" })
-        vim.keymap.set("n", "<leader>ph", "<cmd>split | Oil<CR>", { desc = "Open Oil in split" })
+        -- map("n", "<leader>ph", "<cmd>split | Oil<CR>", nil, "Open Oil in split")
+
+        -- auto open preview on cursor hover
+        local au_group = vim.api.nvim_create_augroup("WinterAgain", { clear = false })
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "OilEnter",
+            group = au_group,
+            callback = vim.schedule_wrap(function(args)
+                local oil = require("oil")
+                if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
+                    oil.open_preview()
+                end
+            end),
+        })
     end,
 }

@@ -202,11 +202,7 @@ return {
             -- require('telescope').load_extension('harpoon')
 
             local builtin = require("telescope.builtin")
-            local function map(mode, lhs, rhs, opts, desc)
-                opts = opts or {}
-                opts.desc = desc
-                vim.keymap.set(mode, lhs, rhs, opts)
-            end
+            local map = require("winteragain.globals").map
             local opts = { silent = true }
 
             map("n", "<leader>ff", custom_ff, opts, "Search files")

@@ -84,7 +84,7 @@ alias ggrep="git ls-files | grep -i"
 
 # functions
 # let yazi change dir
-function yz() {
+function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
     yazi "$@" --cwd-file="$tmp"
     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then

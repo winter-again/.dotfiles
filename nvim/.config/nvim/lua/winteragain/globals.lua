@@ -1,3 +1,5 @@
+local M = {}
+
 ---Pretty print Lua table and its id (from TJ)
 ---@param tbl table
 ---@return table
@@ -32,7 +34,7 @@ function Save_exec_line()
 end
 
 ---Set custom transparency settings
-function Transp()
+function M.transparent()
     local highlights = {
         "Normal",
         "NormalNC", -- unfocused windows
@@ -52,10 +54,10 @@ function Transp()
     end
 end
 vim.api.nvim_create_user_command("Transparent", function()
-    Transp()
+    M.transparent()
 end, { desc = "Make nvim transparent" })
 
-function Toggle_light_dark()
+function M.Toggle_light_dark()
     local curr_set = vim.api.nvim_get_option_value("background", { scope = "global" })
     if curr_set == "dark" then
         vim.opt.background = "light"
@@ -64,13 +66,13 @@ function Toggle_light_dark()
     end
 end
 vim.api.nvim_create_user_command("ToggleLightDark", function()
-    Toggle_light_dark()
+    M.Toggle_light_dark()
 end, { desc = "Toggle light/dark mode" })
 
 ---Convenience function for setting a highlight group in current buf
 ---@param group string
 ---@param hl table
-function Hl(group, hl)
+function M.Hl(group, hl)
     vim.api.nvim_set_hl(0, group, hl)
 end
 
@@ -106,5 +108,21 @@ function Winbar()
     if vim.list_contains(exclude, ft) then
         return ""
     end
+
     return winbar
 end
+
+--- Keymap helper function
+---@param mode string | string[]
+---@param lhs string
+---@param rhs string | function
+---@param opts? vim.keymap.set.Opts
+---@param desc string
+function M.map(mode, lhs, rhs, opts, desc)
+    opts = opts or {}
+    opts.desc = desc
+
+    vim.keymap.set(mode, lhs, rhs, opts)
+end
+
+return M

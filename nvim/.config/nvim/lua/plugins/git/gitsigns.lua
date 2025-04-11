@@ -8,14 +8,10 @@ return {
             },
             current_line_blame_formatter = "<author> • <author_time:%Y-%m-%d> • <summary>",
             on_attach = function(bufnr)
+                local map = require("winteragain.globals").map
                 local gs = package.loaded.gitsigns
+                local opts = { buffer = bufnr, silent = true }
                 -- nav between hunks
-                local function map(mode, l, r, opts, desc)
-                    opts = opts or {}
-                    opts.buffer = bufnr
-                    opts.desc = desc
-                    vim.keymap.set(mode, l, r, opts)
-                end
 
                 map("n", "]h", function()
                     if vim.wo.diff then
@@ -25,7 +21,7 @@ return {
                         gs.next_hunk()
                     end)
                     return "<Ignore>"
-                end, { expr = true })
+                end, { buffer = bufnr, expr = true, silent = true }, "Next hunk")
                 map("n", "[h", function()
                     if vim.wo.diff then
                         return "[h"
@@ -34,9 +30,8 @@ return {
                         gs.prev_hunk()
                     end)
                     return "<Ignore>"
-                end, { expr = true })
+                end, { buffer = bufnr, expr = true, silent = true }, "Previous hunk")
 
-                local opts = { silent = true }
                 map("n", "<leader>gb", gs.toggle_current_line_blame, opts, "Toggle git blame for current line")
                 -- map('n', '<leader>hd', gs.diffthis, opts, 'Diff this file')
                 map("n", "<leader>td", gs.toggle_deleted, opts, "Toggle showing deletions inline")
