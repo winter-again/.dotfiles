@@ -1,3 +1,4 @@
+--- @diagnostic disable: missing-fields
 return {
     "epwalsh/obsidian.nvim",
     -- enabled = false,
@@ -25,12 +26,12 @@ return {
             mappings = {
                 -- overrides the gf mapping to work on markdown/wiki links within vault
                 -- TODO: use own fzf-lua funcs if colors are broken?
-                ["gf"] = {
-                    action = function()
-                        return require("obsidian").util.gf_passthrough()
-                    end,
-                    opts = { noremap = false, expr = true, buffer = true },
-                },
+                -- ["gf"] = {
+                --     action = function()
+                --         return require("obsidian").util.gf_passthrough()
+                --     end,
+                --     opts = { noremap = false, expr = true, buffer = true },
+                -- },
                 ["<leader>fn"] = {
                     action = function()
                         vim.cmd("ObsidianQuickSwitch")
@@ -85,26 +86,6 @@ return {
             -- TODO: there might be a bug when true where ObsidianNewFromTemplate doesn't insert
             -- frontmatter; also don't like the autoformatting right now
             disable_frontmatter = true,
-            ---@return table
-            note_frontmatter_func = function(note)
-                -- Add the title of the note as an alias.
-                -- if note.title then
-                --     note:add_alias(note.title)
-                -- end
-
-                -- local out = { tags = note.tags }
-                local out = { { title = "foo" }, { created = "today" }, { tags = "bar" }, { desc = "baz" } }
-                -- `note.metadata` contains any manually added fields in the frontmatter.
-                -- So here we just make sure those fields are kept in the frontmatter.
-                -- P(note.metadata)
-                -- if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-                --     for k, v in pairs(note.metadata) do
-                --         out[k] = v
-                --     end
-                -- end
-
-                return out
-            end,
             templates = {
                 folder = "templates",
                 date_format = "%Y-%m-%d",

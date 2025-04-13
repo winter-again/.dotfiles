@@ -1,5 +1,4 @@
---- @diagnostic disable: missing-fields
-return {
+local Cmp = {
     "hrsh7th/nvim-cmp",
     version = false,
     lazy = false,
@@ -59,20 +58,17 @@ return {
         local lspkind = require("lspkind")
 
         cmp.setup({
-            -- required: specify a snippet engine
-            snippet = {
-                expand = function(args)
-                    luasnip.lsp_expand(args.body)
-                end,
-            },
-            preselect = cmp.PreselectMode.None, -- don't preselect
-            window = {
-                -- completion = cmp.config.window.bordered(),
-                -- documentation = cmp.config.window.bordered(),
-            },
-            experimental = {
-                ghost_text = false,
-            },
+            sources = cmp.config.sources({
+                -- order determines suggestion order
+                -- can use keyword_length to change when auto completion gets triggered
+                { name = "nvim_lsp" },
+                { name = "lazydev", group_index = 0 },
+                { name = "luasnip" },
+                { name = "path" },
+                { name = "buffer", max_item_count = 4 },
+                { name = "nvim_lsp_signature_help" },
+            }),
+            --- @diagnostic disable: missing-fields
             formatting = {
                 fields = { "abbr", "kind", "menu" }, -- what fields show in completion item
                 format = lspkind.cmp_format({
@@ -92,37 +88,32 @@ return {
                     -- end,
                 }),
             },
+            -- required: specify a snippet engine
+            snippet = {
+                expand = function(args)
+                    luasnip.lsp_expand(args.body)
+                end,
+            },
+            preselect = cmp.PreselectMode.None, -- don't preselect
+            window = {
+                -- completion = cmp.config.window.bordered(),
+                -- documentation = cmp.config.window.bordered(),
+            },
+            experimental = {
+                ghost_text = false,
+            },
             performance = {
                 max_view_entries = 10,
             },
-            sources = cmp.config.sources({
-                -- order determines suggestion order
-                -- can use keyword_length to change when auto completion gets triggered
-                { name = "nvim_lsp" },
-                { name = "luasnip" },
-                { name = "path" },
-                { name = "buffer", max_item_count = 4 },
-                { name = "nvim_lsp_signature_help" },
-            }),
             -- copied from TJ; currently no docs so would have to read source for explanation
             sorting = {
                 comparators = {
                     cmp.config.compare.offset,
+                    -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
                     cmp.config.compare.exact,
                     cmp.config.compare.score,
-
-                    function(entry1, entry2)
-                        local _, entry1_under = entry1.completion_item.label:find("^_+")
-                        local _, entry2_under = entry2.completion_item.label:find("^_+")
-                        entry1_under = entry1_under or 0
-                        entry2_under = entry2_under or 0
-                        if entry1_under > entry2_under then
-                            return false
-                        elseif entry1_under < entry2_under then
-                            return true
-                        end
-                    end,
-
+                    cmp.config.compare.recently_used,
+                    cmp.config.compare.locality,
                     cmp.config.compare.kind,
                     cmp.config.compare.sort_text,
                     cmp.config.compare.length,
@@ -181,3 +172,158 @@ return {
         })
     end,
 }
+
+local blink = {
+    "saghen/blink.cmp",
+    enabled = false,
+    dependencies = {
+        "onsails/lspkind.nvim", -- completion menu icons
+    },
+    version = "1.*",
+    opts = {
+        keymap = { preset = "enter" },
+        appearance = {
+            use_nvim_cmp_as_default = false,
+            nerd_font_variant = "mono",
+        },
+        completion = {
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 500,
+                treesitter_highlighting = true,
+            },
+            list = {
+                max_items = 10,
+                selection = {
+                    preselect = false,
+                    auto_insert = true,
+                },
+            },
+            menu = {
+                border = "none",
+                min_width = 15,
+                max_height = 10,
+                draw = {
+                    columns = {
+                        { "label", "label_description", gap = 1 },
+                        { "kind_icon", "kind", gap = 1, "source_name" },
+                    },
+                    components = {
+                        kind_icon = {
+                            text = function(ctx)
+                                local lspkind = require("lspkind")
+                                local icon = ctx.kind_icon
+                                if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                                    local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+                                    if dev_icon then
+                                        icon = dev_icon
+                                    end
+                                else
+                                    icon = lspkind.symbolic(ctx.kind, {
+                                        mode = "symbol",
+                                    })
+                                end
+
+                                return icon .. ctx.icon_gap
+                            end,
+                            -- Optionally, use the highlight groups from nvim-web-devicons
+                            -- You can also add the same function for `kind.highlight` if you want to
+                            -- keep the highlight groups in sync with the icons.
+                            highlight = function(ctx)
+                                local hl = ctx.kind_hl
+                                if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                                    local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
+                                    if dev_icon then
+                                        hl = dev_hl
+                                    end
+                                end
+
+                                return hl
+                            end,
+                        },
+                        kind = {
+                            ellipsis = true,
+                            width = { fill = true },
+                            text = function(ctx)
+                                return ctx.kind
+                            end,
+                            highlight = function(ctx)
+                                return ctx.kind_hl
+                            end,
+                        },
+                        source_name = {
+                            text = function(ctx)
+                                return "[" .. ctx.source_name .. "]"
+                            end,
+                        },
+                    },
+                },
+            },
+        },
+        sources = {
+            default = { "lsp", "path", "snippets", "buffer" },
+            providers = {
+                lsp = {
+                    name = "LSP",
+                    max_items = 5,
+                },
+                path = {
+                    name = "path",
+                },
+                snippets = {
+                    name = "snip",
+                },
+                buffer = {
+                    name = "buf",
+                    max_items = 5,
+                },
+                cmdline = {
+                    name = "cmd",
+                },
+            },
+        },
+        cmdline = {
+            enabled = true,
+            -- use 'inherit' to inherit mappings from top level `keymap` config
+            keymap = { preset = "cmdline" },
+            sources = function()
+                local type = vim.fn.getcmdtype()
+                -- Search forward and backward
+                if type == "/" or type == "?" then
+                    return { "buffer" }
+                end
+                -- Commands
+                if type == ":" or type == "@" then
+                    return { "cmdline" }
+                end
+                return {}
+            end,
+            completion = {
+                trigger = {
+                    show_on_blocked_trigger_characters = {},
+                    show_on_x_blocked_trigger_characters = {},
+                },
+                list = {
+                    selection = {
+                        -- When `true`, will automatically select the first item in the completion list
+                        preselect = false,
+                        -- When `true`, inserts the completion item automatically when selecting it
+                        auto_insert = true,
+                    },
+                },
+                -- Whether to automatically show the window when new completion items are available
+                menu = { auto_show = true },
+                -- Displays a preview of the selected item on the current line
+                ghost_text = { enabled = false },
+            },
+        },
+        fuzzy = { implementation = "prefer_rust_with_warning" },
+        signature = {
+            enabled = true,
+            window = { border = "none" },
+        },
+    },
+    opts_extend = { "sources.default" },
+}
+
+return Cmp

@@ -277,6 +277,7 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
+# TODO: why doesn't this seem to run on login?
 exec_always pkill kanshi; exec kanshi
 # exec kanshi
 # exec_always kill -1 $(pidof kanshi)
@@ -290,6 +291,7 @@ exec {
 
     # networkmanager
     dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
+    # TODO: start via socket instead
     gnome-keyring-daemon --start --components=secrets
 
     swayidle -w before-sleep 'gtklock -d'
