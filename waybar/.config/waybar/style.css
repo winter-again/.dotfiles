@@ -39,6 +39,10 @@ tooltip {
     border-radius: 0px;
 }
 
+#mode {
+    margin-left: 1rem;
+}
+
 #workspaces button {
     color: @fg;
     background: transparent;
@@ -86,7 +90,7 @@ tooltip {
 
 #mpris {
     color: @spotify;
-    margin-left: 120px;
+    margin-left: 15rem;
 }
 
 #mpris.paused {
@@ -111,7 +115,7 @@ tooltip {
 }
 
 #custom-weather {
-    margin-right: 80px;
+    margin-right: 10rem;
 }
 
 #window,
@@ -120,12 +124,12 @@ tooltip {
 }
 
 /* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
+.modules-left>widget:first-child>#workspaces {
     margin-left: 0;
 }
 
 /* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #workspaces {
+.modules-right>widget:last-child>#workspaces {
     margin-right: 0;
 }
 
@@ -146,7 +150,7 @@ tooltip {
     animation-direction: alternate;
 }
 
-#tray > .needs-attention {
+#tray>.needs-attention {
     -gtk-icon-effect: highlight;
     box-shadow: inset 0 -3px @urgent;
 }
@@ -163,12 +167,14 @@ label:focus {
     border: none;
     box-shadow: none;
 }
+
 #pulseaudio-slider trough {
     min-height: 10px;
     min-width: 80px;
     border-radius: 5px;
     background-color: black;
 }
+
 #pulseaudio-slider highlight {
     min-width: 10px;
     border-radius: 5px;

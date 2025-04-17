@@ -6,8 +6,8 @@
     "fixed-center": true,
     "modules-left": [
         "sway/workspaces",
-        // "custom/spotify",
-        "mpris"
+        "sway/mode",
+        "mpris" // "custom/spotify"
     ],
     "modules-center": [
         "clock"
@@ -26,6 +26,10 @@
         "all-outputs": false,
         "format": "{name}",
         "disable-scroll-wraparound": true
+    },
+    "sway/mode": {
+        "format": "[{}]",
+        "max-length": 10
     },
     "custom/spotify": {
         // "format": "<span font='16' rise='-2000'>󰓇</span> {}",
@@ -59,11 +63,6 @@
             "weeks-pos": "right",
             "on-scroll": 1,
             "format": {
-                // "months": "<span color='#7aa2f7'><b>{}</b></span>",
-                // "days": "<span color='#c0caf5'><b>{}</b></span>",
-                // "weeks": "<span color='#7dcfff'><b>W{}</b></span>",
-                // "weekdays": "<span color='#9d7cd8'><b>{}</b></span>",
-                // "today": "<span color='#db4b4b'><b><u>{}</u></b></span>"
                 "months": "<span color='#8f8aac'><b>{}</b></span>",
                 "days": "<span color='#f0f0f0'><b>{}</b></span>",
                 "weeks": "<span color='#8a98ac'><b>W{}</b></span>",
@@ -108,13 +107,15 @@
         "on-click": "pavucontrol"
     },
     "cpu": {
-        // "format": "<span font='16' rise='-2000'></span> {usage}%",
-        "format": "  {usage}%",
-        "tooltip": false
+        "interval": 10,
+        "format": "  {usage}%", // "format": "<span font='16' rise='-2000'></span> {usage}%"
+        "tooltip": true,
+        "tooltip-format": "{load}"
     },
     "memory": {
         // "format": "<span font='16' rise='-2000'></span> {}%"
-        "format": "  {}%"
+        "format": "  {percentage}%",
+        "tooltip-format": "{used} / {total} GiB\nswap: {swapUsed} / {swapTotal} GiB"
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -128,10 +129,10 @@
     },
     "network": {
         "interval": 10,
-        // "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {signalStrength}%",
         // "format-ethernet": "<span font='16' rise='-2000'>󰈀</span> {bandwidthTotalBytes}",
-        "format-wifi": "󰖩 {signalStrength}%",
+        // "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {signalStrength}%",
         "format-ethernet": "󰈀  {bandwidthTotalBytes}",
+        "format-wifi": "󰖩 {signalStrength}%",
         "tooltip-format-wifi": "󰖩 {essid}",
         "tooltip-format-ethernet": "󰈀 {ifname}  {bandwidthUpBytes}  {bandwidthDownBytes}",
         "format-linked": "{ifname} (No IP)",
@@ -139,22 +140,27 @@
     },
     "battery": {
         "bat": "BAT0",
+        "design-capacity": true, // false = actual capacity could be lower if limit is set
+        "full-at": 80, // battery is capped at 80%
         "interval": 60,
         "states": {
-            // "good": 95,
             "warning": 30,
             "critical": 15
         },
         "format": "{icon} {capacity}%",
+        "format-time": "{H}:{m}",
+        // custom formats; status based based /sys/class/power_supply/BAT0/status
+        // Unknown, Charging, Discharging, Not charging, Full
         "format-charging": "󰂄 {capacity}% | {time}",
-        "format-plugged": "{capacity}%",
         "format-icons": [
             "󰁺",
             "󰁼",
             "󰁾",
             "󰂀",
             "󰁹"
-        ]
+        ],
+        "tooltip-format": "time: {timeTo}", // essentially battery status
+        "tooltip-format-full": "power: {power}W, health: {health}%"
     },
     "tray": {
         "icon-size": 14,

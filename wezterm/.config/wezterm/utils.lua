@@ -12,6 +12,7 @@ function M.set_bg(bg_name)
     else
         bg_key = bg_name
     end
+
     return profile_data.background[bg_key].background
 end
 

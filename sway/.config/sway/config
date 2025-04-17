@@ -1,6 +1,4 @@
 font pango:ZedMono Nerd Font Mono 10
-# font pango:JetBrains Mono 10
-# font pango:Hack Nerd Font Mono 10
 
 default_border pixel 1
 default_floating_border pixel 1
@@ -11,25 +9,12 @@ titlebar_border_thickness 1
 # covers just in sway
 # seat0 is the default seat; seat * would apply to all
 seat seat0 xcursor_theme Adwaita 24
-# seat seat0 xcursor_theme phinger-cursors-light 32
-# seat seat0 xcursor_theme capitaine-cursors-light 32
-# seat seat0 xcursor_theme capitaine-cursors 32
 
 # (1) bar: title bar border
 # (2) background: title bar background
 # (3) text: title bar text
 # (4) indicator: color for indicator of where new view will open
 # (5) child_border: border around the view itself (the entire window/container; the actual border)
-
-# tokyo night
-# set {
-#     $bg #16161e
-#     $fg #c0caf5
-#     $bg_alt #3b4261
-#     $primary #7aa2f7
-#     $indic #9d7cd8
-#     $urgent #f7768e
-# }
 
 # mountain fuji theme
 set {
@@ -65,7 +50,7 @@ input "type:keyboard" {
     # xkb_options ctrl:swapcaps
     # xkb_options caps:swapescape
     repeat_delay 200
-    repeat_rate 40
+    repeat_rate 60
 }
 
 input "type:pointer" {
@@ -86,15 +71,11 @@ set {
     $right l
     $term wezterm
     $browser firefox
-    # $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
     $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
     # seems like the output names change sometimes
     $primary_mon "BNQ BenQ LCD 93J02490SL0"
     $secondary_mon "BNQ BenQ LCD E2H03452SL0"
-    # set $primary_mon "DP-6"
-    # set $secondary_mon "DP-7"
-    # workspaces
     $ws1 "1"
     $ws2 "2"
     $ws3 "3"
@@ -106,6 +87,10 @@ set {
     $ws9 "9"
     $ws10 "10"
 }
+
+# TODO: test if this is needed for touchscreen
+# set $display-touch "1267:11556:ELAN2D24:00_04F3:2D24"
+# input $display-touch map_to_output $laptop_disp
 
 floating_modifier $mod normal
 focus_follows_mouse no
@@ -147,22 +132,17 @@ bindsym {
     $mod+Shift+q kill
     $mod+m exec $menu
     $mod+b exec $browser
-    $mod+o exec obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland
+    # $mod+o exec obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland
     # reload config file
     $mod+Shift+r reload
-    # $mod+Shift+w exec killall waybar && waybar
-    $mod+Shift+W exec killall -SIGUSR2 waybar
+    $mod+Shift+w exec killall -SIGUSR2 waybar
     # Exit sway (logs you out of your Wayland session)
     $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
-    # swaync toggle
-    # $mod+n exec swaync-client -t -sw
     # power menu
-    # $mod+Shift+p exec ~/.config/wofi/power-menu.sh
     $mod+Shift+p exec ~/.config/tofi/power-menu.sh
-    # $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
     $mod+Shift+comma exec gtklock
     $mod+Shift+period exec systemctl suspend
-    # screenshot to clipboard
+    # screenshot 
     $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
 
     $mod+$left focus left
@@ -277,27 +257,22 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-# TODO: why doesn't this seem to run on login?
-exec_always pkill kanshi; exec kanshi
-# exec kanshi
+# goal is for kanshi to also reload on Sway config reload
+# if kanshi receives SIGHUP, will reread config
 # exec_always kill -1 $(pidof kanshi)
+bindsym $mod+Shift+c exec kanshictl reload
+exec_always kanshi; kanshictl reload
+
 exec {
     waybar
+    mako
     nm-applet
     solaar -w hide
-    mako
     spotify-launcher # --skip-update
-    playerctld daemon
-
-    # networkmanager
-    dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
-    # TODO: start via socket instead
-    gnome-keyring-daemon --start --components=secrets
-
-    swayidle -w before-sleep 'gtklock -d'
-
-    # for xwayland, maybe also for nsxiv
-    # xrdb -load ~/.Xresources
+    # might need for systemd/dbus activation envs
+    # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
+    # playerctld daemon
+    swayidle -w before-sleep "gtklock -d"
 }
 
 # use app_id instead of class if Wayland
@@ -306,19 +281,19 @@ assign [app_id="Slack"] $ws1
 for_window [app_id="Slack"] layout stacking
 # assign [class="Slack"] $ws1
 
-assign [app_id="obsidian"] $ws4 
+# assign [app_id="obsidian"] $ws4 
 
 # spotify is stubborn if on X
 # for_window [class="Spotify"] move window to workspace $ws7
 # assign spotify on Wayland; seems to work
 assign [title="^Spotify"] $ws7
 
-assign [app_id="discord"] $ws10
+# assign [app_id="discord"] $ws10
 # assign [class="discord"] $ws10
 
 # for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 # for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
 
-# exec /home/andrew/.local/bin/sway_startup
+# exec ~/.local/bin/sway_startup
 
 include /etc/sway/config.d/*

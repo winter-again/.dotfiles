@@ -13,6 +13,7 @@
 }
 
 @-moz-document url-prefix(about:newtab), url-prefix(about:home) {
+
     .search-wrapper .search-inner-wrapper:active input,
     .search-wrapper input:focus {
         border-color: var(--mountain-purple) !important;
@@ -69,7 +70,7 @@ uses the "zero width space" character shown below as the preface */
     direction: rtl;
 }
 
-#sidebar-box[positionend] > * {
+#sidebar-box[positionend]>* {
     direction: ltr;
 }
 
@@ -77,7 +78,7 @@ uses the "zero width space" character shown below as the preface */
     direction: ltr;
 }
 
-#sidebar-box[positionend]:-moz-locale-dir(rtl) > * {
+#sidebar-box[positionend]:-moz-locale-dir(rtl)>* {
     direction: rtl;
 }
 
@@ -94,7 +95,7 @@ uses the "zero width space" character shown below as the preface */
     will-change: min-width;
 }
 
-#sidebar-box:hover > #sidebar {
+#sidebar-box:hover>#sidebar {
     min-width: var(--uc-sidebar-hover-width) !important;
     transition-delay: 0ms !important;
 }
@@ -119,11 +120,11 @@ hbox#nav-bar-customization-target {
 
 /* move status panel (tooltip when hovering a link) so sidebery doesn't cover on expand */
 /* not sure if necessary */
-#sidebar-box:not([positionend]):hover ~ #appcontent #statuspanel {
+#sidebar-box:not([positionend]):hover~#appcontent #statuspanel {
     inset-inline: auto 0px !important;
 }
 
-#sidebar-box:not([positionend]):hover ~ #appcontent #statuspanel-label {
+#sidebar-box:not([positionend]):hover~#appcontent #statuspanel-label {
     margin-inline: 0px !important;
     border-left-style: solid !important;
 }

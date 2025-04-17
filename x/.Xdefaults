@@ -1,4 +1,0 @@
-! for nsxiv in Sway
-Nsxiv.window.background: #292e42
-Nsxiv.window.foreground: #c0caf5
-Nsxiv.bar.font: Hack Nerd Font Mono-11

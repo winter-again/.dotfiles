@@ -248,9 +248,14 @@ user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); //
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false); // Recommended by Pocket
 user_pref("browser.newtabpage.activity-stream.showSponsored", false); // Sponsored Stories
 
+// PREF: disable unified search button
+user_pref("browser.urlbar.scotchBonnet.enableOverride", false);
+
 // PREF: enable container tabs
 // can also install Multi-Account containers extension
 user_pref("privacy.userContext.enabled", true);
+
+// OPTIONAL HARDENING:
 
 // PREF: disable Firefox Sync
 user_pref("identity.fxaccounts.enabled", false);
@@ -271,13 +276,10 @@ user_pref("dom.security.https_only_mode_error_page_user_suggestions", true);
 
 // PREF: set DoH provider
 // user_pref("network.trr.uri", "https://mozilla.cloudflare-dns.com/dns-query"); // default is none
-// user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
+user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
 // PREF: set DoH provider
-user_pref(
-    "network.trr.uri",
-    "https://dns.dnswarden.com/00000000000000000000048"
-); // Hagezi Light + TIF
-// PREF: enforce DNS-over-HTTPS (DoH)
+// NOTE: currently having issues
+// user_pref("network.trr.uri", "https://dns.dnswarden.com/00000000000000000000048"); // Hagezi Light + TIF DNS-over-HTTPS (DoH)
 // increased protection will switch back to local provider if any issues arise
 user_pref("network.trr.mode", 2);
 user_pref("network.trr.max-fails", 5);
@@ -332,7 +334,7 @@ user_pref("browser.sessionstore.privacy_level", 2);
 user_pref("security.ssl.require_safe_negotiation", true);
 
 /****************************************************************************/
-// not privacy-related:
+// NOT PRIVACY RELATED:
 
 // disable media keys, picture-in-picture, and topbar menu keys
 user_pref("media.hardwaremediakeys.enabled", false);
@@ -340,15 +342,15 @@ user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
 user_pref("ui.key.menuAccessKeyFocuses", false);
 // compact tab bar
 user_pref("browser.uidensity", 1);
-// highlight all hits
+// highlight all search hits
 user_pref("findbar.highlightAll", true);
 // search highlighting
 user_pref("ui.textSelectAttentionBackground", "#8f8aac");
 user_pref("ui.textHighlightBackground", "#767676");
 // allow userChrome.css customization
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-// VA-API hardware video accel
-user_pref("media.ffmpeg.vaapi.enabled", true);
+// VA-API hardware video accel; should no longer need since Firefox 115
+// user_pref("media.ffmpeg.vaapi.enabled", true);
 // for auto-collapse sidebery config where you want to drag tabs around without
 // sidebery collapsing
 user_pref("widget.gtk.ignore-bogus-leave-notify", 1);
@@ -356,19 +358,36 @@ user_pref("widget.gtk.ignore-bogus-leave-notify", 1);
 user_pref("browser.urlbar.suggest.bookmark", true);
 // whether to show bookmarks bar: always, never, or newtab
 user_pref("browser.toolbars.bookmarks.visibility", "never");
+// disable hover preview on tabs
+user_pref("browser.tabs.hoverPreview.enabled", false);
+user_pref("browser.tabs.hoverPreview.showThumbnails", false);
+
+// XDG desktop portals
+user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
+user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
 
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *
  ****************************************************************************/
 // visit https://github.com/yokoffing/Betterfox/blob/main/Smoothfox.js
 // Enter your scrolling overrides below this line:
+// only use one at a time
+
+// only sharpen scrolling
+// user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
+// user_pref("general.smoothScroll", true); // DEFAULT
+// user_pref("mousewheel.min_line_scroll_amount", 10); // 10-40; adjust this number to your liking; default=5
+// user_pref("general.smoothScroll.mouseWheel.durationMinMS", 80); // default=50
+// user_pref("general.smoothScroll.currentVelocityWeighting", "0.15"); // default=.25
+// user_pref("general.smoothScroll.stopDecelerationWeighting", "0.6"); // default=.4
+
 // recommended for 60hz+ displays
 user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
 user_pref("general.smoothScroll", true); // DEFAULT
 user_pref("mousewheel.default.delta_multiplier_y", 275); // 250-400; adjust this number to your liking
 // Firefox Nightly only:
 // [1] https://bugzilla.mozilla.org/show_bug.cgi?id=1846935
-user_pref("general.smoothScroll.msdPhysics.enabled", false); // [FF122+ Nightly]
+// user_pref("general.smoothScroll.msdPhysics.enabled", false); // [FF122+ Nightly]
 
 /****************************************************************************
  * END: BETTERFOX                                                           *

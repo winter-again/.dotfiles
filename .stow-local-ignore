@@ -1,8 +1,0 @@
-.git
-.gitignore
-README.md
-.prettierrc
-.stylua.toml
-neovim.yml
-selene.toml
-sidebery.css
