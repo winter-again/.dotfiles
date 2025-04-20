@@ -3,7 +3,6 @@
     email = 63322884+winter-again@users.noreply.github.com
 [core]
     editor = nvim
-    ; pager = delta
     ; on Linux convert CRLF to LF on commit but not other way around
     autocrlf = input
 [init]
@@ -16,18 +15,6 @@
     ; push to update branch w/ same name on receiving end
     ; another option is upstream which targets the set upstream
     default = current
-; [delta]
-;     navigate = true
-;     light = false
-;     line-numbers = true
-;     side-by-side = true
-;     syntax-theme = tokyonight_night
-; [interactive]
-;     diffFilter = delta --color-only
-; [merge]
-;     conflictstyle = diff3
-; [diff]
-;     colorMoved = default
 [filter "lfs"]
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
