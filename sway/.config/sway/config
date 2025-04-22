@@ -257,11 +257,12 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
+bindsym $mod+Shift+c exec kanshictl reload
 # goal is for kanshi to also reload on Sway config reload
 # if kanshi receives SIGHUP, will reread config
-# exec_always kill -1 $(pidof kanshi)
-bindsym $mod+Shift+c exec kanshictl reload
-exec_always kanshi; kanshictl reload
+exec_always kanshi; exec kanshictl reload
+# exec_always kanshi; exec kill -1 $(pidof kanshi)
+# exec_always pkill kanshi; exec kanshi
 
 exec {
     waybar
@@ -269,6 +270,7 @@ exec {
     nm-applet
     solaar -w hide
     spotify-launcher # --skip-update
+
     # might need for systemd/dbus activation envs
     # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
     # playerctld daemon

@@ -13,7 +13,7 @@ export XDG_CURRENT_DESKTOP=sway
 # export _JAVA_AWT_WM_NONREPARENTING=1
 
 # should make most Electron apps run w/ Wayland w/o the individual flags in desktop files
-# TODO: testing
+# works for Slack
 export ELECTRON_OZONE_PLATFORM_HINT=wayland
 
 # Qt
