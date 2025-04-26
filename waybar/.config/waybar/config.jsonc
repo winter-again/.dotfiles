@@ -38,7 +38,6 @@
         "max-length": 50,
         "escape": false, // false allows markup tags; true used to work
         "on-click": "playerctl --player=spotify play-pause",
-        // "on-click": "ags -t mpris",
         "on-click-right": "pkill spotify",
         // "on-scroll-up": "",
         // "on-scroll-down": "",
@@ -46,7 +45,7 @@
         "exec-if": "pgrep spotify"
     },
     "mpris": {
-        "format": "  {title} | {artist}",
+        "format": "  {artist} | {title}",
         "on-click": "playerctl play-pause",
         "on-scroll-up": "",
         "on-scroll-down": "",
