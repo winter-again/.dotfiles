@@ -1,11 +1,10 @@
-local otter = require("otter")
-
 vim.opt_local.wrap = true
 vim.opt_local.spell = true
 vim.opt_local.spelllang = "en_us"
 
 local cwd = vim.uv.cwd()
 if cwd ~= vim.fs.normalize("~/Documents/notebook") then
+    local otter = require("otter")
     otter.activate({ "javascript" })
 end
 
