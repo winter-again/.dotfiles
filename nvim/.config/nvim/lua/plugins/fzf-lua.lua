@@ -80,5 +80,14 @@ return {
             })
         end, opts, "Live grep")
         map("n", "<leader>/", fzf_lua.lgrep_curbuf, opts, "Find in current buffer")
+
+        -- NOTES
+        local notes_dir = "~/Documents/notebook"
+        map("n", "<leader>fn", function()
+            fzf_lua.files({ cwd = notes_dir, fd_opts = "--color=never --type f -e md --hidden --follow" })
+        end, opts, "Search notes")
+        map("n", "<leader>ns", function()
+            fzf_lua.live_grep({ cwd = notes_dir, exec_empty_query = true })
+        end, opts, "Live grep notes")
     end,
 }

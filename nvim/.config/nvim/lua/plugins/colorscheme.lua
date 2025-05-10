@@ -15,6 +15,8 @@ return {
                 hl_overrides = function(highlights, colors)
                     highlights["Visual"] = { bg = colors.cursor_line }
                     highlights["QuickFixLine"] = { fg = colors.purple, bold = true }
+                    highlights["@markup.list.checked"] = { strikethrough = true }
+                    highlights["RenderMarkdownChecked"] = { strikethrough = false }
                 end,
             })
         end,

@@ -269,7 +269,8 @@ exec {
     mako
     nm-applet
     solaar -w hide
-    spotify-launcher # --skip-update
+    # spotify-launcher # --skip-update
+    amberol
 
     # might need for systemd/dbus activation envs
     # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
@@ -290,6 +291,7 @@ for_window [app_id="Slack"] layout stacking
 # for_window [class="Spotify"] move window to workspace $ws7
 # assign spotify on Wayland; seems to work
 assign [title="^Spotify"] $ws7
+assign [title="^Amberol"] $ws7
 
 # assign [app_id="discord"] $ws10
 # assign [class="discord"] $ws10

@@ -23,5 +23,24 @@
 ; target checked checkbox line and sub items separately
 (list_item (task_list_marker_checked) @markup.list.checkbox.checked (paragraph (inline) @markup.list.checked) (#eq? @markup.list.checkbox.checked "[x]")) @markup.list.checked_item
 
+; checkbox: conceal both minus sign and the actual checkbox
+; ((task_list_marker_unchecked)
+;  @text.todo.unchecked
+;  (#offset! @text.todo.unchecked 0 -2 0 0)
+;  (#set! conceal "󰄱"))
+;
+; ((task_list_marker_checked)
+;  @text.todo.checked
+;  (#offset! @text.todo.checked 0 -2 0 0)
+;  (#set! conceal ""))
+
+; currently doesn't work perf: first sub-item is concealed incorrectly b/c of whitespace
+; see: https://github.com/tree-sitter-grammars/tree-sitter-markdown/issues/127
+; (
+;     (list_marker_minus) @markdown_list_marker
+;     (#offset! @markdown_list_marker 0 0 0 -1)
+;     (#set! conceal "•")
+; )
+
 ; (setext_heading (setext_h1_underline) @markup.heading.1.marker)
 ; (setext_heading (setext_h2_underline) @markup.heading.2.marker)
