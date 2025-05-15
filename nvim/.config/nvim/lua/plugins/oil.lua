@@ -51,9 +51,6 @@ return {
         local map = require("winteragain.globals").map
 
         map("n", "<leader>pv", require("oil").toggle_float, nil, "Open Oil in floating window")
-        -- vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory of current file in Oil" })
-        -- map("n", "<leader>ph", "<cmd>split | Oil<CR>", nil, "Open Oil in split")
-
         -- auto open preview on cursor hover
         local au_group = vim.api.nvim_create_augroup("WinterAgain", { clear = false })
         vim.api.nvim_create_autocmd("User", {

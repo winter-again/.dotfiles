@@ -1,7 +1,7 @@
 --- @diagnostic disable: missing-fields
 return {
     "epwalsh/obsidian.nvim",
-    -- enabled = false,
+    enabled = false,
     version = "*", -- latest release
     dependencies = {
         "nvim-lua/plenary.nvim",
@@ -136,5 +136,17 @@ return {
                 img_folder = "assets",
             },
         })
+
+        local fzf_lua = require("fzf-lua")
+        local map = require("winteragain.globals").map
+        local opts = { silent = true }
+        local notes_dir = "~/Documents/notebook"
+
+        map("n", "<leader>fn", function()
+            fzf_lua.files({ cwd = notes_dir, fd_opts = "--color=never --type f -e md --hidden --follow" })
+        end, opts, "Search notes")
+        map("n", "<leader>ns", function()
+            fzf_lua.live_grep({ cwd = notes_dir, exec_empty_query = true })
+        end, opts, "Live grep notes")
     end,
 }

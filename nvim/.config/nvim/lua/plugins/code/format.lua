@@ -6,7 +6,7 @@ return {
             require("conform").setup({
                 formatters_by_ft = {
                     lua = { "stylua" },
-                    -- python = { 'isort', 'black' },
+                    python = { "ruff_organize_imports", "ruff_format", lsp_format = "fallback" },
                     go = { "goimports", "gofmt" },
                     html = { "prettier" },
                     css = { "prettier" },
@@ -15,10 +15,6 @@ return {
                     typescript = { "prettier" },
                     typescriptreact = { "prettier" },
                     rust = { "rustfmt", lsp_format = "fallback" },
-                    -- disabling to let jsonls handle formatting
-                    -- so we don't have to constantly set overrides in a .prettierrc.json
-                    -- json = { 'prettier' },
-                    -- sql = { 'sqlfluff' },
                     -- 'injected' allows formatting of code fence blocks
                     -- could even have it in python to format sql inside of queries
                     -- see: https://github.com/stevearc/conform.nvim/blob/c36fc6492be27108395443a67bcbd2b3280f29c5/doc/advanced_topics.md
@@ -28,6 +24,7 @@ return {
                     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
                         return
                     end
+
                     return { timeout_ms = 500, lsp_fallback = true }
                 end,
             })
