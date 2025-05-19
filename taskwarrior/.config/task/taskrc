@@ -29,3 +29,4 @@ include dark-16.theme
 color.active=green
 # color.active=green inverse
 color.alternate=on gray2
+color.label=bold

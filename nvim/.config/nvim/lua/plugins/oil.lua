@@ -36,6 +36,7 @@ return {
                     local no_prev = {
                         ".png",
                         ".jpg",
+                        ".jpeg",
                     }
                     local ext = filename:match("^.+(%..+)$")
                     for _, targ in ipairs(no_prev) do

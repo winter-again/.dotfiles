@@ -28,10 +28,10 @@ local function toggle_checkbox()
     vim.api.nvim_win_set_cursor(0, cursor)
 end
 
-map("n", "=", toggle_checkbox, { silent = true, buffer = true }, "Toggle checkboxes in markdown")
+map("n", "=", toggle_checkbox, { silent = true, buffer = true }, "Toggle markdown checkbox")
 
 local cwd = vim.uv.cwd()
-if cwd ~= vim.fs.normalize("~/Documents/notebook") then
+if cwd ~= vim.fs.normalize("~/Documents/notebook") and vim.uv.fs_stat("package.json") then
     local otter = require("otter")
     otter.activate({ "javascript" })
 end
