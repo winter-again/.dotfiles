@@ -907,7 +907,12 @@ return {
                     capabilities = lsp_capabilities,
                     on_attach = function(client, bufnr)
                         -- NOTE: taplo includes formatting capabilities by default
-                        -- client.server_capabilities.documentFormattingProvider = false
+                        -- turn off for pyproject.toml files
+                        local file = vim.api.nvim_buf_get_name(bufnr)
+                        if file:match("pyproject.toml$") then
+                            client.server_capabilities.documentFormattingProvider = false
+                        end
+
                         lsp_attach(client, bufnr)
                     end,
                 },
