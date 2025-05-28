@@ -90,24 +90,33 @@ config.keys = {
 -- I think because I have `$XDG_RUNTIME_DIR` set, my plugins are in ~/.local/share/wezterm/plugins
 -- otherwise check `/run/user/1000/wezterm/plugins/`
 -- only http or local filesystem repos are allowed
-local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-again/wezterm-config.nvim")
--- local wezterm_config_nvim = wezterm.plugin.require('/home/andrew/Documents/code/nvim-dev/wezterm-config.nvim')
+-- local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-again/wezterm-config.nvim")
+local wezterm_config_nvim =
+    wezterm.plugin.require("file:///home/winteragain/Documents/code/nvim-dev/wezterm-config.nvim")
 -- local wezterm_config_nvim = require('wezterm_config_plug')
+
+-- wezterm.plugin.update_all()
 
 -- callbacks
 wezterm.on("user-var-changed", function(window, pane, name, value)
     local overrides = window:get_config_overrides() or {}
-    -- print("OVERRIDES PRE:")
-    -- print(overrides)
-    -- print("USER VAR NAME:")
-    -- print(name)
-    -- print(value)
+    print("------------------------------------")
+    print("OVERRIDES PRE:")
+    print(overrides)
 
-    -- local parsed_val = wezterm.json_parse(value)
+    print(string.format("USER VAR: %s: %s", name, value))
+
+    local parsed_val = wezterm.json_parse(value)
     -- local ok, parsed_val = pcall(wezterm.json_parse, value)
-    -- local parsed_val_type = type(parsed_val)
-    -- print(string.format("PARSED DATA: %s = %s (type: %s)", name, parsed_val, parsed_val_type))
-    -- print(parsed_val)
+    local parsed_val_type = type(parsed_val)
+    print(string.format("PARSED DATA: %s = %s (type: %s)", name, parsed_val, parsed_val_type))
+    print(parsed_val)
+
+    if name == "font" then
+        print("wezterm.font(...):")
+        print(wezterm.font(value))
+    end
+
     overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
     window:set_config_overrides(overrides)
 end)

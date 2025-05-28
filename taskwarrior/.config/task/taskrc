@@ -31,8 +31,12 @@ color.active=green
 color.alternate=on gray2
 color.label=bold
 
-# customize default report "next"
+# customize default report "next"; use task show next to see options
 report.next.columns=id,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.count,urgency
-report.next.labels=id,deps,prio,proj,tag,recur,schd,due,until,desc,urg
+report.next.labels=id,deps,prio,proj,tag,recur,sched,due,until,desc,urg
 # specifying "/" (e.g., project+/) will add empty line between project sections
 report.next.sort=start-,project+,urgency-
+
+report.active.columns=id,depends,project,tags,recur,scheduled.remaining,due,until,description
+report.active.labels=id,deps,proj,tag,recur,sched,due,until,desc
+report.active.sort=project+,urgency-

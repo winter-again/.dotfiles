@@ -9,7 +9,8 @@ export PATH="$PATH:$HOME/.local/bin"
 export EDITOR="/usr/local/bin/nvim"
 export VISUAL="/usr/local/bin/nvim"
 export PAGER="/usr/bin/less"
-export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
+# export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 export BROWSER="firefox"
 
 # Java for pyspark
