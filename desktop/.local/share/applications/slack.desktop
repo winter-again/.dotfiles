@@ -4,7 +4,7 @@ StartupWMClass=Slack
 Comment=Slack Desktop
 GenericName=Slack Client for Linux
 Exec=/usr/bin/slack -s %U
-# Exec=/usr/bin/slack -s --enable-features=UseOzonePlatform --ozone-platform=wayland %U
+# Exec=/usr/bin/slack --enable-features=UseOzonePlatform --ozone-platform=wayland --gtk-version=3 -s %U
 # Exec=/usr/bin/slack -s --disable-gpu --ozone-platform-hint=auto %U
 Icon=slack
 Type=Application
