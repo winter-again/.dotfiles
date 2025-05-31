@@ -39,7 +39,8 @@ local lazy_opts = {
         path = "~/Documents/code/nvim-dev",
     },
     install = {
-        colorscheme = { "winter-again", "mellifluous" }, -- try to load one of these colorschemes when starting an installation during startup
+        -- try to load one of these when installing during startup
+        colorscheme = { "winter-again", "mellifluous" },
     },
     ui = {
         border = "none",
@@ -55,32 +56,26 @@ local lazy_opts = {
 }
 require("lazy").setup({
     { import = "plugins" },
-    -- to load subdirs of lua/plugins
-    -- have to import each one
-    { import = "plugins.code" },
-    { import = "plugins.git" },
 }, lazy_opts)
 
----Set colorscheme and transparent background
----@param cs_idx number
-local function colorize(cs_idx)
-    local colorschemes = {
-        -- muted
-        "winter-again",
-        "mellifluous",
-        "vague",
-        "kanagawa-paper",
-        "posterpole",
-        "lackluster-hack",
-        -- heavier contrast
-        "tokyonight",
-        "catppuccin",
-        "rose-pine",
-        "kanagawa",
-    }
-    vim.cmd("colorscheme " .. colorschemes[cs_idx])
-    vim.cmd("Transp")
-end
+-- local function colorize(cs_idx)
+--     local colorschemes = {
+--         -- muted
+--         "winter-again",
+--         "mellifluous",
+--         "vague",
+--         "kanagawa-paper",
+--         "posterpole",
+--         "lackluster-hack",
+--         -- heavier contrast
+--         "tokyonight",
+--         "catppuccin",
+--         "rose-pine",
+--         "kanagawa",
+--     }
+--     vim.cmd("colorscheme " .. colorschemes[cs_idx])
+--     vim.cmd("Transp")
+-- end
 
 -- colorize(1)
 vim.cmd("colorscheme winter-again")

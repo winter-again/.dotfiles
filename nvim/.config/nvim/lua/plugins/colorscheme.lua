@@ -94,6 +94,7 @@ return {
     },
     {
         "folke/tokyonight.nvim",
+        enabled = false,
         lazy = false, -- ensure main colorscheme loaded on start up
         priority = 1000, -- ensure colorscheme loaded before all other start up plugins
         config = function()
@@ -129,6 +130,7 @@ return {
     },
     {
         "rebelot/kanagawa.nvim",
+        enabled = false,
         lazy = false,
         priority = 999, -- ensure colorscheme loaded before all other start up plugins
         config = function()
@@ -166,6 +168,7 @@ return {
     },
     {
         "thesimonho/kanagawa-paper.nvim",
+        enabled = false,
         lazy = false,
         config = function()
             require("kanagawa-paper").setup({
@@ -202,8 +205,8 @@ return {
         lazy = false,
         config = function()
             require("neomodern").setup({
-                theme = "roseprime",
-                transparent = false,
+                theme = "hojicha",
+                transparent = true,
                 code_style = {
                     functions = "bold",
                     keywords = "bold",
@@ -230,6 +233,7 @@ return {
     },
     {
         "catppuccin/nvim",
+        enabled = false,
         name = "catppuccin",
         priority = 998, -- ensure colorscheme loaded before all other start up plugins
         lazy = false,
@@ -292,6 +296,7 @@ return {
     {
         "rose-pine/neovim",
         name = "rose-pine",
+        enabled = false,
         -- for local dev:
         -- name = 'rose-pine.nvim',
         -- dev = true,
@@ -326,6 +331,7 @@ return {
     },
     {
         "ellisonleao/gruvbox.nvim",
+        enabled = false,
         lazy = false,
         priority = 996,
         config = function()
@@ -343,6 +349,7 @@ return {
     },
     {
         "sainnhe/gruvbox-material",
+        enabled = false,
         lazy = false,
         priority = 995,
         init = function()
@@ -355,25 +362,30 @@ return {
     },
     {
         "savq/melange-nvim",
+        enabled = false,
         lazy = false,
     },
     {
         "nyngwang/nvimgelion",
+        enabled = false,
         -- 'winter-again/nvimgelion',
         -- dev = true,
         config = function() end,
     },
     {
         "hachy/eva01.vim",
+        enabled = false,
         lazy = false,
     },
     {
         "winter-again/seoul256.nvim",
+        enabled = false,
         -- dev = true,
         branch = "fix-indent-blankline",
     },
     {
         "AlexvZyl/nordic.nvim",
+        enabled = false,
         lazy = false,
         config = function()
             local palette = require("nordic.colors")
@@ -393,6 +405,7 @@ return {
     },
     {
         "mcchrish/zenbones.nvim",
+        enabled = false,
         lazy = false,
         dependencies = { "rktjmp/lush.nvim" },
         init = function()
@@ -403,14 +416,5 @@ return {
         "slugbyte/lackluster.nvim",
         lazy = false,
         config = function() end,
-    },
-    {
-        "mellow-theme/mellow.nvim",
-        lazy = false,
-        init = function()
-            vim.g.mellow_bold_keywords = true
-            vim.g.mellow_bold_functions = true
-            vim.g.mellow_transparent = true
-        end,
     },
 }
