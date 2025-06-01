@@ -35,26 +35,4 @@ return {
             })
         end,
     },
-    {
-        "echasnovski/mini.move",
-        enabled = false,
-        version = false,
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require("mini.move").setup({
-                mappings = {
-                    -- visual mode
-                    up = "K",
-                    down = "J",
-                    left = "H",
-                    right = "L",
-                    -- normal mode defaults
-                    line_up = "<M-k>",
-                    line_down = "<M-j>",
-                    line_left = "<M-h>",
-                    line_right = "<M-l>",
-                },
-            })
-        end,
-    },
 }
