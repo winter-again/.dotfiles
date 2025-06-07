@@ -5,14 +5,13 @@ local fmt = require("luasnip.extras.fmt").fmt
 
 return {
     s(
-        { trig = "iferr", desc = "Err check" },
+        { trig = "#!", desc = "Shebang" },
         fmt(
             [[
-        if err != nil {{
-            {}
-        }}
+        #!/usr/bin/env bash
+        {}
         ]],
-            { i(1, "return err") }
+            { i(1) }
         )
     ),
 }
