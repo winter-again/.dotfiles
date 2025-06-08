@@ -1,6 +1,5 @@
 return {
     "zk-org/zk-nvim",
-    -- enabled = false,
     lazy = true,
     event = {
         "BufReadPre " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
@@ -49,7 +48,9 @@ return {
         -- create custom user command since Zk capability doesn't pass the args through
         vim.api.nvim_create_user_command("ZkTempl", function(args)
             local cmd = args.fargs[1]
-            if cmd == "meeting" or cmd == "meetings" or cmd == "meet" then
+            if cmd == "default" or cmd == "def" then
+                zk_cmd.get("ZkNew")({ inline = true })
+            elseif cmd == "meeting" or cmd == "meetings" or cmd == "meet" then
                 zk_cmd.get("ZkNew")({ inline = true, group = "meetings" })
             elseif cmd == "leetcode" or cmd == "leet" or cmd == "lc" then
                 zk_cmd.get("ZkNew")({ inline = true, group = "leetcode" })

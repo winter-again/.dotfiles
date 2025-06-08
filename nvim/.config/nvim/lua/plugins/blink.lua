@@ -14,6 +14,11 @@ return {
             config = function()
                 local ls = require("luasnip")
 
+                -- ls.config.setup({
+                --     region_check_events = "CursorHold,InsertLeave",
+                --     delete_check_events = "TextChanged,InsertEnter",
+                -- })
+
                 require("luasnip.loaders.from_lua").lazy_load({
                     paths = { "~/.config/nvim/lua/winteragain/snippets" },
                 })
@@ -32,7 +37,10 @@ return {
     ---@module "blink.cmp"
     ---@type blink.cmp.Config
     opts = {
-        keymap = { preset = "enter" },
+        keymap = {
+            preset = "enter",
+            ["<Tab>"] = { "fallback" },
+        },
         appearance = {
             nerd_font_variant = "mono",
             kind_icons = {
@@ -132,7 +140,10 @@ return {
         },
         cmdline = {
             enabled = true,
-            keymap = { preset = "inherit" },
+            keymap = {
+                preset = "inherit",
+                ["<CR>"] = { "accept_and_enter", "fallback" },
+            },
             completion = {
                 list = {
                     selection = {

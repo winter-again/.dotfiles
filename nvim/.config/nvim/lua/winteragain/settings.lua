@@ -1,42 +1,30 @@
--- disable Netrw as advised for nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
--- Netrw settings
--- vim.g.netrw_winsize = 20
--- vim.g.netrw_banner = 0 -- disable netrw banner
--- vim.g.netrw_liststyle = 3 -- tree style view
+vim.g.netrw_winsize = 20 -- size for splits
+vim.g.netrw_banner = 0 -- disable netrw banner
+vim.g.netrw_liststyle = 3 -- tree style view
+vim.o.winborder = "none"
 
 local opt = vim.opt
 
-vim.o.winborder = "none"
 -- opt.guicursor = "" -- disable cursor change on mode change
--- opt.splitright = true -- new window to the right of current
--- opt.splitbelow = true -- new window below the current
+opt.splitright = true -- open new window to the right of current
+opt.splitbelow = true -- open new window below the current
 opt.background = "dark"
 opt.inccommand = "split" -- preview substitutions live
 -- opt.winbar = "%{%v:lua.Winbar()%}" -- disable if using incline.nvim
--- opt.winbar = " " -- otherwise incline.nvim will overlap first line of text
 -- (pseudo)transparency for cmp menu and I guess wildmenu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice
 -- note: setting it means cmp menu has highlight but can see text behind
 -- not setting + having transparent bg makes just the transparent background show
 -- opt.pumblend = 35
-opt.wildignore = "__pycache__"
----@diagnostic disable-next-line: undefined-field
-opt.wildignore:append({ "*.pyc", "*pycache*" })
 opt.mouse = "a" -- enable mouse mode always
 opt.equalalways = false -- don't reset window sizes after closing one
 opt.showmode = false -- don't show mode in status line
 opt.swapfile = false -- turn off swapfiles
 opt.backup = false -- turn off backups
--- default location is ~/.local/state/nvim/undo/
--- opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
 opt.undofile = true -- save undo history to an undo file and restore from too
--- line numbers; setting both of these together gives hybrid line numbering
 opt.number = true
 opt.relativenumber = true
-opt.cursorline = true -- highlight current line and its line number
--- opt.colorcolumn = '80'
+opt.cursorline = true
 -- tab settings
 opt.tabstop = 4 -- how wide tab characters are
 opt.softtabstop = 4 -- how Tab and Backspace should operate (look and feel while editing)
@@ -59,14 +47,7 @@ opt.laststatus = 3 -- global statusline
 -- menuone = use menu also when there is only one match
 -- noselect = don't preselect
 opt.completeopt = { "menu", "menuone", "noselect" }
--- opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show; does statuscol conflict with this?
--- settings for folding, which is handled by nvim-ufo plugin
 opt.foldenable = false
--- opt.foldmethod = 'manual'
--- opt.foldcolumn = '1'
--- opt.foldlevel = 99
--- opt.foldlevelstart = 99
--- opt.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
-opt.fillchars:append({ eob = " " })
+opt.fillchars:append({ eob = " " }) -- don't use "~" for filling
 -- what gets saved in sessions
 opt.sessionoptions = "buffers,curdir,winpos,winsize"
