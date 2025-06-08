@@ -3,18 +3,16 @@
     email = 63322884+winter-again@users.noreply.github.com
 [core]
     editor = nvim
-    ; on Linux convert CRLF to LF on commit but not other way around
-    autocrlf = input
+    pager = less
+    autocrlf = input ; replace CRLF with LF when writing, but read as-is
 [init]
     defaultBranch = main
 [pull]
-    rebase = true
-[rebase]
-    autoStash = true
+    rebase = true ; rebase branches on top of the fetched branch
 [push]
-    ; push to update branch w/ same name on receiving end
-    ; another option is upstream which targets the set upstream
-    default = current
+    default = current ; push current branch to its upstream branch of the same name
+[rebase]
+    autoStash = true ; auto stash/pop on rebase
 [filter "lfs"]
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process

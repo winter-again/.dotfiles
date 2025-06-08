@@ -1,5 +1,5 @@
 font = /usr/share/fonts/TTF/ZedMonoNerdFont-Regular.ttf
-font-size = 16
+font-size = 14
 hint-font = false
 
 prompt-text = "❯ "
@@ -9,33 +9,22 @@ history = true
 fuzzy-match = false
 require-match = true
 
-width = 30%
-height = 500
+width = 25%
+height = 30%
 border-width = 2
 outline-width = 0
 # corner-radius = 5
-padding-left = 30
-padding-top = 20
-prompt-padding = 5
-result-spacing = 5
+padding-left = 10
+padding-top = 10
+prompt-padding = 2
+result-spacing = 2
 
-selection-background-padding = 5
-selection-background-corner-radius = 5
+selection-background-padding = 4
+# selection-background-corner-radius = 5
 
-# tokyo night
-# text-color = #c0caf5
-# selection-color = #7aa2f7
-# background-color = #16161e
-# prompt-color = #9d7cd8
-# border-color = #9d7cd8
-# selection-background = #393939
-
-# mountain
 text-color = #f0f0f0
-selection-color = #8a98ac
 background-color = #0f0f0f
-# prompt-color = #8f8aac
-# border-color = #8f8aac
+selection-color = #8a98ac
+selection-background = #262626
 prompt-color = #8a98ac
 border-color = #8a98ac
-selection-background = #262626
