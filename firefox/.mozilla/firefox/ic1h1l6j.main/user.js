@@ -316,6 +316,12 @@ user_pref("browser.sessionstore.privacy_level", 2);
 user_pref("security.ssl.require_safe_negotiation", true);
 
 /****************************************************************************/
+// disable chatbot
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.sidebar", false);
+// user_pref("browser.ml.chat.hideFromLabs", true);
+// user_pref("browser.ml.chat.hideLabsShortcuts", true);
+
 // NOT PRIVACY RELATED:
 
 // disable media keys, picture-in-picture, and topbar menu keys

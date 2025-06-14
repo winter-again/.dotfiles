@@ -35,7 +35,7 @@ local function get_conform()
         for _, formatter in ipairs(formatters) do
             local name = formatter.name
             if formatter.name == "ruff_organize_imports" then
-                name = "ruff_imports"
+                name = "ruff_imp"
             elseif formatter.name == "ruff_format" then
                 name = "ruff_fmt"
             end
