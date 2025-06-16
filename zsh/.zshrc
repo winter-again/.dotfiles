@@ -25,6 +25,14 @@ export PATH="$PATH:$(go env GOBIN)" # add ~/go/bin to path for convenience; go i
 # Rust
 # export PATH="$HOME/.cargo/bin:$PATH" # shouldn't need this if using rustup package from Arch repos
 
+# pnpm
+export PNPM_HOME="/home/winteragain/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
 # aliases
 alias ..="cd .."
 alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls
