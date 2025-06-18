@@ -8,10 +8,22 @@ return {
         config = function()
             require("nvim-treesitter.configs").setup({
                 ensure_installed = {
+                    "c",
+                    "lua",
+                    "vim",
+                    "vimdoc",
+                    "query",
+                    "markdown",
+                    "markdown_inline",
+                    -- 7 parsers above MUST be installed
+                    -- (c, lua, vim, vimdoc, query, markdown, markdown_inline)
                     "astro",
                     "bash",
-                    "c",
                     "css",
+                    "csv",
+                    -- "dockerfile",
+                    "desktop",
+                    "devicetree",
                     "git_config",
                     "git_rebase",
                     "gitattributes",
@@ -19,27 +31,28 @@ return {
                     "gitignore",
                     "go",
                     "gomod",
+                    "gosum",
                     "html",
+                    "ini",
                     "javascript",
-                    "json",
+                    "jsdoc",
+                    "json", -- testing
                     "just",
                     "latex",
-                    "lua",
-                    "markdown",
-                    "markdown_inline",
+                    "luadoc", -- testing
+                    "printf", -- testing
                     "python",
-                    "query",
                     "r",
                     "rasi",
-                    "regex",
+                    "regex", -- testing
                     "rust",
                     "sql",
                     "toml",
+                    "tmux",
                     "tsx",
                     "typescript",
-                    "vim",
-                    "vimdoc",
                     "yaml",
+                    "zathurarc",
                 },
                 sync_install = false, -- synchronous install of parsers (only applied to ensure_installed)
                 auto_install = false, -- recommended to set false if don't have tree-sitter CLI installed locally

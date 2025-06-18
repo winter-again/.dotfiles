@@ -107,7 +107,7 @@ return {
                     },
                     {
                         "diagnostics",
-                        sources = { "nvim_lsp" },
+                        sources = { "nvim_diagnostic" },
                         sections = { "error", "warn", "info", "hint" },
                         -- lualine has its own default icons
                         symbols = {
@@ -116,6 +116,9 @@ return {
                             hint = " ", -- default = 󰌶
                             info = " ",
                         },
+                        colored = true,
+                        update_in_insert = true,
+                        always_visible = false,
                     },
                 },
                 lualine_c = {
