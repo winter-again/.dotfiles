@@ -128,7 +128,7 @@ bindsym {
     $mod+Return exec $term
     $mod+Shift+q kill
     $mod+m exec $menu
-    $mod+w exec $browser
+    $mod+i exec $browser
     # reload config file
     $mod+Shift+r reload
     $mod+Shift+w exec killall -SIGUSR2 waybar

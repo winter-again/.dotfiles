@@ -348,23 +348,8 @@ return {
         end,
     },
     {
-        "sainnhe/gruvbox-material",
-        enabled = false,
-        lazy = false,
-        priority = 995,
-        init = function()
-            -- can be 'material', 'mix', or 'original'
-            vim.g.gruvbox_material_foreground = "material"
-            vim.g.gruvbox_material_enable_bold = true
-            vim.g.gruvbox_material_enable_italic = true
-            vim.g.gruvbox_material_transparent_background = true
-        end,
-    },
-    {
         "nyngwang/nvimgelion",
         enabled = false,
-        -- 'winter-again/nvimgelion',
-        -- dev = true,
         config = function() end,
     },
     {
@@ -375,7 +360,6 @@ return {
     {
         "winter-again/seoul256.nvim",
         enabled = false,
-        -- dev = true,
         branch = "fix-indent-blankline",
     },
     {

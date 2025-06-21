@@ -1,16 +1,16 @@
 export SHELL="/usr/bin/zsh"
-export HISTFILE="$HOME/.zsh_history"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export PATH="$PATH:$HOME/.local/bin"
+export HISTFILE="$XDG_CACHE_HOME/.zsh_history"
 export HISTSIZE="100000000"
 export SAVEHIST="$HISTSIZE" # num of commands stored
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export PATH="$PATH:$HOME/.local/bin"
 export EDITOR="/usr/local/bin/nvim"
 export VISUAL="/usr/local/bin/nvim"
 export PAGER="/usr/bin/less"
-# export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+# export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export BROWSER="firefox"
 
 # Java for pyspark
@@ -26,18 +26,26 @@ export PATH="$PATH:$(go env GOBIN)" # add ~/go/bin to path for convenience; go i
 # export PATH="$HOME/.cargo/bin:$PATH" # shouldn't need this if using rustup package from Arch repos
 
 # pnpm
-export PNPM_HOME="/home/winteragain/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
+
+# fnm
+# `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
+# `--version-file-strategy=recursive` might also make sense; default is local
+# using both = auto use/install the right Node version when going into proj subdirs and moving between proj
+# eval "$(fnm env --use-on-cd --shell zsh)"
+
+# make fd use same colors as eza (set $LS_COLORS)
+eval "$(dircolors -b)"
 
 # aliases
-alias ..="cd .."
-alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls
+alias ls="eza -a --icons --color=always --group-directories-first"
 alias ll="eza -lah --icons --color=always --group-directories-first"
 alias tree="ls -lh --tree --level=2"
+alias open="xdg-open"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
@@ -47,12 +55,9 @@ alias R="R --no-save" # never prompt to save workspace image
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
 alias fd="fd --hidden"
-alias mp="rmpc"
-alias nn="cd ~/Documents/notebook"
 alias pn="pnpm"
 alias tr="trash-put"
 alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # colorize help with bat
-# git aliases
 alias gs="git status"
 alias ga="git add"
 alias gb="git branch --all -v"
@@ -70,13 +75,10 @@ alias glf="git log --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C
 alias gpull="git pull"
 alias gpush="git push"
 alias ggrep="git ls-files | grep -i"
-# taskwarrior
 alias t="task"
 alias ta="task active"
 alias tl="task +lab"
 alias tp="task +personal"
-alias tal="task add +lab"
-alias tap="task add +personal"
 
 # functions
 # let yazi change dir
@@ -107,21 +109,6 @@ function ff() {
     cd "$dir"
 }
 
-# mkdir -p and cd automatically
-function mkd() {
-    [[ "$1" ]] && mkdir -p "$1" && cd "$1"
-}
-
-# wezterm logs appear here
-# function wez-logs() {
-#     cd /run/user/1000/wezterm
-#     ls
-# }
-# function wez-plugs() {
-#     cd ~/.local/share/wezterm/plugins
-#     ls
-# }
-
 function dots() {
     cd ~/.dotfiles
 }
@@ -140,6 +127,17 @@ function umntbk() {
     out=$(udisksctl unmount -b /dev/sda1)
     notify-send "Unmounted backup drive" "$out"
 }
+
+# wezterm logs appear here
+# function wez-logs() {
+#     cd /run/user/1000/wezterm
+#     ls
+# }
+# function wez-plugs() {
+#     cd ~/.local/share/wezterm/plugins
+#     ls
+# }
+
 
 # fzf
 source /usr/share/fzf/key-bindings.zsh # fzf keybinds
@@ -171,11 +169,9 @@ export FZF_CTRL_R_OPTS="
     --color header:italic
     --header 'CTRL-Y to copy command to clipboard'"
 
-# fnm
-# `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
-# `--version-file-strategy=recursive` might also make sense; default is local
-# using both = auto use/install the right Node version when going into proj subdirs and moving between proj
-# eval "$(fnm env --use-on-cd --shell zsh)"
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 
 unsetopt beep autocd
 setopt hist_ignore_all_dups # delete old even if new one is dup
@@ -191,13 +187,15 @@ bindkey -v "^?" backward-delete-char # make vi backspace like vim backspace
 bindkey "^H" backward-kill-word # ctrl-backspace to del word
 
 zmodload zsh/complist # need for menuselect; load before compinit
-autoload -U compinit && compinit # autocompletion system
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect "h" vi-backward-char
+bindkey -M menuselect "k" vi-up-line-or-history
+bindkey -M menuselect "l" vi-forward-char
+bindkey -M menuselect "j" vi-down-line-or-history
 bindkey "^F" expand-or-complete # inititate completion menu
+
+autoload -Uz compinit && compinit # autocompletion system
 _comp_options+=(globdots) # include hidden files in completion
+
 setopt MENU_COMPLETE # on ambiguous completion insert first match and cycle thru rest
 setopt AUTO_LIST # on ambiguous, automatically list
 setopt COMPLETE_IN_WORD # tries to complete from either end of the word
@@ -206,18 +204,27 @@ zstyle ':completion:*' completer _extensions _complete _approximate # which comp
 zstyle ':completion:*' menu select # menu-based completion
 zstyle ':completion:*' complete-options true # autocomplete for cd
 zstyle ':completion:*' file-sort modification # ordering of names (mod time)
-zstyle ':completion:*' rehash true
+zstyle ':completion:*' rehash true # automatic rehash; maybe perf hit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
 
-# make fd use same colors as eza (set $LS_COLORS)
-eval "$(dircolors -b)"
+eval "$(zoxide init zsh)" # must be after compinit called
 
-# keep at end
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
-eval "$(zoxide init zsh)"
-eval "$(uv generate-shell-completion zsh)"
-eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/omp_config.toml)"
+# fix uv run autocomplete for py files: https://github.com/astral-sh/uv/issues/8432
+if type "uv" > /dev/null; then
+    eval "$(uv generate-shell-completion zsh)"
+    eval "$(uvx --generate-shell-completion zsh)"
+
+    _uv_run_mod() {
+        if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+            _arguments '*:filename:_files -g "*.py"'
+        else
+            _uv "$@"
+        fi
+    }
+
+    compdef _uv_run_mod uv
+fi
+
+eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/omp_config.toml)"
