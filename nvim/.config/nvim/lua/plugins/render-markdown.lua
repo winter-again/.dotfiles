@@ -56,7 +56,7 @@ return {
         },
         quote = {
             enabled = true,
-            icon = "┃",
+            -- icon = "┃",
         },
         pipe_table = { enabled = false },
         link = { enabled = false },
