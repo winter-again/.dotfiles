@@ -1,0 +1,42 @@
+:root,
+panel,
+dialog,
+window {
+    --mountain-purple: #8f8aac;
+
+    /* search bars */
+    --focus-outline-color: var(--mountain-purple) !important;
+    /* elements like downloads */
+    --lwt-toolbarbutton-icon-fill-attention: var(--mountain-purple) !important;
+
+    --button-primary-bgcolor: var(--mountain-purple) !important;
+    --button-primary-hover-bgcolor: var(--mountain-purple) !important;
+    --button-primary-active-bgcolor: var(--mountain-purple) !important;
+    --checkbox-checked-bgcolor: var(--mountain-purple) !important;
+
+    /* url bar highlights */
+    --urlbarView-highlight-background: var(--mountain-purple) !important;
+    --urlbarView-hover-background: var(--mountain-purple) !important;
+    --urlbarView-separator-color: var(--mountain-purple) !important;
+
+    --in-content-primary-button-background: var(--mountain-purple) !important;
+    --in-content-primary-button-background-hover: var(--mountain-purple) !important;
+    --in-content-primary-button-background-active: var(--mountain-purple) !important;
+    --input-border-color: var(--mountain-purple) !important;
+    --uc-checkbox-checked-bgcolor: var(--mountain-purple) !important;
+    --in-content-link-color: var(--mountain-purple) !important;
+}
+
+@-moz-document url-prefix(about:newtab), url-prefix(about:home) {
+
+    .search-wrapper .search-inner-wrapper:active input,
+    .search-wrapper input:focus {
+        border-color: var(--mountain-purple) !important;
+        box-shadow: none !important;
+    }
+}
+
+/* hide star button in url bar */
+#star-button {
+    display: none !important;
+}

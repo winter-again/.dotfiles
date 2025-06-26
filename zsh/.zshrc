@@ -49,28 +49,30 @@ export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p
 # export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export BROWSER="firefox"
 
+# override defaults
+# see: https://github.com/eza-community/eza/blob/d477699f89f2346be712f287287a7205f37933e9/man/eza_colors.5.md
+export LS_COLORS="di=1;36"
+# seems only EZA_COLORS has "da" option
+export EZA_COLORS="da=1;36"
+
+# make fd use same colors as eza (set $LS_COLORS)
+# eval "$(dircolors -b)"
+
 typeset -U path PATH # prevent path duplicates (keeps only leftmost occurrence)
-# export PATH="$PATH:$HOME/.local/bin"
 path+=("$HOME/.local/bin")
 
 # Go
 export GOPATH="$HOME/go" # $HOME/go is already the default
 export GOBIN="$GOPATH/bin" # binaries installed here, not set by default
-# export PATH="$PATH:$(go env GOBIN)" # add ~/go/bin to path for convenience; go install suggests PATH=$PATH:/usr/local/go/bin
 path+=("$(go env GOBIN)")
 # export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # only necessary if they differ
 
 # Rust
 # export PATH="$HOME/.cargo/bin:$PATH" # shouldn't need this if using rustup package from Arch repos
 
-# TODO: is this better than the case statement pnpm inserted?
-# pnpm
+# pnpm global packages
 export PNPM_HOME="$HOME/.local/share/pnpm"
 path+=("$PNPM_HOME")
-# case ":$PATH:" in
-#   *":$PNPM_HOME:"*) ;;
-#   *) export PATH="$PNPM_HOME:$PATH" ;;
-# esac
 
 export PATH
 
@@ -82,9 +84,6 @@ export PATH
 
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
-
-# make fd use same colors as eza (set $LS_COLORS)
-eval "$(dircolors -b)"
 
 # aliases
 alias ls="eza -a --icons --color=always --group-directories-first"
@@ -213,10 +212,6 @@ export FZF_CTRL_R_OPTS="
     --color header:italic
     --header 'CTRL-Y to copy command to clipboard'"
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
-
 # fix uv run autocomplete for py files: https://github.com/astral-sh/uv/issues/8432
 if type "uv" > /dev/null; then
     eval "$(uv generate-shell-completion zsh)"
@@ -232,5 +227,9 @@ if type "uv" > /dev/null; then
 
     compdef _uv_run_mod uv
 fi
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/omp_config.toml)"
