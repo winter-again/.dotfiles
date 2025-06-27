@@ -163,13 +163,13 @@ function bk() {
 }
 
 function mntbk() {
-    out=$(udisksctl mount -b /dev/sda1)
-    notify-send "Mounted backup drive" "$out"
+    local drive="/dev/sda1"
+    udisksctl mount -b "$drive" && notify-send "Mounted backup drive:" "$drive"
 }
 
 function umntbk() {
-    out=$(udisksctl unmount -b /dev/sda1)
-    notify-send "Unmounted backup drive" "$out"
+    local drive="/dev/sda1"
+    udisksctl unmount -b "$drive" && notify-send "Unmounted backup drive:" "$drive"
 }
 
 # wezterm logs appear here
