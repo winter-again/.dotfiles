@@ -88,7 +88,7 @@ export PATH
 # aliases
 alias ls="eza -a --icons --color=always --group-directories-first"
 alias ll="eza -lah --icons --color=always --group-directories-first"
-alias tree="ls -lh --tree --level=2"
+alias tree="ls -lh --tree --level=2 -I .git -I .venv"
 alias open="xdg-open"
 alias cp="cp -i"
 alias mv="mv -i"

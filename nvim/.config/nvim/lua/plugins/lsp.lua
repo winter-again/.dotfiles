@@ -248,33 +248,46 @@ return {
                         Lua = {},
                     },
                 },
-                ["pyright"] = {
+                ["basedpyright"] = {
                     capabilities = lsp_capabilities,
                     on_attach = lsp_attach,
-                    -- TODO: why this?
-                    -- root_dir = require("lspconfig").util.root_pattern(".venv"),
-                    -- remove capabilities that ruff can provide
-                    -- https://github.com/astral-sh/ruff-lsp/issues/384
-                    -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
                     settings = {
-                        -- see settings: https://github.com/microsoft/pyright/blob/54f7da25f9c2b6253803602048b04fe0ccb13430/docs/settings.md
-                        pyright = {
-                            disableOrganizeImports = true, -- use Ruff instead
-                        },
-                        python = {
+                        basedpyright = {
                             analysis = {
-                                -- ignore = { '*' }, -- use Ruff for linting; disables all pyright
-                                -- alt: have to go one by one if preserving pyright type-checking
-                                -- see: https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
-                                -- note that some of the Pyright stuff are "hints" and can't be easily removed
-                                -- ex:
-                                diagnosticSeverityOverrides = {
-                                    reportUndefinedVariable = "none",
-                                },
+                                autoSearchPaths = true,
+                                diagnosticMode = "openFilesOnly",
+                                useLibraryCodeForTypes = true,
                             },
                         },
                     },
                 },
+                -- ["pyright"] = {
+                --     capabilities = lsp_capabilities,
+                --     on_attach = lsp_attach,
+                --     -- TODO: why this?
+                --     -- root_dir = require("lspconfig").util.root_pattern(".venv"),
+                --     -- remove capabilities that ruff can provide
+                --     -- https://github.com/astral-sh/ruff-lsp/issues/384
+                --     -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+                --     settings = {
+                --         -- see settings: https://github.com/microsoft/pyright/blob/54f7da25f9c2b6253803602048b04fe0ccb13430/docs/settings.md
+                --         pyright = {
+                --             disableOrganizeImports = true, -- use Ruff instead
+                --         },
+                --         python = {
+                --             analysis = {
+                --                 -- ignore = { '*' }, -- use Ruff for linting; disables all pyright
+                --                 -- alt: have to go one by one if preserving pyright type-checking
+                --                 -- see: https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
+                --                 -- note that some of the Pyright stuff are "hints" and can't be easily removed
+                --                 -- ex:
+                --                 diagnosticSeverityOverrides = {
+                --                     reportUndefinedVariable = "none",
+                --                 },
+                --             },
+                --         },
+                --     },
+                -- },
                 ["ruff"] = {
                     capabilities = lsp_capabilities,
                     on_attach = function(client, bufnr)

@@ -126,7 +126,7 @@ workspace 7 gaps outer 20
 # keybinds
 bindsym {
     $mod+Return exec $term
-    $mod+Shift+x kill
+    $mod+Shift+q kill
     $mod+m exec $menu
     $mod+i exec $browser
     # reload config file
