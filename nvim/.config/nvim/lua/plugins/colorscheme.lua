@@ -27,6 +27,12 @@ return {
                         ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
                         ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
                         ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
+                        ["markdownH1"] = { reverse = true },
+                        ["markdownH2"] = { reverse = true },
+                        ["markdownH3"] = { reverse = true },
+                        ["markdownH4"] = { reverse = true },
+                        ["markdownH5"] = { reverse = true },
+                        ["markdownH6"] = { reverse = true },
                     }
                 end,
             })
