@@ -9,7 +9,6 @@ return {
                     library = {
                         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
                         { path = "globals", mods = { "globals" } },
-                        { path = "snacks.nvim", words = { "Snacks" } },
                     },
                 },
             },
@@ -252,6 +251,8 @@ return {
                 ["basedpyright"] = {
                     capabilities = lsp_capabilities,
                     on_attach = lsp_attach,
+                    -- TODO: use uv tool interface instead?
+                    cmd = { "uv", "run", "basedpyright-langserver", "--stdio" },
                     settings = {
                         basedpyright = {
                             disableOrganizeImports = true, -- use Ruff instead
@@ -263,6 +264,9 @@ return {
                                     reportUndefinedVariable = "none",
                                 },
                             },
+                        },
+                        python = {
+                            pythonPath = "./.venv/bin/python",
                         },
                     },
                 },

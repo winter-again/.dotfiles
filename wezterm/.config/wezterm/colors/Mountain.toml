@@ -6,7 +6,7 @@ background = "#0f0f0f"
 cursor_bg = "#f0f0f0"
 # removing this prevents covering char under cursor with the fg color
 # cursor_fg = "#f0f0f0"
-cursor_border = "#262626"
+cursor_border = "#f0f0f0"
 split = "#4c4c4c"
 
 ansi = [
