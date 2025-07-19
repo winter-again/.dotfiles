@@ -9,9 +9,10 @@ return {
                 saturation = 0,
                 brightness = 0,
                 -- transparent = false,
-                -- text_styles = {
-                --     booleans = { italic = false },
-                -- },
+                text_styles = {
+                    numbers = { italic = false },
+                    floats = { italic = false },
+                },
                 plugins = {},
                 hl_overrides = function(colors)
                     return {
@@ -27,12 +28,18 @@ return {
                         ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
                         ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
                         ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
-                        ["markdownH1"] = { reverse = true },
-                        ["markdownH2"] = { reverse = true },
-                        ["markdownH3"] = { reverse = true },
-                        ["markdownH4"] = { reverse = true },
-                        ["markdownH5"] = { reverse = true },
-                        ["markdownH6"] = { reverse = true },
+                        ["markdownH1"] = { reverse = false, underline = true },
+                        ["markdownH2"] = { reverse = false, underline = true },
+                        ["markdownH3"] = { reverse = false, underline = true },
+                        ["markdownH4"] = { reverse = false, underline = true },
+                        ["markdownH5"] = { reverse = false, underline = true },
+                        ["markdownH6"] = { reverse = false, underline = true },
+                        ["@markup.heading.1.html"] = { fg = colors.fg },
+                        ["@markup.heading.2.html"] = { fg = colors.fg },
+                        ["@markup.heading.3.html"] = { fg = colors.fg },
+                        ["@markup.heading.4.html"] = { fg = colors.fg },
+                        ["@markup.heading.5.html"] = { fg = colors.fg },
+                        ["@markup.heading.6.html"] = { fg = colors.fg },
                     }
                 end,
             })

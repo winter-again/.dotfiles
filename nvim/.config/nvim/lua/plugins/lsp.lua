@@ -251,8 +251,7 @@ return {
                 ["basedpyright"] = {
                     capabilities = lsp_capabilities,
                     on_attach = lsp_attach,
-                    -- TODO: use uv tool interface instead?
-                    cmd = { "uv", "run", "basedpyright-langserver", "--stdio" },
+                    -- cmd = { "uv", "run", "basedpyright-langserver", "--stdio" },
                     settings = {
                         basedpyright = {
                             disableOrganizeImports = true, -- use Ruff instead
@@ -260,14 +259,15 @@ return {
                                 autoSearchPaths = true,
                                 diagnosticMode = "openFilesOnly",
                                 useLibraryCodeForTypes = true,
+                                autoImportCompletions = false,
                                 diagnosticSeverityOverrides = {
                                     reportUndefinedVariable = "none",
                                 },
                             },
                         },
-                        python = {
-                            pythonPath = "./.venv/bin/python",
-                        },
+                        -- python = {
+                        --     pythonPath = "./.venv/bin/python",
+                        -- },
                     },
                 },
                 -- ["pyright"] = {
