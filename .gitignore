@@ -1,8 +1,5 @@
-wezterm/.config/wezterm/profile_data.lua
 wezterm/.config/wezterm/lua/profile_data.lua
 wezterm/.config/wezterm/bg.lua
-# wezterm/.config/wezterm/utils.lua
-scratch.lua
 flow/
 nvim/.config/nvim/scratch/
 ncmpcpp/.config/ncmpcpp/error.log
