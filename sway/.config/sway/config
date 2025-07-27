@@ -264,18 +264,12 @@ exec {
 assign [app_id="Slack"] $ws1
 # force Slack to use stacking layout
 for_window [app_id="Slack"] layout stacking
-# assign [class="Slack"] $ws1
-
-# assign [app_id="obsidian"] $ws4 
 
 # spotify is stubborn if on X
 # for_window [class="Spotify"] move window to workspace $ws7
 # assign spotify on Wayland; seems to work
 assign [title="^Spotify"] $ws7
 assign [title="^Amberol"] $ws7
-
-# assign [app_id="discord"] $ws10
-# assign [class="discord"] $ws10
 
 # for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 # for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
