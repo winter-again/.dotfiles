@@ -1,4 +1,4 @@
-discord\.desktop
-obsidian\.desktop
-rstudio\.desktop
-yazi\.desktop
+\.local/share/applications/discord\.desktop
+\.local/share/applications/obsidian\.desktop
+\.local/share/applications/rstudio\.desktop
+\.local/share/applications/yazi\.desktop
