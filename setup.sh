@@ -92,8 +92,9 @@ echo "Configuring pacman..."
 sed -i "/Color/s/^#//g" /etc/pacman.conf
 sed -i "/VerbosePkgLists/s/^#//g" /etc/pacman.conf
 
-echo "Use all cores for makepkg compilation..."
-sed -i "s/-j2/-j$(nproc)/;/^#MAKEFLAGS/s/^#//" /etc/makepkg.conf
+# NOTE: opt to configure this with user file in ~/.config
+# echo "Use all cores for makepkg compilation..."
+# sed -i "s/-j2/-j$(nproc)/;/^#MAKEFLAGS/s/^#//" /etc/makepkg.conf
 
 echo "Updating before proceeding..."
 pacman -Syu
@@ -241,6 +242,7 @@ essential_pkgs=(
     wget
     xsv
     yazi
+    yt-dlp
     zoxide
 )
 paru_pkg "${essential_pkgs[@]}"
@@ -387,6 +389,7 @@ git remote set-url origin git@github.com:winter-again/backups.git
 cd "$HOME"
 
 # TODO: CUPS for printing?
+# TODO: SMART tools?
 
 echo "Installing ufw and activating firewall..."
 paru_pkg ufw
