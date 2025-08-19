@@ -1,7 +1,7 @@
 vim.g.netrw_winsize = 20 -- size for splits
 vim.g.netrw_banner = 0 -- disable netrw banner
 vim.g.netrw_liststyle = 3 -- tree style view
-vim.o.winborder = "none"
+vim.o.winborder = "single"
 
 local opt = vim.opt
 
