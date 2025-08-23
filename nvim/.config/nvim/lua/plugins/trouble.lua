@@ -16,7 +16,7 @@ return {
                         preview = {
                             type = "split",
                             relative = "win",
-                            position = "bottom",
+                            position = "right",
                             size = 0.5,
                         },
                     },
