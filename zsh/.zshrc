@@ -105,6 +105,7 @@ alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # colorize 
 alias g="git"
 alias gs="git status"
 alias gb="git branch --all -v"
+alias gco="git checkout"
 alias gu="git restore --staged" # recommended undo for staged file
 alias gd="git diff"
 alias gds="git diff --staged" # staged changes
