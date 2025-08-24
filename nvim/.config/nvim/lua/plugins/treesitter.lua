@@ -62,6 +62,9 @@ return {
             parsers = vim.iter(vim.tbl_values(parsers)):flatten():totable()
             ts.install(parsers)
 
+            -- use markdown parser for mdx files
+            vim.treesitter.language.register("markdown", { "mdx" })
+
             local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
             for _, parser in ipairs(parsers) do
                 -- autocmd for treesitter highlights and indentation support
