@@ -1,10 +1,10 @@
 local au_group = vim.api.nvim_create_augroup("winter.again", { clear = true })
 
--- highlight the text you just yanked (visual cue)
+-- highlight yanked text (visual cue)
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = au_group,
     callback = function()
-        vim.hl.on_yank()
+        vim.highlight.on_yank()
     end,
 })
 
@@ -22,17 +22,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     end,
 })
 
--- get rid of status column inside of nvim tree buffer
--- the builtin setting didn't seem to work
-vim.api.nvim_create_autocmd("BufEnter", {
-    group = au_group,
-    callback = function()
-        if vim.bo.filetype == "NvimTree" then
-            vim.wo.statuscolumn = ""
-        end
-    end,
-})
-
 -- trying to get rid of folds in diffsplit with fugitive
 -- not perfect but it kind of works
 vim.api.nvim_create_autocmd({ "WinEnter", "WinLeave" }, {
@@ -41,13 +30,13 @@ vim.api.nvim_create_autocmd({ "WinEnter", "WinLeave" }, {
 })
 
 -- disable treesitter context in .md files if having issues
-vim.api.nvim_create_autocmd("FileType", {
-    group = au_group,
-    pattern = { "markdown" },
-    callback = function()
-        require("treesitter-context").disable()
-    end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--     group = au_group,
+--     pattern = { "markdown" },
+--     callback = function()
+--         require("treesitter-context").disable()
+--     end,
+-- })
 
 -- remove items from qflist
 -- source: https://github.com/rmarganti/.dotfiles/blob/main/dots/.config/nvim/lua/rmarganti/core/autocommands.lua#L12
@@ -89,13 +78,3 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.keymap.set("", "d", del_qflist, { buffer = true })
     end,
 })
-
--- modify automatic formatting to not continue comments when you hit Enter
--- setting it with autocmd otherwise ftplugin overrides it
--- BufWinEnter event is late enough to override formatoptions
--- https://www.reddit.com/r/neovim/comments/sqld76/stop_automatic_newline_continuation_of_comments/
--- local exit_cursor_group = vim.api.nvim_create_augroup('ModAutoComment', { clear = true })
--- vim.api.nvim_create_autocmd('BufWinEnter', {
---     command = 'set formatoptions-=cro',
---     group = exit_cursor_group,
--- })

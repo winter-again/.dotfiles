@@ -1,13 +1,12 @@
-vim.g.netrw_winsize = 20 -- size for splits
-vim.g.netrw_banner = 0 -- disable netrw banner
-vim.g.netrw_liststyle = 3 -- tree style view
+-- vim.g.netrw_winsize = 20 -- size for splits
+-- vim.g.netrw_banner = 0 -- disable netrw banner
+-- vim.g.netrw_liststyle = 3 -- tree style view
+
 vim.o.winborder = "single"
 
 local opt = vim.opt
 
 -- opt.guicursor = "" -- disable cursor change on mode change
--- opt.splitright = true -- open new window to the right of current
--- opt.splitbelow = true -- open new window below the current
 opt.background = "dark"
 opt.inccommand = "split" -- preview substitutions live
 -- opt.winbar = "%{%v:lua.Winbar()%}" -- disable if using incline.nvim
@@ -21,7 +20,7 @@ opt.equalalways = false -- don't reset window sizes after closing one
 opt.showmode = false -- don't show mode in status line
 opt.swapfile = false -- turn off swapfiles
 opt.backup = false -- turn off backups
-opt.undofile = true -- save undo history to an undo file and restore from too
+opt.undofile = true -- save/restore undo history from file
 opt.number = true
 opt.relativenumber = true
 opt.cursorline = true

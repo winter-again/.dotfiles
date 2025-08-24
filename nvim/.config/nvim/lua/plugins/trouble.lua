@@ -2,8 +2,7 @@ return {
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        cmd = "Trouble",
-        keys = { "<leader>tt" },
+        keys = { "<leader>tt", "<leader>ts" },
         config = function()
             require("trouble").setup({
                 open_no_results = true, -- open even when no results
