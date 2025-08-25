@@ -30,7 +30,6 @@ require("winteragain.autocmds")
 require("winteragain.globals")
 require("winteragain.keymaps")
 
--- any file in lua/plugins/*.lua will be merged into the main plugin spec
 local lazy_opts = {
     dev = {
         path = "~/Documents/code/nvim-dev",
@@ -52,6 +51,7 @@ local lazy_opts = {
     },
 }
 require("lazy").setup({
+    -- any file in lua/plugins/*.lua will be merged into the main plugin spec
     { import = "plugins" },
 }, lazy_opts)
 

@@ -13,6 +13,7 @@ return {
                 ["-"] = { "actions.parent", mode = "n" },
                 ["_"] = { "actions.open_cwd", mode = "n" },
                 ["g."] = { "actions.toggle_hidden", mode = "n" },
+                ["<C-p>"] = "actions.preview",
             },
             view_options = {
                 show_hidden = true,
@@ -52,18 +53,20 @@ return {
 
         local map = require("winteragain.globals").map
 
-        map("n", "<leader>pv", require("oil").toggle_float, nil, "Open Oil in floating window")
+        map("n", "<leader>pv", require("oil").toggle_float, { silent = true }, "Open Oil in floating window")
+
+        -- BUG: can't move, can only copy if preview open
         -- auto open preview on cursor hover
-        local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
-        vim.api.nvim_create_autocmd("User", {
-            pattern = "OilEnter",
-            group = au_group,
-            callback = vim.schedule_wrap(function(args)
-                local oil = require("oil")
-                if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
-                    oil.open_preview()
-                end
-            end),
-        })
+        -- local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
+        -- vim.api.nvim_create_autocmd("User", {
+        --     pattern = "OilEnter",
+        --     group = au_group,
+        --     callback = vim.schedule_wrap(function(args)
+        --         local oil = require("oil")
+        --         if vim.api.nvim_get_current_buf() == args.data.buf and oil.get_cursor_entry() then
+        --             oil.open_preview()
+        --         end
+        --     end),
+        -- })
     end,
 }

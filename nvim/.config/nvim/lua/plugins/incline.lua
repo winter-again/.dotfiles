@@ -24,7 +24,7 @@ return {
                     filename,
                     " ",
                     modified and "[+]" or "",
-                    read_only and " 󰌾" or "",
+                    read_only and "󰌾" or "",
                 }
             end,
         })

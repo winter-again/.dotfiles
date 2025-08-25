@@ -19,7 +19,7 @@ local function get_lsp()
     local names = {}
     for _, client in ipairs(clients) do
         local filetypes = client.config.filetypes
-        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 or client.config.name == "zk" then
+        if filetypes and (vim.fn.index(filetypes, buf_ft) ~= -1 or client.config.name == "zk") then
             table.insert(names, client.name)
         end
     end

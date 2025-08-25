@@ -100,7 +100,7 @@ return {
         )
     ),
     s(
-        { trig = "with pl", snippetType = "autosnippet", desc = "Polars special print" },
+        { trig = "with pl.Con", snippetType = "autosnippet", desc = "Polars special print" },
         fmta(
             [[
         with pl.Config(tbl_<opt>=-1):

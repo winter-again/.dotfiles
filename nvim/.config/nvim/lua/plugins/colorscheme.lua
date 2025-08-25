@@ -111,42 +111,6 @@ return {
         end,
     },
     {
-        "folke/tokyonight.nvim",
-        enabled = false,
-        lazy = false, -- ensure main colorscheme loaded on start up
-        priority = 1000, -- ensure colorscheme loaded before all other start up plugins
-        config = function()
-            require("tokyonight").setup({
-                style = "night",
-                styles = {
-                    functions = { bold = true },
-                    sidebars = "dark",
-                    floats = "dark",
-                },
-                lualine_bold = true,
-                on_colors = function(colors)
-                    colors.border = colors.fg_dark
-                end,
-                on_highlights = function(highlights, colors)
-                    highlights["WinBar"] = { bg = "none", italic = true }
-                    highlights["WinBarNC"] = { bg = "none", italic = true }
-                    -- highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
-                    highlights["LineNr"] = { fg = "#696d87" } -- line number color
-                    highlights["CursorLineNr"] = { fg = colors.fg } -- cursor line number color
-                    highlights["TelescopeSelection"] = { bg = colors.bg_visual }
-                    -- swap undercurl for underdot
-                    highlights["DiagnosticUnderlineError"] = { underdotted = true }
-                    highlights["DiagnosticUnderlineWarn"] = { underdotted = true }
-                    highlights["DiagnosticUnderlineInfo"] = { underdotted = true }
-                    highlights["DiagnosticUnderlineHint"] = { underdotted = true }
-                    highlights["@lsp.type.unresolvedReference"] = { underdotted = true }
-                    highlights["SpellBad"] = { underdotted = true }
-                    highlights["SpellCap"] = { underdotted = true }
-                end,
-            })
-        end,
-    },
-    {
         "rebelot/kanagawa.nvim",
         enabled = false,
         lazy = false,
@@ -246,6 +210,47 @@ return {
                 selected_tab_highlight = false, --highlight current selected tab
                 fg_saturation = 0, -- font saturation, gray colors become more brighter
                 bg_saturation = 0, -- background saturation
+            })
+        end,
+    },
+    {
+        "slugbyte/lackluster.nvim",
+        lazy = false,
+        config = function() end,
+    },
+    {
+        "folke/tokyonight.nvim",
+        enabled = false,
+        lazy = false, -- ensure main colorscheme loaded on start up
+        priority = 1000, -- ensure colorscheme loaded before all other start up plugins
+        config = function()
+            require("tokyonight").setup({
+                style = "night",
+                styles = {
+                    functions = { bold = true },
+                    sidebars = "dark",
+                    floats = "dark",
+                },
+                lualine_bold = true,
+                on_colors = function(colors)
+                    colors.border = colors.fg_dark
+                end,
+                on_highlights = function(highlights, colors)
+                    highlights["WinBar"] = { bg = "none", italic = true }
+                    highlights["WinBarNC"] = { bg = "none", italic = true }
+                    -- highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
+                    highlights["LineNr"] = { fg = "#696d87" } -- line number color
+                    highlights["CursorLineNr"] = { fg = colors.fg } -- cursor line number color
+                    highlights["TelescopeSelection"] = { bg = colors.bg_visual }
+                    -- swap undercurl for underdot
+                    highlights["DiagnosticUnderlineError"] = { underdotted = true }
+                    highlights["DiagnosticUnderlineWarn"] = { underdotted = true }
+                    highlights["DiagnosticUnderlineInfo"] = { underdotted = true }
+                    highlights["DiagnosticUnderlineHint"] = { underdotted = true }
+                    highlights["@lsp.type.unresolvedReference"] = { underdotted = true }
+                    highlights["SpellBad"] = { underdotted = true }
+                    highlights["SpellCap"] = { underdotted = true }
+                end,
             })
         end,
     },
@@ -408,10 +413,5 @@ return {
         init = function()
             vim.g.zenbones_darkness = "warm"
         end,
-    },
-    {
-        "slugbyte/lackluster.nvim",
-        lazy = false,
-        config = function() end,
     },
 }
