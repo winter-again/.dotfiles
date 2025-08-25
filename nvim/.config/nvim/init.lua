@@ -30,9 +30,6 @@ require("winteragain.autocmds")
 require("winteragain.globals")
 require("winteragain.keymaps")
 
--- use markdown parser for mdx files
--- vim.treesitter.language.register("markdown", { "mdx" })
-
 -- any file in lua/plugins/*.lua will be merged into the main plugin spec
 local lazy_opts = {
     dev = {

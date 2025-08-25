@@ -16,6 +16,7 @@ local parsers = {
     "csv",
     "desktop",
     "devicetree",
+    "dockerfile",
     "git_config",
     "git_rebase",
     "gitattributes",
@@ -24,26 +25,31 @@ local parsers = {
     "go",
     "gomod",
     "gosum",
+    "gotmpl",
     "html",
     "ini",
     "javascript",
     "jsdoc",
-    "json", -- testing
+    "json",
+    "jsonc",
     "just",
     "latex",
-    "luadoc", -- testing
-    "printf", -- testing
+    "luadoc",
+    "printf",
     "python",
     "r",
     "rasi",
-    "regex", -- testing
+    "regex",
     "rust",
     "sql",
+    "ssh_config",
+    "svelte",
     "tmux",
     "toml",
     "tsx",
     "typescript",
     "typst",
+    "udev",
     "yaml",
     "zathurarc",
 }
@@ -65,21 +71,22 @@ return {
             -- use markdown parser for mdx files
             vim.treesitter.language.register("markdown", { "mdx" })
 
-            local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
-            for _, parser in ipairs(parsers) do
-                -- autocmd for treesitter highlights and indentation support
-                vim.api.nvim_create_autocmd({ "FileType" }, {
-                    group = au_group,
-                    pattern = parser,
-                    desc = "Enable treesitter highlights and indentation support",
-                    callback = function(event)
-                        vim.treesitter.start(event.buf, parser)
-
-                        -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-                        vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-                    end,
-                })
-            end
+            local au_group = vim.api.nvim_create_augroup("winter.again.treesitter", { clear = true })
+            vim.api.nvim_create_autocmd({ "FileType" }, {
+                group = au_group,
+                pattern = parsers,
+                desc = "Enable treesitter highlights and indentation support",
+                callback = function(event)
+                    local filetype = event.match
+                    local lang = vim.treesitter.language.get_lang(filetype) -- returns filetype if nothing registered
+                    --- @diagnostic disable: param-type-mismatch
+                    if vim.treesitter.language.add(lang) then
+                        local bufnr = event.buf
+                        vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                        vim.treesitter.start(bufnr, lang)
+                    end
+                end,
+            })
         end,
     },
     {

@@ -47,19 +47,6 @@ return {
                         map({ "n", "v" }, "gca", vim.lsp.buf.code_action, opts, "Code actions")
                     end
 
-                    -- NOTE: replaces cmp-nvim-lsp-signature-help but req manual keymap trigger
-                    -- if client and client:supports_method(methods.textDocument_signatureHelp) then
-                    --     ---@diagnostic disable-next-line missing-parameter
-                    --     map({ "i", "s" }, "<C-k>", function()
-                    --         local cmp = require("cmp")
-                    --         if cmp.visible() then
-                    --             cmp.close()
-                    --         end
-                    --
-                    --         vim.lsp.buf.signature_help()
-                    --     end)
-                    -- end
-
                     map("n", "gs", function()
                         vim.diagnostic.open_float({ scope = "cursor" })
                     end, opts, "Get cursor diagnostics")
@@ -114,116 +101,6 @@ return {
                     end
                 end,
             })
-
-            --- Default on_attach function for common settings/keymaps
-            ---@param client vim.lsp.Client
-            ---@param bufnr integer
-            -- local function lsp_attach(client, bufnr)
-            --     local map = require("winteragain.globals").map
-            --     local opts = { silent = true, buffer = bufnr }
-            --
-            --     -- some of these became default keymaps
-            --     if client:supports_method(methods.textDocument_hover) then
-            --         map("n", "K", vim.lsp.buf.hover, opts, "Hover docs")
-            --     end
-            --     if client:supports_method(methods.textDocument_declaration) then
-            --         map("n", "gD", vim.lsp.buf.declaration, opts, "Go to declaration")
-            --     end
-            --     if client:supports_method(methods.textDocument_inlayHint) then
-            --         map("n", "<leader>ih", function()
-            --             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
-            --         end, opts, "Toggle inlay hints")
-            --     end
-            --     if client:supports_method(methods.textDocument_rename) then
-            --         map("n", "grn", function()
-            --             return ":IncRename " .. vim.fn.expand("<cword>")
-            --         end, { expr = true, silent = true }, "LSP incremental rename")
-            --         -- map("n", "grn", vim.lsp.buf.rename, opts, "LSP default rename")
-            --     end
-            --     if client:supports_method(methods.textDocument_codeAction) then
-            --         map({ "n", "v" }, "gca", vim.lsp.buf.code_action, opts, "Code actions")
-            --     end
-            --
-            --     -- NOTE: replaces cmp-nvim-lsp-signature-help but req manual keymap trigger
-            --     if client:supports_method(methods.textDocument_signatureHelp) then
-            --         ---@diagnostic disable-next-line missing-parameter
-            --         map({ "i", "s" }, "<C-k>", function()
-            --             local cmp = require("cmp")
-            --             if cmp.visible() then
-            --                 cmp.close()
-            --             end
-            --
-            --             vim.lsp.buf.signature_help()
-            --         end)
-            --     end
-            --
-            --     map("n", "gs", function()
-            --         vim.diagnostic.open_float({ scope = "cursor" })
-            --     end, opts, "Get cursor diagnostics")
-            --     map("n", "gl", function()
-            --         vim.diagnostic.open_float({ scope = "line" })
-            --     end, opts, "Get line diagnostics")
-            --
-            --     if client:supports_method(methods.textDocument_documentHighlight) then
-            --         map("n", "gc", function()
-            --             if vim.g.doc_highlight then
-            --                 vim.lsp.buf.clear_references()
-            --                 vim.g.doc_highlight = false
-            --             else
-            --                 vim.lsp.buf.document_highlight()
-            --                 vim.g.doc_highlight = true
-            --             end
-            --         end, opts, "Highlight symbol under cursor")
-            --     end
-            --
-            --     local ok_telescope, builtin = pcall(require, "telescope.builtin")
-            --     local ok_fzf_lua, fzf_lua = pcall(require, "fzf-lua")
-            --     if ok_telescope then
-            --         map("n", "gd", builtin.lsp_definitions, opts, "LSP definitions")
-            --         map("n", "gr", builtin.lsp_references, opts, "LSP references")
-            --         map("n", "gI", builtin.lsp_implementations, opts, "LSP implementations")
-            --         map("n", "<leader>D", builtin.lsp_type_definitions, opts, "LSP type defns.")
-            --         map("n", "<leader>ds", builtin.lsp_document_symbols, opts, "LSP doc. symbols")
-            --         map("n", "<leader>ws", builtin.lsp_workspace_symbols, opts, "LSP workspace symbols")
-            --     elseif ok_fzf_lua then
-            --         if client:supports_method(methods.textDocument_definition) then
-            --             map("n", "gd", function()
-            --                 fzf_lua.lsp_definitions({ jump1 = true })
-            --             end, opts, "LSP definition")
-            --             map("n", "gp", function()
-            --                 fzf_lua.lsp_definitions({ jump1 = false })
-            --             end, opts, "LSP peek definition")
-            --             map("n", "gr", fzf_lua.lsp_references, opts, "LSP references")
-            --
-            --             map("n", "<leader>D", fzf_lua.lsp_typedefs, opts, "LSP type defns.")
-            --         end
-            --         if client:supports_method(methods.textDocument_implementation) then
-            --             map("n", "gI", fzf_lua.lsp_implementations, opts, "LSP implementations")
-            --         end
-            --         if client:supports_method(methods.textDocument_documentSymbol) then
-            --             map("n", "<leader>ds", fzf_lua.lsp_document_symbols, opts, "LSP doc. symbols")
-            --         end
-            --         if client:supports_method(methods.workspace_symbol) then
-            --             map("n", "<leader>ws", fzf_lua.lsp_live_workspace_symbols, opts, "Workspace symbols")
-            --         end
-            --     else
-            --         print("Neither telescope.nvim nor fzf-lua installed...")
-            --     end
-            -- end
-
-            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            -- also see: https://github.com/hrsh7th/cmp-nvim-lsp/issues/38#issuecomment-1815265121
-            -- NOTE: snippetSupport = false by default but true in require('cmp_nvim_lsp').default_capabilities() so it's forced to true
-            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-            local ok_cmp, cmp = pcall(require, "cmp_nvim_lsp")
-            local ok_blink, blink = pcall(require, "blink.cmp")
-            if ok_cmp then
-                lsp_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, cmp.default_capabilities())
-            elseif ok_blink then
-                -- NOTE: blink already includes the built-in default capabilities, so this should be redundant
-                -- lsp_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, blink.get_lsp_capabilities({}, false))
-                lsp_capabilities = blink.get_lsp_capabilities()
-            end
 
             -- lspconfig appearance and behavior
             -- global floating window borders by replacing the orig. function
@@ -301,7 +178,6 @@ return {
             -- NOTE: settings specified here extend the default settings provided by nvim-lspconfig
             local servers = {
                 ["lua_ls"] = {
-                    capabilities = lsp_capabilities,
                     on_init = function(client)
                         if client.workspace_folders then
                             local path = client.workspace_folders[1].name
@@ -329,8 +205,6 @@ return {
                                 --     -- "${3rd}/luv/library"
                                 --     -- "${3rd}/busted/library",
                                 -- },
-                                -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-                                -- library = vim.api.nvim_get_runtime_file("", true)
                             },
                             telemetry = {
                                 enable = false,
@@ -350,8 +224,6 @@ return {
                     },
                 },
                 ["basedpyright"] = {
-                    capabilities = lsp_capabilities,
-                    -- cmd = { "uv", "run", "basedpyright-langserver", "--stdio" },
                     settings = {
                         basedpyright = {
                             disableOrganizeImports = true, -- use Ruff instead
@@ -365,13 +237,9 @@ return {
                                 },
                             },
                         },
-                        -- python = {
-                        --     pythonPath = "./.venv/bin/python",
-                        -- },
                     },
                 },
                 -- ["pyright"] = {
-                --     capabilities = lsp_capabilities,
                 --     -- TODO: why this?
                 --     -- root_dir = require("lspconfig").util.root_pattern(".venv"),
                 --     -- remove capabilities that ruff can provide
@@ -397,7 +265,6 @@ return {
                 --     },
                 -- },
                 ["ruff"] = {
-                    capabilities = lsp_capabilities,
                     on_attach = function(client, bufnr)
                         -- disable Ruff's hover to use Pyright instead
                         client.server_capabilities.hoverProvider = false
@@ -408,7 +275,6 @@ return {
                     -- },
                 },
                 ["gopls"] = {
-                    capabilities = lsp_capabilities,
                     settings = {
                         gopls = {
                             semanticTokens = true,
@@ -434,8 +300,16 @@ return {
                         },
                     },
                 },
+                ["marksman"] = {
+                    on_attach = function(client, bufnr)
+                        if vim.uv.cwd() == vim.fs.normalize("~/Documents/notebook") then
+                            -- disable some capabilities in notes dir to use zk/obsidian instead
+                            client.server_capabilities.completionProvider = nil
+                            client.server_capabilities.hoverProvider = false
+                        end
+                    end,
+                },
                 ["rust_analyzer"] = {
-                    capabilities = lsp_capabilities,
                     settings = {
                         ["rust-analyzer"] = {
                             cargo = {
@@ -444,14 +318,9 @@ return {
                         },
                     },
                 },
-                ["astro"] = {
-                    capabilities = lsp_capabilities,
-                },
-                ["clangd"] = {
-                    capabilities = lsp_capabilities,
-                },
+                ["astro"] = {},
+                ["clangd"] = {},
                 ["html"] = {
-                    capabilities = lsp_capabilities,
                     init_options = {
                         configurationSection = { "html", "css", "javascript" },
                         embeddedLanguages = {
@@ -461,24 +330,16 @@ return {
                         provideFormatter = false, -- using prettier instead
                     },
                 },
-                ["cssls"] = {
-                    capabilities = lsp_capabilities,
-                },
-                ["ts_ls"] = {
-                    capabilities = lsp_capabilities,
-                },
-                ["bashls"] = {
-                    capabilities = lsp_capabilities,
-                },
+                ["cssls"] = {},
+                ["ts_ls"] = {},
+                ["bashls"] = {},
                 ["jsonls"] = {
-                    capabilities = lsp_capabilities,
                     -- on_attach = function(client, bufnr)
                     --     -- NOTE: jsonls includes formatting capabilities by default
                     --     client.server_capabilities.documentFormattingProvider = false
                     -- end,
                 },
                 ["taplo"] = {
-                    capabilities = lsp_capabilities,
                     on_attach = function(client, bufnr)
                         -- NOTE: taplo includes formatting capabilities by default
                         -- turn off for pyproject.toml files
@@ -489,7 +350,6 @@ return {
                     end,
                 },
                 ["tinymist"] = {
-                    capabilities = lsp_capabilities,
                     settings = {
                         formatterMode = "typstyle",
                         formatterIndentSize = 4,
@@ -500,7 +360,6 @@ return {
                     },
                 },
                 ["yamlls"] = {
-                    capabilities = lsp_capabilities,
                     on_attach = function(client, bufnr)
                         -- NOTE: yamlls includes formatting capabilities; disable it, though
                         -- it doesn't seem to work anyway?
@@ -513,23 +372,6 @@ return {
                 vim.lsp.config(server, config)
                 vim.lsp.enable(server)
             end
-
-            local cwd = vim.uv.cwd()
-            if cwd == vim.fs.normalize("~/Documents/notebook") then
-                vim.lsp.config("marksman", {
-                    capabilities = lsp_capabilities,
-                    on_attach = function(client, bufnr)
-                        -- disable some capabilities in notes dir to use zk/obsidian instead
-                        client.server_capabilities.completionProvider = nil
-                        client.server_capabilities.hoverProvider = false
-                    end,
-                })
-            else
-                vim.lsp.config("marksman", {
-                    capabilities = lsp_capabilities,
-                })
-            end
-            vim.lsp.enable("marksman")
         end,
     },
     {
