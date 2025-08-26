@@ -62,10 +62,14 @@ local function display_tools()
 end
 
 -- use gitsigns as the diff source below
-local function diff_source()
+local function gitsigns_diff()
     local gitsigns = vim.b.gitsigns_status_dict
     if gitsigns then
-        return { added = gitsigns.added, modified = gitsigns.changed, removed = gitsigns.removed }
+        return {
+            added = gitsigns.added,
+            modified = gitsigns.changed,
+            removed = gitsigns.removed,
+        }
     end
 end
 
@@ -95,7 +99,7 @@ return {
                     },
                     {
                         "diff",
-                        source = diff_source,
+                        source = gitsigns_diff,
                         symbols = {
                             added = " ",
                             modified = " ",

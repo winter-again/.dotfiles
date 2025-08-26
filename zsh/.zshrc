@@ -1,5 +1,25 @@
 unsetopt beep hist_beep list_beep
 
+export SHELL="/usr/bin/zsh"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export EDITOR="/usr/local/bin/nvim"
+export VISUAL="/usr/local/bin/nvim"
+export PAGER="/usr/bin/less"
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+# export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
+export BROWSER="firefox"
+
+# override defaults
+# see: https://github.com/eza-community/eza/blob/d477699f89f2346be712f287287a7205f37933e9/man/eza_colors.5.md
+export LS_COLORS="di=1;36"
+# seems only EZA_COLORS has "da" option
+export EZA_COLORS="da=1;36"
+
+# make fd use same colors as eza (set $LS_COLORS)
+# eval "$(dircolors -b)"
+
 HISTFILE="$XDG_CACHE_HOME/.zsh_history"
 SAVEHIST="100000000" # num of lines saved (last $SAVEHIST lines)
 HISTSIZE="100000000" # num of lines to keep in one session; read in at start
@@ -37,26 +57,6 @@ zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
 
 eval "$(zoxide init zsh)" # must be after compinit called
-
-export SHELL="/usr/bin/zsh"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-export EDITOR="/usr/local/bin/nvim"
-export VISUAL="/usr/local/bin/nvim"
-export PAGER="/usr/bin/less"
-export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
-# export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
-export BROWSER="firefox"
-
-# override defaults
-# see: https://github.com/eza-community/eza/blob/d477699f89f2346be712f287287a7205f37933e9/man/eza_colors.5.md
-export LS_COLORS="di=1;36"
-# seems only EZA_COLORS has "da" option
-export EZA_COLORS="da=1;36"
-
-# make fd use same colors as eza (set $LS_COLORS)
-# eval "$(dircolors -b)"
 
 typeset -U path PATH # prevent path duplicates (keeps only leftmost occurrence)
 path+=("$HOME/.local/bin")

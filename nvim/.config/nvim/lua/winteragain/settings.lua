@@ -2,7 +2,7 @@ vim.g.netrw_winsize = 20 -- size for splits
 vim.g.netrw_banner = 0 -- disable netrw banner
 vim.g.netrw_liststyle = 3 -- tree style view
 
-vim.o.winborder = "single" -- global border setting
+-- vim.o.winborder = "single" -- global border setting
 vim.o.confirm = true -- ask whether to save unsaved changes
 
 local opt = vim.opt

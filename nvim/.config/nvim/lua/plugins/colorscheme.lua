@@ -2,7 +2,7 @@ return {
     {
         "winter-again/winter-again.nvim",
         lazy = false,
-        priority = 1001,
+        priority = 1000,
         dev = true,
         config = function()
             require("winter-again").setup({
@@ -20,26 +20,26 @@ return {
                         ["@markup.math"] = { italic = true },
                         ["QuickFixLine"] = { bold = true },
                         ["@keyword.luadoc"] = { bold = false },
-                        ["@markup.list.checked"] = { strikethrough = true },
-                        ["RenderMarkdownChecked"] = { strikethrough = false },
-                        ["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" },
-                        ["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" },
-                        ["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" },
-                        ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
-                        ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
-                        ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
-                        ["markdownH1"] = { reverse = false, underline = true },
-                        ["markdownH2"] = { reverse = false, underline = true },
-                        ["markdownH3"] = { reverse = false, underline = true },
-                        ["markdownH4"] = { reverse = false, underline = true },
-                        ["markdownH5"] = { reverse = false, underline = true },
-                        ["markdownH6"] = { reverse = false, underline = true },
-                        ["@markup.heading.1.html"] = { fg = colors.fg },
-                        ["@markup.heading.2.html"] = { fg = colors.fg },
-                        ["@markup.heading.3.html"] = { fg = colors.fg },
-                        ["@markup.heading.4.html"] = { fg = colors.fg },
-                        ["@markup.heading.5.html"] = { fg = colors.fg },
-                        ["@markup.heading.6.html"] = { fg = colors.fg },
+                        -- ["@markup.list.checked"] = { strikethrough = true },
+                        -- ["RenderMarkdownChecked"] = { strikethrough = false },
+                        -- ["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" },
+                        -- ["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" },
+                        -- ["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" },
+                        -- ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
+                        -- ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
+                        -- ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
+                        -- ["markdownH1"] = { reverse = false, underline = true },
+                        -- ["markdownH2"] = { reverse = false, underline = true },
+                        -- ["markdownH3"] = { reverse = false, underline = true },
+                        -- ["markdownH4"] = { reverse = false, underline = true },
+                        -- ["markdownH5"] = { reverse = false, underline = true },
+                        -- ["markdownH6"] = { reverse = false, underline = true },
+                        -- ["@markup.heading.1.html"] = { fg = colors.fg },
+                        -- ["@markup.heading.2.html"] = { fg = colors.fg },
+                        -- ["@markup.heading.3.html"] = { fg = colors.fg },
+                        -- ["@markup.heading.4.html"] = { fg = colors.fg },
+                        -- ["@markup.heading.5.html"] = { fg = colors.fg },
+                        -- ["@markup.heading.6.html"] = { fg = colors.fg },
                     }
                 end,
             })
@@ -48,7 +48,6 @@ return {
     {
         "ramojus/mellifluous.nvim",
         lazy = false,
-        priority = 995,
         config = function()
             require("mellifluous").setup({
                 -- mellifluous, alduin, mountain, and kanagawa_dragon are ok
@@ -112,9 +111,7 @@ return {
     },
     {
         "rebelot/kanagawa.nvim",
-        enabled = false,
         lazy = false,
-        priority = 999, -- ensure colorscheme loaded before all other start up plugins
         config = function()
             require("kanagawa").setup({
                 colors = {
@@ -222,7 +219,6 @@ return {
         "folke/tokyonight.nvim",
         enabled = false,
         lazy = false, -- ensure main colorscheme loaded on start up
-        priority = 1000, -- ensure colorscheme loaded before all other start up plugins
         config = function()
             require("tokyonight").setup({
                 style = "night",
@@ -258,7 +254,6 @@ return {
         "catppuccin/nvim",
         enabled = false,
         name = "catppuccin",
-        priority = 998, -- ensure colorscheme loaded before all other start up plugins
         lazy = false,
         config = function()
             require("catppuccin").setup({
@@ -324,7 +319,6 @@ return {
         -- name = 'rose-pine.nvim',
         -- dev = true,
         lazy = false,
-        priority = 997, -- ensure colorscheme loaded before all other start up plugins
         config = function()
             require("rose-pine").setup({
                 variant = "main",
@@ -356,7 +350,6 @@ return {
         "ellisonleao/gruvbox.nvim",
         enabled = false,
         lazy = false,
-        priority = 996,
         config = function()
             require("gruvbox").setup({
                 invert_selection = true,
