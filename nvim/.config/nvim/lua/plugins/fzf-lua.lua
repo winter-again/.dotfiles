@@ -2,7 +2,6 @@ return {
     "ibhagwan/fzf-lua",
     -- 'https://gitlab.com/ibhagwan/fzf-lua', -- Gitlab alt
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- keys = { "<leader>ff", "<leader>fs", "<leader>fl" },
     even = "VimEnter",
     config = function()
         local fzf_lua = require("fzf-lua")

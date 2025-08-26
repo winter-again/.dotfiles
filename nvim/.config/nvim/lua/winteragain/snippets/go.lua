@@ -5,25 +5,25 @@ local fmta = require("luasnip.extras.fmt").fmta
 
 return {
     s(
-        { trig = "iferr", desc = "Handle err" },
+        { trig = "iferr", desc = "Handle error" },
         fmta(
             [[
-        if err != nil {
-            <res>
-        }
-        ]],
-            { res = i(1) }
+            if err != nil {
+                <>
+            }
+            ]],
+            { i(1) }
         )
     ),
     s(
-        { trig = "err", desc = "Handle error single line" },
+        { trig = "err", desc = "Define and handle error in single line" },
         fmta(
             [[
-        if err := <func>(); err != nil {
-            <res>
-        }
-        ]],
-            { func = i(1, "func"), res = i(2, "res") }
+            if err := <func>(); err != nil {
+                <res>
+            }
+            ]],
+            { func = i(1, "func"), res = i(2) }
         )
     ),
 }

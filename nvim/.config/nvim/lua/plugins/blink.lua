@@ -4,13 +4,13 @@ return {
         {
             "L3MON4D3/LuaSnip",
             version = "v2.*",
-            -- build = (function()
-            --     -- build step needed for optional regex support in snipppets
-            --     if vim.fn.executable("make") == 0 then
-            --         return
-            --     end
-            --     return "make install_jsregexp"
-            -- end)(),
+            build = (function()
+                -- build step needed for optional regex support in snipppets
+                if vim.fn.executable("make") == 0 then
+                    return
+                end
+                return "make install_jsregexp"
+            end)(),
             config = function()
                 local ls = require("luasnip")
 
