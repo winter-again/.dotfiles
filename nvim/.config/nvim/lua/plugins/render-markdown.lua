@@ -57,12 +57,16 @@ return {
         checkbox = {
             enabled = true,
             right_pad = 1,
+            -- NOTE: these highlights only apply to the virtual/rendered text,
+            -- not the underlying text
             unchecked = {
                 icon = "󰄱",
+                highlight = "@markup.list.unchecked",
             },
             checked = {
                 icon = "",
-                scoped_highlight = "@markup.list.checked_item", -- custom highlight
+                highlight = "@markup.list.checked", -- icon highlight
+                scope_highlight = "@markup.list.checked", -- item highlight
             },
         },
         quote = {

@@ -1,36 +1,7 @@
 return {
     "saghen/blink.cmp",
     dependencies = {
-        {
-            "L3MON4D3/LuaSnip",
-            version = "v2.*",
-            build = (function()
-                -- build step needed for optional regex support in snipppets
-                if vim.fn.executable("make") == 0 then
-                    return
-                end
-                return "make install_jsregexp"
-            end)(),
-            config = function()
-                local ls = require("luasnip")
-
-                ls.setup({
-                    update_events = { "TextChanged", "TextChangedI" },
-                    enable_autosnippets = true,
-                })
-
-                require("luasnip.loaders.from_lua").lazy_load({
-                    paths = { "~/.config/nvim/lua/winteragain/snippets" },
-                })
-
-                vim.keymap.set({ "i", "s" }, "<C-h>", function()
-                    ls.jump(-1)
-                end, { silent = true, desc = "Jump to previous snippet node" })
-                vim.keymap.set({ "i", "s" }, "<C-l>", function()
-                    ls.jump(1)
-                end, { silent = true, desc = "Jump to next snippet node" })
-            end,
-        },
+        "L3MON4D3/LuaSnip",
         "brenoprata10/nvim-highlight-colors",
         "folke/lazydev.nvim",
     },
@@ -97,7 +68,7 @@ return {
                 draw = {
                     columns = {
                         { "label", "label_description", gap = 1 },
-                        { "kind_icon", "kind", gap = 1, "source_name" },
+                        { "kind_icon", "kind", gap = 2, "source_name" },
                     },
                     padding = { 0, 0 },
                     components = {

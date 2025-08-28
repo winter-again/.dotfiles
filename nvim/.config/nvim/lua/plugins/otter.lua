@@ -3,6 +3,6 @@ return {
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
     },
-    event = { "BufReadPost", "BufNewFile" },
-    ft = { "markdown" },
+    -- event = { "BufReadPost", "BufNewFile" },
+    -- ft = { "markdown" },
 }

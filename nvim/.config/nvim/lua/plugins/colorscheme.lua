@@ -8,7 +8,6 @@ return {
             require("winter-again").setup({
                 saturation = 0,
                 brightness = 0,
-                -- transparent = false,
                 text_styles = {
                     numbers = { italic = false },
                     floats = { italic = false },
@@ -20,14 +19,13 @@ return {
                         ["@markup.math"] = { italic = true },
                         ["QuickFixLine"] = { bold = true },
                         ["@keyword.luadoc"] = { bold = false },
-                        -- ["@markup.list.checked"] = { strikethrough = true },
-                        -- ["RenderMarkdownChecked"] = { strikethrough = false },
-                        -- ["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" },
-                        -- ["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" },
-                        -- ["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" },
-                        -- ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
-                        -- ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
-                        -- ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
+                        ["@markup.list.checked"] = { strikethrough = false },
+                        ["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" },
+                        ["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" },
+                        ["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" },
+                        ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
+                        ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
+                        ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
                         -- ["markdownH1"] = { reverse = false, underline = true },
                         -- ["markdownH2"] = { reverse = false, underline = true },
                         -- ["markdownH3"] = { reverse = false, underline = true },
@@ -111,6 +109,7 @@ return {
     },
     {
         "rebelot/kanagawa.nvim",
+        enabled = false,
         lazy = false,
         config = function()
             require("kanagawa").setup({
@@ -147,7 +146,7 @@ return {
     },
     {
         "thesimonho/kanagawa-paper.nvim",
-        enabled = false,
+        -- enabled = false,
         lazy = false,
         config = function()
             require("kanagawa-paper").setup({

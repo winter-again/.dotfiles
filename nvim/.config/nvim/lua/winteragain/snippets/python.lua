@@ -55,7 +55,6 @@ return {
     s(
         {
             trig = "def",
-            snippetType = "autosnippet",
             desc = "define function",
             docstring = {
                 "def <func>(<arg>) -> <ret>:",
@@ -63,7 +62,7 @@ return {
         },
         fmta(
             [[
-            def<func>(<arg>) ->> <ret>:
+            def <func>(<arg>) ->> <ret>:
                 <>
             ]],
             { func = i(1), arg = i(2), ret = i(3), i(4) }
@@ -137,7 +136,7 @@ return {
     ),
     s(
         {
-            trig = "with pl.Config",
+            trig = "with pl.Conf",
             snippetType = "autosnippet",
             desc = "Polars special print",
             docstring = {

@@ -1,0 +1,22 @@
+--smart-case
+# follow symlinks
+--follow
+# trim leading whitespace
+--trim
+
+# search hidden files/dirs by default
+--hidden
+# exclude some patterns
+--glob=!.git/*
+--glob=!.venv/*
+--glob=!node_modules/*
+
+# avoid long lines
+--max-columns=500
+--max-columns-preview
+
+# colors: black, blue, green, red, cyan, magenta, yellow, white
+--colors=path:fg:blue
+--colors=match:fg:red
+--colors=line:fg:green
+--colors=column:fg:yellow
