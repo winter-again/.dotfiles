@@ -6,9 +6,9 @@
 
 ; override code block query to prevent default conceal
 (fenced_code_block
-    (fenced_code_block_delimiter) @codeblock.delim
-    (info_string (language) @codeblock.lang)
-    (code_fence_content) @codeblock.inner
+  (fenced_code_block_delimiter) @codeblock.delim
+  (info_string (language) @codeblock.lang)
+  (code_fence_content) @codeblock.inner
 ) @codeblock.outer
 
 ; relink these nodes to what's described here: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#markup

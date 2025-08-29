@@ -27,7 +27,7 @@ return {
         )
     ),
     s(
-        { trig = "switch", snippetType = "autosnippet", desc = "switch statement" },
+        { trig = "switch", desc = "switch statement" },
         fmta(
             [[
             switch <> {

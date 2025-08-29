@@ -32,7 +32,6 @@ opt.tabstop = 4 -- how wide tab characters are
 opt.softtabstop = 4 -- how Tab and Backspace should operate (look and feel while editing)
 opt.shiftwidth = 4 -- number of spaces to use for autoindent
 opt.expandtab = true -- use only space characters in your files; i.e., using Tab inserts spaces
--- indentation
 opt.smartindent = true -- smart autoindenting when starting new line
 -- case insensitive searching UNLESS /C or capital in search
 opt.smartcase = true -- be smart about case when searching

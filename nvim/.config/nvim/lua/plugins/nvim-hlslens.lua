@@ -6,7 +6,7 @@ return {
             calm_down = false, -- true will clear all lens and highlighting when cursor is out of position range or any text changed
         })
 
-        local map = require("winteragain.globals").map
+        local map = require("winter-again.globals").map
         local opts = { silent = true }
         map(
             "n",

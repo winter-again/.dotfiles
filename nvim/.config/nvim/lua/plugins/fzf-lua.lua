@@ -67,13 +67,13 @@ return {
 
         fzf_lua.register_ui_select()
 
-        local map = require("winteragain.globals").map
+        local map = require("winter-again.globals").map
         local opts = { silent = true }
 
         map("n", "<leader>ff", fzf_lua.files, opts, "Search files")
         map("n", "<leader>fl", fzf_lua.buffers, opts, "Search buffers")
         map("n", "<leader>fs", function()
-            require("fzf-lua").live_grep({ exec_empty_query = true })
+            require("fzf-lua").live_grep_native({ exec_empty_query = true })
         end, opts, "Live grep")
         map("n", "<leader>/", fzf_lua.lgrep_curbuf, opts, "Find in current buffer")
 

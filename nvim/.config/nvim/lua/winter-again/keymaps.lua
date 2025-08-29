@@ -1,4 +1,4 @@
-local globals = require("winteragain.globals")
+local globals = require("winter-again.globals")
 local opts = { silent = true }
 
 globals.map({ "n", "v" }, "<Space>", "<Nop>", opts, "Unbind space to avoid potential unwanted behavior")
@@ -42,19 +42,30 @@ globals.map("x", "<leader>p", '"_dP', opts, "Paste w/o losing")
 -- vim.keymap.map({'n', 'v'}, '<leader>d', '"+d')
 -- vim.keymap.map({'n', 'v'}, '<leader>D', '"+D')
 globals.map({ "n", "v" }, "<leader>d", '"_d', opts, "Delete to black hole register")
--- replace all for the word cursor is on; just delete and start typing the replacement text
--- the search string appears at bottom
-globals.map("n", "<leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", opts, "Replace under cursor")
-globals.map("n", "+", "<C-a>", opts, "Increment")
-globals.map("n", "-", "<C-x>", opts, "Decrement")
+-- replace word under cursor for cur buf
+globals.map("n", "<leader>rs", [[:%s/<C-r><C-w>//g<Left><Left>]], opts, "Replace cursor word")
+-- globals.map("n", "+", "<C-a>", opts, "Increment")
+-- globals.map("n", "-", "<C-x>", opts, "Decrement")
 globals.map("n", "<C-a>", "gg<S-v>G", opts, "Select all")
 -- cycle through buffers
-globals.map("n", "<Tab>", "<cmd>bnext<CR>", opts, "Next buffer")
-globals.map("n", "<S-Tab>", "<cmd>bprev<CR>", opts, "Previous buffer")
+-- globals.map("n", "<Tab>", "<cmd>bnext<CR>", opts, "Next buffer")
+-- globals.map("n", "<S-Tab>", "<cmd>bprev<CR>", opts, "Previous buffer")
 globals.map("n", "<leader>bd", "<cmd>bn<CR><cmd>bd#<CR>", opts, "Delete buffer w/o closing window")
--- nav quickfix list
-globals.map("n", "]c", "<cmd>cnext<CR>zz", opts, "Next quickfixlist")
-globals.map("n", "[c", "<cmd>cprev<CR>zz", opts, "Prev quickfixlist")
+-- nav quickfix list; has wrap-around behavior
+globals.map("n", "]c", function()
+    local ok = pcall(vim.cmd, vim.v.count1 .. "cnext")
+    if not ok then
+        vim.cmd("cfirst")
+    end
+    vim.cmd("norm zz")
+end, opts, "Next quickfixlist")
+globals.map("n", "[c", function()
+    local ok = pcall(vim.cmd, vim.v.count1 .. "cprev")
+    if not ok then
+        vim.cmd("clast")
+    end
+    vim.cmd("norm zz")
+end, opts, "Prev quickfixlist")
 globals.map("n", "<leader>x", function()
     globals.save_exec_line()
 end, opts, "Save and exec current line of Lua file")

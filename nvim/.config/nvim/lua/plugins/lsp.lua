@@ -19,7 +19,7 @@ return {
         config = function()
             local methods = vim.lsp.protocol.Methods
 
-            local map = require("winteragain.globals").map
+            local map = require("winter-again.globals").map
             local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = au_group,

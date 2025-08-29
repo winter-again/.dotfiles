@@ -25,10 +25,10 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-require("winteragain.settings")
-require("winteragain.autocmds")
-require("winteragain.globals")
-require("winteragain.keymaps")
+require("winter-again.settings")
+require("winter-again.autocmds")
+require("winter-again.globals")
+require("winter-again.keymaps")
 
 local lazy_opts = {
     dev = {

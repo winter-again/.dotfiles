@@ -18,10 +18,10 @@ return {
         ls.filetype_extend("markdown", { "python", "go" })
 
         require("luasnip.loaders.from_lua").lazy_load({
-            paths = { vim.fn.stdpath("config") .. "/lua/winteragain/snippets" },
+            paths = { vim.fn.stdpath("config") .. "/lua/winter-again/snippets" },
         })
 
-        local map = require("winteragain.globals").map
+        local map = require("winter-again.globals").map
         local opts = { silent = true }
         map({ "i", "s" }, "<C-h>", function()
             ls.jump(-1)

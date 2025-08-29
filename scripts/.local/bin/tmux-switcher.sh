@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-tmux_switcher() {
+function tmux_switcher() {
     if tmux list-sessions &>/dev/null; then
         TMUX_RUNNING=1
     else
@@ -12,29 +12,6 @@ tmux_switcher() {
     # also read: https://github.com/junegunn/fzf/releases/tag/0.45.0
     # --header $'\e[1;34mHi mom\e[m' \
     if [[ "$TMUX_RUNNING" -eq 1 ]]; then
-        # selection=$(tmux list-sessions -F "#{session_name}" | \
-        #     fzf-tmux \
-        #     --layout reverse \
-        #     --no-multi \
-        #     -p 80%,60% \
-        #     --prompt=" Sessions: " \
-        #     --header $'\e[1;34m<tab>\e[m: common dirs / \e[1;34m<shift-tab>\e[m: sessions /\n\e[1;34m<ctrl-k>\e[m: kill session' \
-        #     --bind "tab:change-preview-window(hidden)+change-prompt( Common dirs: )+reload(fd . ~/Documents/Bansal-lab ~/Documents/code ~/Documents/code/nvim-dev --min-depth 1 --max-depth 1 --type d)" \
-        #     --bind "shift-tab:preview(~/.local/bin/tmux-switcher-preview.sh {})+change-prompt( Sessions)+reload(tmux list-sessions -F '#{session_name}')" \
-        #     --bind "ctrl-k:execute(tmux kill-session -t {})+reload(tmux list-sessions -F '#{session_name}')" \
-        #     --preview "$HOME/.local/bin/tmux-switcher-preview.sh {}" \
-        #     --preview-window "right:65%" \
-        #     --preview-window "border-left" \
-        #     --preview-label "Currently active pane" \
-        #     --border rounded \
-        #     --no-separator \
-        #     --color=fg:#c0caf5,bg:-1,hl:underline:#9d7cd8 \
-        #     --color=fg+:#c0caf5,bg+:#283457,hl+:underline:#7dcfff \
-        #     --color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5 \
-        #     --color=marker:#9ece6a,spinner:#9ece6a \
-        #     --color=gutter:-1,border:#7aa2f7,header:-1 \
-        #     --color=preview-fg:#c0caf5,preview-bg:-1
-        # )
         selection=$(tmux list-sessions -F "#{session_name}" | \
             fzf-tmux \
             --layout reverse \

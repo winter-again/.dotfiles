@@ -137,7 +137,7 @@ return {
         })
 
         local fzf_lua = require("fzf-lua")
-        local map = require("winteragain.globals").map
+        local map = require("winter-again.globals").map
         local opts = { silent = true }
         local notes_dir = "~/Documents/notebook"
 

@@ -89,10 +89,10 @@ export PATH
 # -a = show hidden files
 alias ls="eza -a --icons --color=always --group-directories-first"
 alias ll="eza -lahM --icons --color=always --group-directories-first"
-alias cp="cp -i"
-alias mv="mv -i"
+alias cp="cp -vi"
+alias mv="mv -vi"
 alias rm="rm -i"
-alias tree="eza -la --no-permissions --tree --level=2 -I .git -I .venv -I node_modules"
+alias tree="eza -la --no-permissions --tree --level=2 --ignore-glob='.git|.venv|node_modules'"
 alias open="xdg-open"
 alias grep="grep --color=auto"
 alias tv="tidy-viewer"
@@ -169,7 +169,6 @@ function umntbk() {
     # udisksctl unmount -b "$drive" && notify-send "Unmounted backup drive:" "$drive"
 }
 
-source <(fzf --zsh) # fzf key bindings and fuzzy completion
 # + = current line
 # info = match counters
 export FZF_DEFAULT_OPTS="--no-separator
@@ -182,38 +181,38 @@ export FZF_DEFAULT_OPTS="--no-separator
     --color=preview-fg:#cacaca,preview-bg:-1"
 # use fd, follow symlinks, include hidden files, respect .gitignore
 export FZF_DEFAULT_COMMAND="fd --type file --follow --strip-cwd-prefix --hidden --exclude .git"
-export FZF_CTRL_T_COMMAND="" # disable to replace with Alt-c func.
 # fuzzy find command history
 export FZF_CTRL_R_OPTS="
     --bind 'ctrl-h:execute-silent(echo -n {2..} | wl-copy --trim-newline)+abort'
     --header '<ctrl-h> to copy command to clipboard'"
-export FZF_ALT_C_COMMAND="" # disable
+export FZF_CTRL_T_COMMAND="" # disable; don't disable FZF_ALT_C_COMMAND
 # these will apply to Ctrl-t after rebind
 export FZF_ALT_C_OPTS="
     --walker-skip .git,.venv,node_modules
     --prompt=' Directory: '
     --preview 'eza -la --no-permissions --icons --color=always --tree --level=3 {}'
     --preview-border sharp"
-# copy of fzf's cd cmd but with simpler output after cd
+# copy of fzf's cd cmd but with cleaner cd output
 function fzf-cd-widget() {
     setopt localoptions pipefail no_aliases 2> /dev/null
     local dir="$(
-        FZF_DEFAULT_COMMAND=${FZF_ALT_C_COMMAND:-} \
-        FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse --walker=dir,follow,hidden --scheme=path" "${FZF_ALT_C_OPTS-} +m") \
-        FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd) < /dev/tty)"
+    FZF_DEFAULT_COMMAND=${FZF_ALT_C_COMMAND:-} \
+    FZF_DEFAULT_OPTS=$(__fzf_defaults "--reverse --walker=dir,follow,hidden --scheme=path" "${FZF_ALT_C_OPTS-} +m") \
+    FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd) < /dev/tty)"
     if [[ -z "$dir" ]]; then
         zle redisplay
         return 0
     fi
     zle push-line # Clear buffer. Auto-restored on next prompt.
-    BUFFER="cd ${(q)dir:a}" # less verbose ver.
+    BUFFER="cd ${(q)dir:a}"
+    # BUFFER="builtin cd -- ${(q)dir:a}"
     zle accept-line
-    builtin cd -- ${(q)dir:a} >/dev/null
     local ret=$?
     unset dir # ensure this doesn't end up appearing in prompt expansion
     zle reset-prompt
     return $ret
 }
+source <(fzf --zsh) # fzf key bindings and fuzzy completion; should come after vi binds?
 bindkey "\C-t" fzf-cd-widget # replace Ctrl-t with functionality of Alt-c (search dir and cd)
 
 # fix uv run autocomplete for py files: https://github.com/astral-sh/uv/issues/8432
