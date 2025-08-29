@@ -1,6 +1,6 @@
 return {
     {
-        "echasnovski/mini.surround",
+        "nvim-mini/mini.surround",
         version = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()
@@ -21,7 +21,7 @@ return {
         end,
     },
     {
-        "echasnovski/mini.splitjoin",
+        "nvim-mini/mini.splitjoin",
         version = false,
         event = { "BufReadPost", "BufNewFile" },
         config = function()

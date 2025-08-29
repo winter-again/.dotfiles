@@ -16,23 +16,11 @@ function M.set_bg(bg_name)
     return profile_data.background[bg_key].background
 end
 
--- TODO: can make this accept the attributes table and pass on to wezterm.font()?
--- so that we can specify font and font size together in a single table
--- in profile_data.lua? is it even worth it?
-
 ---@param font_alias string
 ---@return table, number
-function M.set_font_properties(font_alias)
-    local font
-    local font_size
-    for k, v in pairs(profile_data.font) do
-        if k == font_alias then
-            font = v.font
-            font_size = v.font_size
-            break
-        end
-    end
-    return wezterm.font(font), font_size
+function M.set_font(font_alias)
+    local font_choice = profile_data.font[font_alias]
+    return wezterm.font(font_choice.font), font_choice.font_size
 end
 
 ---@param config table

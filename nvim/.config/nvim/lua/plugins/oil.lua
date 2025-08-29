@@ -53,7 +53,7 @@ return {
 
         local map = require("winteragain.globals").map
 
-        map("n", "<leader>pv", require("oil").toggle_float, { silent = true }, "Open Oil in floating window")
+        map("n", "<leader>e", require("oil").toggle_float, { silent = true }, "Toggle Oil")
 
         -- BUG: can't move, can only copy if preview open
         -- auto open preview on cursor hover
