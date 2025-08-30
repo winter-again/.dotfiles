@@ -8,6 +8,9 @@ return {
             lua = { "selene" },
             markdown = { "markdownlint-cli2" },
             sh = { "shellcheck" },
+            -- installed via uv tool interface but nvim-lint can find b/c it's in ~/.local/bin
+            -- can also activate via LSP interface
+            sql = { "sqruff" },
             typescript = { "eslint" },
             typescriptreact = { "eslint" },
         }

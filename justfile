@@ -17,6 +17,7 @@ stow:
     stow swappy
     stow sway
     stow taskwarrior
+    stow taplo
     stow tidy-viewer
     stow tmux
     stow tofi

@@ -37,7 +37,7 @@ setup_and_switch_user() {
     sed -i "/%wheel ALL=(ALL:ALL) ALL/s/^# //g" /etc/sudoers
     # equiv?
     # echo "%wheel ALL=(ALL:ALL) ALL" | EDITOR="tee -a" visudo
-    
+
     echo "Switching to user '$USER'"
     su -l "$USER"
 }
@@ -45,7 +45,7 @@ setup_and_switch_user() {
 echo "Make sure to verify boot mode and connect to internet"
 read -r -p "Are you ready to begin? (y/n): " confirm && [[ $confirm = [yY] ]]
 
-echo "Checking internet connection..." 
+echo "Checking internet connection..."
 ping -c 3 archlinux.org || (echo "Not connected to internet" && exit 1)
 
 echo "Configuring timesyncd..."
@@ -60,8 +60,8 @@ sleep 4
 
 echo "Configuring hostname..."
 read -r -p "Enter hostname: " HOSTNAME
-echo "$HOSTNAME" > /etc/hostname
-cat <<EOF > /etc/hosts
+echo "$HOSTNAME" >/etc/hostname
+cat <<EOF >/etc/hosts
 127.0.0.1    localhost
 ::1          localhost
 127.0.1.1    $HOSTNAME
@@ -76,7 +76,7 @@ sed -i "s/^#\{0,1\}HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=
 sed -i "s/^#\{0,1\}HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore" /etc/systemd/logind.conf
 
 echo "Disabling wake on lid open..."
-cat <<EOF > /etc/systemd/system/toggle-lid-wakeup.service
+cat <<EOF >/etc/systemd/system/toggle-lid-wakeup.service
 [Unit]
 Description="Disable LID0 wake from suspend trigger"
 
@@ -102,7 +102,7 @@ pacman -Syu
 echo "Installing and configuring reflector. Activating reflector.timer..."
 pacman_pkg reflector
 systemctl enable --now reflector.timer
-cat <<EOF > /etc/xdg/reflector/reflector.conf
+cat <<EOF >/etc/xdg/reflector/reflector.conf
 --save /etc/pacman.d/mirrorlist
 --protocol https
 --country "United States"
@@ -167,7 +167,7 @@ setup_and_switch_user
 
 # XDG user dirs
 pacman_pkg xdg-user-dirs xdg-utils
-xdg-user-dirs-update 
+xdg-user-dirs-update
 
 # TODO: not sure if can use this part since requires GUI for Firefox
 # echo "Setting up GitHub SSH key..."
@@ -428,7 +428,7 @@ base_pacstrap_pkgs=(
 partition_disk() {
     echo "Formatting disk."
     echo "This will create an EFI partition of size $EFI_PART and Linux file system for the remainder"
-    read -r -p "Are you sure? (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1 
+    read -r -p "Are you sure? (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1
     # destroy GPT and MBR data structures before repartitioning
     sgdisk -Z "$SYS_DISK"
     # -n = create new partition with format partnum:start:end
@@ -460,7 +460,7 @@ format_mount_partitions() {
     cryptsetup close root
     cryptsetup open "$ROOT_PART" root
     mount /dev/mapper/root /mnt
-    
+
     echo "Formatting EFI partition ($EFI_PART) as FAT32..."
     mkfs.fat -F 32 "$EFI_PART" &>/dev/null
     mount --mkdir "$EFI_PART" /mnt/boot

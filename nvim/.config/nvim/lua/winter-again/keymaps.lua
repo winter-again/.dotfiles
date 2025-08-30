@@ -77,3 +77,9 @@ globals.map("n", "<leader>ls", function()
     require("persistence").load()
 end, opts, "Load session for dir") -- session for current dir and current branch
 -- map('t', '<esc><esc>', '<c-\\><c-n>', opts, 'Escape terminal mode') -- conflicts with fzf-lua
+globals.map("n", "gs", function()
+    vim.diagnostic.open_float({ scope = "cursor" })
+end, opts, "Get cursor diagnostics")
+globals.map("n", "gl", function()
+    vim.diagnostic.open_float({ scope = "line" })
+end, opts, "Get line diagnostics")
