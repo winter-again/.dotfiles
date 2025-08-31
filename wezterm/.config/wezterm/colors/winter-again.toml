@@ -1,0 +1,33 @@
+[colors]
+foreground = "#f0f0f0"
+background = "#0f0f0f"
+# removing this prevents covering char under cursor with the fg color
+# cursor_fg = "#f0f0f0"
+cursor_bg = "#f0f0f0"
+cursor_border = "#f0f0f0"
+# selection_fg = ""
+# selection_bg = ""
+split = "#4c4c4c"
+ansi = [
+    "#0f0f0f", # black
+    "#b36d7c", # red
+    "#778c73", # green
+    "#aca98a", # yellow
+    "#8f8aac", # blue
+    "#ac8aac", # purple 
+    "#8aabac", # cyan
+    "#f0f0f0", # white
+]
+brights = [
+    "#4c4c4c", # black
+    "#c48282", # red
+    "#8aac8b", # green
+    "#c4c19e", # yello
+    "#a39ec4", # blue
+    "#c49ec4", # purpl
+    "#9ec3c4", # cyan
+    "#f0f0f0", # white
+]
+
+[metadata]
+name = "winter-again"

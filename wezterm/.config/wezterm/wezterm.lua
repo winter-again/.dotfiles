@@ -14,7 +14,7 @@ if wezterm.config_builder then
     config = wezterm.config_builder() -- allows better logging of warnings and errors
 end
 
-config.color_scheme = "Mountain"
+config.color_scheme = "winter-again"
 config.background = require("bg").set_bg()
 config.font, config.font_size = utils.set_font("Iosevka")
 config.cursor_blink_rate = 0
