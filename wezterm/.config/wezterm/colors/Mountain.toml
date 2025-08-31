@@ -13,7 +13,7 @@ ansi = [
     "#aca98a",
     "#8f8aac",
     "#ac8aac",
-    "#7e97ab",
+    "#8aabac",
     "#f0f0f0",
 ]
 brights = [
@@ -23,6 +23,6 @@ brights = [
     "#c4c19e",
     "#a39ec4",
     "#c49ec4",
-    "#8a98ac",
+    "#9ec3c4",
     "#f0f0f0",
 ]

@@ -1,4 +1,4 @@
-stow:
+default:
     stow --no-folding desktop
     stow bat
     stow ghostty
