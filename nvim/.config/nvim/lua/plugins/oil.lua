@@ -3,33 +3,56 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     even = "VimEnter",
     config = function()
+        local permission_hlgroups = {
+            ["-"] = "Comment",
+            ["r"] = "DiagnosticSignWarn",
+            ["w"] = "DiagnosticSignError",
+            ["x"] = "DiagnosticSignOk",
+        }
         require("oil").setup({
             default_file_explorer = false,
             delete_to_trash = true,
-            columns = { "icon" },
+            columns = {
+                {
+                    "permissions",
+                    highlight = function(permission_str)
+                        local hls = {}
+                        for i = 1, #permission_str do
+                            local char = permission_str:sub(i, i)
+                            table.insert(hls, { permission_hlgroups[char], i - 1, i })
+                        end
+                        return hls
+                    end,
+                },
+                -- custom hl groups
+                { "size", highlight = "OilSize" },
+                { "mtime", highlight = "OilModTime" },
+                { "icon", add_padding = false },
+            },
+            constrain_cursor = "name",
             use_default_keymaps = false,
             keymaps = {
+                ["g?"] = { "actions.show_help", mode = "n" },
                 ["<CR>"] = "actions.select",
                 ["-"] = { "actions.parent", mode = "n" },
                 ["_"] = { "actions.open_cwd", mode = "n" },
                 ["g."] = { "actions.toggle_hidden", mode = "n" },
                 ["<C-p>"] = "actions.preview",
+                ["<C-c>"] = { "actions.close", mode = "n" },
             },
             view_options = {
                 show_hidden = true,
             },
             float = {
                 padding = 0,
-                -- max_width = 50,
                 max_height = 16,
-                border = "none",
+                border = "solid",
                 -- win_options = { winblend = 20 },
                 preview_split = "right",
                 override = function(conf)
                     conf.relative = "editor"
                     conf.row = 200
                     conf.col = 0
-
                     return conf
                 end,
             },

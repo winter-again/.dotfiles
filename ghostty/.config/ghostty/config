@@ -14,6 +14,9 @@ shell-integration-features = false
 
 keybind = ctrl+y>r=reload_config
 
+working-directory = home
+window-inherit-working-directory = false
+
 foreground = #f0f0f0
 background = #0f0f0f
 cursor-color = #f0f0f0
@@ -22,21 +25,21 @@ cursor-text = #0f0f0f
 # selection-foreground = #c0af8c
 
 # base
-palette = 0=#262626
-palette = 1=#ac8a8c
-palette = 2=#8aac8b
+palette = 0=#0f0f0f
+palette = 1=#b36d7c
+palette = 2=#778c73
 palette = 3=#aca98a
 palette = 4=#8f8aac
 palette = 5=#ac8aac
-palette = 6=#8aabac
-palette = 7=#e7e7e7
+palette = 6=#7e97ab
+palette = 7=#f0f0f0
 
 # bright
 palette = 8=#4c4c4c
-palette = 9=#c49ea0
-palette = 10=#9ec49f
+palette = 9=#c48282
+palette = 10=#8aac8b
 palette = 11=#c4c19e
 palette = 12=#a39ec4
 palette = 13=#c49ec4
-palette = 14=#9ec3c4
-palette = 15=#f5f5f5
+palette = 14=#a5b4cb
+palette = 15=#f0f0f0

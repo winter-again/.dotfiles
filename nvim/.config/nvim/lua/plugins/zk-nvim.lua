@@ -101,6 +101,7 @@ return {
                 vim.ui.select(choices, {
                     prompt = "Template: ",
                 }, function(choice)
+                    -- TODO: figure out how to create notes even from outside of notebook dir
                     if choice == "default" or choice == "def" then
                         zk_cmd.get("ZkNew")({
                             title = title,

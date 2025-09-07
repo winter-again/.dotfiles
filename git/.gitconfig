@@ -4,7 +4,21 @@
 [core]
     editor = nvim
     pager = less
+    ; pager = delta
     autocrlf = input ; replace CRLF with LF when writing, but read as-is
+
+; [interactive]
+;     diffFilter = delta --color-only
+; [delta]
+;     navigate = true
+;     syntax-theme = base16-256
+;     line-numbers = true
+;     hyperlinks = true
+; [merge]
+;     conflictStyle = zdiff3
+; [diff]
+;     colorMoved = default ; detect moved blocks of code
+
 [init]
     defaultBranch = main
 [pull]

@@ -116,7 +116,31 @@ return {
         )
     ),
     s(
-        { trig = ".filter", desc = "Polars multi-condition filter" },
+        { trig = "arg", desc = "argparse boilerplate" },
+        fmta(
+            [[
+            import argparse
+            from collections.abc import Sequence
+
+
+            def main(argv: Sequence[str] | None = None) ->> int:
+                parser = argparse.ArgumentParser()
+                parser.add_argument("-<arg_short>", "--<arg_long>")
+
+                args = parser.parse_args(argv)
+                print(vars(args))
+
+                return 0
+
+
+            if __name__ == "__main__":
+                raise SystemExit(main())
+            ]],
+            { arg_short = i(1, "arg-short"), arg_long = i(2, "arg-long") }
+        )
+    ),
+    s(
+        { trig = "filter", desc = "Polars multi-condition filter" },
         fmta(
             [[
             .filter(
@@ -128,7 +152,7 @@ return {
         )
     ),
     s(
-        { trig = ".when", snippetType = "autosnippet", desc = "Polars when, then, otherwise construct" },
+        { trig = "when", desc = "Polars when, then, otherwise construct" },
         fmta(
             " .when(pl.col(<col1>) <cond>).then(pl.col(<col2>) <out>).otherwise(pl.col(<otherwise>))",
             { col1 = i(1), cond = i(2), col2 = i(3), out = i(4), otherwise = i(5) }

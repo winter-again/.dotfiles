@@ -10,7 +10,7 @@
 /****************************************************************************
  * Betterfox                                                                *
  * "Ad meliora"                                                             *
- * version: 138                                                             *
+ * version: 142                                                             *
  * url: https://github.com/yokoffing/Betterfox                              *
 ****************************************************************************/
 
@@ -54,7 +54,6 @@ user_pref("browser.urlbar.speculativeConnect.enabled", false);
 user_pref("browser.places.speculativeConnect.enabled", false);
 user_pref("network.prefetch-next", false);
 user_pref("network.predictor.enabled", false);
-user_pref("network.predictor.enable-prefetch", false);
 
 /** EXPERIMENTAL ***/
 user_pref("layout.css.grid-template-masonry-value.enabled", true);
@@ -64,6 +63,8 @@ user_pref("layout.css.grid-template-masonry-value.enabled", true);
 ****************************************************************************/
 /** TRACKING PROTECTION ***/
 user_pref("browser.contentblocking.category", "strict");
+user_pref("privacy.trackingprotection.allow_list.baseline.enabled", true);
+user_pref("privacy.trackingprotection.allow_list.convenience.enabled", true);
 user_pref("browser.download.start_downloads_in_tmp_dir", true);
 user_pref("browser.helperApps.deleteTempFileOnExit", true);
 user_pref("browser.uitour.enabled", false);
@@ -72,6 +73,7 @@ user_pref("privacy.globalprivacycontrol.enabled", true);
 /** OCSP & CERTS / HPKP ***/
 user_pref("security.OCSP.enabled", 0);
 user_pref("security.pki.crlite_mode", 2);
+user_pref("security.csp.reporting.enabled", false);
 
 /** SSL / TLS ***/
 user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
@@ -90,7 +92,6 @@ user_pref("privacy.history.custom", true);
 user_pref("browser.urlbar.trimHttps", true);
 user_pref("browser.urlbar.untrimOnUserInteraction.featureGate", true);
 user_pref("browser.search.separatePrivateDefault.ui.enabled", true);
-user_pref("browser.urlbar.update2.engineAliasRefresh", true);
 user_pref("browser.search.suggest.enabled", false);
 user_pref("browser.urlbar.quicksuggest.enabled", false);
 user_pref("browser.urlbar.groupLabels.enabled", false);
@@ -176,21 +177,24 @@ user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.privateWindowSeparation.enabled", false); // WINDOWS
 
+/** AI ***/
+user_pref("browser.ml.enable", false);
+user_pref("browser.ml.chat.enabled", false);
+
 /** FULLSCREEN NOTICE ***/
 user_pref("full-screen-api.transition-duration.enter", "0 0");
 user_pref("full-screen-api.transition-duration.leave", "0 0");
 user_pref("full-screen-api.warning.timeout", 0);
 
 /** URL BAR ***/
-user_pref("browser.urlbar.unitConversion.enabled", true);
 user_pref("browser.urlbar.trending.featureGate", false);
-user_pref("dom.text_fragments.create_text_fragment.enabled", true);
 
 /** NEW TAB PAGE ***/
 user_pref("browser.newtabpage.activity-stream.default.sites", "");
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
+user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false);
 
 /** POCKET ***/
 user_pref("extensions.pocket.enabled", false);
@@ -209,7 +213,7 @@ user_pref("layout.word_select.eat_space_to_next_word", false);
 
 /****************************************************************************
  * START: MY OVERRIDES                                                      *
- ****************************************************************************/
+****************************************************************************/
 // visit https://github.com/yokoffing/Betterfox/wiki/Common-Overrides
 // visit https://github.com/yokoffing/Betterfox/wiki/Optional-Hardening
 // Enter your personal overrides below this line:
@@ -316,12 +320,6 @@ user_pref("browser.sessionstore.privacy_level", 2);
 user_pref("security.ssl.require_safe_negotiation", true);
 
 /****************************************************************************/
-// disable chatbot
-user_pref("browser.ml.chat.enabled", false);
-user_pref("browser.ml.chat.sidebar", false);
-// user_pref("browser.ml.chat.hideFromLabs", true);
-// user_pref("browser.ml.chat.hideLabsShortcuts", true);
-
 // NOT PRIVACY RELATED:
 
 // sidebar
@@ -367,27 +365,18 @@ user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
 
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *
- ****************************************************************************/
+****************************************************************************/
 // visit https://github.com/yokoffing/Betterfox/blob/main/Smoothfox.js
 // Enter your scrolling overrides below this line:
-// only use one at a time
 
-// only sharpen scrolling
-// user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
-// user_pref("general.smoothScroll", true); // DEFAULT
-// user_pref("mousewheel.min_line_scroll_amount", 10); // 10-40; adjust this number to your liking; default=5
-// user_pref("general.smoothScroll.mouseWheel.durationMinMS", 80); // default=50
-// user_pref("general.smoothScroll.currentVelocityWeighting", "0.15"); // default=.25
-// user_pref("general.smoothScroll.stopDecelerationWeighting", "0.6"); // default=.4
-
+/****************************************************************************************
+ * OPTION: INSTANT SCROLLING (SIMPLE ADJUSTMENT)                                       *
+****************************************************************************************/
 // recommended for 60hz+ displays
 user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
 user_pref("general.smoothScroll", true); // DEFAULT
 user_pref("mousewheel.default.delta_multiplier_y", 275); // 250-400; adjust this number to your liking
-// Firefox Nightly only:
-// [1] https://bugzilla.mozilla.org/show_bug.cgi?id=1846935
-// user_pref("general.smoothScroll.msdPhysics.enabled", false); // [FF122+ Nightly]
 
 /****************************************************************************
  * END: BETTERFOX                                                           *
- ****************************************************************************/
+****************************************************************************/

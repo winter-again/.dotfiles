@@ -5,7 +5,7 @@ local fmta = require("luasnip.extras.fmt").fmta
 
 return {
     s(
-        { trig = "iferr", desc = "Handle error" },
+        { trig = "iferr", snippetType = "autosnippet", desc = "Handle error" },
         fmta(
             [[
             if err != nil {

@@ -114,6 +114,9 @@ return {
         },
         sources = {
             default = { "lsp", "path", "snippets", "buffer", "lazydev" },
+            per_filetype = {
+                org = { "orgmode" },
+            },
             providers = {
                 lsp = {
                     name = "LSP",
@@ -144,6 +147,11 @@ return {
                     name = "nvim",
                     module = "lazydev.integrations.blink",
                     score_offset = 100,
+                },
+                orgmode = {
+                    name = "org",
+                    module = "orgmode.org.autocompletion.blink",
+                    fallbacks = { "buffer" },
                 },
             },
         },

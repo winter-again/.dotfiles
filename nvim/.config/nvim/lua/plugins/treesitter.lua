@@ -12,6 +12,7 @@ local parsers = {
     },
     "astro",
     "bash",
+    "commonlisp",
     "css",
     "csv",
     "desktop",
@@ -79,8 +80,11 @@ return {
                 callback = function(event)
                     local filetype = event.match
                     local lang = vim.treesitter.language.get_lang(filetype) -- returns filetype if nothing registered
+                    local disabled = {
+                        "org",
+                    }
                     --- @diagnostic disable: param-type-mismatch
-                    if vim.treesitter.language.add(lang) then
+                    if not vim.tbl_contains(disabled, lang) and vim.treesitter.language.add(lang) then
                         local bufnr = event.buf
                         vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
                         vim.treesitter.start(bufnr, lang)
