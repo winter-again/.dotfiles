@@ -141,12 +141,12 @@
     },
     "battery": {
         "bat": "BAT0",
-        "design-capacity": true, // false = actual capacity could be lower if limit is set
-        "full-at": 80, // battery is capped at 80%
+        "design-capacity": true, // true = relative to real capacity; false = relative to orig. capacity
+        "full-at": 80, // define real max percentage; may be useful if design-capacity = false -> would be treated as the upper limit
         "interval": 60,
         "states": {
-            "warning": 30,
-            "critical": 15
+            "warning": 20,
+            "critical": 10
         },
         "format": "{icon} {capacity}%",
         "format-time": "{H}:{m}",
@@ -160,8 +160,7 @@
             "󰂀",
             "󰁹"
         ],
-        "tooltip-format": "time: {timeTo}", // essentially battery status
-        "tooltip-format-full": "power: {power}W, health: {health}%"
+        "tooltip-format": "time: {timeTo}, health: {health}%" // timeTo = either est. of time until full/empty or the status
     },
     "tray": {
         "icon-size": 14,

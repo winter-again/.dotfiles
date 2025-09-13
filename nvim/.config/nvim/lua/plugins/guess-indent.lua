@@ -3,8 +3,7 @@ return {
     config = function()
         require("guess-indent").setup({
             filetype_exclude = {
-                "markdown",
-                "org",
+                -- "markdown",
             },
         })
     end,

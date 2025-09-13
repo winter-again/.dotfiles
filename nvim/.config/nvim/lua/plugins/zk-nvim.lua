@@ -1,6 +1,7 @@
 return {
     "zk-org/zk-nvim",
     lazy = true,
+    enabled = false,
     event = {
         "BufReadPre " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
         "BufNewFile " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",

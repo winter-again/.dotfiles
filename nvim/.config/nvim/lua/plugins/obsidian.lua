@@ -1,151 +1,171 @@
 return {
-    "epwalsh/obsidian.nvim",
-    enabled = false,
+    "obsidian-nvim/obsidian.nvim",
     version = "*", -- latest release
-    dependencies = {
-        "nvim-lua/plenary.nvim",
+    keys = {
+        "<leader>nn",
+        "<leader>fn",
+        "<leader>ns",
+        "<leader>nt",
+        "<leader>nl",
+        "<leader>nb",
     },
-    lazy = true,
     event = {
         "BufReadPre " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
         "BufNewFile " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
     },
     config = function()
         require("obsidian").setup({
+            legacy_commands = false,
             workspaces = {
                 {
-                    name = "notes",
                     path = "~/Documents/notebook",
                 },
             },
+            notes_subdir = "notes",
+            -- NOTE: set higher thresh because of frontmatter validation
+            -- warning for template files; claims {{title}} is invalid value
+            log_level = vim.log.levels.ERROR,
+            new_notes_location = "notes_subdir",
             completion = {
-                nvim_cmp = true,
+                nvim_cmp = false,
+                blink = true,
                 min_chars = 2,
+                create_new = false,
             },
-            mappings = {
-                -- overrides the gf mapping to work on markdown/wiki links within vault
-                -- TODO: use own fzf-lua funcs if colors are broken?
-                -- ["gf"] = {
-                --     action = function()
-                --         return require("obsidian").util.gf_passthrough()
-                --     end,
-                --     opts = { noremap = false, expr = true, buffer = true },
-                -- },
-                -- ["<leader>fn"] = {
-                --     action = function()
-                --         vim.cmd("ObsidianQuickSwitch")
-                --     end,
-                --     opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by title" },
-                -- },
-                -- ["<leader>fs"] = {
-                --     action = function()
-                --         vim.cmd("ObsidianSearch")
-                --     end,
-                --     opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by content" },
-                -- },
-                ["<leader>ft"] = {
-                    action = function()
-                        vim.cmd("ObsidianTags")
-                    end,
-                    opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by tag" },
-                },
-                ["<leader>nl"] = {
-                    action = function()
-                        vim.cmd("ObsidianLinks")
-                    end,
-                    opts = { silent = true, noremap = true, buffer = true, desc = "Search buffer links" },
-                },
-                ["<leader>nb"] = {
-                    action = function()
-                        vim.cmd("ObsidianBacklinks")
-                    end,
-                    opts = { silent = true, noremap = true, buffer = true, desc = "Search buffer backlinks" },
-                },
-                ["<leader>nt"] = {
-                    action = function()
-                        vim.cmd("ObsidianTemplate")
-                    end,
-                    opts = { silent = true, noremap = true, buffer = true, desc = "Insert template into current note" },
-                },
-            },
-            new_notes_location = "current_dir",
-            -- NOTE: just use the note name for the title
+            -- NOTE: use note title for file name
             note_id_func = function(title)
-                if title ~= nil then
-                    return title:gsub(" ", "-")
-                else
-                    print("Must provide a title")
-                end
+                -- local suffix = ""
+                -- if title ~= nil then
+                --     -- If title is given, transform it into valid file name.
+                --     suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+                -- else
+                --     -- If title is nil, just add 4 random uppercase letters to the suffix.
+                --     for _ = 1, 4 do
+                --         suffix = suffix .. string.char(math.random(65, 90))
+                --     end
+                -- end
+                -- return tostring(os.time()) .. "-" .. suffix
+
+                -- if title ~= nil then
+                --     return title:gsub(" ", "-")
+                -- else
+                --     print("Must provide a title")
+                -- end
+                return title:gsub(" ", "-")
             end,
-            wiki_link_func = "prepend_note_path",
+            -- NOTE: default func
             markdown_link_func = function(opts)
                 return require("obsidian.util").markdown_link(opts)
             end,
             preferred_link_style = "markdown", -- still able to autocomplete both types
-            -- TODO: there might be a bug when true where ObsidianNewFromTemplate doesn't insert
-            -- frontmatter; also don't like the autoformatting right now
             disable_frontmatter = true,
+            -- TODO: note_frontmatter_func()?
             templates = {
                 folder = "templates",
                 date_format = "%Y-%m-%d",
                 time_format = "%I:%M %m",
-                -- map of custom variables
-                substitutions = {},
+                substitutions = {
+                    -- NOTE: convert title like "notes-on-something" to "Notes on something"
+                    note_title = function(ctx)
+                        local id = ctx.partial_note.id
+                        return id:gsub("-", " "):gsub("^%l", string.upper)
+                    end,
+                },
+                customizations = {
+                    ["meeting-templ"] = {
+                        notes_subdir = "meetings",
+                        note_id_func = function(title)
+                            local today = os.date("%Y-%m-%d")
+                            title = title:gsub(" ", "-")
+                            return string.format("%s-%s", today, title)
+                        end,
+                    },
+                },
             },
-            follow_url_func = function(url)
-                vim.fn.jobstart({ "xdg-open", url })
-            end,
+            -- TODO: already default?
+            -- there's also follow_img_func
+            -- follow_url_func = function(url)
+            --     vim.ui.open(url)
+            -- end,
             picker = {
                 name = "fzf-lua",
             },
+            -- TODO: figure out behavior of this
+            -- I think this pertains to :ObsidianBacklinks func
+            backlinks = {
+                parse_headers = false, -- get from whole note?
+            },
             sort_by = "modified",
             sort_reversed = true,
+            search_max_lines = 1000,
+            open_notes_in = "current",
             ui = {
                 enable = false, -- set to false to disable all additional syntax features
-                update_debounce = 200, -- update delay after a text change (in milliseconds)
-                max_file_length = 5000,
-                checkboxes = {
-                    -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-                    -- [" "] = { char = "󰄱", hl_group = "@markup.list" },
-                    -- ["x"] = { char = "", hl_group = "@markup.list.checked" },
-                    -- [">"] = { char = "", hl_group = "ObsidianRightArrow" },
-                    -- ["~"] = { char = "󰰱", hl_group = "ObsidianTilde" },
-                },
+                -- ignore_conceal_warn = true, -- set to true to disable conceallevel specific warning
+                -- update_debounce = 200, -- update delay after a text change (in milliseconds)
+                -- max_file_length = 5000, -- disable UI features for files with more than this many lines
+                -- Define how various check-boxes are displayed
+                -- checkboxes = {
+                --     -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
+                --     [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+                --     ["x"] = { char = "", hl_group = "ObsidianDone" },
+                -- },
+                -- Use bullet marks for non-checkbox lists.
                 -- bullets = { char = "•", hl_group = "ObsidianBullet" },
-                bullets = {}, -- set empty to disable
                 -- external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
-                external_link_icon = {},
+                -- Replace the above with this if you don't have a patched font:
+                -- external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
                 -- reference_text = { hl_group = "ObsidianRefText" },
                 -- highlight_text = { hl_group = "ObsidianHighlightText" },
                 -- tags = { hl_group = "ObsidianTag" },
                 -- block_ids = { hl_group = "ObsidianBlockID" },
-                hl_groups = {
-                    -- The options are passed directly to `vim.api.nvim_set_hl()`. See `:help nvim_set_hl`.
-                    -- ObsidianTodo = { bold = true, fg = "#7aa2f7" },
-                    -- ObsidianDone = { bold = true, fg = "none" },
-                    -- ObsidianRightArrow = { bold = true, fg = "#c0caf5" },
-                    -- ObsidianTilde = { bold = true, fg = "#c0caf5" },
-                    -- ObsidianRefText = { fg = "#c0caf5", underline = true },
-                    -- ObsidianExtLinkIcon = { fg = "#7aa2f7" },
-                    -- ObsidianTag = { fg = "#7aa2f7" },
-                    -- ObsidianHighlightText = { bg = "#9ece6a" },
-                },
+                -- hl_groups = {
+                --     -- The options are passed directly to `vim.api.nvim_set_hl()`. See `:help nvim_set_hl`.
+                --     ObsidianTodo = { bold = true, fg = "#f78c6c" },
+                --     ObsidianDone = { bold = true, fg = "#89ddff" },
+                --     ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
+                --     ObsidianTilde = { bold = true, fg = "#ff5370" },
+                --     ObsidianImportant = { bold = true, fg = "#d73128" },
+                --     ObsidianBullet = { bold = true, fg = "#89ddff" },
+                --     ObsidianRefText = { underline = true, fg = "#c792ea" },
+                --     ObsidianExtLinkIcon = { fg = "#c792ea" },
+                --     ObsidianTag = { italic = true, fg = "#89ddff" },
+                --     ObsidianBlockID = { italic = true, fg = "#89ddff" },
+                --     ObsidianHighlightText = { bg = "#75662e" },
+                -- },
             },
-            attachments = {
-                img_folder = "assets",
+            -- TODO: figure this out
+            -- attachments = {
+            --     img_folder = "assets",
+            -- },
+            footer = {
+                enabled = false,
             },
         })
 
-        local fzf_lua = require("fzf-lua")
         local map = require("winter-again.globals").map
         local opts = { silent = true }
-        local notes_dir = "~/Documents/notebook"
 
+        map("n", "<leader>nn", function()
+            vim.cmd("Obsidian new_from_template")
+        end, opts, "Create new note with template")
         map("n", "<leader>fn", function()
-            fzf_lua.files({ cwd = notes_dir, fd_opts = "--color=never --type f -e md --hidden --follow" })
-        end, opts, "Search notes")
+            vim.cmd("Obsidian quick_switch")
+        end, opts, "Search notes by title")
         map("n", "<leader>ns", function()
-            fzf_lua.live_grep({ cwd = notes_dir, exec_empty_query = true })
-        end, opts, "Live grep notes")
+            vim.cmd("Obsidian search")
+        end, opts, "Search notes with ripgrep")
+        map("n", "<leader>nt", function()
+            vim.cmd("Obsidian tags")
+        end, opts, "Search notes by tag")
+        map("n", "<leader>nl", function()
+            vim.cmd("Obsidian links")
+        end, opts, "Search current note's links")
+        map("n", "<leader>nb", function()
+            vim.cmd("Obsidian backlinks")
+        end, opts, "Search current note's backlinks")
+        map("n", "<leader>ni", function()
+            vim.cmd("Obsidian template")
+        end, opts, "Insert template into current note")
     end,
 }

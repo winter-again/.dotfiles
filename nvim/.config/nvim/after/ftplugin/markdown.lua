@@ -11,13 +11,14 @@ vim.opt_local.spell = true
 
 -- 1 makes concealed links look too long because it has to be a 1:1 conceal, meaning the "["
 -- is concealed with just a blank
+-- TODO: setting this to 2 affects the checkbox cycle command
 -- vim.opt_local.conceallevel = 2
 -- vim.opt_local.concealcursor = "nc" -- modes in which text in cursor line can remain concealed
 
 local root = vim.fs.root(0, ".git")
 local notebook_dir = vim.fs.normalize("~/Documents/notebook")
 
-if root == notebook_dir then
+if root ~= nil and root == notebook_dir then
     -- use local spellfile
     vim.opt_local.spellfile = vim.uv.cwd() .. "/spell/en.utf-8.add"
 else
