@@ -141,7 +141,7 @@
     },
     "battery": {
         "bat": "BAT0",
-        "design-capacity": true, // true = relative to real capacity; false = relative to orig. capacity
+        "design-capacity": false, // whether to enable theoretical capacity instead of actual capacity
         "full-at": 80, // define real max percentage; may be useful if design-capacity = false -> would be treated as the upper limit
         "interval": 60,
         "states": {
