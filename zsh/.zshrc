@@ -85,12 +85,6 @@ path+=("$PNPM_HOME")
 
 export PATH
 
-# fnm
-# `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
-# `--version-file-strategy=recursive` might also make sense; default is local
-# using both = auto use/install the right Node version when going into proj subdirs and moving between proj
-# eval "$(fnm env --use-on-cd --shell zsh)"
-
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
@@ -105,7 +99,7 @@ alias open="xdg-open"
 alias grep="grep --color=auto"
 alias x="xan"
 alias xv="xan view -l 15"
-alias tv="tidy-viewer"
+# alias tv="tidy-viewer"
 alias j="just"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
