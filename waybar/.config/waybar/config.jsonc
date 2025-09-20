@@ -41,7 +41,7 @@
         "on-click-right": "pkill spotify",
         // "on-scroll-up": "",
         // "on-scroll-down": "",
-        "exec": "~/.config/waybar/scripts/spotify.sh",
+        "exec": "~/.local/bin/spotify.sh",
         "exec-if": "pgrep spotify"
     },
     "mpris": {
@@ -83,7 +83,7 @@
         ],
         "return-type": "json",
         "interval": 900, // 15 min
-        "exec": "~/.config/waybar/scripts/weather.sh"
+        "exec": "~/.local/bin/weather.sh"
     },
     "pulseaudio": {
         // "format": "<span font='16' rise='-2000'>{icon}</span> {volume}%",
