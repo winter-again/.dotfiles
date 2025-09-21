@@ -13,7 +13,7 @@
         "clock"
     ],
     "modules-right": [
-        "custom/weather",
+        // "custom/weather",
         "pulseaudio",
         "cpu",
         "memory",
@@ -138,7 +138,7 @@
         "format-disconnected": "󰈂"
     },
     "battery": {
-        "bat": "BAT0",
+        "bat": "BAT1",
         "design-capacity": false, // whether to enable theoretical capacity instead of actual capacity
         // "full-at": 80, // define real max percentage; may be useful if design-capacity = false -> would be treated as the upper limit
         "states": {

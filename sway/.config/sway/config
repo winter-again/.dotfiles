@@ -69,13 +69,10 @@ set {
     $down j
     $up k
     $right l
-    $term wezterm
+    $term ghostty
     $browser firefox
     $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
-    # seems like the output names change sometimes
-    $primary_mon "BNQ BenQ LCD 93J02490SL0"
-    $secondary_mon "BNQ BenQ LCD E2H03452SL0"
     $ws1 "1"
     $ws2 "2"
     $ws3 "3"
@@ -88,37 +85,22 @@ set {
     $ws10 "10"
 }
 
-# TODO: test if this is needed for touchscreen
-# set $display-touch "1267:11556:ELAN2D24:00_04F3:2D24"
-# input $display-touch map_to_output $laptop_disp
-
 floating_modifier $mod normal
 focus_follows_mouse no
 
-# seems like we have to set this so that layout is correct on Sway start
-# not great since this assumes docked config; I guess could just manually trigger reload
-# output $laptop_disp disable
-# following the same conventions from hyprland.conf
-# output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
-# output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
-# focus monitor on launch
-# focus output $primary_mon
-# output $laptop_disp enable mode 3840x2400@60Hz scale 2
-# focus output $laptop_disp
-
 # first available output will be used
 # so give laptop as fallback
-workspace 1 output $primary_mon $laptop_disp
-workspace 2 output $primary_mon $laptop_disp
-workspace 3 output $primary_mon $laptop_disp
-workspace 4 output $primary_mon $laptop_disp
-workspace 5 output $primary_mon $laptop_disp
+workspace 1 output $laptop_disp
+workspace 2 output $laptop_disp
+workspace 3 output $laptop_disp
+workspace 4 output $laptop_disp
+workspace 5 output $laptop_disp
 
-workspace 6 output $secondary_mon $laptop_disp
-workspace 7 output $secondary_mon $laptop_disp
-workspace 8 output $secondary_mon $laptop_disp
-workspace 9 output $secondary_mon $laptop_disp
-workspace 10 output $secondary_mon $laptop_disp
+workspace 6 output $laptop_disp
+workspace 7 output $laptop_disp
+workspace 8 output $laptop_disp
+workspace 9 output $laptop_disp
+workspace 10 output $laptop_disp
 
 workspace 7 gaps inner 20
 workspace 7 gaps outer 20
@@ -253,11 +235,10 @@ exec {
     waybar
     mako
     nm-applet
-    solaar -w hide
-    spotify-launcher # --skip-update
+    # spotify-launcher # --skip-update
     # might need for systemd/dbus activation envs
     # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
-    playerctld daemon # make playerctl act on the currently active media player
+    # playerctld daemon # make playerctl act on the currently active media player
     swayidle -w before-sleep "gtklock -d"
 }
 

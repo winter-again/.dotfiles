@@ -13,16 +13,16 @@ default:
     stow paru
     stow ripgrep
     stow --no-folding scripts
-    stow spotify
+    # stow spotify
     stow swappy
     stow sway
-    stow taskwarrior
+    # stow taskwarrior
     stow taplo
     stow tmux
     stow tofi
     stow uv
     stow waybar
-    stow --no-folding wezterm
+    # stow --no-folding wezterm
     stow yazi
     stow zathura
     stow zsh

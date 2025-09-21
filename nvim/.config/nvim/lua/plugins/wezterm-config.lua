@@ -1,6 +1,7 @@
 return {
     "winter-again/wezterm-config.nvim",
-    dev = true,
+    enabled = false,
+    dev = false,
     config = function()
         local wezterm_config = require("wezterm-config")
         -- NOTE: changes to profile_data should be hot-reloaded somehow?
