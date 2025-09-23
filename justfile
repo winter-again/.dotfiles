@@ -22,7 +22,7 @@ default:
     stow tofi
     stow uv
     stow waybar
-    stow --no-folding wezterm
+    stow wezterm
     stow yazi
     stow zathura
     stow zsh

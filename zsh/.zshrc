@@ -121,6 +121,7 @@ alias aur="pacman -Qqm"
 alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # color help with bat
 
 alias g="git"
+alias gc="git commit"
 alias gp="git push"
 alias gs="git status"
 alias gb="git branch --all -v"

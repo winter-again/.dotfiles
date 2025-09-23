@@ -1,8 +1,9 @@
 ;; extends
 
 ; turn off spell check for specific nodes
-; ((inline) @_inline (#lua-match? @_inline "^%s*import")) @nospell
-; ((inline) @_inline (#lua-match? @_inline "^%s*export")) @nospell
+; this is useful for mdx files treated as markdown
+((inline) @_inline (#lua-match? @_inline "^%s*import")) @nospell
+((inline) @_inline (#lua-match? @_inline "^%s*export")) @nospell
 
 ; override code block query to prevent default conceal
 (fenced_code_block
