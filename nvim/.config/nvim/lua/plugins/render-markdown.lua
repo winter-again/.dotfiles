@@ -4,8 +4,12 @@ return {
         "nvim-treesitter/nvim-treesitter",
         "nvim-tree/nvim-web-devicons",
     },
-    event = { "BufReadPost", "BufNewFile" },
-    ft = { "markdown" },
+    event = {
+        "BufReadPre " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
+        "BufNewFile " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
+    },
+    -- event = { "BufReadPost", "BufNewFile" },
+    -- ft = { "markdown" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {

@@ -99,7 +99,7 @@ alias open="xdg-open"
 alias grep="grep --color=auto"
 alias x="xan"
 alias xv="xan view -l 15"
-# alias tv="tidy-viewer"
+alias xc="xan count"
 alias j="just"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
@@ -231,8 +231,8 @@ if type "uv" > /dev/null; then
     compdef _uv_run_mod uv
 fi
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # source after zsh-autosuggestions
 
 eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/omp-config.toml)"

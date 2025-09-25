@@ -32,15 +32,12 @@
         "max-length": 10
     },
     "custom/spotify": {
-        // "format": "<span font='16' rise='-2000'>󰓇</span> {}",
         "format": "󰓇  {}",
         "return-type": "json",
         "max-length": 50,
         "escape": false, // false allows markup tags; true used to work
         "on-click": "playerctl --player=spotify play-pause",
         "on-click-right": "pkill spotify",
-        // "on-scroll-up": "",
-        // "on-scroll-down": "",
         "exec": "~/.local/bin/spotify.sh",
         "exec-if": "pgrep spotify"
     },
@@ -53,7 +50,7 @@
         "max-length": 50
     },
     "clock": {
-        "timezone": "America/New_York",
+        // "timezone": "America/New_York",
         "format": "{:%a %Y-%m-%d | %I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
@@ -78,18 +75,13 @@
     "custom/weather": {
         "format": "{icon}  {0}",
         "format-icons": [
-            // "<span font='16' rise='-2000'>󰅟</span>",
             "󰅟"
         ],
         "return-type": "json",
-        "interval": 900, // 15 min
+        "interval": 1800, // every half hour
         "exec": "~/.local/bin/weather.sh"
     },
     "pulseaudio": {
-        // "format": "<span font='16' rise='-2000'>{icon}</span> {volume}%",
-        // "format-muted": "<span font='16' rise='-2000'>󰝟</span> {volume}%",
-        // "format-bluetooth": "<span font='16' rise='-2000'>{icon}</span> {format_source} {volume}%",
-        // "format-bluetooth-muted": "󰝟 {icon} {format_source}",
         "format": "{icon} {volume}%",
         "format-muted": "󰝟 {volume}%",
         "format-bluetooth": "{icon} {format_source} {volume}%",
@@ -112,7 +104,6 @@
         "tooltip-format": "{load}"
     },
     "memory": {
-        // "format": "<span font='16' rise='-2000'></span> {}%"
         "format": "  {percentage}%",
         "tooltip-format": "{used} / {total} GiB\nswap: {swapUsed} / {swapTotal} GiB"
     },
@@ -174,7 +165,6 @@
         "spacing": 4
     },
     "bluetooth": {
-        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
         "format": " {status}",
         "format-disabled": "", // an empty format will hide the module
         "format-connected": " {num_connections} connected",
