@@ -24,6 +24,7 @@ return {
                     toml = { "taplo" },
                     typescript = { "prettierd", "prettier", stop_after_reset = true },
                     typescriptreact = { "prettierd", "prettier", stop_after_reset = true },
+                    typst = { lsp_format = "prefer" },
                     -- 'injected' allows formatting of code fence blocks
                     -- or in python to format sql inside of queries
                     -- see: https://github.com/stevearc/conform.nvim/blob/c36fc6492be27108395443a67bcbd2b3280f29c5/doc/advanced_topics.md

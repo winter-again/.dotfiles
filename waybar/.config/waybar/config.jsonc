@@ -46,7 +46,7 @@
         "on-click": "playerctl play-pause",
         "on-scroll-up": "",
         "on-scroll-down": "",
-        "tooltip-format": "({player}) - {album}: [{length} {position}]",
+        "tooltip-format": "{artist}: {album} - {length} [{player}]",
         "max-length": 50
     },
     "clock": {
