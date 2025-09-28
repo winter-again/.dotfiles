@@ -28,10 +28,9 @@ window {
 }
 
 @-moz-document url-prefix(about:newtab), url-prefix(about:home) {
-
     .search-wrapper .search-inner-wrapper:active input,
     .search-wrapper input:focus {
-        border-color: var(--mountain-purple) !important;
+        border-color: #8f8aac !important;
         box-shadow: none !important;
     }
 }

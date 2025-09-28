@@ -2,5 +2,12 @@ return {
     "chomosuke/typst-preview.nvim",
     ft = "typst",
     version = "1.*",
-    opts = {}, -- lazy.nvim will implicitly calls `setup {}`
+    config = function()
+        require("typst-preview").setup({
+            dependencies_bin = {
+                ["tinymist"] = "/usr/bin/tinymist",
+                ["websocat"] = "/usr/bin/websocat",
+            },
+        })
+    end,
 }
