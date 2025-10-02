@@ -370,12 +370,16 @@ user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
 // Enter your scrolling overrides below this line:
 
 /****************************************************************************************
- * OPTION: INSTANT SCROLLING (SIMPLE ADJUSTMENT)                                       *
+ * OPTION: SHARPEN SCROLLING                                                           *
 ****************************************************************************************/
-// recommended for 60hz+ displays
+// credit: https://github.com/black7375/Firefox-UI-Fix
+// only sharpen scrolling
 user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
 user_pref("general.smoothScroll", true); // DEFAULT
-user_pref("mousewheel.default.delta_multiplier_y", 275); // 250-400; adjust this number to your liking
+user_pref("mousewheel.min_line_scroll_amount", 10); // adjust this number to your liking; default=5
+user_pref("general.smoothScroll.mouseWheel.durationMinMS", 80); // default=50
+user_pref("general.smoothScroll.currentVelocityWeighting", "0.15"); // default=.25
+user_pref("general.smoothScroll.stopDecelerationWeighting", "0.6"); // default=.4
 
 /****************************************************************************
  * END: BETTERFOX                                                           *
