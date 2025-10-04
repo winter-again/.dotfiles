@@ -24,12 +24,6 @@
             "type": "prompt",
             "segments": [
                 {
-                    "type": "session",
-                    "style": "plain",
-                    "foreground": "p:fg",
-                    "template": "{{ if .SSHSession }} {{.UserName }}@{{ .HostName }} {{ end }}"
-                },
-                {
                     "type": "path",
                     "style": "plain",
                     "foreground": "p:purple",
@@ -72,6 +66,13 @@
                         "threshold": 5000,
                         "format": "austin"
                     }
+                },
+                {
+                    "type": "session",
+                    "style": "plain",
+                    "foreground": "p:fg",
+                    "template": "{{ if .SSHSession }}[<#7e97ab>{{ .UserName }}</>@<#8f8aac>{{ .HostName }}</>] {{ end }}"
+                    // "template": "{{ if .SSHSession }} {{.UserName }}@{{ .HostName }} {{ end }}"
                 },
                 {
                     "type": "time",
