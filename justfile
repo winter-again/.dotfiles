@@ -3,9 +3,9 @@ default:
     stow bat
     stow ghostty
     stow git
-    stow gtklock
+    # stow gtklock
     stow imv
-    stow kanshi
+    # stow kanshi
     stow mako
     stow nvim
     stow oh-my-posh
