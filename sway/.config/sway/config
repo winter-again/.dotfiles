@@ -102,9 +102,9 @@ focus_follows_mouse no
 bindsym {
     $mod+Return exec $term
     $mod+Shift+q kill
-    $mod+m exec $menu
+    $mod+o exec $menu
     $mod+i exec $browser
-    $mod+o exec nemo
+    $mod+n exec nemo
     # reload config file
     $mod+Shift+r reload
     $mod+Shift+w exec killall -SIGUSR2 waybar
@@ -158,7 +158,7 @@ bindsym {
     $mod+t layout tabbed
     # Cycle through customizable set of layouts
     # 'layout toggle split' can act like a reset out of tabs/stack -> then just cycles through split layouts
-    $mod+n layout toggle split
+    $mod+m layout toggle split
     # using split instead of splitv and splith here means only the current split layout is considered
     # rather than cycling through both possibilities
     $mod+semicolon layout toggle split tabbed stacking
