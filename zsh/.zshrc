@@ -26,9 +26,6 @@ export LS_COLORS="di=1;36:ln=3;92:or=4;91"
 # uu = your user
 export EZA_COLORS=$LS_COLORS:"da=35:uu=1;34:sn=33"
 
-# make fd use same colors as eza (set $LS_COLORS)
-# eval "$(dircolors -b)"
-
 HISTFILE="$XDG_CACHE_HOME/.zsh_history"
 SAVEHIST="100000000" # num of lines saved (last $SAVEHIST lines)
 HISTSIZE="100000000" # num of lines to keep in one session; read in at start
@@ -88,27 +85,26 @@ export PATH
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
-# -a = show hidden files
 alias ls="eza -a --icons --color=always --group-directories-first"
 alias ll="eza -lahM --icons --color=always --group-directories-first --time-style=long-iso"
 alias cp="cp -vi"
 alias mv="mv -vi"
 alias rm="rm -i"
 alias tree="eza -la --no-permissions --tree --level=2 --ignore-glob='.git|.venv|node_modules|__pycache__|.pytest_cache'"
+alias fd="fd --color=always --hidden --exclude '{.git,.venv,node_modules}'"
+alias dots="cd $HOME/.dotfiles"
 alias open="xdg-open"
 alias grep="grep --color=auto"
 alias x="xan"
 alias xv="xan view -l 15"
 alias xc="xan count"
+alias xh="xan headers"
 alias j="just"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
-alias fd="fd --color=always --hidden --exclude '{.git,.venv,node_modules}'"
-alias bot="btm"
 alias pn="pnpm"
 alias tr="trash-put"
-alias R="R --no-save"
-alias dots="cd $HOME/.dotfiles"
+# alias R="R --no-save"
 alias wez-logs="cd /run/user/1000/wezterm" # wezterm logs
 alias wez-plugs="cd $HOME/.local/share/wezterm/plugins" # wezterm plugins
 alias t="task"
@@ -176,10 +172,11 @@ export FZF_DEFAULT_COMMAND="fd --type file --follow --strip-cwd-prefix --hidden 
 export FZF_DEFAULT_OPTS="--no-separator
     --layout reverse --height 40% --preview-window '50%'
     --preview 'bat --theme=base16 --color always {}'
+    --gutter ' '
     --color=fg:#cacaca,bg:-1,hl:#8a98ac
     --color=fg+:#f0f0f0,bg+:#262626,hl+:underline:#8f8aac
     --color=prompt:#8f8aac,info:#ab9a78,pointer:#cacaca,marker:#778c73
-    --color=spinner:#778c73,gutter:-1,header:-1,border:#cacaca
+    --color=spinner:#778c73,header:-1,border:#cacaca
     --color=preview-fg:#cacaca,preview-bg:-1"
 # fuzzy find command history
 export FZF_CTRL_R_OPTS="
