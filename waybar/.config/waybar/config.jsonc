@@ -38,7 +38,7 @@
         "escape": false, // false allows markup tags; true used to work
         "on-click": "playerctl --player=spotify play-pause",
         "on-click-right": "pkill spotify",
-        "exec": "~/.local/bin/spotify.sh",
+        "exec": "~/.local/bin/spotify",
         "exec-if": "pgrep spotify"
     },
     "mpris": {
@@ -79,7 +79,7 @@
         ],
         "return-type": "json",
         "interval": 1800, // every half hour
-        "exec": "~/.local/bin/weather.sh"
+        "exec": "~/.local/bin/weather"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 MUSIC_DIR="$HOME/Music/yt-dlp"
-URL="$1"
 
 # NOTE: handles single videos and playlists
 
@@ -16,7 +15,7 @@ args=(
     --no-write-playlist-metafiles # only need if using --write-info-json or --write-description?
     --no-overwrites
     --parse-metadata "playlist_index:%(track_number)s" # use playlist index as the track nums
-    "$URL"
+    "$1"
 )
 
 yt-dlp "${args[@]}"
