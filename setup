@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-set -uxo pipefail
-
-BUILD_REPOS="$HOME/build-repos"
-PARU_REPO="$BUILD_REPOS/paru"
+# TODO: review
+set -uo pipefail
 
 pacman_install() {
     pacman -S --needed --noconfirm "$1"
@@ -13,87 +11,40 @@ paru_install() {
     paru -S --needed --noconfirm "$1"
 }
 
-# setup_and_switch_user() {
-#     read -r -p "Enter username: " USER
-#
-#     read -r -p "Enter user password: " PASSWD
-#     read -r -p "Confirm password: " PASSWD2
-#     # TODO: use [[ instead
-#     while ! [ "$PASSWD" = "$PASSWD2" ]; do
-#         read -r -p "Enter user password: " PASSWD
-#         read -r -p "Confirm password: " PASSWD2
-#     done
-#
-#     echo "Creating user..."
-#     useradd -m -G wheel -s /usr/bin/zsh "$USER"
-#
-#     echo "Setting user password..."
-#     echo "$USER:$PASSWD" | chpasswd
-#     unset PASSWD PASSWD2
-#
-#     echo "Making wheel group sudoers..."
-#     sed -i "/%wheel ALL=(ALL:ALL) ALL/s/^# //g" /etc/sudoers
-#     # equiv?
-#     # echo "%wheel ALL=(ALL:ALL) ALL" | EDITOR="tee -a" visudo
-#
-#     echo "Switching to user '$USER'"
-#     su -l "$USER"
-# }
+# NOTE: run as newly created user
 
-echo "Make sure to verify boot mode and connect to internet"
-read -r -p "Are you ready to begin? (y/n): " confirm && [[ $confirm = [yY] ]]
+BUILD_REPOS="$HOME/build-repos"
+PARU_REPO="$BUILD_REPOS/paru"
+
+read -r -p "Confirm ready to setup system for user $USER with home $HOME (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1
+
+cd "$HOME" || exit 1
 
 echo "Checking internet connection..."
-ping -c 3 archlinux.org || (echo "Not connected to internet" && exit 1)
+ping -c 3 archlinux.org || { echo "Not connected to internet" && exit 1; }
+clear
 
-# TODO: use chronyd instead
-# Include config file in dotfiles?
-echo "Configuring timesyncd..."
-sed -i "s/^#\{0,1\}NTP=.*/NTP=0.arch.pool.ntp.org 1.arch.pool.ntp.org 2.arch.pool.ntp.org 3.arch.pool.ntp.org" /etc/systemd/timesyncd.conf
-sed -i "s/^#\{0,1\}FallbackNTP=.*/FallbackNTP=0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org" /etc/systemd/timesyncd.conf
+echo "Installing zsh packages and setting zsh as login shell..."
+zsh_pkgs=(
+    zsh
+    zsh-autosuggestions
+    zsh-completions
+    zsh-syntax-highlighting
+)
+pacman_install "${zsh_pkgs[@]}"
+chsh -s /usr/bin/zsh "$USER"
 
-echo "Ensuring that time sync is active..."
-timedatectl set-ntp true
-echo -e "\nDate/Time service status:"
-timedatectl status
-sleep 4
-
-echo "Configuring hostname..."
-read -r -p "Enter hostname: " HOSTNAME
-echo "$HOSTNAME" >/etc/hostname
-cat <<EOF >/etc/hosts
-127.0.0.1    localhost
-::1          localhost
-127.0.1.1    $HOSTNAME
-EOF
-
-echo "Enabling NetworkManager.service"
-systemctl enable --now NetworkManager.service
-
-##########################################
-# NOTE: post-install script
-# TODO: user not created yet so need to figure out how to download dotfiles and script
-# Maybe have to do the user creation, switch to user, and XDG directories config manually
-# before cloning dotfiles and running script?
-# Download to /tmp and running script from there + proper handling of
-# creating files, etc. as new user
-# Also need to set up Git before cloning
-# TODO: makepkg conf
-
-cd "$HOME" || exit
-
-# TODO: store pacman.conf in dotfiles repo instead?
-echo "Configuring pacman (/etc/pacman.conf)..."
+echo "Configuring /etc/pacman.conf..."
 sed -i "/Color/s/^#//g" /etc/pacman.conf
 sed -i "/VerbosePkgLists/s/^#//g" /etc/pacman.conf
 
 echo "Updating before proceeding..."
 pacman -Syu --noconfirm
+clear
 
-# TODO: store pacman.conf in dotfiles repo instead?
 echo "Installing and configuring reflector. Activating reflector.timer..."
 pacman_install reflector
-cat << EOF > /etc/xdg/reflector/reflector.conf
+cat <<EOF > /etc/xdg/reflector/reflector.conf
 --protocol https
 --country US,CA
 --latest 10
@@ -106,77 +57,18 @@ echo "Installing pacman-contrib and activating paccache.timer..."
 pacman_install pacman-contrib
 systemctl enable --now paccache.timer
 
+echo "Setting up xdg-user-dirs and installing xdg-utils..."
+pacman_install xdg-user-dirs xdg-utils
+xdg-user-dirs-update
+
 echo "Installing paru..."
 pacman_install rustup
 rustup default stable
-mkdir ~/Documents/build-repos
+mkdir "$HOME/Documents/build-repos"
 git clone https://aur.archlinux.org/paru.git "$PARU_REPO"
-cd "$PARU_REPO" || exit
+cd "$PARU_REPO" || exit 1
 makepkg -sirc --noconfirm
-cd "$HOME" || exit
-
-echo "Installing Sway and other core packages..."
-sway_pkgs=(
-    sway
-    swayidle
-    swaybg
-    wl-clipboard
-    waybar
-    mako
-    kanshi
-    grim
-    slurp
-    swappy
-    brightnessctl
-    solaar
-    tofi
-    gtklock
-)
-paru_install "${sway_pkgs[@]}"
-
-echo "Installing fonts..."
-font_pkgs=(
-    ttf-zed-mono-nerd
-    ttf-iosevka-nerd
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-)
-paru_install "${font_pkgs[@]}"
-
-echo "Installing Wezterm and Ghostty..."
-terminals=(
-    wezterm-git
-    ghostty
-)
-paru_install "${terminals[@]}"
-
-echo "Installing core tools..."
-tools_pkgs=(
-    bat
-    bc
-    bottom
-    dust
-    dysk
-    eza
-    fd
-    fzf
-    jaq
-    just
-    oh-my-posh-bin
-    ripgrep
-    stow
-    task
-    tmux
-    usbutils
-    wget
-    xan
-    yazi
-    yt-dlp
-    zip
-    zoxide
-)
-paru_install "${tools_pkgs[@]}"
+cd "$HOME" || exit 1
 
 echo "Installing Intel graphics packages..."
 intel_graphics_pkgs=(
@@ -226,6 +118,81 @@ network_pkgs=(
 )
 paru_install "${network_pkgs[@]}"
 
+echo "Mapping caps lock to escape and control..."
+paru_install keyd
+cat <<EOF > /etc/keyd/default.conf
+[ids]
+
+*
+
+[main]
+
+capslock = overload(control, esc)
+EOF
+
+echo "Installing Sway and other core packages..."
+sway_pkgs=(
+    sway
+    swayidle
+    swaybg
+    brightnessctl
+    grim
+    gtklock
+    kanshi
+    mako
+    slurp
+    solaar
+    swappy
+    tofi
+    waybar
+    wl-clipboard
+)
+paru_install "${sway_pkgs[@]}"
+
+echo "Installing fonts..."
+font_pkgs=(
+    ttf-zed-mono-nerd
+    ttf-iosevka-nerd
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+)
+paru_install "${font_pkgs[@]}"
+
+echo "Installing Wezterm and Ghostty..."
+terminals=(
+    wezterm-git
+    ghostty
+)
+paru_install "${terminals[@]}"
+
+echo "Installing core tools..."
+tools_pkgs=(
+    bat
+    bc
+    bottom
+    dust
+    dysk
+    eza
+    fd
+    fzf
+    jaq
+    just
+    oh-my-posh-bin
+    ripgrep
+    stow
+    task
+    tmux
+    usbutils
+    wget
+    xan
+    yazi
+    yt-dlp
+    zip
+    zoxide
+)
+paru_install "${tools_pkgs[@]}"
+
 echo "Installing Lua packages..."
 lua_dev_pkgs=(
     lua-language-server
@@ -266,6 +233,8 @@ js_dev_pkgs=(
     vscode-json-languageserver
 )
 paru_install  "${js_dev_pkgs[@]}"
+echo "Installing Astro LSP as global package..."
+pnpm install -g @astrojs/language-server
 
 echo "Installing Rust packages..."
 rust_dev_pkgs=(
@@ -295,12 +264,12 @@ nvim_pkgs=(
 )
 paru_install "${nvim_pkgs[@]}"
 git clone https://github.com/neovim/neovim.git "$BUILD_REPOS/neovim"
-cd "$BUILD_REPOS/neovim" || exit
+cd "$BUILD_REPOS/neovim" || exit 1
 git remote set-url origin git@github.com:neovim/neovim.git
 git checkout nightly
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 make install
-cd "$HOME" || exit
+cd "$HOME" || exit 1
 
 echo "Installing theming packages. Must still set theme manually..."
 theming_pkgs=(
@@ -345,54 +314,28 @@ app_pkgs=(
 paru_install "${app_pkgs[@]}"
 echo "30" | paru_install "${sound_pkgs[@]}"
 
-# TODO: ssh config
-# TODO: sudoers config
-# TODO: map caps lock to escape/control
-
-###################
+echo "Setting SSH URL for dotfiles repo and stowing dotfiles..."
+cd "$HOME/.dotfiles" || exit 1
+git remote set-url origin git@github.com:winter-again/.dotfiles.git
+git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
+just stow
+cd "$HOME" || exit 1
 
 echo "Installing rclone and restic for backups..."
 paru_install rclone restic
 # NOTE: if no SSH key added, can't use this URL for clone
 # git clone git@github.com:winter-again/backups.git
 git clone https://github.com/winter-again/backups.git "$HOME/Documents/code/backups"
-cd "$HOME/Documents/code/backups" || exit
+cd "$HOME/Documents/code/backups" || exit 1
 just lab
 just personal
 git remote set-url origin git@github.com:winter-again/backups.git
-cd "$HOME" || exit
-
-# TODO: CUPS for printing?
-# TODO: SMART tools?
+cd "$HOME" || exit 1
 
 echo "Installing ufw and activating firewall..."
 paru_install ufw
 systemctl enable --now ufw.service
 ufw enable
 
-echo "Setting SSH URL for dotfiles repo and stowing dotfiles..."
-cd "$HOME/.dotfiles" || exit
-git remote set-url origin git@github.com:winter-again/.dotfiles.git
-just stow
-cd "$HOME" || exit
-
-echo "Done. Reboot the system."
-
-#######################
-
-echo "Disabling suspend on lid close..."
-sed -i "s/^#\{0,1\}HandleLidSwitch=.*/HandleLidSwitch=ignore" /etc/systemd/logind.conf
-sed -i "s/^#\{0,1\}HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore" /etc/systemd/logind.conf
-sed -i "s/^#\{0,1\}HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore" /etc/systemd/logind.conf
-
-echo "Disabling wake on lid open..."
-cat <<EOF >/etc/systemd/system/toggle-lid-wakeup.service
-[Unit]
-Description="Disable LID0 wake from suspend trigger"
-
-[Service]
-ExecStart=/bin/sh -c "/bin/echo LID0 > /proc/acpi/wakeup"
-
-[Install]
-WantedBy=multi-user.target
-EOF
+echo
+echo "Done. Reboot the system..."

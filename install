@@ -1,0 +1,498 @@
+#!/usr/bin/env bash
+
+# TODO: review
+set -uo pipefail
+
+pacman_install() {
+    pacman -S --needed --noconfirm "$1"
+}
+
+paru_install() {
+    paru -S --needed --noconfirm "$1"
+}
+
+verify_boot_mode() {
+    if [[ "$(< /sys/firmware/efi/fw_platform_size)" -ne 64 ]]; then
+        return 1
+    fi
+    return 0
+}
+
+DISK="/dev/nvme0n1"
+DISK_P1="${DISK}p1"
+DISK_P2="${DISK}p2"
+
+EFI_PART_SIZE="1G"
+
+pacstrap_pkgs=(
+    base
+    linux
+    linux-firmware
+    base-devel
+    e2fsprogs
+    intel-ucode
+    man-db
+    man-pages
+    networkmanager
+    network-manager-applet
+    firefox
+    git
+    vim
+    curl
+)
+
+partition_disk() {
+    # -o = clear our all partition data
+    # -g = convert MBR or BSD disklabel disk to GPT disk
+    sgdisk -og "$DISK"
+
+    # -n partnum:start:end
+    # could use 0 to refer to default
+    # -t = partition type code
+    # -c = change GPT partition name
+    sgdisk -n 1:2048:+"$EFI_PART_SIZE" -t 1:ef00 -c 1:"EFI System Partition" "$DISK"
+    local endsector
+    endsector="$(sgdisk -E "$DISK")"
+    sgdisk -n 2:0:"$endsector" -t 2:8304 -c 2:"Linux root (x86-64)" "$DISK"
+}
+
+encrypt_disk() {
+    # should prompt for password
+    cryptsetup -q -v --hash sha512 luksFormat "$DISK_P2"
+    cryptsetup --allow-discards --persistent open "$DISK_P2" root
+}
+
+make_fs() {
+    mkfs.ext4 /dev/mapper/root
+    mount /dev/mapper/root /mnt
+
+    mkfs.fat -F32 "$DISK_P1"
+    mount --mkdir "$DISK_P1" /mnt/boot
+}
+
+pacstrap_base_install() {
+    reflector --protocol https --country US,CA --latest 10 --sort rate --save /etc/pacman.d/mirrorlist
+    pacstrap -K /mnt "${pacstrap_pkgs[@]}"
+}
+
+BUILD_REPOS="$HOME/build-repos"
+PARU_REPO="$BUILD_REPOS/paru"
+
+setup_and_switch_user() {
+    read -r -p "Enter username: " USER
+    read -r -p "Enter user password: " PASSWD
+    read -r -p "Confirm password: " PASSWD2
+
+    while [[ "$PASSWD" != "$PASSWD2" ]]; do
+        read -r -p "Enter user password: " PASSWD
+        read -r -p "Confirm password: " PASSWD2
+    done
+
+    echo "Creating user..."
+    useradd -m -G wheel -s /usr/bin/zsh "$USER"
+
+    echo "Setting user password..."
+    echo "$USER:$PASSWD" | chpasswd
+    unset PASSWD PASSWD2
+
+    echo "Making wheel group sudoers..."
+    sed -i "/%wheel ALL=(ALL:ALL) ALL/s/^# //g" /etc/sudoers
+
+    echo "Switching to user $USER"
+    su -l "$USER"
+}
+
+read -r -p "Confirm ready to install Arch Linux (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1
+
+verify_boot_mode || exit 1
+
+echo "Checking internet connection..."
+ping -c 3 archlinux.org || { echo "Not connected to internet" && exit 1; }
+clear
+
+echo "Partitioning disk..."
+lsblk
+echo
+read -r -p "Confirm lsblk output (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1
+
+partition_disk
+lsblk
+echo
+read -r -p "Confirm lsblk output (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1
+clear
+
+echo "Encrypting disk and creating file system..."
+encrypt_disk
+make_fs
+
+echo "Installing base packages with pacstrap..."
+pacstrap_base_install
+
+echo "Generating fstab..."
+genfstab -U /mnt >> /mnt/etc/fstab
+
+echo "chroot into new system..."
+arch-chroot /mnt
+
+echo "Setting up time..."
+ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+hwclock --systohc
+
+echo "Setting up chrony..."
+pacman_install chrony
+cat <<EOF >/etc/chrony.conf
+pool 2.arch.pool.ntp.org iburst maxsources 4
+rtconutc
+! rtcsync
+rtcfile /var/lib/chrony/rtc
+rtcautotrim 10
+dumpdir /var/lib/chrony
+EOF
+
+echo "Setting up locales..."
+sed -i "/en_US.UTF-8/s/^#//g" /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+echo "Configuring hostname..."
+read -r -p "Enter hostname: " HOSTNAME
+echo "$HOSTNAME" >/etc/hostname
+cat <<EOF >/etc/hosts
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    $HOSTNAME
+EOF
+
+###############################################################
+# NOTE: post-install script
+# TODO: leaning towards starting script after install+reboot
+# First step would be creation of new user?
+
+echo "Installing zsh packages..."
+zsh_pkgs=(
+    zsh
+    zsh-completions
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+)
+pacman_install "${zsh_pkgs[@]}"
+setup_and_switch_user
+
+# TODO: add makepkg conf
+
+cd "$HOME" || exit
+
+# TODO: store pacman.conf in dotfiles repo instead?
+echo "Configuring pacman (/etc/pacman.conf)..."
+sed -i "/Color/s/^#//g" /etc/pacman.conf
+sed -i "/VerbosePkgLists/s/^#//g" /etc/pacman.conf
+
+echo "Updating before proceeding..."
+pacman -Syu --noconfirm
+
+# TODO: store pacman.conf in dotfiles repo instead?
+echo "Installing and configuring reflector. Activating reflector.timer..."
+pacman_install reflector
+cat << EOF > /etc/xdg/reflector/reflector.conf
+--protocol https
+--country US,CA
+--latest 10
+--sort rate
+--save /etc/pacman.d/mirrorlist
+EOF
+systemctl enable --now reflector.timer
+
+echo "Installing pacman-contrib and activating paccache.timer..."
+pacman_install pacman-contrib
+systemctl enable --now paccache.timer
+
+echo "Installing paru..."
+pacman_install rustup
+rustup default stable
+mkdir ~/Documents/build-repos
+git clone https://aur.archlinux.org/paru.git "$PARU_REPO"
+cd "$PARU_REPO" || exit
+makepkg -sirc --noconfirm
+cd "$HOME" || exit
+
+echo "Installing Sway and other core packages..."
+sway_pkgs=(
+    sway
+    swayidle
+    swaybg
+    wl-clipboard
+    waybar
+    mako
+    kanshi
+    grim
+    slurp
+    swappy
+    brightnessctl
+    solaar
+    tofi
+    gtklock
+)
+paru_install "${sway_pkgs[@]}"
+
+echo "Installing fonts..."
+font_pkgs=(
+    ttf-zed-mono-nerd
+    ttf-iosevka-nerd
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+)
+paru_install "${font_pkgs[@]}"
+
+echo "Installing Wezterm and Ghostty..."
+terminals=(
+    wezterm-git
+    ghostty
+)
+paru_install "${terminals[@]}"
+
+echo "Installing core tools..."
+tools_pkgs=(
+    bat
+    bc
+    bottom
+    dust
+    dysk
+    eza
+    fd
+    fzf
+    jaq
+    just
+    oh-my-posh-bin
+    ripgrep
+    stow
+    task
+    tmux
+    usbutils
+    wget
+    xan
+    yazi
+    yt-dlp
+    zip
+    zoxide
+)
+paru_install "${tools_pkgs[@]}"
+
+echo "Installing Intel graphics packages..."
+intel_graphics_pkgs=(
+    mesa
+    mesa-utils
+    intel-media-driver
+    libva-utils
+)
+paru_install "${intel_graphics_pkgs[@]}"
+
+echo "Installing Pipewire and other sound packages..."
+sound_pkgs=(
+    pipewire
+    pipewire-audio
+    pipewire-alsa
+    pipewire-pulse
+    pipewire-jack
+    wireplumber
+    pavucontrol
+)
+# NOTE: will be prompted to replace jack2 with pipewire-jack, so respond with "y" since
+# default is "N"
+echo "y" | paru_install "${sound_pkgs[@]}"
+
+echo "Using rfkill to disable bluetooth..."
+rfkill block bluetooth
+
+echo "Installing system maintenance packages..."
+sys_maint_pkgs=(
+    libsmbios
+    nvme-cli
+    smartmontools
+    thermald
+    trash-cli
+    util-linux
+)
+paru_install "${sys_maint_pkgs[@]}"
+echo "Enabling and starting thermald.service..."
+systemctl enable --now thermald.service
+echo "Enabling and starting fstrim.timer..."
+systemctl enable --now fstrim.timer
+
+echo "Installing networking packages..."
+network_pkgs=(
+    networkmanager
+    network-manager-applet
+)
+paru_install "${network_pkgs[@]}"
+
+echo "Installing Lua packages..."
+lua_dev_pkgs=(
+    lua-language-server
+    selene
+    stylua
+)
+paru_install "${lua_dev_pkgs[@]}"
+
+echo "Installing Python packages..."
+python_dev_pkgs=(
+    ruff
+    uv
+)
+paru_install "${python_dev_pkgs[@]}"
+uv tool install basedpyright
+
+echo "Installing Go packages..."
+go_dev_pkgs=(
+    go
+    go-tools
+    gopls
+)
+paru_install "${go_dev_pkgs[@]}"
+
+echo "Installing Typst packages..."
+typst_dev_pkgs=(
+    typst
+    tinymist
+)
+paru_install "${typst_dev_pkgs[@]}"
+
+echo "Installing JS/TS packages..."
+js_dev_pkgs=(
+    pnpm
+    typescript-language-server
+    vscode-html-languageserver
+    vscode-css-languageserver
+    vscode-json-languageserver
+)
+paru_install  "${js_dev_pkgs[@]}"
+
+echo "Installing Rust packages..."
+rust_dev_pkgs=(
+    rust-analyzer
+)
+paru_install "${rust_dev_pkgs[@]}"
+
+echo "Installing other dev packages..."
+dev_pkgs=(
+    bash-language-server
+    markdownlint-cli2
+    marksman
+    shellcheck
+    taplo-cli
+    yaml-language-server
+)
+paru_install "${dev_pkgs[@]}"
+
+echo "Building and installing Neovim from source..."
+nvim_pkgs=(
+    base-devel
+    cmake
+    curl
+    ninja
+    tree-sitter-cli
+    unzip
+)
+paru_install "${nvim_pkgs[@]}"
+git clone https://github.com/neovim/neovim.git "$BUILD_REPOS/neovim"
+cd "$BUILD_REPOS/neovim" || exit
+git remote set-url origin git@github.com:neovim/neovim.git
+git checkout nightly
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+make install
+cd "$HOME" || exit
+
+echo "Installing theming packages. Must still set theme manually..."
+theming_pkgs=(
+    kvantum
+    kvantum-qt5
+    kvantum-theme-materia
+    materia-gtk-theme
+    nwg-look
+)
+paru_install "${theming_pkgs[@]}"
+
+echo "Installing XDG desktop portals..."
+xdg_portal_pkgs=(
+    xdg-desktop-portal
+    xdg-desktop-portal-wlr
+    xdg-desktop-portal-gtk
+)
+paru_install "${xdg_portal_pkgs[@]}"
+
+echo "Installing Nemo and setting as default file manager..."
+paru_install nemo
+# set as default file browser
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+# set Wezterm as terminal for Nemo
+gsettings set org.cinnamon.desktop.default-applications.terminal exec wezterm
+
+# TODO: handle having to choose OCR lang
+echo "Installing other apps..."
+app_pkgs=(
+    amberol
+    chromaprint
+    gst-libav
+    imv
+    mpv
+    picard
+    qt5-wayland
+    slack-desktop
+    spotify-launcher
+    zathura
+    zathura-pdf-mupdf
+)
+paru_install "${app_pkgs[@]}"
+echo "30" | paru_install "${sound_pkgs[@]}"
+
+# TODO: ssh config
+# TODO: sudoers config
+# TODO: map caps lock to escape/control
+
+###################
+
+echo "Installing rclone and restic for backups..."
+paru_install rclone restic
+# NOTE: if no SSH key added, can't use this URL for clone
+# git clone git@github.com:winter-again/backups.git
+git clone https://github.com/winter-again/backups.git "$HOME/Documents/code/backups"
+cd "$HOME/Documents/code/backups" || exit
+just lab
+just personal
+git remote set-url origin git@github.com:winter-again/backups.git
+cd "$HOME" || exit
+
+# TODO: CUPS for printing?
+# TODO: SMART tools?
+
+echo "Installing ufw and activating firewall..."
+paru_install ufw
+systemctl enable --now ufw.service
+ufw enable
+
+echo "Setting SSH URL for dotfiles repo and stowing dotfiles..."
+cd "$HOME/.dotfiles" || exit
+git remote set-url origin git@github.com:winter-again/.dotfiles.git
+just stow
+cd "$HOME" || exit
+
+echo "Done. Reboot the system."
+
+#######################
+
+echo "Disabling suspend on lid close..."
+sed -i "s/^#\{0,1\}HandleLidSwitch=.*/HandleLidSwitch=ignore" /etc/systemd/logind.conf
+sed -i "s/^#\{0,1\}HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore" /etc/systemd/logind.conf
+sed -i "s/^#\{0,1\}HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore" /etc/systemd/logind.conf
+
+echo "Disabling wake on lid open..."
+cat <<EOF >/etc/systemd/system/toggle-lid-wakeup.service
+[Unit]
+Description="Disable LID0 wake from suspend trigger"
+
+[Service]
+ExecStart=/bin/sh -c "/bin/echo LID0 > /proc/acpi/wakeup"
+
+[Install]
+WantedBy=multi-user.target
+EOF
