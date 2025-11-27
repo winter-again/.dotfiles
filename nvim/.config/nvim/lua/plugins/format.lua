@@ -6,11 +6,11 @@ return {
             require("conform").setup({
                 -- NOTE: conform can find local formatters like prettier installed as dev dep
                 formatters_by_ft = {
-                    css = { "prettierd", "prettier", stop_after_reset = true },
+                    css = { "biome", "prettierd", "prettier", stop_after_first = true },
                     go = { "goimports", "gofmt" }, -- sequential
-                    html = { "prettierd", "prettier", stop_after_reset = true },
-                    javascript = { "prettierd", "prettier", stop_after_first = true },
-                    javascriptreact = { "prettierd", "prettier", stop_after_reset = true },
+                    html = { "biome", "prettierd", "prettier", stop_after_first = true },
+                    javascript = { "biome", "prettierd", "prettier", stop_after_first = true },
+                    javascriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
                     json = { lsp_format = "prefer" },
                     just = { "just" },
                     lua = { "stylua" },
@@ -22,8 +22,8 @@ return {
                     -- b/c it's in ~/.local/bin
                     -- sql = { "sqruff" },
                     toml = { "taplo" },
-                    typescript = { "prettierd", "prettier", stop_after_reset = true },
-                    typescriptreact = { "prettierd", "prettier", stop_after_reset = true },
+                    typescript = { "biome", "prettierd", "prettier", stop_after_first = true },
+                    typescriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
                     typst = { lsp_format = "prefer" },
                     -- 'injected' allows formatting of code fence blocks
                     -- or in python to format sql inside of queries

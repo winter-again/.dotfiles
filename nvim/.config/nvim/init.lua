@@ -55,24 +55,4 @@ require("lazy").setup({
     { import = "plugins" },
 }, lazy_opts)
 
--- local function colorize(cs_idx)
---     local colorschemes = {
---         -- muted
---         "winter-again",
---         "mellifluous",
---         "vague",
---         "kanagawa-paper",
---         "posterpole",
---         "lackluster-hack",
---         -- heavier contrast
---         "tokyonight",
---         "catppuccin",
---         "rose-pine",
---         "kanagawa",
---     }
---     vim.cmd("colorscheme " .. colorschemes[cs_idx])
---     vim.cmd("Transp")
--- end
-
--- colorize(1)
 vim.cmd("colorscheme winter-again")

@@ -239,6 +239,7 @@ return {
                         },
                     },
                 },
+                -- ["biome"] = {},
                 ["ruff"] = {
                     on_attach = function(client, bufnr)
                         -- disable Ruff's hover to use Pyright instead

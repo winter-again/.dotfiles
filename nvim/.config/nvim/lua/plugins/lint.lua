@@ -3,16 +3,17 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
         require("lint").linters_by_ft = {
-            javascript = { "eslint" },
-            javascriptreact = { "eslint" },
+            astro = { "biomejs" },
+            javascript = { "biomejs" },
+            javascriptreact = { "biomejs" },
             lua = { "selene" },
             markdown = { "markdownlint-cli2" },
             sh = { "shellcheck" },
             -- installed via uv tool interface but nvim-lint can find b/c it's in ~/.local/bin
             -- can also activate via LSP interface
             sql = { "sqruff" },
-            typescript = { "eslint" },
-            typescriptreact = { "eslint" },
+            typescript = { "biomejs" },
+            typescriptreact = { "biomejs" },
         }
 
         local lint_group = vim.api.nvim_create_augroup("lint", { clear = true })

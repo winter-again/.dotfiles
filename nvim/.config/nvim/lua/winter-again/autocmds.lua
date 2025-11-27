@@ -29,15 +29,6 @@ vim.api.nvim_create_autocmd({ "WinEnter", "WinLeave" }, {
     command = "set nofen",
 })
 
--- disable treesitter context in .md files if having issues
--- vim.api.nvim_create_autocmd("FileType", {
---     group = au_group,
---     pattern = { "markdown" },
---     callback = function()
---         require("treesitter-context").disable()
---     end,
--- })
-
 -- remove items from qflist
 -- source: https://github.com/rmarganti/.dotfiles/blob/main/dots/.config/nvim/lua/rmarganti/core/autocommands.lua#L12
 local function del_qflist()
@@ -76,5 +67,20 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_set_option_value("buflisted", false, { buf = 0 })
         vim.keymap.set("n", "dd", del_qflist, { buffer = true })
         vim.keymap.set("", "d", del_qflist, { buffer = true })
+    end,
+})
+
+-- TODO: only a hunch that this is necessary
+-- ensure these are set even if files loaded from session
+vim.api.nvim_create_autocmd("BufRead", {
+    group = au_group,
+    pattern = { "markdown", "mdx" },
+    callback = function()
+        vim.opt_local.wrap = true
+        -- wrap long lines at chars in breakat var
+        vim.opt_local.linebreak = true
+        -- wrapped lines keep any indents
+        vim.opt_local.breakindent = true
+        vim.opt_local.spell = true
     end,
 })
