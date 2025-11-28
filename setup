@@ -216,6 +216,9 @@ go_dev_pkgs=(
 )
 paru_install "${go_dev_pkgs[@]}"
 
+echo "Installing flow..."
+go install github.com/winter-again/flow@latest
+
 echo "Installing Typst packages..."
 typst_dev_pkgs=(
     typst
