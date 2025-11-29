@@ -1,0 +1,6 @@
+font=ZedMono Nerd Font Mono 10
+
+[exit]
+layer=overlay
+background=0f0f0f
+button-background=393939

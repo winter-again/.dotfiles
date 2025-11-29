@@ -69,7 +69,7 @@ set {
     $down j
     $up k
     $right l
-    $term ghostty
+    $term wezterm
     $browser firefox
     $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
@@ -109,14 +109,14 @@ workspace 7 gaps outer 20
 bindsym {
     $mod+Return exec $term
     $mod+Shift+q kill
-    $mod+m exec $menu
+    $mod+o exec $menu
     $mod+i exec $browser
-    $mod+o exec nemo
+    $mod+n exec nemo
     # reload config file
     $mod+Shift+r reload
     $mod+Shift+w exec killall -SIGUSR2 waybar
     # Exit sway (logs you out of your Wayland session)
-    $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
+    $mod+Shift+e exec swaynag -t exit -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
     # power menu
     $mod+Shift+p exec ~/.config/tofi/power-menu.sh
     $mod+Shift+comma exec gtklock
@@ -165,7 +165,7 @@ bindsym {
     $mod+t layout tabbed
     # Cycle through customizable set of layouts
     # layout toggle split can act like a reset out of tabs/stack -> then just cycles through split layouts
-    $mod+n layout toggle split
+    $mod+m layout toggle split
     # using split instead of splitv and splith here means only the current split layout is considered
     # rather than cycling through both possibilities
     $mod+semicolon layout toggle split tabbed stacking
