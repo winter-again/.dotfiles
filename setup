@@ -355,7 +355,7 @@ echo "Enabling and starting fstrim.timer..."
 sudo systemctl enable --now fstrim.timer
 
 echo "Increasing allowed failed login attempts from 3 to 5..."
-sudo sed -i 's/.*deny = .*/deny = 5/' /etc/tlp.conf
+sudo sed -i 's/.*deny = .*/deny = 5/' /etc/security/faillock.conf
 
 echo "Mapping caps lock to escape and control..."
 paru_install keyd
