@@ -12,11 +12,11 @@
  * "Ad meliora"                                                             *
  * version: 144                                                             *
  * url: https://github.com/yokoffing/Betterfox                              *
-****************************************************************************/
+ ****************************************************************************/
 
 /****************************************************************************
  * SECTION: FASTFOX                                                         *
-****************************************************************************/
+ ****************************************************************************/
 /** GENERAL ***/
 user_pref("gfx.content.skia-font-cache-size", 32);
 
@@ -65,7 +65,7 @@ user_pref("network.predictor.enabled", false);
 
 /****************************************************************************
  * SECTION: SECUREFOX                                                       *
-****************************************************************************/
+ ****************************************************************************/
 /** TRACKING PROTECTION ***/
 user_pref("browser.contentblocking.category", "strict");
 user_pref("privacy.trackingprotection.allow_list.baseline.enabled", true);
@@ -161,15 +161,21 @@ user_pref("browser.tabs.crashReporting.sendReport", false);
 
 /****************************************************************************
  * SECTION: PESKYFOX                                                        *
-****************************************************************************/
+ ****************************************************************************/
 /** MOZILLA UI ***/
 user_pref("browser.privatebrowsing.vpnpromourl", "");
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("browser.discovery.enabled", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+user_pref(
+    "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons",
+    false
+);
+user_pref(
+    "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features",
+    false
+);
 user_pref("browser.preferences.moreFromMozilla", false);
 user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.aboutwelcome.enabled", false);
@@ -216,7 +222,7 @@ user_pref("layout.word_select.eat_space_to_next_word", false);
 
 /****************************************************************************
  * START: MY OVERRIDES                                                      *
-****************************************************************************/
+ ****************************************************************************/
 // visit https://github.com/yokoffing/Betterfox/wiki/Common-Overrides
 // visit https://github.com/yokoffing/Betterfox/wiki/Optional-Hardening
 // Enter your personal overrides below this line:
@@ -232,7 +238,7 @@ user_pref("browser.newtabpage.activity-stream.feeds.topsites", true);
 // This does not block you from adding your own.
 user_pref("browser.newtabpage.activity-stream.default.sites", "");
 // PREF: remove sponsored content on New Tab page
-user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // Sponsored shortcuts 
+user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // Sponsored shortcuts
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false); // Recommended by Pocket
 user_pref("browser.newtabpage.activity-stream.showSponsored", false); // Sponsored Stories
 
@@ -247,7 +253,7 @@ user_pref("privacy.userContext.enabled", true);
 // PREF: disable Firefox Sync
 user_pref("identity.fxaccounts.enabled", false);
 // PREF: disable the Firefox View tour from popping up
-user_pref("browser.firefox-view.feature-tour", "{\"screen\":\"\",\"complete\":true}");
+user_pref("browser.firefox-view.feature-tour", '{"screen":"","complete":true}');
 
 // PREF: disable login manager
 user_pref("signon.rememberSignons", false);
@@ -309,7 +315,7 @@ user_pref("media.eme.enabled", false);
 
 /****************************************************************************
  * from arkenfox user.js
-****************************************************************************/
+ ****************************************************************************/
 
 // PREF: require safe negotiation
 // [ERROR] SSL_ERROR_UNSAFE_NEGOTIATION
@@ -330,7 +336,7 @@ user_pref("security.ssl.require_safe_negotiation", true);
 
 /****************************************************************************
  * Not privacy related
-****************************************************************************/
+ ****************************************************************************/
 
 // SIDEBAR
 // activate sidebar
@@ -376,13 +382,13 @@ user_pref("browser.tabs.hoverPreview.showThumbnails", false);
 
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *
-****************************************************************************/
+ ****************************************************************************/
 // visit https://github.com/yokoffing/Betterfox/blob/main/Smoothfox.js
 // Enter your scrolling overrides below this line:
 
 /****************************************************************************************
  * OPTION: INSTANT SCROLLING (SIMPLE ADJUSTMENT)                                       *
-****************************************************************************************/
+ ****************************************************************************************/
 // recommended for 60hz+ displays
 user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
 user_pref("general.smoothScroll", true); // DEFAULT
@@ -390,4 +396,4 @@ user_pref("mousewheel.default.delta_multiplier_y", 275); // 250-400; adjust this
 
 /****************************************************************************
  * END: BETTERFOX                                                           *
-****************************************************************************/
+ ****************************************************************************/

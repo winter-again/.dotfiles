@@ -109,7 +109,7 @@ bindsym {
     $mod+Shift+r reload
     $mod+Shift+w exec killall -SIGUSR2 waybar
     # exit sway (logs you out of your Wayland session)
-    $mod+Shift+e exec swaynag -t warning -m "Exit Sway?" -B "Yes" "swaymsg exit"
+    $mod+Shift+e exec swaynag -t exit -m "Exit Sway?" -B "Yes" "swaymsg exit"
     # power menu
     $mod+Shift+p exec ~/.config/tofi/power-menu.sh
     $mod+Shift+comma exec gtklock
