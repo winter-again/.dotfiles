@@ -99,6 +99,7 @@ paru_install "${font_pkgs[@]}"
 
 echo "Installing zsh packages..."
 zsh_pkgs=(
+    zsh
     zsh-autosuggestions
     zsh-completions
     zsh-syntax-highlighting
@@ -149,6 +150,7 @@ python_dev_pkgs=(
 )
 paru_install "${python_dev_pkgs[@]}"
 echo "Installing uv tools..."
+# NOTE: need --managed-python?
 uv python install --managed-python
 uv_tools=(
     basedpyright
@@ -179,8 +181,11 @@ js_dev_pkgs=(
     vscode-json-languageserver
 )
 paru_install  "${js_dev_pkgs[@]}"
+# NOTE: seems that this fails if given path isn't in PATH
+# so I set PATH like this and it works; should double-check this
 echo "Installing Astro LSP as global package via pnpm..."
 export PNPM_HOME="$HOME/.local/share/pnpm"
+PATH="$PATH:$HOME/.local/share/pnpm"
 pnpm install -g @astrojs/language-server
 
 echo "Installing Rust packages..."
@@ -210,14 +215,18 @@ nvim_pkgs=(
     unzip
 )
 paru_install "${nvim_pkgs[@]}"
-git clone https://github.com/neovim/neovim.git "$BUILD_REPOS/neovim"
-cd "$BUILD_REPOS/neovim" || exit 1
-git remote set-url origin git@github.com:neovim/neovim.git
-git remote set-url --push origin git@github.com:neovim/neovim.git
-git checkout nightly
-make CMAKE_BUILD_TYPE=RelWithDebInfo
-sudo make install
-cd "$HOME" || exit 1
+if ! type nvim > /dev/null; then
+    git clone https://github.com/neovim/neovim.git "$BUILD_REPOS/neovim"
+    cd "$BUILD_REPOS/neovim" || exit 1
+    git remote set-url origin git@github.com:neovim/neovim.git
+    git remote set-url --push origin git@github.com:neovim/neovim.git
+    git checkout nightly
+    make CMAKE_BUILD_TYPE=RelWithDebInfo
+    sudo make install
+    cd "$HOME" || exit 1
+else
+    echo "Neovim already installed..."
+fi
 
 echo "Installing theming packages. Must still set theme manually..."
 theming_pkgs=(
@@ -262,8 +271,8 @@ zathura_pkgs=(
     zathura-pdf-mupdf
 )
 # NOTE: select 30 for tesseract pkg
-paru -S --needed "${zathura_pkgs[@]}"
 printf "%s\n" 30 Y | paru -S --needed "${zathura_pkgs[@]}"
+# paru -S --needed "${zathura_pkgs[@]}"
 
 echo "Installing AUR packages..."
 aur_pkgs=(
@@ -275,6 +284,7 @@ aur_pkgs=(
 )
 # NOTE: will require manual responses and PKGBUILD review
 paru -S --needed "${aur_pkgs[@]}"
+# paru_install "${aur_pkgs[@]}"
 
 echo "Installing Wezterm terminfo..."
 tempfile=$(mktemp) \
@@ -283,14 +293,16 @@ tempfile=$(mktemp) \
     && rm "$tempfile"
 
 echo "Cloning dotfiles, setting SSH URL, and stowing dotfiles..."
-git clone https://github.com/winter-again/.dotfiles.git
-cd "$HOME/.dotfiles" || exit 1
-git remote set-url origin git@github.com:winter-again/.dotfiles.git
-git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
-just
-cd "$HOME" || exit 1
+if [[ ! -d "$HOME/.dotfiles" ]]; then
+    git clone https://github.com/winter-again/.dotfiles.git
+    cd "$HOME/.dotfiles" || exit 1
+    git remote set-url origin git@github.com:winter-again/.dotfiles.git
+    git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
+    just
+    cd "$HOME" || exit 1
+fi	
 
-echo "Configuring SSH for GitHub..."
+echo "Configuring SSH and key for GitHub..."
 paru_install openssh
 ssh-keygen -t ed25519 -f "$HOME/.ssh/github" -C XPS
 cat > "$HOME/.ssh/config" <<"EOF"
@@ -320,8 +332,9 @@ sound_pkgs=(
 # paru -S --needed "${sound_pkgs[@]}"
 printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
 
-echo "Using rfkill to disable bluetooth..."
-rfkill block bluetooth
+# NOTE: handle via TLP
+# echo "Using rfkill to disable bluetooth..."
+# rfkill block bluetooth
 
 echo "Installing system maintenance packages..."
 sys_maint_pkgs=(
@@ -375,14 +388,14 @@ sudo systemctl enable --now tlp.service
 sudo systemctl enable --now NetworkManager-dispatcher.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
-sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
-sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_LAN_CONNECT.*/DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"/' /etc/tlp.conf
-sudo sed -i 's/.*DEVICES_TO_ENABLE_ON_LAN_DISCONNECT.*/DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"/' /etc/tlp.conf
+sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP=.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
+sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_LAN_CONNECT=.*/DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"/' /etc/tlp.conf
+sudo sed -i 's/.*DEVICES_TO_ENABLE_ON_LAN_DISCONNECT=.*/DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"/' /etc/tlp.conf
 
 echo "Disabling lid switch..."
-sudo sed -i "s/.*HandleLidSwitch.*/HandleLidSwitch=ignore" /etc/systemd/logind.conf
-sudo sed -i "s/.*HandleLidSwitchExternalPower.*/HandleLidSwitchExternalPower=ignore" /etc/systemd/logind.conf
-sudo sed -i "s/.*HandleLidSwitchDocked.*/HandleLidSwitchDocked=ignore" /etc/systemd/logind.conf
+sudo sed -i "s/.*HandleLidSwitch=.*/HandleLidSwitch=ignore/" /etc/systemd/logind.conf
+sudo sed -i "s/.*HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore/" /etc/systemd/logind.conf
+sudo sed -i "s/.*HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/" /etc/systemd/logind.conf
 sudo tee /etc/systemd/system/ignore-lid-wakeup.service > /dev/null <<"EOF"
 [Unit]
 Description="Disable LID0 wake from suspend trigger"
