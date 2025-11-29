@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # NOTE: run as newly created user
+
 set -uxo pipefail
 
 pacman_install() {
@@ -15,6 +16,7 @@ BUILD_REPOS="$HOME/build-repos"
 PARU_REPO="$BUILD_REPOS/paru"
 
 read -r -p "Confirm ready to setup system for user $USER with home $HOME (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1
+echo
 
 cd "$HOME" || exit 1
 
@@ -24,6 +26,7 @@ ping -c 3 archlinux.org || { echo "Not connected to internet" && exit 1; }
 echo "Configuring /etc/pacman.conf..."
 sudo sed -i "/Color/s/^#//g" /etc/pacman.conf
 sudo sed -i "/VerbosePkgLists/s/^#//g" /etc/pacman.conf
+sudo sed -i "/CheckSpace/s/^#//g" /etc/pacman.conf # should already be default
 
 echo "Updating before proceeding..."
 sudo pacman -Syu --noconfirm
@@ -68,6 +71,22 @@ intel_graphics_pkgs=(
     libva-utils
 )
 paru_install "${intel_graphics_pkgs[@]}"
+
+echo "Installing Pipewire and other sound packages..."
+sound_pkgs=(
+    pipewire
+    pipewire-audio
+    pipewire-alsa
+    pipewire-pulse
+    pipewire-jack
+    wireplumber
+    pavucontrol
+)
+# NOTE: will be prompted to replace jack2 with pipewire-jack, so respond with "y" since
+# default is "N"
+# NOTE: can't use --no-confirm for this
+# paru -S --needed "${sound_pkgs[@]}"
+printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
 
 echo "Installing Sway and other core packages..."
 sway_pkgs=(
@@ -150,8 +169,8 @@ python_dev_pkgs=(
 )
 paru_install "${python_dev_pkgs[@]}"
 echo "Installing uv tools..."
-# NOTE: need --managed-python?
-uv python install --managed-python
+# NOTE: not sure if --managed-python is needed, but doesn't hurt
+uv python --managed-python install # installs latest Python
 uv_tools=(
     basedpyright
 )
@@ -181,12 +200,15 @@ js_dev_pkgs=(
     vscode-json-languageserver
 )
 paru_install  "${js_dev_pkgs[@]}"
-# NOTE: seems that this fails if given path isn't in PATH
-# so I set PATH like this and it works; should double-check this
 echo "Installing Astro LSP as global package via pnpm..."
-export PNPM_HOME="$HOME/.local/share/pnpm"
+# NOTE: seems that this fails if given path isn't in PATH
+# so I set PATH like this and it works, even if path doesn't exist
+# Not sure if setting PNPM_HOME is needed as well. It should resolve to that path by default
+# export PNPM_HOME="$HOME/.local/share/pnpm"
 PATH="$PATH:$HOME/.local/share/pnpm"
 pnpm install -g @astrojs/language-server
+
+exit 0
 
 echo "Installing Rust packages..."
 rust_dev_pkgs=(
@@ -270,12 +292,13 @@ zathura_pkgs=(
     zathura
     zathura-pdf-mupdf
 )
-# NOTE: select 30 for tesseract pkg
+# NOTE: select 30 for tesseract eng pkg
 printf "%s\n" 30 Y | paru -S --needed "${zathura_pkgs[@]}"
 # paru -S --needed "${zathura_pkgs[@]}"
 
 echo "Installing AUR packages..."
 aur_pkgs=(
+    epson-inkjet-printer-escpr2
     librewolf-bin
     oh-my-posh-bin
     slack-desktop
@@ -292,18 +315,9 @@ tempfile=$(mktemp) \
     && tic -x -o ~/.terminfo "$tempfile" \
     && rm "$tempfile"
 
-echo "Cloning dotfiles, setting SSH URL, and stowing dotfiles..."
-if [[ ! -d "$HOME/.dotfiles" ]]; then
-    git clone https://github.com/winter-again/.dotfiles.git
-    cd "$HOME/.dotfiles" || exit 1
-    git remote set-url origin git@github.com:winter-again/.dotfiles.git
-    git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
-    just
-    cd "$HOME" || exit 1
-fi	
-
 echo "Configuring SSH and key for GitHub..."
 paru_install openssh
+# NOTE: will prompt for password
 ssh-keygen -t ed25519 -f "$HOME/.ssh/github" -C XPS
 cat > "$HOME/.ssh/config" <<"EOF"
 Host github.com
@@ -313,28 +327,18 @@ Host github.com
     PreferredAuthentications publickey
 EOF
 
+echo "Cloning dotfiles, setting SSH URL, and stowing dotfiles..."
+if [[ ! -d "$HOME/.dotfiles" ]]; then
+    git clone https://github.com/winter-again/.dotfiles.git "$HOME/.dotfiles"
+    cd "$HOME/.dotfiles" || exit 1
+    git remote set-url origin git@github.com:winter-again/.dotfiles.git
+    git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
+    just
+    cd "$HOME" || exit 1
+fi	
+
 echo "Installing flow..."
 go install github.com/winter-again/flow@latest
-
-echo "Installing Pipewire and other sound packages..."
-sound_pkgs=(
-    pipewire
-    pipewire-audio
-    pipewire-alsa
-    pipewire-pulse
-    pipewire-jack
-    wireplumber
-    pavucontrol
-)
-# NOTE: will be prompted to replace jack2 with pipewire-jack, so respond with "y" since
-# default is "N"
-# NOTE: can't use --no-confirm for this
-# paru -S --needed "${sound_pkgs[@]}"
-printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
-
-# NOTE: handle via TLP
-# echo "Using rfkill to disable bluetooth..."
-# rfkill block bluetooth
 
 echo "Installing system maintenance packages..."
 sys_maint_pkgs=(
@@ -368,6 +372,37 @@ sudo systemctl enable --now keyd.service
 echo "Installing rclone, restic, and rsync for backups..."
 paru_install rclone restic rsync
 
+# echo "Installing GNOME keyring..."
+# paru_install gnome-keyring libsecret
+
+echo "Disabling NetworkManager connectivity check..."
+sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf > /dev/null <<"EOF"
+[connectivity]
+enabled=false
+EOF
+
+echo "Creating NetworkManager dispatcher for setting timezone..."
+sudo tee /etc/NetworkManager/dispatcher.d/09-timezone > /dev/null <<"EOF"
+#!/bin/sh
+
+case "$2" in
+    up)
+        timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
+    ;;
+esac
+EOF
+sudo chown root:root /etc/NetworkManager/dispatcher.d/09-timezone
+sudo chmod +x /etc/NetworkManager/dispatcher.d/09-timezone
+sudo systemctl enable --now NetworkManager-dispatcher.service
+sudo systemctl restart NetworkManager.service
+
+echo "Installing helpful networking packages..."
+network_pkgs=(
+    bind
+    tcpdump
+)
+paru_install "${network_pkgs[@]}"
+
 echo "Installing CUPS and setting up printing..."
 cups_pkgs=(
     cups
@@ -375,20 +410,24 @@ cups_pkgs=(
 )
 paru_install "${cups_pkgs[@]}"
 sudo systemctl enable --now cups.socket
-printf "%s\n" 1 | paru -S --needed epson-inkjet-printer-escpr2
 
 echo "Installing ufw and activating firewall..."
 paru_install ufw
 sudo systemctl enable --now ufw.service
 sudo ufw enable
 
+echo "Blacklisting btusb and bluetooth modules..."
+sudo tee /etc/modprobe.d/blacklist.conf > /dev/null <<"EOF"
+blacklist btusb
+blacklist bluetooth
+EOF
+
 echo "Installing powertop and tlp..."
 paru_install powertop tlp tlp-rdw
 sudo systemctl enable --now tlp.service
-sudo systemctl enable --now NetworkManager-dispatcher.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
-sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP=.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
+# sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP=.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
 sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_LAN_CONNECT=.*/DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"/' /etc/tlp.conf
 sudo sed -i 's/.*DEVICES_TO_ENABLE_ON_LAN_DISCONNECT=.*/DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"/' /etc/tlp.conf
 
@@ -406,35 +445,6 @@ ExecStart=/bin/sh -c "/bin/echo LID0 > /proc/acpi/wakeup"
 [Install]
 WantedBy=multi-user.target
 EOF
-
-echo "Installing helpful networking packages..."
-network_pkgs=(
-    bind
-    tcpdump
-)
-paru_install "${network_pkgs[@]}"
-
-echo "Installing GNOME keyring..."
-paru_install gnome-keyring libsecret
-
-echo "Disabling NetworkManager connectivity check..."
-sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf > /dev/null <<"EOF"
-[connectivity]
-enabled=false
-EOF
-
-echo "Creating NetworkManager dispatcher to set timezone..."
-sudo tee /etc/NetworkManager/dispatcher.d/09-timezone > /dev/null <<"EOF"
-#!/bin/sh
-
-case "$2" in
-    up)
-        timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
-    ;;
-esac
-EOF
-sudo chmod +x /etc/NetworkManager/dispatcher.d/09-timezone
-sudo systemctl restart NetworkManager.service
 
 echo
 echo "Done. Reboot the system..."
