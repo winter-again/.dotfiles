@@ -279,6 +279,7 @@ app_pkgs=(
     chromaprint
     gst-libav
     imv
+    libreoffice-still
     mpv
     picard
     qt5-wayland
