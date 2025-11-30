@@ -31,8 +31,12 @@ require("winter-again.globals")
 require("winter-again.keymaps")
 
 local lazy_opts = {
+    rocks = {
+        enabled = false,
+    },
     dev = {
         path = "~/Documents/code/nvim-dev",
+        fallback = false,
     },
     install = {
         -- try to load one of these when installing during startup
