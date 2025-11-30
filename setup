@@ -88,12 +88,21 @@ sound_pkgs=(
 # paru -S --needed "${sound_pkgs[@]}"
 printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
 
+echo "Blacklisting bluetooth and btusb modules..."
+sudo tee /etc/modprobe.d/blacklist.conf > /dev/null <<"EOF"
+blacklist bluetooth
+blacklist btusb
+EOF
+echo "Regenerating mkinitcpio..."
+mkinitcpio -P
+
 echo "Installing Sway and other core packages..."
 sway_pkgs=(
     sway
     swayidle
     swaybg
     brightnessctl
+    ghostty
     grim
     gtklock
     kanshi
@@ -110,6 +119,7 @@ echo "Installing fonts..."
 font_pkgs=(
     ttf-zed-mono-nerd
     ttf-iosevka-nerd
+    ttf-nerd-fonts-symbols-mono
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
@@ -125,9 +135,6 @@ zsh_pkgs=(
 )
 paru_install "${zsh_pkgs[@]}"
 
-echo "Installing Ghostty..."
-paru_install ghostty
-
 echo "Installing core tools..."
 tools=(
     bat
@@ -139,6 +146,8 @@ tools=(
     fzf
     jaq
     just
+    openssh
+    poppler
     ripgrep
     stow
     task
@@ -206,7 +215,7 @@ echo "Installing Astro LSP as global package via pnpm..."
 # Seems that setting PNPM_HOME is needed as well. Though it should resolve to that path by default
 export PNPM_HOME="$HOME/.local/share/pnpm"
 PATH="$PATH:$PNPM_HOME"
-pnpm install -g @astrojs/language-server
+pnpm add -g @astrojs/language-server
 
 echo "Installing Rust packages..."
 rust_dev_pkgs=(
@@ -248,15 +257,38 @@ else
     echo "Neovim already installed..."
 fi
 
-echo "Installing theming packages. Must still set theme manually..."
-theming_pkgs=(
+echo "Mapping caps lock to escape and control..."
+paru_install keyd
+sudo tee /etc/keyd/default.conf > /dev/null <<"EOF"
+[ids]
+
+*
+
+[main]
+
+capslock = overload(control, esc)
+EOF
+sudo systemctl enable --now keyd.service
+
+echo "Cloning dotfiles and stowing dotfiles..."
+if [[ ! -d "$HOME/.dotfiles" ]]; then
+    git clone https://github.com/winter-again/.dotfiles.git "$HOME/.dotfiles"
+    cd "$HOME/.dotfiles" || exit 1
+    git remote set-url origin git@github.com:winter-again/.dotfiles.git
+    git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
+    just
+    cd "$HOME" || exit 1
+fi	
+
+echo "Installing Materia theme packages for GTK and Qt. Must still set theme manually..."
+theme_pkgs=(
     kvantum
     kvantum-qt5
     kvantum-theme-materia
     materia-gtk-theme
     nwg-look
 )
-paru_install "${theming_pkgs[@]}"
+paru_install "${theme_pkgs[@]}"
 
 echo "Installing XDG desktop portals..."
 xdg_portal_pkgs=(
@@ -266,13 +298,6 @@ xdg_portal_pkgs=(
 )
 paru_install "${xdg_portal_pkgs[@]}"
 
-echo "Installing Nemo and setting as default file manager..."
-paru_install nemo
-# set as default file browser
-xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
-# set Wezterm as default terminal for Nemo
-gsettings set org.cinnamon.desktop.default-applications.terminal exec wezterm
-
 echo "Installing other apps..."
 app_pkgs=(
     amberol
@@ -281,12 +306,19 @@ app_pkgs=(
     imv
     libreoffice-still
     mpv
+    nemo
     picard
     qt5-wayland
     spotify-launcher
 )
 paru_install "${app_pkgs[@]}"
+# imv
+xdg-mime default imv-dir.desktop image/png image/jpeg
+# nemo
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+gsettings set org.cinnamon.desktop.default-applications.terminal exec wezterm
 
+echo "Installing zathura..."
 zathura_pkgs=(
     zathura
     zathura-pdf-mupdf
@@ -294,8 +326,10 @@ zathura_pkgs=(
 # NOTE: select 30 for tesseract eng pkg
 printf "%s\n" 30 Y | paru -S --needed "${zathura_pkgs[@]}"
 # paru -S --needed "${zathura_pkgs[@]}"
+# NOTE: uses custom stowed desktop file
+xdg-mime default org.pwmt.zathura-sandbox.desktop application/pdf
 
-echo "Installing AUR packages..."
+echo "Installing all AUR packages..."
 aur_pkgs=(
     epson-inkjet-printer-escpr2
     librewolf-bin
@@ -313,28 +347,6 @@ tempfile=$(mktemp) \
     && curl -o "$tempfile" https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo \
     && tic -x -o ~/.terminfo "$tempfile" \
     && rm "$tempfile"
-
-# echo "Configuring SSH and key for GitHub..."
-# paru_install openssh
-# # NOTE: will prompt for password
-# ssh-keygen -f "$HOME/.ssh/github" -C "$(whoami)@$(uname -n)"
-# cat > "$HOME/.ssh/config" <<"EOF"
-# Host github.com
-#     HostName github.com
-#     IdentitiesOnly yes
-#     IdentityFile ~/.ssh/github
-#     PreferredAuthentications publickey
-# EOF
-
-echo "Cloning dotfiles, setting SSH URL, and stowing dotfiles..."
-if [[ ! -d "$HOME/.dotfiles" ]]; then
-    git clone https://github.com/winter-again/.dotfiles.git "$HOME/.dotfiles"
-    cd "$HOME/.dotfiles" || exit 1
-    git remote set-url origin git@github.com:winter-again/.dotfiles.git
-    git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
-    just
-    cd "$HOME" || exit 1
-fi	
 
 echo "Installing flow..."
 go install github.com/winter-again/flow@latest
@@ -356,30 +368,16 @@ echo "Enabling and starting fstrim.timer..."
 sudo systemctl enable --now fstrim.timer
 
 echo "Increasing allowed failed login attempts from 3 to 5..."
-sudo sed -i 's/.*deny = .*/deny = 5/' /etc/security/faillock.conf
-
-echo "Mapping caps lock to escape and control..."
-paru_install keyd
-sudo tee /etc/keyd/default.conf > /dev/null <<"EOF"
-[ids]
-
-*
-
-[main]
-
-capslock = overload(control, esc)
-EOF
-sudo systemctl enable --now keyd.service
+sudo sed -i "s/.*deny = .*/deny = 5/" /etc/security/faillock.conf
 
 echo "Installing rclone, restic, and rsync for backups..."
 paru_install rclone restic rsync
 
-# echo "Installing GNOME keyring..."
-# paru_install gnome-keyring libsecret
-
-echo "Installing helpful networking packages..."
+echo "Installing networking-related packages..."
 network_pkgs=(
     bind
+    gnome-keyring
+    libsecret
     tcpdump
 )
 paru_install "${network_pkgs[@]}"
@@ -400,32 +398,18 @@ case "$2" in
     ;;
 esac
 EOF
-sudo chown root:root /etc/NetworkManager/dispatcher.d/09-timezone
 sudo chmod +x /etc/NetworkManager/dispatcher.d/09-timezone
+sudo chown root:root /etc/NetworkManager/dispatcher.d/09-timezone
 sudo systemctl enable --now NetworkManager-dispatcher.service
 sudo systemctl restart NetworkManager.service
 
-echo "Installing CUPS and setting up printing..."
-cups_pkgs=(
-    cups
-    cups-pdf
-)
-paru_install "${cups_pkgs[@]}"
-sudo systemctl enable --now cups.socket
-
-echo "Installing ufw and activating firewall..."
-paru_install ufw
-sudo systemctl enable --now ufw.service
-sudo ufw enable
-
-echo "Blacklisting btusb and bluetooth modules..."
-sudo tee /etc/modprobe.d/blacklist.conf > /dev/null <<"EOF"
-blacklist btusb
-blacklist bluetooth
-EOF
-
 echo "Installing powertop and tlp..."
-paru_install powertop tlp tlp-rdw
+power_pkgs=(
+    powertop
+    tlp
+    tlp-rdw
+)
+paru_install "${power_pkgs[@]}"
 sudo systemctl enable --now tlp.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
@@ -448,6 +432,31 @@ ExecStart=/bin/sh -c "/bin/echo LID0 > /proc/acpi/wakeup"
 [Install]
 WantedBy=multi-user.target
 EOF
+
+echo "Installing CUPS..."
+cups_pkgs=(
+    cups
+    cups-pdf
+)
+paru_install "${cups_pkgs[@]}"
+sudo systemctl enable --now cups.socket
+
+echo "Installing ufw and activating firewall..."
+paru_install ufw
+sudo systemctl enable --now ufw.service
+sudo ufw enable
+
+# echo "Configuring SSH and key for GitHub..."
+# paru_install openssh
+# # NOTE: will prompt for password
+# ssh-keygen -f "$HOME/.ssh/github" -C "$(whoami)@$(uname -n)"
+# cat > "$HOME/.ssh/config" <<"EOF"
+# Host github.com
+#     HostName github.com
+#     IdentitiesOnly yes
+#     IdentityFile ~/.ssh/github
+#     PreferredAuthentications publickey
+# EOF
 
 echo
 echo "Done. Reboot the system..."
