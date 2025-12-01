@@ -411,8 +411,8 @@ power_pkgs=(
 )
 paru_install "${power_pkgs[@]}"
 sudo systemctl enable --now tlp.service
-sudo systemctl mask systemd-rfkill.service
-sudo systemctl mask systemd-rfkill.socket
+sudo systemctl mask --now systemd-rfkill.service
+sudo systemctl mask --now systemd-rfkill.socket
 # NOTE: blacklisting bluetooth modules instead
 # sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP=.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
 sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_LAN_CONNECT=.*/DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"/' /etc/tlp.conf
