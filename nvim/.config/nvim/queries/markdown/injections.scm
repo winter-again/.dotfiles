@@ -1,4 +1,4 @@
-; extends
+;; extends
 
 ; Inject some JS/JSX highlights into markdown/mdx
 ((inline) @injection.content

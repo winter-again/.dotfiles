@@ -13,7 +13,7 @@ return {
                     "--line-number",
                     "--column",
                     "--hidden", -- had to add for stuff to show in dotfiles
-                    "--glob=!.git",
+                    "--glob='!{.git,.venv,node_modules}/*'",
                 },
             },
         })

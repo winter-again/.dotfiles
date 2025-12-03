@@ -35,15 +35,16 @@ local lazy_opts = {
         enabled = false,
     },
     dev = {
-        path = "~/Documents/code/nvim-dev",
+        path = "~/Documents/code",
         fallback = false,
     },
     install = {
+        missing = true,
         -- try to load one of these when installing during startup
         colorscheme = { "winter-again", "mellifluous" },
     },
     ui = {
-        border = "none",
+        -- border = "solid", -- or "none"
     },
     checker = {
         enabled = false,
@@ -53,6 +54,20 @@ local lazy_opts = {
         enabled = false,
         notify = false,
     },
+    performance = {
+        rtp = {
+            disabled_plugins = {
+                "gzip",
+                "matchit",
+                -- "matchparen",
+                -- "netrwPlugin",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "zipPlugin",
+            },
+        },
+    },
 }
 require("lazy").setup({
     -- any file in lua/plugins/*.lua will be merged into the main plugin spec
@@ -60,3 +75,5 @@ require("lazy").setup({
 }, lazy_opts)
 
 vim.cmd("colorscheme winter-again")
+
+require("winter-again.statusline")

@@ -1,5 +1,6 @@
 return {
     "chomosuke/typst-preview.nvim",
+    enabled = false,
     ft = "typst",
     version = "1.*",
     config = function()

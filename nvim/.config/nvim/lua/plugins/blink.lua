@@ -1,8 +1,10 @@
+local kind_icons = require("winter-again.icons").kind
+
 return {
     "saghen/blink.cmp",
     dependencies = {
         "L3MON4D3/LuaSnip",
-        "brenoprata10/nvim-highlight-colors",
+        -- "brenoprata10/nvim-highlight-colors",
         "folke/lazydev.nvim",
     },
     version = "1.*",
@@ -15,38 +17,7 @@ return {
         },
         appearance = {
             nerd_font_variant = "mono",
-            kind_icons = {
-                Text = "󰉿",
-                Method = "󰆧",
-                Function = "󰊕",
-                Constructor = "󰒓",
-
-                Field = "󰜢",
-                Variable = "󰂡",
-                Property = "󰜢",
-
-                Class = "󰠱",
-                Interface = "",
-                Struct = "",
-                Module = "󰅩",
-
-                Unit = "󰪚",
-                Value = "󰎠",
-                Enum = "",
-                EnumMember = "",
-
-                Keyword = "󰌋",
-                Constant = "󰏿",
-
-                Snippet = "",
-                Color = "󰏘",
-                File = "󰈙",
-                Reference = "󰬲",
-                Folder = "󰉋",
-                Event = "󱐋",
-                Operator = "󰆕",
-                TypeParameter = "󰬛",
-            },
+            kind_icons = kind_icons,
         },
         completion = {
             documentation = {

@@ -33,7 +33,7 @@ sudo pacman -Syu --noconfirm
 
 echo "Installing and configuring reflector. Activating reflector.timer..."
 pacman_install reflector
-sudo tee /etc/xdg/reflector/reflector.conf > /dev/null <<"EOF"
+sudo tee /etc/xdg/reflector/reflector.conf >/dev/null <<"EOF"
 --protocol https
 --country US,CA
 --latest 10
@@ -51,7 +51,7 @@ pacman_install xdg-user-dirs xdg-utils
 xdg-user-dirs-update
 
 echo "Installing paru..."
-if ! type paru > /dev/null; then
+if ! type paru >/dev/null; then
     pacman_install rustup
     rustup default stable
     mkdir "$BUILD_REPOS"
@@ -89,7 +89,7 @@ sound_pkgs=(
 printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
 
 echo "Blacklisting bluetooth and btusb modules..."
-sudo tee /etc/modprobe.d/blacklist.conf > /dev/null <<"EOF"
+sudo tee /etc/modprobe.d/blacklist.conf >/dev/null <<"EOF"
 blacklist bluetooth
 blacklist btusb
 EOF
@@ -182,6 +182,7 @@ echo "Installing uv tools..."
 uv python --managed-python install # installs latest Python
 uv_tools=(
     basedpyright
+    sqruff
 )
 uv tool install "${uv_tools[@]}"
 
@@ -194,9 +195,11 @@ go_dev_pkgs=(
 paru_install "${go_dev_pkgs[@]}"
 
 echo "Installing Typst packages..."
+# NOTE: websocat is for typst-preview nvim plugin
 typst_dev_pkgs=(
     typst
     tinymist
+    websocat
 )
 paru_install "${typst_dev_pkgs[@]}"
 
@@ -208,7 +211,7 @@ js_dev_pkgs=(
     vscode-css-languageserver
     vscode-json-languageserver
 )
-paru_install  "${js_dev_pkgs[@]}"
+paru_install "${js_dev_pkgs[@]}"
 echo "Installing Astro LSP as global package via pnpm..."
 # NOTE: seems that this fails if given path isn't in PATH
 # so I set PATH like this and it works, even if path doesn't exist
@@ -225,10 +228,12 @@ paru_install "${rust_dev_pkgs[@]}"
 
 echo "Installing other dev packages..."
 dev_pkgs=(
+    clang
     bash-language-server
     markdownlint-cli2
     marksman
     shellcheck
+    shfmt
     taplo-cli
     yaml-language-server
 )
@@ -244,7 +249,7 @@ nvim_pkgs=(
     unzip
 )
 paru_install "${nvim_pkgs[@]}"
-if ! type nvim > /dev/null; then
+if ! type nvim >/dev/null; then
     git clone https://github.com/neovim/neovim.git "$BUILD_REPOS/neovim"
     cd "$BUILD_REPOS/neovim" || exit 1
     git remote set-url origin git@github.com:neovim/neovim.git
@@ -259,7 +264,7 @@ fi
 
 echo "Mapping caps lock to escape and control..."
 paru_install keyd
-sudo tee /etc/keyd/default.conf > /dev/null <<"EOF"
+sudo tee /etc/keyd/default.conf >/dev/null <<"EOF"
 [ids]
 
 *
@@ -278,7 +283,7 @@ if [[ ! -d "$HOME/.dotfiles" ]]; then
     git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
     just
     cd "$HOME" || exit 1
-fi	
+fi
 
 echo "Installing Materia theme packages for GTK and Qt. Must still set theme manually..."
 theme_pkgs=(
@@ -343,10 +348,10 @@ paru -S --needed "${aur_pkgs[@]}"
 # paru_install "${aur_pkgs[@]}"
 
 echo "Installing Wezterm terminfo..."
-tempfile=$(mktemp) \
-    && curl -o "$tempfile" https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo \
-    && tic -x -o ~/.terminfo "$tempfile" \
-    && rm "$tempfile"
+tempfile=$(mktemp) &&
+    curl -o "$tempfile" https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo &&
+    tic -x -o ~/.terminfo "$tempfile" &&
+    rm "$tempfile"
 
 echo "Installing flow..."
 go install github.com/winter-again/flow@latest
@@ -383,13 +388,13 @@ network_pkgs=(
 paru_install "${network_pkgs[@]}"
 
 echo "Disabling NetworkManager connectivity check..."
-sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf > /dev/null <<"EOF"
+sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf >/dev/null <<"EOF"
 [connectivity]
 enabled=false
 EOF
 
 echo "Creating NetworkManager dispatcher for setting timezone..."
-sudo tee /etc/NetworkManager/dispatcher.d/09-timezone > /dev/null <<"EOF"
+sudo tee /etc/NetworkManager/dispatcher.d/09-timezone >/dev/null <<"EOF"
 #!/bin/sh
 
 case "$2" in
@@ -422,7 +427,7 @@ echo "Disabling lid switch..."
 sudo sed -i "s/.*HandleLidSwitch=.*/HandleLidSwitch=ignore/" /etc/systemd/logind.conf
 sudo sed -i "s/.*HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore/" /etc/systemd/logind.conf
 sudo sed -i "s/.*HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/" /etc/systemd/logind.conf
-sudo tee /etc/systemd/system/ignore-lid-wakeup.service > /dev/null <<"EOF"
+sudo tee /etc/systemd/system/ignore-lid-wakeup.service >/dev/null <<"EOF"
 [Unit]
 Description="Disable LID0 wake from suspend trigger"
 

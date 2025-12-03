@@ -16,8 +16,8 @@ return {
                     lua = { "stylua" },
                     python = { "ruff_organize_imports", "ruff_format" },
                     rust = { "rustfmt" },
-                    -- I think bash LS formats via shfmt if instlled
-                    sh = { lsp_format = "first" },
+                    -- bash LS formats via shfmt if installed
+                    sh = { lsp_format = "prefer" },
                     -- sqruff installed via uv tool interface but conform can find
                     -- b/c it's in ~/.local/bin
                     -- sql = { "sqruff" },

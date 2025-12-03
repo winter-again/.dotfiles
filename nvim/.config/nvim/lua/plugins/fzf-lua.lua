@@ -1,8 +1,10 @@
+--- @diagnostic disable: missing-fields
 return {
     "ibhagwan/fzf-lua",
     -- "https://gitlab.com/ibhagwan/fzf-lua", -- Gitlab alt
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    even = "VimEnter",
+    dependencies = { "nvim-mini/mini.icons" },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "VimEnter",
     config = function()
         local fzf_lua = require("fzf-lua")
         local actions = require("fzf-lua.actions")

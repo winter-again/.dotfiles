@@ -12,6 +12,7 @@ local parsers = {
     },
     "astro",
     "bash",
+    "bibtex",
     "commonlisp",
     "css",
     "csv",
@@ -37,6 +38,7 @@ local parsers = {
     "just",
     "latex",
     "luadoc",
+    "make",
     "printf",
     "python",
     "r",
@@ -54,6 +56,7 @@ local parsers = {
     "udev",
     "yaml",
     "zathurarc",
+    "zsh",
 }
 
 return {

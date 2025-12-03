@@ -2,14 +2,13 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
-        "nvim-tree/nvim-web-devicons",
+        "nvim-mini/mini.icons",
+        -- "nvim-tree/nvim-web-devicons",
     },
     event = {
         "BufReadPre " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
         "BufNewFile " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
     },
-    -- event = { "BufReadPost", "BufNewFile" },
-    -- ft = { "markdown" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {

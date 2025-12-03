@@ -104,6 +104,7 @@
         "tooltip-format": "{load}"
     },
     "memory": {
+        "interval": 30,
         "format": "  {percentage}%",
         "tooltip-format": "{used} / {total} GiB\nswap: {swapUsed} / {swapTotal} GiB"
     },

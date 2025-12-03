@@ -52,4 +52,4 @@ opt.completeopt = { "menu", "menuone", "noselect" }
 opt.foldenable = false
 opt.fillchars:append({ eob = " " }) -- don't use "~" for filling
 -- what gets saved in sessions
-opt.sessionoptions = "buffers,curdir,winpos,winsize"
+opt.sessionoptions = "buffers,curdir,help,winpos,winsize"
