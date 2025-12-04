@@ -3,7 +3,7 @@ return {
         "winter-again/winter-again.nvim",
         lazy = false,
         priority = 1000,
-        dev = true,
+        -- dev = true,
         config = function()
             require("winter-again").setup({
                 saturation = 0,
