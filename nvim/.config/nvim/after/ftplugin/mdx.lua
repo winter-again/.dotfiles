@@ -8,12 +8,6 @@ vim.opt_local.breakindent = true
 
 vim.opt_local.spell = true
 
--- 1 makes concealed links look too long because it has to be a 1:1 conceal, meaning the "["
--- is concealed with just a blank
--- NOTE: setting this to 2 affects the checkbox cycle command
--- vim.opt_local.conceallevel = 2
--- vim.opt_local.concealcursor = "nc" -- modes in which text in cursor line can remain concealed
-
 -- toggle checkbox and keep cursor in place
 local function toggle_checkbox()
     local cursor = vim.api.nvim_win_get_cursor(0)
