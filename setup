@@ -275,7 +275,7 @@ sudo tee /etc/keyd/default.conf >/dev/null <<"EOF"
 
 [main]
 
-capslock = overload(control, esc)
+capslock = overload(control, esc, 150)
 EOF
 sudo systemctl enable --now keyd.service
 

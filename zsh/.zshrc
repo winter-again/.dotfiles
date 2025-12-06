@@ -1,19 +1,20 @@
 unsetopt beep hist_beep list_beep
 
 export SHELL="/usr/bin/zsh"
+export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-export EDITOR="/usr/local/bin/nvim"
-export VISUAL="/usr/local/bin/nvim"
-export DIFFPROG="nvim -d"
-export PAGER="/usr/bin/less"
+export XDG_STATE_HOME="$HOME/.local/state"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER="less"
+export LESS="--incsearch -R" # need -R for git diff colors
+export MANPAGER="nvim +Man!"
 # color manpages with bat
-export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
-# export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+# export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+export DIFFPROG="nvim -d"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/.ripgreprc"
 export BROWSER="firefox"
-
 # override some eza colors
 # fd reads LS_COLORS, not EZA_COLORS
 # see: https://github.com/eza-community/eza/blob/main/man/eza_colors.5.md
@@ -215,20 +216,20 @@ source <(fzf --zsh) # fzf key bindings and fuzzy completion; should come after v
 bindkey "\C-t" fzf-cd-widget # replace Ctrl-t with functionality of Alt-c (search dir and cd)
 
 # fix uv run autocomplete for py files: https://github.com/astral-sh/uv/issues/8432
-if type "uv" > /dev/null; then
-    eval "$(uv generate-shell-completion zsh)"
-    eval "$(uvx --generate-shell-completion zsh)"
-
-    _uv_run_mod() {
-        if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
-            _arguments '*:filename:_files -g "*.py"'
-        else
-            _uv "$@"
-        fi
-    }
-
-    compdef _uv_run_mod uv
-fi
+# if type "uv" > /dev/null; then
+#     eval "$(uv generate-shell-completion zsh)"
+#     eval "$(uvx --generate-shell-completion zsh)"
+#
+#     _uv_run_mod() {
+#         if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+#             _arguments '*:filename:_files -g "*.py"'
+#         else
+#             _uv "$@"
+#         fi
+#     }
+#
+#     compdef _uv_run_mod uv
+# fi
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)

@@ -11,7 +11,7 @@ return {
             sh = { "shellcheck" },
             -- installed via uv tool interface but nvim-lint can find b/c it's in ~/.local/bin
             -- can also activate via LSP interface
-            sql = { "sqruff" },
+            -- sql = { "sqruff" },
             typescript = { "biomejs" },
             typescriptreact = { "biomejs" },
         }
