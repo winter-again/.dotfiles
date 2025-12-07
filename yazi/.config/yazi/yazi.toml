@@ -41,9 +41,9 @@ open = [
 reveal = [
     { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", orphan = true, block = true, for = "linux" },
 ]
-extract = [
-    { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "linux" },
-]
+# extract = [
+#     { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "linux" },
+# ]
 play = [{ run = 'mpv --force-window "$@"', orphan = true, for = "linux" }]
 
 [open]

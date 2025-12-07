@@ -7,17 +7,16 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 
-vim.o.winborder = "solid" -- global border setting; "none", "single", and "solid" are good choices
-vim.o.confirm = true -- ask whether to save unsaved changes
-
 local opt = vim.opt
 
-opt.spelllang = "en_us"
--- default spellfile loc; dir must exist
-opt.spellfile = vim.fn.stdpath("data") .. "/spell/en.utf-8.add"
 -- opt.guicursor = "" -- disable cursor change on mode change
 opt.background = "dark"
+opt.winborder = "solid" -- global border setting for floating windows; "none", "single", and "solid" are good choices
+opt.confirm = true -- ask whether to save unsaved changes
 opt.inccommand = "split" -- preview substitutions live
+opt.spelllang = "en_us"
+-- default spellfile loc; spell dir must exist
+opt.spellfile = vim.fn.stdpath("data") .. "/spell/en.utf-8.add"
 -- opt.winbar = "%{%v:lua.Winbar()%}" -- disable if using incline.nvim
 -- (pseudo)transparency for cmp menu and I guess wildmenu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice

@@ -8,7 +8,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export PAGER="less"
-export LESS="--incsearch -R" # need -R for git diff colors
+export LESS="--ignore-case --incsearch -R --use-color" # need -R for git diff colors
 export MANPAGER="nvim +Man!"
 # color manpages with bat
 # export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
