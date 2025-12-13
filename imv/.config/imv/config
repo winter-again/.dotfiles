@@ -4,6 +4,7 @@
 background = 0f0f0f
 overlay = true
 overlay_font = Zed Mono Nerd Font Mono:12
+# overlay_font = Iosevka Nerd Font Mono:12
 overlay_text_color = 8f8aac
 overlay_text_alpha = ff
 overlay_background_color = 0f0f0f

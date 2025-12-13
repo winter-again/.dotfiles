@@ -140,7 +140,8 @@ return {
             },
         },
         fuzzy = {
-            implementation = "prefer_rust_with_warning",
+            implementation = "lua",
+            -- implementation = "prefer_rust_with_warning",
             sorts = {
                 -- ensure exact matches prioritized
                 "exact",

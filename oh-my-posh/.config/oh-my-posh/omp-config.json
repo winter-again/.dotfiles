@@ -1,105 +1,99 @@
 {
-    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-    "version": 3,
-    "final_space": true,
-    "async": true,
-    "upgrade": {
-        "notice": false,
-        "auto": false
-    },
-    "palette": {
-        "fg": "#f0f0f0",
-        "bg": "#0f0f0f",
-        "purple": "#8f8aac",
-        "pink": "#ac8aac",
-        "yellow": "#aca98a",
-        "red": "#b36d7c",
-        "orange": "#c6a679",
-        "green": "#778c73",
-        "blue": "#7e97ab"
-    },
-    "blocks": [
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+    "fg": "#f0f0f0",
+    "bg": "#0f0f0f",
+    "blue": "#7e97ab",
+    "green": "#778c73",
+    "orange": "#c6a679",
+    "pink": "#ac8aac",
+    "purple": "#8f8aac",
+    "red": "#b36d7c",
+    "yellow": "#aca98a"
+  },
+  "upgrade": {
+    "notice": false,
+    "auto": false
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
         {
-            "alignment": "left",
-            "type": "prompt",
-            "segments": [
-                {
-                    "type": "path",
-                    "style": "plain",
-                    "foreground": "p:purple",
-                    "template": "<b>{{ if not .Writable }}󰌾 {{ end }}{{ .Path }}</b>",
-                    "properties": {
-                        "style": "full"
-                    }
-                },
-                {
-                    "type": "git",
-                    "style": "plain",
-                    "foreground": "p:red",
-                    // note: .Working.Added isn't possible? .Working.Untracked is the only one that makes sense
-                    // .Working, .Staging
-                    // .Untracked, .Added, .Modified, .Deleted, .Changed
-                    // full spec: main ⇣ 1 ⇡ 1 +5 !10 ?4 stash 2 merge rebase
-                    // template = " {{ .HEAD }}{{ if gt .Behind 0 }} ⇣ {{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} ⇡ {{ .Ahead }}{{ end }}{{ if .Staging.Changed }} +{{ add .Staging.Added .Staging.Modified .Staging.Deleted }}{{ end }}{{ if .Working.Changed }} !{{ add .Working.Modified .Working.Deleted }}{{ end }}{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}{{ if gt .StashCount 0 }} stash {{ .StashCount }}{{ end }}{{ if .Merge }} merge{{ end }}{{ if .Rebase }} rebase{{ end }}"
-                    "template": " {{ .HEAD }}{{ if gt .Behind 0 }} ⇣ {{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} ⇡ {{ .Ahead }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} stash {{ .StashCount }}{{ end }}",
-                    "properties": {
-                        "branch_icon": " ",
-                        "commit_icon": "@",
-                        "tag_icon": " ",
-                        "fetch_status": true,
-                        "source": "cli"
-                    }
-                }
-            ]
+          "options": {
+            "style": "full"
+          },
+          "template": "<b>{{ if not .Writable }}\udb80\udf3e {{ end }}{{ .Path }}</b>",
+          "foreground": "p:purple",
+          "type": "path",
+          "style": "plain"
         },
         {
-            "type": "prompt",
-            "alignment": "right",
-            "overflow": "hide",
-            "segments": [
-                {
-                    "type": "executiontime",
-                    "style": "plain",
-                    "template": " {{ .FormattedMs }} ",
-                    "foreground": "p:green",
-                    "properties": {
-                        "threshold": 5000,
-                        "format": "austin"
-                    }
-                },
-                {
-                    "type": "session",
-                    "style": "plain",
-                    "foreground": "p:fg",
-                    "template": "{{ if .SSHSession }}[<#7e97ab>{{ .UserName }}</>@<#8f8aac>{{ .HostName }}</>] {{ end }}"
-                    // "template": "{{ if .SSHSession }} {{.UserName }}@{{ .HostName }} {{ end }}"
-                },
-                {
-                    "type": "time",
-                    "style": "plain",
-                    "template": " {{ .CurrentDate | date .Format }}",
-                    "foreground": "p:blue",
-                    "properties": {
-                        "time_format": "03:04:05 PM"
-                    }
-                }
-            ]
-        },
-        {
-            "type": "prompt",
-            "alignment": "left",
-            "newline": true,
-            "segments": [
-                {
-                    "type": "text",
-                    "style": "plain",
-                    "foreground": "p:blue",
-                    "foreground_templates": [
-                        "{{ if gt .Code 0 }}p:red{{ end }}"
-                    ],
-                    "template": "<b>></b>"
-                }
-            ]
+          "options": {
+            "branch_icon": "\ue725 ",
+            "commit_icon": "@",
+            "fetch_status": true,
+            "source": "cli",
+            "tag_icon": "\uf412 "
+          },
+          "template": " {{ .HEAD }}{{ if gt .Behind 0 }} \u21e3 {{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} \u21e1 {{ .Ahead }}{{ end }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} stash {{ .StashCount }}{{ end }}",
+          "foreground": "p:red",
+          "type": "git",
+          "style": "plain"
         }
-    ]
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "overflow": "hide",
+      "segments": [
+        {
+          "options": {
+            "format": "austin",
+            "threshold": 5000
+          },
+          "template": "\uf252 {{ .FormattedMs }} ",
+          "foreground": "p:green",
+          "type": "executiontime",
+          "style": "plain"
+        },
+        {
+          "template": "{{ if .SSHSession }}[<#7e97ab>{{ .UserName }}</>@<#8f8aac>{{ .HostName }}</>] {{ end }}",
+          "foreground": "p:fg",
+          "type": "session",
+          "style": "plain"
+        },
+        {
+          "options": {
+            "time_format": "03:04:05 PM"
+          },
+          "template": "\uf017 {{ .CurrentDate | date .Format }}",
+          "foreground": "p:blue",
+          "type": "time",
+          "style": "plain"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "template": "<b>></b>",
+          "foreground": "p:blue",
+          "type": "text",
+          "style": "plain",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}p:red{{ end }}"
+          ]
+        }
+      ],
+      "newline": true
+    }
+  ],
+  "version": 4,
+  "async": true,
+  "final_space": true
 }

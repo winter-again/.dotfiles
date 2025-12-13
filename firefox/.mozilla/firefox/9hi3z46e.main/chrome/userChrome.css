@@ -31,6 +31,11 @@ window {
     --in-content-link-color: var(--mountain-purple) !important;
 }
 
+* {
+    font-family: "ZedMono Nerd Font Mono";
+    /* font-family: "Iosevka Nerd Font Mono"; */
+}
+
 @-moz-document url-prefix(about:newtab), url-prefix(about:home) {
     .search-wrapper .search-inner-wrapper:active input,
     .search-wrapper input:focus {
