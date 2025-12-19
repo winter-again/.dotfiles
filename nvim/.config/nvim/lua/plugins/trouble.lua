@@ -1,6 +1,7 @@
 return {
     {
         "folke/trouble.nvim",
+        enabled = false,
         keys = { "<leader>tt", "<leader>ts" },
         config = function()
             require("trouble").setup({
