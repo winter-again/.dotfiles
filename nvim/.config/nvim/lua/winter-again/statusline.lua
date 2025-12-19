@@ -101,7 +101,7 @@ function M.file_name()
     -- :p = full path; use "~/" for home dir
     -- :~ = reduce to be relative to home dir
     -- :. = reduce to be relative to current dir if possible
-    local file_name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":p:~:.")
+    local file_name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":p:~")
     if file_name == "" then
         file_name = "[untitled]"
     end
