@@ -6,43 +6,28 @@ return {
         -- dev = true,
         config = function()
             require("winter-again").setup({
+                transparent = true,
                 saturation = 0,
-                brightness = 0,
+                lightness = 0,
                 text_styles = {
                     numbers = { italic = false },
                     floats = { italic = false },
                 },
                 plugins = {},
-                hl_overrides = function(colors)
-                    return {
-                        ["MatchParen"] = { bold = false, italic = true },
-
-                        ["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" },
-                        ["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" },
-                        ["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" },
-                        ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
-                        ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
-                        ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
-
-                        ["@markup.math"] = { italic = true },
-                        ["QuickFixLine"] = { bold = true },
-                        ["@markup.list.checked"] = { strikethrough = false },
-
-                        -- ["@keyword.luadoc"] = { bold = false },
-
-                        -- ["markdownH1"] = { reverse = false, underline = true },
-                        -- ["markdownH2"] = { reverse = false, underline = true },
-                        -- ["markdownH3"] = { reverse = false, underline = true },
-                        -- ["markdownH4"] = { reverse = false, underline = true },
-                        -- ["markdownH5"] = { reverse = false, underline = true },
-                        -- ["markdownH6"] = { reverse = false, underline = true },
-                        -- ["@markup.heading.1.html"] = { fg = colors.fg },
-                        -- ["@markup.heading.2.html"] = { fg = colors.fg },
-                        -- ["@markup.heading.3.html"] = { fg = colors.fg },
-                        -- ["@markup.heading.4.html"] = { fg = colors.fg },
-                        -- ["@markup.heading.5.html"] = { fg = colors.fg },
-                        -- ["@markup.heading.6.html"] = { fg = colors.fg },
-                    }
+                hl_overrides = function(highlights, colors)
+                    -- req custom queries queries/markdown_inline/highlights.scm
+                    highlights["@markup.wikilink.label"] = { fg = colors.green }
+                    highlights["@markup.wikilink.url"] = { fg = colors.green, italic = true }
+                    -- req custom capture for markdown fenced code blocks
+                    highlights["@codeblock.delim"] = { link = "@punctutation.delimiter" }
+                    highlights["@codeblock.lang"] = { fg = colors.blue, italic = true }
+                    -- render-markdown.nvim
+                    highlights["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" }
+                    highlights["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" }
+                    highlights["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" }
+                    highlights["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" }
+                    highlights["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" }
+                    highlights["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" }
                 end,
             })
         end,

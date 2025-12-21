@@ -54,6 +54,6 @@ opt.laststatus = 3 -- global statusline
 -- noselect = don't preselect
 opt.completeopt = { "menu", "menuone", "noselect" }
 opt.foldenable = false
-opt.fillchars:append({ eob = " " }) -- don't use "~" for filling
+opt.fillchars:append({ diff = "/", eob = " " }) -- don't use "~" for filling
 -- what gets saved in sessions
 opt.sessionoptions = "buffers,curdir,help,winpos,winsize"
