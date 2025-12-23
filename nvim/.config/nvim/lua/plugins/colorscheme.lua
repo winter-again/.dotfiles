@@ -33,7 +33,63 @@ return {
         end,
     },
     {
+        "ilof2/posterpole.nvim",
+        enabled = false,
+        lazy = false,
+        priority = 999,
+        config = function()
+            require("posterpole").setup({
+                transparent = true,
+                colorless_bg = false, -- grayscale or not
+                dim_inactive = false, -- highlight inactive splits
+                brightness = -1, -- negative numbers - darker, positive - lighter
+                selected_tab_highlight = false, --highlight current selected tab
+                fg_saturation = 0, -- font saturation, gray colors become more brighter
+                bg_saturation = 0, -- background saturation
+            })
+        end,
+    },
+    {
+        "vague2k/vague.nvim",
+        enabled = false,
+        lazy = false,
+        config = function()
+            require("vague").setup({
+                transparent = false,
+                style = {
+                    functions = "bold",
+                    keywords = "bold",
+                    strings = "none",
+                },
+            })
+        end,
+    },
+    {
+        "slugbyte/lackluster.nvim",
+        enabled = false,
+        lazy = false,
+        config = function() end,
+    },
+    {
+        "cdmill/neomodern.nvim",
+        enabled = false,
+        lazy = false,
+        config = function()
+            require("neomodern").setup({
+                theme = "hojicha",
+                transparent = true,
+                code_style = {
+                    functions = "bold",
+                    keywords = "bold",
+                    string = "none",
+                },
+            })
+            require("neomodern").load()
+        end,
+    },
+    {
         "ramojus/mellifluous.nvim",
+        enabled = false,
         lazy = false,
         config = function()
             require("mellifluous").setup({
@@ -95,116 +151,5 @@ return {
                 },
             })
         end,
-    },
-    {
-        "rebelot/kanagawa.nvim",
-        enabled = false,
-        lazy = false,
-        config = function()
-            require("kanagawa").setup({
-                colors = {
-                    theme = {
-                        all = {
-                            ui = {
-                                bg_gutter = "none",
-                            },
-                        },
-                        wave = {
-                            ui = {
-                                bg_visual = "#45475a",
-                            },
-                        },
-                    },
-                },
-                overrides = function(colors)
-                    local theme = colors.theme
-                    return {
-                        WinSeparator = { fg = theme.ui.nontext },
-                        -- Visual = { reverse = true },
-                        WinBar = { bg = "none", italic = true },
-                        WinBarNC = { bg = "none", italic = true },
-                        DiagnosticUnderlineError = { underdotted = true },
-                        DiagnosticUnderlineWarn = { underdotted = true },
-                        DiagnosticUnderlineInfo = { underdotted = true },
-                        DiagnosticUnderlineHint = { underdotted = true },
-                        ["@lsp.type.unresolvedReference"] = { underdotted = true },
-                    }
-                end,
-            })
-        end,
-    },
-    {
-        "thesimonho/kanagawa-paper.nvim",
-        enabled = false,
-        lazy = false,
-        config = function()
-            require("kanagawa-paper").setup({
-                transparent = true,
-                dimInactive = false,
-                functionStyle = { bold = true },
-                keywordStyle = { bold = true },
-                typeStyle = { italic = true },
-                overrides = function(colors)
-                    return {
-                        WinBar = { fg = colors.palette.fujiWhite },
-                        WinBarNC = { fg = colors.palette.fujiWhite },
-                    }
-                end,
-            })
-        end,
-    },
-    {
-        "vague2k/vague.nvim",
-        enabled = false,
-        lazy = false,
-        config = function()
-            require("vague").setup({
-                transparent = false,
-                style = {
-                    functions = "bold",
-                    keywords = "bold",
-                    strings = "none",
-                },
-            })
-        end,
-    },
-    {
-        "cdmill/neomodern.nvim",
-        enabled = false,
-        lazy = false,
-        config = function()
-            require("neomodern").setup({
-                theme = "hojicha",
-                transparent = true,
-                code_style = {
-                    functions = "bold",
-                    keywords = "bold",
-                    string = "none",
-                },
-            })
-            require("neomodern").load()
-        end,
-    },
-    {
-        "ilof2/posterpole.nvim",
-        enabled = false,
-        lazy = false,
-        config = function()
-            require("posterpole").setup({
-                transparent = true,
-                colorless_bg = false, -- grayscale or not
-                dim_inactive = false, -- highlight inactive splits
-                brightness = 0, -- negative numbers - darker, positive - lighter
-                selected_tab_highlight = false, --highlight current selected tab
-                fg_saturation = 0, -- font saturation, gray colors become more brighter
-                bg_saturation = 0, -- background saturation
-            })
-        end,
-    },
-    {
-        "slugbyte/lackluster.nvim",
-        enabled = false,
-        lazy = false,
-        config = function() end,
     },
 }
