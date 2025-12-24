@@ -323,6 +323,8 @@ app_pkgs=(
 paru_install "${app_pkgs[@]}"
 # imv
 xdg-mime default imv-dir.desktop image/png image/jpeg
+# mpv
+xdg-mime default mpv.desktop audio/x-opus+ogg audio/x-aiff
 # nemo
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.cinnamon.desktop.default-applications.terminal exec wezterm
