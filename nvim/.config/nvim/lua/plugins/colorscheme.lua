@@ -15,13 +15,29 @@ return {
                 },
                 plugins = {},
                 hl_overrides = function(highlights, colors)
+                    highlights["BlinkCmpMenuSelection"] =
+                        vim.tbl_deep_extend("force", highlights["PmenuSel"], { bold = true })
+                    highlights["SpellBad"] =
+                        vim.tbl_deep_extend("force", highlights["SpellBad"], { underdotted = true, undercurl = false })
+                    highlights["SpellCap"] =
+                        vim.tbl_deep_extend("force", highlights["SpellCap"], { underdotted = true, undercurl = false })
+                    highlights["SpellRare"] =
+                        vim.tbl_deep_extend("force", highlights["SpellRare"], { underdotted = true, undercurl = false })
+                    highlights["SpellLocal"] = vim.tbl_deep_extend(
+                        "force",
+                        highlights["SpellLocal"],
+                        { underdotted = true, undercurl = false }
+                    )
+
+                    -- HACK: highlight tags in markdown
+                    highlights["@lsp.type.enumMember.markdown"] = { fg = colors.yellow, bold = true }
                     -- req custom queries queries/markdown_inline/highlights.scm
-                    highlights["@markup.wikilink.label"] = { fg = colors.green }
-                    highlights["@markup.wikilink.url"] = { fg = colors.green, italic = true }
+                    -- highlights["@markup.wikilink.label"] = { fg = colors.green }
+                    -- highlights["@markup.wikilink.url"] = { fg = colors.green, italic = true }
                     -- req custom capture for markdown fenced code blocks
                     highlights["@codeblock.delim"] = { link = "@punctutation.delimiter" }
                     highlights["@codeblock.lang"] = { fg = colors.blue, italic = true }
-                    -- render-markdown.nvim
+
                     highlights["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" }
                     highlights["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" }
                     highlights["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" }

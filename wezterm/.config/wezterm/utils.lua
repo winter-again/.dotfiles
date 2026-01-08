@@ -20,7 +20,7 @@ end
 ---@return table, number
 function M.set_font(font_alias)
     local font_choice = profile_data.font[font_alias]
-    return wezterm.font(font_choice.font), font_choice.font_size
+    return wezterm.font_with_fallback(font_choice.font), font_choice.font_size
 end
 
 ---@param config table

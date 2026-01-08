@@ -119,10 +119,11 @@ echo "Installing fonts..."
 font_pkgs=(
     ttf-zed-mono-nerd
     ttf-iosevka-nerd
-    ttf-nerd-fonts-symbols-mono
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
+    ttf-sarasa-gothic
+    # ttf-nerd-fonts-symbols-mono
+    # noto-fonts
+    # noto-fonts-cjk
+    # noto-fonts-emoji
 )
 paru_install "${font_pkgs[@]}"
 

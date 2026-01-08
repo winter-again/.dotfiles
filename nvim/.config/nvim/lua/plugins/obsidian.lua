@@ -1,18 +1,11 @@
 return {
     "obsidian-nvim/obsidian.nvim",
     version = "*", -- latest release
-    keys = {
-        "<leader>nn",
-        "<leader>fn",
-        "<leader>ns",
-        "<leader>nt",
-        "<leader>nl",
-        "<leader>nb",
-    },
     event = {
         "BufReadPre " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
         "BufNewFile " .. vim.fn.expand("~") .. "/Documents/notebook/*.md",
     },
+    -- enabled = false,
     config = function()
         require("obsidian").setup({
             legacy_commands = false,
@@ -28,8 +21,9 @@ return {
             new_notes_location = "notes_subdir",
             completion = {
                 nvim_cmp = false,
-                blink = true,
+                blink = false,
                 min_chars = 2,
+                match_case = false,
                 create_new = false,
             },
             -- NOTE: use note title for file name
@@ -55,8 +49,43 @@ return {
                 end
             end,
             markdown_link_func = function(opts)
+                local util = require("obsidian.util")
+                local anchor = ""
+                local header = ""
+                if opts.anchor then
+                    anchor = opts.anchor.anchor
+                    header = util.format_anchor_label(opts.anchor)
+                elseif opts.block then
+                    anchor = "#" .. opts.block.id
+                    header = "#" .. opts.block.id
+                end
+
+                -- NOTE: identical to default except that I use spaces instead of dashes to separate
+                local label = opts.label:gsub("-", " ")
+                local path = util.urlencode(opts.path, { keep_path_sep = true })
+                return string.format("[%s%s](%s%s)", label, header, path, anchor)
+
                 -- NOTE: default func
-                return require("obsidian.util").markdown_link(opts)
+                -- return require("obsidian.util").markdown_link(opts)
+            end,
+            ---@param opts obsidian.link.LinkCreationOpts
+            ---@return string
+            wiki_link_func = function(opts)
+                local anchor = ""
+                local header = ""
+                if opts.anchor then
+                    anchor = opts.anchor.anchor
+                    header = string.format(" ❯ %s", opts.anchor.header)
+                elseif opts.block then
+                    anchor = "#" .. opts.block.id
+                    header = "#" .. opts.block.id
+                end
+
+                if opts.label ~= opts.path then
+                    return string.format("[[%s%s|%s%s]]", opts.path, anchor, opts.label, header)
+                else
+                    return string.format("[[%s%s]]", opts.path, anchor)
+                end
             end,
             preferred_link_style = "markdown", -- still able to autocomplete both types
             frontmatter = {
@@ -102,7 +131,7 @@ return {
             },
             -- NOTE: I don't rely on this functionality
             attachments = {
-                img_folder = "assets",
+                folder = "assets",
             },
             footer = {
                 enabled = false,
@@ -112,26 +141,29 @@ return {
         local map = require("winter-again.globals").map
         local opts = { silent = true }
 
-        map("n", "<leader>nn", function()
-            vim.cmd("Obsidian new_from_template")
-        end, opts, "Create new note with template")
-        map("n", "<leader>fn", function()
-            vim.cmd("Obsidian quick_switch")
-        end, opts, "Search notes by title")
-        map("n", "<leader>ns", function()
-            vim.cmd("Obsidian search")
-        end, opts, "Search notes with ripgrep")
-        map("n", "<leader>nt", function()
-            vim.cmd("Obsidian tags")
-        end, opts, "Search notes by tag")
+        -- map("n", "<leader>nn", function()
+        --     vim.cmd("Obsidian new_from_template")
+        -- end, opts, "Create new note with template")
+        -- map("n", "<leader>ni", function()
+        --     vim.cmd("Obsidian template")
+        -- end, opts, "Insert template into current note")
+        -- map("n", "<leader>fn", function()
+        --     vim.cmd("Obsidian quick_switch")
+        -- end, opts, "Search notes by title")
+
+        -- map("n", "<leader>ns", function()
+        --     vim.cmd("Obsidian search")
+        -- end, opts, "Search notes with ripgrep")
+
+        -- map("n", "<leader>nt", function()
+        --     vim.cmd("Obsidian tags")
+        -- end, opts, "Search notes by tag")
+
         map("n", "<leader>nl", function()
             vim.cmd("Obsidian links")
         end, opts, "Search current note's links")
         map("n", "<leader>nb", function()
             vim.cmd("Obsidian backlinks")
         end, opts, "Search current note's backlinks")
-        map("n", "<leader>ni", function()
-            vim.cmd("Obsidian template")
-        end, opts, "Insert template into current note")
     end,
 }

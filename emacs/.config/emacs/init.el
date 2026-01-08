@@ -1,3 +1,4 @@
+;; NOTE: create this blank file so emacs doesn't complain
 ;; define custom file so Emacs doesn't touch this file
 (setq custom-file "~/.config/emacs/emacs-custom.el")
 (load custom-file)

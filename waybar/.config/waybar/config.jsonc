@@ -50,8 +50,7 @@
         "max-length": 50
     },
     "clock": {
-        // "timezone": "America/New_York",
-        "format": "{:%a %Y-%m-%d %I:%M %p}",
+        "format": "{:%Y-%m-%d %a | %I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
@@ -122,7 +121,7 @@
         "interval": 10,
         "format": "󰈀  {bandwidthTotalBytes}",
         "format-ethernet": "󰈀  {bandwidthTotalBytes}",
-        "format-wifi": "󰖩 {signalStrength}%",
+        "format-wifi": "󰖩  {signalStrength}%",
         // "tooltip-format": "󰈀 {ifname}  {bandwidthUpBytes}  {bandwidthDownBytes}",
         "tooltip-format-ethernet": "󰈀 {ifname} |  {bandwidthDownBytes}  {bandwidthUpBytes}",
         "tooltip-format-wifi": "󰖩 {essid}",

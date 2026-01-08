@@ -6,7 +6,7 @@ vim.opt_local.breakindent = true
 
 vim.opt_local.spell = true
 
-local root = vim.fs.root(0, { ".git", ".gitignore", ".fdignore", ".markdownlint-cli2.jsonc" })
+local root = vim.fs.root(0, { ".git", ".gitignore", ".ignore", ".fdignore", ".markdownlint-cli2.jsonc" })
 local notebook_dir = vim.fs.normalize("~/Documents/notebook")
 
 if root ~= nil and root == notebook_dir then

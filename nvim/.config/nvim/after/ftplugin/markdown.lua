@@ -8,13 +8,13 @@ vim.opt_local.breakindent = true
 
 vim.opt_local.spell = true
 
--- NOTE: use render-markdown to handle this behavior
+-- NOTE: use render-markdown to handle conceal behavior
 -- 1 makes concealed links look too long because it has to be a 1:1 conceal, meaning the "["
 -- is concealed with just a blank
 -- vim.opt_local.conceallevel = 2
 -- vim.opt_local.concealcursor = "nc" -- modes in which text in cursor line can remain concealed
 
-local root = vim.fs.root(0, { ".git", ".gitignore", ".fdignore", ".markdownlint-cli2.jsonc" })
+local root = vim.fs.root(0, { ".git", ".gitignore", ".ignore", ".fdignore", ".markdownlint-cli2.jsonc" })
 local notebook_dir = vim.fs.normalize("~/Documents/notebook")
 
 if root ~= nil then

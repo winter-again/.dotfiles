@@ -43,9 +43,6 @@ local lazy_opts = {
         -- try to load one of these when installing during startup
         colorscheme = { "winter-again", "mellifluous" },
     },
-    ui = {
-        -- border = "solid", -- or "none"
-    },
     checker = {
         enabled = false,
         notify = false,

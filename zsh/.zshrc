@@ -8,7 +8,11 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export PAGER="less"
-export LESS="--ignore-case --incsearch -R --use-color" # need -R for git diff colors
+# -X = don't clear screen on quit
+# -F =  quit if one screen
+# -R = use limited set of esc sequences
+export LESS="-XFR --use-color --ignore-case --incsearch"
+# export LESS="-F --ignore-case --incsearch -R --use-color" # need -R for git diff colors
 export MANPAGER="nvim +Man!"
 # color manpages with bat
 # export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
@@ -105,7 +109,6 @@ alias j="just"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
 alias pn="pnpm"
-alias tr="trash-put"
 # alias R="R --no-save"
 alias wez-logs="cd /run/user/1000/wezterm" # wezterm logs
 alias wez-plugs="cd $HOME/.local/share/wezterm/plugins" # wezterm plugins
@@ -120,19 +123,22 @@ alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # color hel
 alias dust="dust -r"
 
 alias g="git"
+alias gap="git add -p"
 alias gc="git commit"
 alias gp="git push"
 alias gs="git status"
 alias gb="git branch --all -v"
 alias gco="git checkout"
-alias gu="git restore --staged" # recommended undo for staged file
+alias gu="git restore --staged"
 alias gd="git diff"
 alias gds="git diff --staged" # staged changes
 alias gdh="git diff HEAD~" # diff latest commit with previous
 alias gu="git rm --cached" # stop tracking given file
-alias gl="git log --stat"
-alias glg="git log --all --graph --abbrev-commit --decorate --date=format-local:'%Y-%m-%d (%a) %I:%M:%S %p' --format=format:'%C(bold blue)%h%C(reset) - %C(bold magenta)%ad%C(reset) %C(yellow)(%ar)%C(reset) %C(bold cyan)%an%C(reset)%C(auto)%d%C(reset)%C(white): %s%C(reset)'"
-alias gls="git log -all --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
+alias gl="git log --stat --date=format-local:'%Y-%m-%d (%a) %I:%M:%S %p' \
+    --format=format:'%C(bold blue)%H%C(reset) - %C(bold magenta)%ad%C(reset) %C(yellow)(%ar)%C(reset) %C(bold cyan)%an%C(reset)%C(auto)%d%C(reset): %s'"
+alias glg="git log --all --graph --date=format-local:'%Y-%m-%d (%a) %I:%M:%S %p' \
+    --format=format:'%C(bold blue)%h%C(reset) - %C(bold magenta)%ad%C(reset) %C(yellow)(%ar)%C(reset) %C(bold cyan)%an%C(reset)%C(auto)%d%C(reset): %s'"
+alias gls="git log --all --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
 
 # change cwd on exit; use Q instead of q to prevent
 function y() {

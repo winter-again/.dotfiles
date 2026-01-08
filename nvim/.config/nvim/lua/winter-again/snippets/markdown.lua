@@ -11,6 +11,10 @@ return {
             return os.date("%Y-%m-%d")
         end)
     ),
+    s(
+        { trig = ";f", snippetType = "autosnippet", desc = "External file link" },
+        fmta("[<>](file:///home/winteragain/Documents<>)", { i(1), i(2) })
+    ),
     s({ trig = ";l", snippetType = "autosnippet", desc = "Link" }, fmta("[<>](<>)", { i(1), i(2) })),
     s({ trig = ";i", snippetType = "autosnippet", desc = "Image link" }, fmta("![image](<>)", { i(1) })),
     s({ trig = ";-", snippetType = "autosnippet", desc = "Checkbox" }, fmta("- [ ] <>", { i(1) })),
