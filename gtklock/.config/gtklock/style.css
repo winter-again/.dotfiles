@@ -1,6 +1,5 @@
 window {
-    /* contrary to docs, only abs path works */
-    background-image: url("/home/winteragain/Pictures/wallpapers/Ivan-Konstantinovich-Aivazovsky-A-Moonlit-Night-at-Sea-1885.jpg");
+    background-image: url("/home/winteragain/Pictures/wallpapers/Titian-Ramsay-Peale-Spray-of-Flowers-and-Ferns.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -11,15 +10,19 @@ window {
 }
 
 #window-box {
-    background: #0f0f0f;
-    border-radius: 10px;
+    background-color: rgba(15, 15, 15, 0.85);
+    /* background-color: #0f0f0f; */
     padding: 10px;
-    border-color: #8f8aac;
 }
+
+/* #info-box { */
+/*     background: transparent; */
+/* } */
 
 #input-field {
     border: none;
-    background: #262626;
+    background: rgba(38, 38, 38, 0.85);
+    /* background: #262626; */
     box-shadow: none;
 }
 

@@ -1,7 +1,6 @@
 return {
     "zk-org/zk-nvim",
     lazy = true,
-    -- enabled = false,
     dev = true,
     keys = {
         "<leader>nn",

@@ -1,7 +1,7 @@
 local filetypes = {
     "markdown",
     "mdx",
-    "typst",
+    -- "typst",
 }
 
 return {
