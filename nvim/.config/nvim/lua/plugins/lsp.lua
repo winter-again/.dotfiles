@@ -114,6 +114,24 @@ return {
                 end,
             })
 
+            vim.api.nvim_create_autocmd("ColorScheme", {
+                group = au_group,
+                desc = "Override some semantic token highlights",
+                callback = function(args)
+                    -- local token = args.data.token
+                    -- if token.type == "variable" then
+                    --     print(vim.inspect(token.modifiers))
+                    --     -- vim.lsp.semantic_tokens.highlight_token(
+                    --     --     token,
+                    --     --     args.buf,
+                    --     --     args.data.client_id,
+                    --     --     "@variable.member"
+                    --     -- )
+                    -- end
+                    vim.api.nvim_set_hl(0, "@lsp.type.variable.python", {})
+                end,
+            })
+
             -- NOTE: https://neovim.io/doc/user/diagnostic.html
             -- custom signs for diagnostics; trouble.nvim can use too
             local diagnostic_icons = require("winter-again.icons").diagnostics
@@ -331,6 +349,11 @@ return {
                             enabled = true,
                             when = "onSave",
                         },
+                        -- preview = {
+                        --     background = {
+                        --         enabled = true,
+                        --     },
+                        -- },
                     },
                 },
                 ["yamlls"] = {
