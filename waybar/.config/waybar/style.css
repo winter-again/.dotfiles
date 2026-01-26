@@ -9,9 +9,9 @@
 
 * {
     font-family:
-        ZedMono Nerd Font,
+        /* ZedMono Nerd Font, */
+        Iosevka Nerd Font,
         Sarasa Mono CL;
-    /* Iosevka Nerd Font Mono; */
     border: none;
     font-size: 14px;
     padding: 0px 0px;

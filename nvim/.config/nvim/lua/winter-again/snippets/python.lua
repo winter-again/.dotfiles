@@ -54,6 +54,39 @@ return {
     ),
     s(
         {
+            trig = "cf",
+            desc = "competitive programming template",
+            docstring = {
+                "import sys",
+                " ",
+                " ",
+                "def main() -> int:",
+                " ",
+                "    return 0",
+                " ",
+                " ",
+                'if __name__ == "__main__":',
+                "    raise SystemExit(main())",
+            },
+        },
+        fmt(
+            [[
+            import sys
+
+
+            def main() -> int:
+                {}
+                return 0
+
+
+            if __name__ == "__main__":
+                raise SystemExit(main())
+            ]],
+            { i(1) }
+        )
+    ),
+    s(
+        {
             trig = "def",
             desc = "define function",
             docstring = {

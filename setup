@@ -117,9 +117,9 @@ paru_install "${sway_pkgs[@]}"
 
 echo "Installing fonts..."
 font_pkgs=(
-    ttf-zed-mono-nerd
     ttf-iosevka-nerd
     ttf-sarasa-gothic
+    # ttf-zed-mono-nerd
     # ttf-nerd-fonts-symbols-mono
     # noto-fonts
     # noto-fonts-cjk
