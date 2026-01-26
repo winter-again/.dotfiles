@@ -1,11 +1,7 @@
 "$schema" = "https://yazi-rs.github.io/schemas/theme.json"
 
 [mgr]
-# cwd label at top left
-cwd = { bold = true }
-hovered = { fg = "#0f0f0f", bg = "#8f8aac" }
-# line highlighted in preview window
-preview_hovered = { fg = "#f0f0f0", bg = "#393939" }
+cwd = { bold = true }                                           # cwd label at top left
 find_keyword = { fg = "#0f0f0f", bg = "#aca98a", bold = true }
 find_position = { fg = "#0f0f0f", bg = "#aca98a", bold = true }
 marker_copied = { fg = "#778c73", bg = "#778c73" }
