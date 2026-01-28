@@ -1341,17 +1341,35 @@ user_pref(
 );
 
 /****************************************************************************
- * Overrides and additions
+ * Arkenfox overrides
  ****************************************************************************/
-// Home page
+/* 0102: set startup page [SETUP-CHROME]
+ * 0=blank, 1=home, 2=last visited page, 3=resume previous session
+ * [NOTE] Session Restore is cleared if history is also cleared (2811+), and not used in Private Browsing mode
+ * [SETTING] General>Startup>Restore previous session ***/
 user_pref("browser.startup.page", 1);
+/* 0103: set HOME+NEWWINDOW page
+ * about:home=Firefox Home (default, see 0105), custom URLs..., Blank Page
+ * [SETTING] Home>New Windows and Tabs>Homepage and new windows ***/
 user_pref("browser.startup.homepage", "about:home");
+/* 0104: set NEWTAB page
+ * true=Firefox Home (default, see 0105), false=blank page
+ * [SETTING] Home>New Windows and Tabs>New tabs ***/
 user_pref("browser.newtabpage.enabled", true);
-// remove news section
-user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 
-// force DNS-over-HTTPS
+/* 0710: enable DNS-over-HTTPS (DoH) [FF60+]
+ * 0=default, 2=increased (TRR (Trusted Recursive Resolver) first), 3=max (TRR only), 5=off (no rollout)
+ * see "doh-rollout.home-region": USA 2019, Canada 2021, Russia/Ukraine 2022 [3]
+ * [SETTING] Privacy & Security>DNS over HTTPS
+ * [1] https://hacks.mozilla.org/2018/05/a-cartoon-intro-to-dns-over-https/
+ * [2] https://wiki.mozilla.org/Security/DOH-resolver-policy
+ * [3] https://support.mozilla.org/kb/firefox-dns-over-https
+ * [4] https://www.eff.org/deeplinks/2020/12/dns-doh-and-odoh-oh-my-year-review-2020 ***/
 user_pref("network.trr.mode", 3);
+/* 0712: set DoH provider
+ * The custom uri is the value shown when you "Choose provider>Custom>"
+ * [NOTE] If you USE custom then "network.trr.uri" should be set the same
+ * [SETTING] Privacy & Security>DNS over HTTPS>Increased/Max>Choose provider ***/
 user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
 user_pref("network.trr.custom_uri", "https://dns.quad9.net/dns-query");
 
@@ -1360,11 +1378,15 @@ user_pref("network.trr.custom_uri", "https://dns.quad9.net/dns-query");
  * [SETTING] Search>Address Bar>When using the address bar, suggest>Search engines ***/
 user_pref("browser.urlbar.suggest.engines", false);
 
-// TODO: 2652: disable downloads panel opening on every download [FF96+]
-// user_pref("browser.download.alwaysOpenPanel", true);
-
-// 5003: disable saving passwords
+/* 5003: disable saving passwords
+ * [NOTE] This does not clear any passwords already saved
+ * [SETTING] Privacy & Security>Logins and Passwords>Ask to save logins and passwords for websites ***/
 user_pref("signon.rememberSignons", false);
+
+/* 5009: disable "open with" in download dialog [FF50+]
+ * Application data isolation [1]
+ * [1] https://bugzilla.mozilla.org/1281959 ***/
+user_pref("browser.download.forbid_open_with", true);
 
 /* 5017: disable Form Autofill
  * If .supportedCountries includes your region (browser.search.region) and .supported
@@ -1374,40 +1396,8 @@ user_pref("signon.rememberSignons", false);
 user_pref("extensions.formautofill.addresses.enabled", false); // [FF55+]
 user_pref("extensions.formautofill.creditCards.enabled", false); // [FF56+]
 
-user_pref("browser.shell.checkDefaultBrowser", false);
-user_pref("browser.preferences.moreFromMozilla", false);
-user_pref("browser.aboutwelcome.enabled", false);
-user_pref("browser.profiles.enabled", true);
-
-user_pref("browser.compactmode.show", true);
-
-// AI
-user_pref("browser.ml.enable", false);
-user_pref("browser.ml.chat.enabled", false);
-user_pref("browser.ml.chat.menu", false);
-user_pref("browser.tabs.groups.smart.enabled", false);
-user_pref("browser.ml.linkPreview.enabled", false);
-
-// FULLSCREEN NOTICE
-user_pref("full-screen-api.transition-duration.enter", "0 0");
-user_pref("full-screen-api.transition-duration.leave", "0 0");
-user_pref("full-screen-api.warning.timeout", 0);
-
-// TAB BEHAVIOR
-user_pref("browser.bookmarks.openInTabClosesMenu", false);
-user_pref("browser.menu.showViewImageInfo", true);
-user_pref("layout.word_select.eat_space_to_next_word", false);
-
-// PREF: disable unified search button at left of urlbar
-user_pref("browser.urlbar.scotchBonnet.enableOverride", false);
-
-// PREF: disable Firefox Sync
-user_pref("identity.fxaccounts.enabled", false);
-// PREF: disable the Firefox View tour from popping up
-user_pref("browser.firefox-view.feature-tour", '{"screen":"","complete":true}');
-
-// hide weather on New Tab page
-user_pref("browser.newtabpage.activity-stream.showWeather", false);
+/* 5019: disable page thumbnail collection ***/
+user_pref("browser.pagethumbnails.capturing_disabled", true); // [HIDDEN PREF]
 
 /* 5508: disable all DRM (Digital Rights Management) content (EME: Encryption Media Extension)
  * Optionally hide the UI setting which also disables the DRM prompt
@@ -1415,8 +1405,63 @@ user_pref("browser.newtabpage.activity-stream.showWeather", false);
  * [TEST] https://bitmovin.com/demos/drm
  * [1] https://www.eff.org/deeplinks/2017/10/drms-dead-canary-how-we-just-lost-web-what-we-learned-it-and-what-we-need-do-next ***/
 user_pref("media.eme.enabled", false);
+// user_pref("browser.eme.ui.enabled", false);
 
-// SIDEBAR
+/****************************************************************************
+ * Additions
+ ****************************************************************************/
+user_pref("browser.preferences.moreFromMozilla", false);
+user_pref("browser.aboutwelcome.enabled", false);
+// disable Firefox Sync
+user_pref("identity.fxaccounts.enabled", false);
+// disable the Firefox View tour from popping up
+user_pref("browser.firefox-view.feature-tour", '{"screen":"","complete":true}');
+// remove news section in home page
+user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
+// remove weather widget from home page
+user_pref("browser.newtabpage.activity-stream.showWeather", false);
+// allow compact mode density as an option in toolbar customization menu
+user_pref("browser.compactmode.show", true);
+// set compact mode
+user_pref("browser.uidensity", 1);
+// disable search engine/mode dropdown at left of urlbar
+user_pref("browser.urlbar.scotchBonnet.enableOverride", false);
+// disable media keys, picture-in-picture, and topbar menu keys
+user_pref("media.hardwaremediakeys.enabled", false);
+user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
+user_pref(
+    "media.videocontrols.picture-in-picture.urlbar-button.enabled",
+    false
+);
+user_pref("ui.key.menuAccessKeyFocuses", false);
+
+// allow customization via userChrome.css
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+// search highlight colors
+user_pref("ui.textSelectAttentionBackground", "#8f8aac");
+user_pref("ui.textHighlightBackground", "#767676");
+// highlight all search hits
+user_pref("findbar.highlightAll", true);
+// whether to show bookmarks bar: always, never, or newtab
+user_pref("browser.toolbars.bookmarks.visibility", "never");
+// disable hover preview on tabs
+user_pref("browser.tabs.hoverPreview.enabled", false);
+user_pref("browser.tabs.hoverPreview.showThumbnails", false);
+
+// XDG desktop portal features
+// 0 = never, 1 = always, 2 = auto
+// file picker
+// user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
+// mime handler
+// user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
+// settings/look-and-feel information
+// user_pref("widget.use-xdg-desktop-portal.settings", 1);
+// geolocation
+// user_pref("widget.use-xdg-desktop-portal.location", 0);
+// opening to a file
+// user_pref("widget.use-xdg-desktop-portal.open-uri", 1);
+
+// sidebar
 // activate sidebar
 user_pref("sidebar.revamp", true);
 user_pref("sidebar.verticalTabs", true);
@@ -1427,44 +1472,89 @@ user_pref("sidebar.visibility", "always-show");
 user_pref("sidebar.main.tools", "bookmarks");
 user_pref("sidebar.animation.enabled", false);
 
-// disable media keys, picture-in-picture, and topbar menu keys
-user_pref("media.hardwaremediakeys.enabled", false);
-user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
-user_pref(
-    "media.videocontrols.picture-in-picture.urlbar-button.enabled",
-    false
-);
-user_pref("ui.key.menuAccessKeyFocuses", false);
-// compact tab bar
-user_pref("browser.uidensity", 1);
-// highlight all search hits
-user_pref("findbar.highlightAll", true);
-// search highlighting
-user_pref("ui.textSelectAttentionBackground", "#8f8aac");
-user_pref("ui.textHighlightBackground", "#767676");
-// allow userChrome.css customization
-user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-// allow suggestions from bookmarks
-// user_pref("browser.urlbar.suggest.bookmark", true);
-// whether to show bookmarks bar: always, never, or newtab
-user_pref("browser.toolbars.bookmarks.visibility", "never");
-// disable hover preview on tabs
-user_pref("browser.tabs.hoverPreview.enabled", false);
-user_pref("browser.tabs.hoverPreview.showThumbnails", false);
+// NOTE: Fastfox
+// user_pref("gfx.content.skia-font-cache-size", 32);
 
-// XDG desktop portal features
-// 0 = never, 1 = always, 2 = auto
-// file picker
-user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
-// mime handler
-user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
-// settings/look-and-feel information
-user_pref("widget.use-xdg-desktop-portal.settings", 1);
-// geolocation
-user_pref("widget.use-xdg-desktop-portal.location", 0);
-// opening to a file
-user_pref("widget.use-xdg-desktop-portal.open-uri", 1);
+/** GFX ***/
+// user_pref("gfx.webrender.layer-compositor", true);
+// user_pref("gfx.canvas.accelerated.cache-items", 32768);
+// user_pref("gfx.canvas.accelerated.cache-size", 4096);
+// user_pref("webgl.max-size", 16384);
 
+/** DISK CACHE ***/
+// user_pref("browser.cache.disk.enable", false);
+
+/** MEMORY CACHE ***/
+// user_pref("browser.cache.memory.capacity", 131072);
+// user_pref("browser.cache.memory.max_entry_size", 20480);
+// user_pref("browser.sessionhistory.max_total_viewers", 4);
+// user_pref("browser.sessionstore.max_tabs_undo", 10);
+
+/** MEDIA CACHE ***/
+// user_pref("media.memory_cache_max_size", 262144);
+// user_pref("media.memory_caches_combined_limit_kb", 1048576);
+// user_pref("media.cache_readahead_limit", 600);
+// user_pref("media.cache_resume_threshold", 300);
+
+/** IMAGE CACHE ***/
+// user_pref("image.cache.size", 10485760);
+// user_pref("image.mem.decode_bytes_at_a_time", 65536);
+
+/** NETWORK ***/
+// user_pref("network.http.max-connections", 1800);
+// user_pref("network.http.max-persistent-connections-per-server", 10);
+// user_pref("network.http.max-urgent-start-excessive-connections-per-host", 5);
+// user_pref("network.http.request.max-start-delay", 5);
+// user_pref("network.http.pacing.requests.enabled", false);
+// user_pref("network.dnsCacheEntries", 10000);
+// user_pref("network.dnsCacheExpiration", 3600);
+// user_pref("network.ssl_tokens_cache_capacity", 10240);
+
+// NOTE: Peskyfox
+// AI
+// PREF: AI master switch
+// [1] https://github.com/yokoffing/Betterfox/issues/416
+user_pref("browser.ml.enable", false);
+// PREF: AI chat
+user_pref("browser.ml.chat.enabled", false);
+// PREF: AI chatbot option in right click menu
+user_pref("browser.ml.chat.menu", false);
+// PREF: AI-enhanced tab groups
+// [1] https://support.mozilla.org/kb/how-use-ai-enhanced-tab-groups
+user_pref("browser.tabs.groups.smart.enabled", false);
+// PREF: link previews
+user_pref("browser.ml.linkPreview.enabled", false);
+
+// FULLSCREEN NOTICE
+// PREF: remove fullscreen delay
+user_pref("full-screen-api.transition-duration.enter", "0 0"); // default=200 200
+user_pref("full-screen-api.transition-duration.leave", "0 0"); // default=200 200
+// PREF: disable fullscreen notice
+// [NOTE] Adjust to a sensible value, like 1250, if you have security concerns.
+user_pref("full-screen-api.warning.timeout", 0); // default=3000; alt=1250
+//user_pref("full-screen-api.warning.delay", -1); // default=500
+
+// TAB BEHAVIOR
+// PREF: leave Bookmarks Menu open when selecting a site
+// user_pref("browser.bookmarks.openInTabClosesMenu", false);
+// PREF: restore "View image info" on right-click
+user_pref("browser.menu.showViewImageInfo", true);
+// PREF: do not select the space next to a word when selecting a word
+user_pref("layout.word_select.eat_space_to_next_word", false);
+
+// NOTE: Securefox
+// PREF: disable capturing credentials in private browsing
+user_pref("signon.privateBrowsingCapture.enabled", false);
+// PREF: disable search engine updates (e.g. OpenSearch)
+// Prevent Firefox from adding back search engines after you removed them.
+// [NOTE] This does not affect Mozilla's built-in or Web Extension search engines.
+user_pref("browser.search.update", false);
+// PREF: disable metadata caching for installed add-ons by default
+// [1] https://blog.mozilla.org/addons/how-to-opt-out-of-add-on-metadata-updates/
+user_pref("extensions.getAddons.cache.enabled", false);
+
+// NOTE: Smoothfox
+// instant scrolling
 // recommended for 60hz+ displays
 user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
 user_pref("general.smoothScroll", true); // DEFAULT
