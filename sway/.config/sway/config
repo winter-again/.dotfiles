@@ -1,5 +1,5 @@
-font pango:ZedMono Nerd Font Mono 10
-# font pango:Iosevka Nerd Font Mono 10
+font pango:Iosevka Nerd Font Mono 10
+# font pango:ZedMono Nerd Font Mono 10
 
 default_border pixel 1
 default_floating_border pixel 1

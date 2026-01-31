@@ -9,6 +9,7 @@
 
 * {
     font-family:
+        /* avoid using Mono variant because icons too small */
         /* ZedMono Nerd Font, */
         Iosevka Nerd Font,
         Sarasa Mono CL;

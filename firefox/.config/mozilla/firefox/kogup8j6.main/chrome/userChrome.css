@@ -32,8 +32,8 @@ window {
 }
 
 * {
-    font-family: "ZedMono Nerd Font Mono";
-    /* font-family: "Iosevka Nerd Font Mono"; */
+    font-family: "Iosevka Nerd Font Propo";
+    /* font-family: "ZedMono Nerd Font Propo"; */
 }
 
 @-moz-document url-prefix(about:newtab), url-prefix(about:home) {

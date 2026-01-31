@@ -3,8 +3,8 @@ sort=-time
 on-button-left=invoke-default-action
 on-button-right=dismiss
 
-font=ZedMono Nerd Font Mono 12
-# font=Iosevka Nerd Font Mono 12
+font=Iosevka Nerd Font Mono 12
+# font=ZedMono Nerd Font Mono 12
 background-color=#0f0f0f
 text-color=#f0f0f0
 width=400
