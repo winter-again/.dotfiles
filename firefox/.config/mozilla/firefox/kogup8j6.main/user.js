@@ -1410,6 +1410,9 @@ user_pref("media.eme.enabled", false);
 /****************************************************************************
  * Additions
  ****************************************************************************/
+// fonts and sizing
+// user_pref("font.name.monospace.x-western", "Iosevka Nerd Font Propo"); // use fontconfig instead
+user_pref("font.size.monospace.x-western", 14);
 user_pref("browser.preferences.moreFromMozilla", false);
 user_pref("browser.aboutwelcome.enabled", false);
 // disable Firefox Sync
