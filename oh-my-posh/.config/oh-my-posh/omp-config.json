@@ -66,6 +66,12 @@
           "style": "plain"
         },
         {
+          "type": "python",
+          "foreground": "p:yellow",
+          "style": "plain",
+          "template": "  {{ .Full }} "
+        },
+        {
           "options": {
             "time_format": "03:04:05 PM"
           },
