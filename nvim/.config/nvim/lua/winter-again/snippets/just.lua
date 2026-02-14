@@ -8,8 +8,8 @@ return {
         { trig = "just", desc = "justfile default recipe for listing recipes" },
         fmta(
             [[
-            default:
-                @just -f {{ justfile() }} --list
+            @_:
+                just --list
 
             <>
             ]],
