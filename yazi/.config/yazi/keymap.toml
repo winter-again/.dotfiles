@@ -48,7 +48,7 @@ keymap = [
     # Toggle
     { on = "<Space>", run = [
         "toggle",
-        "arrow next",
+        "arrow 1",
     ], desc = "Toggle the current selection state" },
     { on = "<C-a>", run = "toggle_all --state=on", desc = "Select all files" },
     { on = "<C-r>", run = "toggle_all", desc = "Invert selection of all files" },
@@ -65,7 +65,7 @@ keymap = [
     { on = "<Tab>", run = "spot", desc = "Spot hovered file" },
 
     # Operation
-    # { on = "o", run = "open", desc = "Open selected files" },
+    { on = "o", run = "open", desc = "Open selected files" },
     { on = "O", run = "open --interactive", desc = "Open selected files interactively" },
     { on = "<Enter>", run = "open", desc = "Open selected files" },
     { on = "<S-Enter>", run = "open --interactive", desc = "Open selected files interactively" },
@@ -80,7 +80,7 @@ keymap = [
     { on = "X", run = "unyank", desc = "Cancel the yank status" },
     { on = "d", run = "remove", desc = "Trash selected files" },
     { on = "D", run = "remove --permanently", desc = "Permanently delete selected files" },
-    { on = "o", run = "create", desc = "Create a file (ends with / for directories)" },
+    { on = "a", run = "create", desc = "Create a file (ends with / for directories)" },
     { on = "r", run = "rename --cursor=before_ext", desc = "Rename selected file(s)" },
     { on = ";", run = "shell --interactive", desc = "Run a shell command" },
     { on = ":", run = "shell --block --interactive", desc = "Run a shell command (block until finishes)" },
@@ -156,7 +156,7 @@ keymap = [
         ",",
         "M",
     ], run = [
-        "sort mtime --reverse",
+        "sort mtime --reverse=yes",
         "linemode mtime",
     ], desc = "Sort by modified time (reverse)" },
     { on = [
@@ -170,7 +170,7 @@ keymap = [
         ",",
         "B",
     ], run = [
-        "sort btime --reverse",
+        "sort btime --reverse=yes",
         "linemode btime",
     ], desc = "Sort by birth time (reverse)" },
     { on = [
@@ -180,7 +180,7 @@ keymap = [
     { on = [
         ",",
         "E",
-    ], run = "sort extension --reverse", desc = "Sort by extension (reverse)" },
+    ], run = "sort extension --reverse=yes", desc = "Sort by extension (reverse)" },
     { on = [
         ",",
         "a",
@@ -188,7 +188,7 @@ keymap = [
     { on = [
         ",",
         "A",
-    ], run = "sort alphabetical --reverse", desc = "Sort alphabetically (reverse)" },
+    ], run = "sort alphabetical --reverse=yes", desc = "Sort alphabetically (reverse)" },
     { on = [
         ",",
         "n",
@@ -196,7 +196,7 @@ keymap = [
     { on = [
         ",",
         "N",
-    ], run = "sort natural --reverse", desc = "Sort naturally (reverse)" },
+    ], run = "sort natural --reverse=yes", desc = "Sort naturally (reverse)" },
     { on = [
         ",",
         "s",
@@ -208,7 +208,7 @@ keymap = [
         ",",
         "S",
     ], run = [
-        "sort size --reverse",
+        "sort size --reverse=yes",
         "linemode size",
     ], desc = "Sort by size (reverse)" },
     { on = [
@@ -388,6 +388,8 @@ keymap = [
     { on = "E", run = "forward --far --end-of-word", desc = "Move forward to the end of the current or next WORD" },
     { on = "<A-b>", run = "backward", desc = "Move back to the start of the current or previous word" },
     { on = "<A-f>", run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
+    { on = "<C-Left>", run = "backward", desc = "Move back to the start of the current or previous word" },
+    { on = "<C-Right>", run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
 
     # Line-wise movement
     { on = "0", run = "move bol", desc = "Move to the BOL" },
@@ -410,6 +412,8 @@ keymap = [
     { on = "<C-k>", run = "kill eol", desc = "Kill forwards to the EOL" },
     { on = "<C-w>", run = "kill backward", desc = "Kill backwards to the start of the current word" },
     { on = "<A-d>", run = "kill forward", desc = "Kill forwards to the end of the current word" },
+    { on = "<C-Backspace>", run = "kill backward", desc = "Kill backwards to the start of the current word" },
+    { on = "<C-Delete>", run = "kill forward", desc = "Kill forwards to the end of the current word" },
 
     # Cut/Yank/Paste
     { on = "d", run = "delete --cut", desc = "Cut selected characters" },
@@ -422,6 +426,15 @@ keymap = [
         "delete --cut --insert",
         "move eol",
     ], desc = "Cut until EOL, and enter insert mode" },
+    { on = "s", run = [
+        "delete --cut --insert",
+        "move 1",
+    ], desc = "Cut current character, and enter insert mode" },
+    { on = "S", run = [
+        "move bol",
+        "delete --cut --insert",
+        "move eol",
+    ], desc = "Cut from BOL until EOL, and enter insert mode" },
     { on = "x", run = [
         "delete --cut",
         "move 1 --in-operating",
@@ -430,19 +443,18 @@ keymap = [
     { on = "p", run = "paste", desc = "Paste copied characters after the cursor" },
     { on = "P", run = "paste --before", desc = "Paste copied characters before the cursor" },
 
-    # Undo/Redo
-    { on = "u", run = "undo", desc = "Undo the last operation" },
+    # Undo/Redo/Casefy
+    { on = "u", run = [
+        "undo",
+        "casefy lower",
+    ], desc = "Undo, or lowercase if in visual mode" },
+    { on = "U", run = "casefy upper", desc = "Uppercase" },
     { on = "<C-r>", run = "redo", desc = "Redo the last operation" },
 
     # Help
     { on = "~", run = "help", desc = "Open help" },
     { on = "<F1>", run = "help", desc = "Open help" },
 ]
-
-[[input.prepend_keymap]]
-on = "<Esc>"
-run = "close"
-desc = "Cancel input"
 
 [confirm]
 
