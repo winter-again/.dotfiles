@@ -6,6 +6,8 @@ window {
     background-position: center;
     /* used if image fails to load */
     background-color: #0f0f0f;
+    color: #f0f0f0;
+    font-family: monospace;
 }
 
 #window-box {
@@ -15,11 +17,17 @@ window {
     border-color: #8f8aac;
 }
 
+#input-field {
+    border: none;
+    background: #262626;
+    box-shadow: none;
+}
+
 #error-label {
     color: #ac8a8c;
 }
 
 #unlock-button {
-    color: #262626;
+    color: #0f0f0f;
     background: #8f8aac;
 }

@@ -361,11 +361,6 @@ return {
         end,
     },
     {
-        "savq/melange-nvim",
-        enabled = false,
-        lazy = false,
-    },
-    {
         "nyngwang/nvimgelion",
         enabled = false,
         -- 'winter-again/nvimgelion',
