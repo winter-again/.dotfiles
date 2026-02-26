@@ -14,7 +14,7 @@ vim.opt_local.spell = true
 -- vim.opt_local.conceallevel = 2
 -- vim.opt_local.concealcursor = "nc" -- modes in which text in cursor line can remain concealed
 
-local root = vim.fs.root(0, ".git")
+local root = vim.fs.root(0, { ".git", ".gitignore", ".fdignore", ".markdownlint-cli2.jsonc" })
 local notebook_dir = vim.fs.normalize("~/Documents/notebook")
 
 if root ~= nil then

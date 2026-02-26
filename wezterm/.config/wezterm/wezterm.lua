@@ -56,6 +56,16 @@ config.keys = {
         mods = "LEADER",
         action = wezterm.action.EmitEvent("clear-overrides"),
     },
+    {
+        key = "J",
+        mods = "CTRL | SHIFT",
+        action = wezterm.action.DecreaseFontSize,
+    },
+    {
+        key = "K",
+        mods = "CTRL | SHIFT",
+        action = wezterm.action.IncreaseFontSize,
+    },
     -- {
     --     key = "s",
     --     mods = "LEADER",

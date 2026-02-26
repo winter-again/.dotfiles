@@ -7,7 +7,7 @@ local M = {}
 ---@return table
 function M.set_bg(bg_name)
     local bg_key
-    if bg_name ~= "solid_black" then
+    if bg_name ~= "default" and bg_name ~= "black" then
         bg_key = "bg_" .. bg_name
     else
         bg_key = bg_name

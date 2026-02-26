@@ -119,6 +119,7 @@ alias tla="task +lab active"
 alias tpa="task +personal active"
 alias aur="pacman -Qqm"
 alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # color help with bat
+alias dust="dust -r"
 
 alias g="git"
 alias gc="git commit"
