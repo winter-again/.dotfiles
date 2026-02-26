@@ -3,11 +3,12 @@ return {
     event = {'BufReadPost', 'BufNewFile'},
     config = function()
         require('Comment').setup({
+            -- note that these are set using "_" but are actually targeting "/"
             toggler = {
-                line = '<C-/>'
+                line = '<C-_>'
             },
             opleader = {
-                line = '<C-/>'
+                line = '<C-_>'
             },
             extra = {
                 eol = 'gce'
