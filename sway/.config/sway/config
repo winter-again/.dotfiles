@@ -281,16 +281,17 @@ mode "resize" {
 exec kanshi
 exec_always kill -1 $(pidof kanshi)
 exec {
-    spotify-launcher
     waybar
     nm-applet
     solaar -w hide
     mako
-    swayidle -w before-sleep 'gtklock -d'
+    spotify-launcher
     playerctld daemon
 
     dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
     gnome-keyring-daemon --start --components=secrets
+
+    swayidle -w before-sleep 'gtklock -d'
 
     # for xwayland, maybe also for nsxiv
     # xrdb -load ~/.Xresources
