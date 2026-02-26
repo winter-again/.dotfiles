@@ -17,6 +17,7 @@ return {
                     highlights['@text.literal.markdown'] = { link = '@punctuation.delimiter.markdown' }
                     -- highlights['FidgetTask'] = {fg = colors.fg} -- override for fidget plugin
                     highlights['Visual'] = { bg = '#45475a' }
+                    highlights['LineNr'] = { fg = '#696d87' } -- line number color
                 end,
             })
         end,
@@ -60,6 +61,7 @@ return {
                     return {
                         TreesitterContext = { bg = colors.surface2 },
                         WinSeparator = { fg = colors.surface2 },
+                        LineNr = { fg = colors.surface2 },
                     }
                 end,
                 -- overrides for stark black bg

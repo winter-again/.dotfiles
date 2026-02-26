@@ -18,8 +18,8 @@ vim.api.nvim_create_autocmd('BufEnter', {
 -- setting it with autocmd otherwise ftplugin overrides it
 -- BufWinEnter event is late enough to override formatoptions
 -- https://www.reddit.com/r/neovim/comments/sqld76/stop_automatic_newline_continuation_of_comments/
-local exit_cursor_group = vim.api.nvim_create_augroup('ModAutoComment', { clear = true })
-vim.api.nvim_create_autocmd('BufWinEnter', {
-    command = 'set formatoptions-=cro',
-    group = exit_cursor_group,
-})
+-- local exit_cursor_group = vim.api.nvim_create_augroup('ModAutoComment', { clear = true })
+-- vim.api.nvim_create_autocmd('BufWinEnter', {
+--     command = 'set formatoptions-=cro',
+--     group = exit_cursor_group,
+-- })
