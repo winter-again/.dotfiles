@@ -6,8 +6,8 @@ return {
             window = {
                 -- width = 150,
                 options = {
-                    foldcolumn = '0' -- disable fold column
-                }
+                    foldcolumn = '0', -- disable fold column
+                },
             },
             plugins = {
                 wezterm = {
@@ -16,8 +16,8 @@ return {
                     -- enabled = true,
                     -- set an absolute font
                     -- font = 12
-                }
-            }
+                },
+            },
         })
-    end
+    end,
 }

@@ -10,7 +10,13 @@ return {
         local function header()
             local date_time = os.date('%a %x %I:%M %p')
             local version = vim.version()
-            local version_info = devicons.get_icon_by_filetype('vim') .. ' v' .. version.major .. '.' .. version.minor .. '.' .. version.patch
+            local version_info = devicons.get_icon_by_filetype('vim')
+                .. ' v'
+                .. version.major
+                .. '.'
+                .. version.minor
+                .. '.'
+                .. version.patch
             local plugins_tot = lazy_stats.count -- total number of plugins
 
             return '󱛡 ' .. date_time .. ' | ' .. version_info .. ' | ' .. ' ' .. plugins_tot .. ' plugins'
@@ -23,7 +29,7 @@ return {
                 dashboard.button('SPC pr', '  Restore last local session'),
                 -- dashboard.button('SPC fp', '  Find session'),
                 dashboard.button('SPC ff', '  Find file'),
-                dashboard.button('SPC fs', '  Find string in cwd')
+                dashboard.button('SPC fs', '  Find string in cwd'),
             }
         end
 
@@ -31,11 +37,11 @@ return {
         dashboard.section.buttons.val = buttons()
 
         dashboard.config.layout = {
-          {type = 'padding', val = 3},
+            { type = 'padding', val = 3 },
             dashboard.section.header,
-          {type = 'padding', val = 5},
-            dashboard.section.buttons
+            { type = 'padding', val = 5 },
+            dashboard.section.buttons,
         }
         alpha.setup(dashboard.opts)
-    end
+    end,
 }

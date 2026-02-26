@@ -1,7 +1,7 @@
 return {
     {
         'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make'
+        build = 'make',
     },
     {
         'nvim-telescope/telescope.nvim',
@@ -9,13 +9,13 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'debugloop/telescope-undo.nvim',
-            'nvim-telescope/telescope-file-browser.nvim'
+            'nvim-telescope/telescope-file-browser.nvim',
         },
         config = function()
             -- how to specify remaps for operations within Telescope
             -- local actions = require('telescope.actions')
             local telescope_config = require('telescope.config')
-            local vimgrep_arguments = {unpack(telescope_config.values.vimgrep_arguments)}
+            local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
             -- allow search in dotfiles
             table.insert(vimgrep_arguments, '--hidden')
             -- leave this out of it
@@ -30,9 +30,9 @@ return {
                     sorting_strategy = 'ascending',
                     layout_config = {
                         horizontal = {
-                            prompt_position = 'top'
-                        }
-                    }
+                            prompt_position = 'top',
+                        },
+                    },
                 },
                 pickers = {
                     find_files = {
@@ -47,9 +47,9 @@ return {
                             '-g',
                             '!**/.git/*',
                             '-g',
-                            '!.venv/*'
-                        }
-                    }
+                            '!.venv/*',
+                        },
+                    },
                 },
                 extensions = {
                     undo = {
@@ -57,13 +57,13 @@ return {
                         side_by_side = true,
                         layout_strategy = 'vertical',
                         layout_config = {
-                            preview_height = 0.8
-                        }
+                            preview_height = 0.8,
+                        },
                     },
                     file_browser = {
-                        hijack_netrw = true
-                    }
-                }
+                        hijack_netrw = true,
+                    },
+                },
             })
             require('telescope').load_extension('fzf')
             require('telescope').load_extension('undo')
@@ -73,35 +73,37 @@ return {
 
             local builtin = require('telescope.builtin')
             -- use '<leader>ff' to find among ALL files; respects .gitignore
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, {silent = true})
+            vim.keymap.set('n', '<leader>ff', builtin.find_files, { silent = true })
             -- use '<leader>fg' to find among git files; again respects .gitignore
-            vim.keymap.set('n', '<leader>fgc', builtin.git_commits, {silent = true})
-            vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, {silent = true})
-            vim.keymap.set('n', '<leader>fgs', builtin.git_status, {silent = true})
+            vim.keymap.set('n', '<leader>fgc', builtin.git_commits, { silent = true })
+            vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, { silent = true })
+            vim.keymap.set('n', '<leader>fgs', builtin.git_status, { silent = true })
             -- search for string in current working dir
-            vim.keymap.set('n', '<leader>fs', builtin.live_grep, {silent = true})
+            vim.keymap.set('n', '<leader>fs', builtin.live_grep, { silent = true })
             -- search within current buffer
-            vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, {silent = true})
+            vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, { silent = true })
             -- search previously open files
-            vim.keymap.set('n', '<leader>fr', builtin.registers, {silent = true})
+            vim.keymap.set('n', '<leader>fr', builtin.registers, { silent = true })
             -- search open buffers in current neovim instance
-            vim.keymap.set('n', '<leader>fl', builtin.buffers, {silent = true})
+            vim.keymap.set('n', '<leader>fl', builtin.buffers, { silent = true })
             -- search diagnostics for current buffer
-            vim.keymap.set('n', '<leader>fd', function() builtin.diagnostics({bufnr=0}) end, {silent = true})
+            vim.keymap.set('n', '<leader>fd', function()
+                builtin.diagnostics({ bufnr = 0 })
+            end, { silent = true })
             -- search diagnostics for entire workspace
-            vim.keymap.set('n', '<leader>fD', builtin.diagnostics, {silent = true})
+            vim.keymap.set('n', '<leader>fD', builtin.diagnostics, { silent = true })
             -- search keymaps
-            vim.keymap.set('n', '<leader>fk', builtin.keymaps, {silent = true})
+            vim.keymap.set('n', '<leader>fk', builtin.keymaps, { silent = true })
             -- search highlights
-            vim.keymap.set('n', '<leader>fh', builtin.highlights, {silent = true})
+            vim.keymap.set('n', '<leader>fh', builtin.highlights, { silent = true })
             -- search colorscheme
-            vim.keymap.set('n', '<leader>fc', builtin.colorscheme, {silent = true})
+            vim.keymap.set('n', '<leader>fc', builtin.colorscheme, { silent = true })
             --search jumplist
-            vim.keymap.set('n', '<leader>fj', builtin.jumplist, {silent = true})
+            vim.keymap.set('n', '<leader>fj', builtin.jumplist, { silent = true })
             -- extensions
-            vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', {silent = true})
-            vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', {silent=true})
-            vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', {silent=true})
-        end
-    }
+            vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', { silent = true })
+            vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', { silent = true })
+            vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', { silent = true })
+        end,
+    },
 }

@@ -14,12 +14,12 @@ return {
                 -- doing this allows my cursorline to not get overriden when cursor is in a code block
                 on_highlights = function(highlights, colors)
                     -- using this keeps cursorline highlight from getting overriden in markdown code blocks
-                    highlights['@text.literal.markdown'] = {link = '@punctuation.delimiter.markdown'}
+                    highlights['@text.literal.markdown'] = { link = '@punctuation.delimiter.markdown' }
                     -- highlights['FidgetTask'] = {fg = colors.fg} -- override for fidget plugin
-                    highlights['Visual'] = {bg = '#45475a'}
-                end
+                    highlights['Visual'] = { bg = '#45475a' }
+                end,
             })
-        end
+        end,
     },
     {
         'rebelot/kanagawa.nvim',
@@ -30,24 +30,24 @@ return {
                     theme = {
                         all = {
                             ui = {
-                                bg_gutter = 'none'
-                            }
+                                bg_gutter = 'none',
+                            },
                         },
                         wave = {
                             ui = {
-                                bg_visual = '#45475a'
-                            }
-                        }
-                    }
+                                bg_visual = '#45475a',
+                            },
+                        },
+                    },
                 },
                 overrides = function(colors)
                     local theme = colors.theme
                     return {
-                        WinSeparator = {fg = theme.ui.nontext}
+                        WinSeparator = { fg = theme.ui.nontext },
                     }
-                end
+                end,
             })
-        end
+        end,
     },
     {
         'catppuccin/nvim',
@@ -58,8 +58,8 @@ return {
                 flavour = 'mocha',
                 custom_highlights = function(colors)
                     return {
-                        TreesitterContext = {bg = colors.surface2},
-                        WinSeparator = {fg = colors.surface2}
+                        TreesitterContext = { bg = colors.surface2 },
+                        WinSeparator = { fg = colors.surface2 },
                     }
                 end,
                 -- overrides for stark black bg
@@ -78,29 +78,29 @@ return {
                     telescope = true,
                     indent_blankline = {
                         enabled = true,
-                        colored_indent_levels = false
+                        colored_indent_levels = false,
                     },
                     lsp_saga = true,
                     native_lsp = {
                         enabled = true,
                         virtual_text = {
-                            errors = {'italic'},
-                            hints = {'italic'},
-                            warnings = {'italic'},
-                            information = {'italic'}
+                            errors = { 'italic' },
+                            hints = { 'italic' },
+                            warnings = { 'italic' },
+                            information = { 'italic' },
                         },
                         underlines = {
-                            errors = {'underline'},
-                            hints = {'underline'},
-                            warnings = {'underline'},
-                            information = {'underline'}
-                        }
+                            errors = { 'underline' },
+                            hints = { 'underline' },
+                            warnings = { 'underline' },
+                            information = { 'underline' },
+                        },
                     },
                     treesitter_context = true,
-                    which_key = true
-                }
+                    which_key = true,
+                },
             })
-        end
+        end,
     },
     {
         'rose-pine/neovim',
@@ -110,17 +110,17 @@ return {
             require('rose-pine').setup({
                 variant = 'moon',
                 highlight_groups = {
-                    TreesitterContext = {bg='foam', blend=10},
+                    TreesitterContext = { bg = 'foam', blend = 10 },
                     -- for transparency, otherwise bg remains in signcolumn
-                    GitSignsAdd = {bg='none'},
-                    GitSignsDelete = {bg='none'},
-                    GitSignsChange = {bg='none'},
-                }
+                    GitSignsAdd = { bg = 'none' },
+                    GitSignsDelete = { bg = 'none' },
+                    GitSignsChange = { bg = 'none' },
+                },
             })
-        end
+        end,
     },
     {
         'EdenEast/nightfox.nvim',
-        config = true
-    }
+        config = true,
+    },
 }

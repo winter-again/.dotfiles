@@ -1,6 +1,7 @@
 return {
     'Vigemus/iron.nvim',
-    ft = {'python', 'r'}, -- I think overridden because of the Rmd stuff in init.lua
+    ft = { 'python', 'r' }, -- I think overridden because of the Rmd stuff in init.lua
+    enabled = false,
     config = function()
         local iron = require('iron.core')
         local view = require('iron.view')
@@ -15,22 +16,22 @@ return {
                     --     -- command = {'radian'},
                     --     -- format = require('iron.fts.common').bracketed_paste
                     -- }
-                }
+                },
             },
             keymaps = {
                 visual_send = '<leader>sc', -- send visual selection
                 send_line = '<leader>sl', -- send line
                 send_file = '<leader>sf', -- send file
                 send_until_cursor = '<leader>su', -- send until cursor
-                interrupt = '<leader>st' -- interrupt REPL
+                interrupt = '<leader>st', -- interrupt REPL
             },
             highlight_last = 'IronLastSent', -- highlight last send block
             highlight = {
-                italic = true -- use italics instead of bold
+                italic = true, -- use italics instead of bold
             },
-            ignore_blank_lines = false
+            ignore_blank_lines = false,
         })
-        vim.keymap.set('n', '<leader>si', '<cmd>IronReplHere<CR>', {silent=true})
-        vim.keymap.set('n', '<leader>ss', '<cmd>IronRepl<CR>', {silent=true})
-    end
+        vim.keymap.set('n', '<leader>si', '<cmd>IronReplHere<CR>', { silent = true })
+        vim.keymap.set('n', '<leader>ss', '<cmd>IronRepl<CR>', { silent = true })
+    end,
 }

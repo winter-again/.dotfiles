@@ -33,7 +33,7 @@ end
 
 local function get_null_ls()
     local buf_ft = vim.bo.filetype
-    local sources = require('null-ls').get_source({filetype=buf_ft})
+    local sources = require('null-ls').get_source({ filetype = buf_ft })
     if next(sources) ~= nil then
         local src_list = {}
         for _, source in pairs(sources) do
@@ -60,9 +60,9 @@ local function display_lsp_venv()
         return lsp_status .. null_ls
     elseif lsp_status ~= 'None active' and null_ls == 'None active' and venv_name ~= '' then
         return lsp_status .. ' (' .. venv_name .. ')'
-    -- elseif lsp_status ~= 'None active' and null_ls == 'None active' and venv_name == '' then
+        -- elseif lsp_status ~= 'None active' and null_ls == 'None active' and venv_name == '' then
         -- return lsp_status
-    -- elseif lsp_status == 'None active' then
+        -- elseif lsp_status == 'None active' then
     else
         return lsp_status
     end
@@ -72,45 +72,45 @@ end
 local function diff_source()
     local gitsigns = vim.b.gitsigns_status_dict
     if gitsigns then
-        return {added = gitsigns.added, modified = gitsigns.changed, removed = gitsigns.removed}
+        return { added = gitsigns.added, modified = gitsigns.changed, removed = gitsigns.removed }
     end
 end
 
 return {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
-    dependencies = {'nvim-tree/nvim-web-devicons'},
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
         require('lualine').setup({
             options = {
                 disabled_filetypes = {
-                    winbar = {'NvimTree', 'alpha'}
+                    winbar = { 'NvimTree', 'alpha' },
                 },
                 globalstatus = true,
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''}
+                component_separators = { left = '', right = '' },
+                section_separators = { left = '', right = '' },
             },
             -- most of this is default
             sections = {
-                lualine_a = {'mode'},
+                lualine_a = { 'mode' },
                 lualine_b = {
                     -- reuse info from gitsigns
-                    {'b:gitsigns_head', icon = ''},
-                    {'diff', source = diff_source, symbols = {added = ' ', modified = ' ', removed = ' '}},
-                    'diagnostics'
+                    { 'b:gitsigns_head', icon = '' },
+                    { 'diff', source = diff_source, symbols = { added = ' ', modified = ' ', removed = ' ' } },
+                    'diagnostics',
                 },
-                lualine_c = {{'filename', path=1}},
-                lualine_x = {'encoding', 'filetype', {display_lsp_venv, icon={' LSP:'}}},
-                lualine_y = {'progress'},
-                lualine_z = {'location'}
-              },
+                lualine_c = { { 'filename', path = 1 } },
+                lualine_x = { 'encoding', 'filetype', { display_lsp_venv, icon = { ' LSP:' } } },
+                lualine_y = { 'progress' },
+                lualine_z = { 'location' },
+            },
             winbar = {
-                lualine_c = {{'filename', path = 3}}
+                lualine_c = { { 'filename', path = 3 } },
             },
             inactive_winbar = {
-                lualine_c = {{'filename', path = 3}}
+                lualine_c = { { 'filename', path = 3 } },
             },
-            extensions = {'nvim-tree', 'fugitive'}
+            extensions = { 'nvim-tree', 'fugitive' },
         })
-    end
+    end,
 }

@@ -5,7 +5,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.swapfile = false -- turn off swapfiles
 vim.opt.backup = false -- turn off backups
-vim.opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
+vim.opt.undodir = os.getenv('HOME') .. '/.nvim/undodir'
 vim.opt.undofile = true -- save undo history to an undo file and restore from too
 -- line numbers; setting both of these together gives hybrid line numbering
 vim.opt.number = true
@@ -14,7 +14,7 @@ vim.opt.cursorline = true -- highlight current line and its line number
 -- vim.opt.colorcolumn = '80' -- very slow rendering
 -- tab settings
 vim.opt.tabstop = 4 -- how wide tab characters are
-vim.opt.softtabstop = 4 -- how Tab and Backspace should operate 
+vim.opt.softtabstop = 4 -- how Tab and Backspace should operate
 vim.opt.shiftwidth = 4 -- number of spaces to use for autoindent
 vim.opt.expandtab = true -- use only space characters in your files; i.e., using Tab inserts spaces
 -- indentation
@@ -26,7 +26,7 @@ vim.opt.wrap = false -- no line wrapping
 vim.opt.incsearch = true -- show search result while typing the search term
 vim.opt.termguicolors = true -- nice colors
 vim.opt.scrolloff = 4 -- always keep at least this number of lines above/below the cursor when scrolling
-vim.opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show 
+vim.opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show
 -- vim.opt.clipboard = 'unnamedplus' -- makes all yanking use clipboard
 vim.opt.updatetime = 1000 -- faster updatetime for triggering plugins; default is 4000 ms
 -- settings for which-key plugin
@@ -52,31 +52,31 @@ vim.opt.sessionoptions = 'buffers,curdir,folds,globals,winpos,winsize'
 vim.opt.pumblend = 35
 
 -- highlight the text you just yanked (visual cue)
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', {clear = true})
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
         vim.highlight.on_yank()
     end,
     group = highlight_group,
-    pattern = '*'
+    pattern = '*',
 })
 -- allow line wrapping for .md files
-local wrap_group = vim.api.nvim_create_augroup('MarkdownWrap', {clear = true})
+local wrap_group = vim.api.nvim_create_augroup('MarkdownWrap', { clear = true })
 vim.api.nvim_create_autocmd('BufEnter', {
-    pattern = {'*.md'},
+    pattern = { '*.md' },
     group = wrap_group,
-    command = 'setlocal wrap'
+    command = 'setlocal wrap',
 })
 -- modify automatic formatting to not continue comments when you hit Enter
 -- setting it with autocmd otherwise ftplugin overrides it
 -- BufWinEnter event is late enough to override formatoptions
 -- https://www.reddit.com/r/neovim/comments/sqld76/stop_automatic_newline_continuation_of_comments/
-local exit_cursor_group = vim.api.nvim_create_augroup('ModAutoComment', {clear = true})
-vim.api.nvim_create_autocmd("BufWinEnter", { command = 'set formatoptions-=cro', group = exit_cursor_group })
+local exit_cursor_group = vim.api.nvim_create_augroup('ModAutoComment', { clear = true })
+vim.api.nvim_create_autocmd('BufWinEnter', { command = 'set formatoptions-=cro', group = exit_cursor_group })
 --------------------------------------------------------------------------------------------------------
 -- defaults to NOT use recursive mapping
-local opts = {silent = true} -- prevents printing to command line
-vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', opts) -- unbind space in case it interferes with leader setting
+local opts = { silent = true } -- prevents printing to command line
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', opts) -- unbind space in case it interferes with leader setting
 -- split windows (reversed for my brain)
 vim.keymap.set('n', '<leader>sh', ':split<CR><C-w>w', opts)
 vim.keymap.set('n', '<leader>sv', ':vsplit<CR><C-w>w', opts)
@@ -113,7 +113,7 @@ vim.keymap.set('v', 'y', 'ygv<esc>', opts)
 -- paste without overwriting what's yanked
 vim.keymap.set('x', '<leader>p', '"_dP', opts)
 -- yank into clipboard
-vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', opts)
+vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', opts)
 vim.keymap.set('n', '<leader>Y', '"+Y', opts)
 -- delete into clipboard
 -- vim.keymap.set({'n', 'v'}, '<leader>d', '"+d')
@@ -122,7 +122,7 @@ vim.keymap.set('n', '<leader>Y', '"+Y', opts)
 -- vim.keymap.set('n', '<leader>p', '"+p')
 -- vim.keymap.set('n', '<leader>P', '"+P')
 -- delete to black hole register to prevent overwriting
-vim.keymap.set({'n', 'v'}, '<leader>d', '"_d', opts)
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', opts)
 -- disable "Q"
 -- apparently "Q" would replay the last recorded macro?
 -- https://github.com/neovim/neovim/issues/15404
@@ -142,4 +142,4 @@ vim.keymap.set('n', '+', '<C-a>', opts)
 vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
 vim.keymap.set('n', '<leader>o', '<cmd>lua Transp()<CR>') -- set transparency
 vim.keymap.set('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>') -- delete buffer without losing window layout
-vim.keymap.set('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', {silent=true}) -- set here since plugin only loaded on command
+vim.keymap.set('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }) -- set here since plugin only loaded on command

@@ -1,7 +1,7 @@
 return {
     {
         'echasnovski/mini.move',
-        event = {'BufReadPost', 'BufNewFile'},
+        event = { 'BufReadPost', 'BufNewFile' },
         version = false,
         config = function()
             require('mini.move').setup({
@@ -15,21 +15,21 @@ return {
                     line_up = '<M-k>',
                     line_down = '<M-j>',
                     line_left = '<M-h>',
-                    line_right = '<M-l>'
-                }
+                    line_right = '<M-l>',
+                },
             })
-        end
+        end,
     },
     {
         'echasnovski/mini.splitjoin',
         version = false,
-        event = {'BufReadPost', 'BufNewFile'},
+        event = { 'BufReadPost', 'BufNewFile' },
         config = function()
             require('mini.splitjoin').setup({
                 mappings = {
-                    toggle = '<leader>sa'
-                }
+                    toggle = '<leader>sa',
+                },
             })
-        end
-    }
+        end,
+    },
 }

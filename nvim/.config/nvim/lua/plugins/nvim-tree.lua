@@ -1,7 +1,7 @@
 return {
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
-    dependencies = {'nvim-tree/nvim-web-devicons'},
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     tag = 'nightly',
     config = function()
         require('nvim-tree').setup({
@@ -21,16 +21,16 @@ return {
             },
             -- LSP diagnostics in tree
             diagnostics = {
-                enable = false
+                enable = false,
             },
             git = {
                 enable = true,
-                ignore = false
+                ignore = false,
             },
             renderer = {
                 highlight_opened_files = 'name',
                 indent_markers = {
-                    enable = true
+                    enable = true,
                 },
                 icons = {
                     glyphs = {
@@ -41,11 +41,11 @@ return {
                             renamed = 'R',
                             untracked = 'U', -- e.g., new file; took default "unstaged" icon
                             deleted = 'D',
-                            ignored = '◌' -- default
-                        }
-                    }
-                }
-            }
+                            ignored = '◌', -- default
+                        },
+                    },
+                },
+            },
         })
-    end
+    end,
 }
