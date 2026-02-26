@@ -91,18 +91,5 @@ return {
         map("n", "<leader>fgs", fzf_lua.git_status, opts, "Search git status")
         map("n", "<leader>fgb", fzf_lua.git_bcommits, opts, "Search buf commit log")
         map("n", "<leader>fgc", fzf_lua.git_commits, opts, "Search proj git commit log")
-
-        -- notes
-        local notes_dir = "~/Documents/notebook"
-        map("n", "<leader>fn", function()
-            fzf_lua.files({ cwd = notes_dir, fd_opts = "--type file -e md --color=never" })
-        end, opts, "Search notes")
-        map("n", "<leader>ns", function()
-            fzf_lua.live_grep({
-                cwd = notes_dir,
-                exec_empty_query = true,
-                rg_opts = "--smart-case --column --line-number --color=always --max-columns=4096",
-            })
-        end, opts, "Live grep notes")
     end,
 }
