@@ -47,7 +47,6 @@ return {
         -- vim.api.nvim_create_user_command('Bg', function(opts)
         --     local bg_profile = tostring(opts.fargs[1])
         --     wezterm_config.set_wezterm_user_var('profile_background', bg_profile)
-        --     wezterm_config.set_wezterm_user_var('profile_background', bg_profile)
         -- end, {
         --     nargs = 1,
         --     complete = function(ArgLead, CmdLine, CursorPos)
