@@ -13,10 +13,10 @@ if wezterm.config_builder then
     config = wezterm.config_builder() -- allows better logging of warnings and errors
 end
 
+-- config.front_end = "WebGpu" -- default is OpenGL
 -- trying this since it's technically using the dGPU now; unsure of whether one is clearly better
 -- local gpus = wezterm.gui.enumerate_gpus()
 -- config.webgpu_preferred_adapter = gpus[2]
--- config.front_end = 'OpenGL' -- already the default
 config.warn_about_missing_glyphs = false
 -- config.enable_wayland = true -- already default
 config.audible_bell = "Disabled"

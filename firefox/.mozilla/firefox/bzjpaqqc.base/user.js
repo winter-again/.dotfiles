@@ -244,7 +244,8 @@ user_pref("identity.fxaccounts.enabled", false);
 user_pref("browser.tabs.firefox-view", false);
 user_pref("browser.tabs.firefox-view-next", false); // [FF119+]
 user_pref("browser.tabs.firefox-view-newIcon", false);
-user_pref("browser.firefox-view.feature-tour", '{"screen":"","complete":true}');
+// PREF: disable the Firefox View tour from popping up
+user_pref("browser.firefox-view.feature-tour", "{\"screen\":\"\",\"complete\":true}");
 
 // disable login manager
 user_pref("signon.rememberSignons", false);
@@ -266,6 +267,7 @@ user_pref("security.ssl.require_safe_negotiation", true);
 // PREF: set DoH provider
 // user_pref("network.trr.uri", "https://mozilla.cloudflare-dns.com/dns-query"); // default is none
 user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
+// user_pref("network.trr.uri", "https://dns.dnswarden.com/00000000000000000000048"); // Hagezi Light + TIF
 // DNS over HTTPS
 user_pref("network.trr.mode", 2); // use TRR first; if fails, use native resolver as fallback
 user_pref("network.trr.max-fails", 5);

@@ -1,6 +1,6 @@
 profile double {
     output eDP-1 disable
-    output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 1500,0 scale 2
+    output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 0,0 scale 2
     output "BNQ BenQ LCD E2H03452SL0" mode 3840x2160@60Hz position 3420,0 scale 2
     exec swaymsg focus output BNQ BenQ LCD 93J02490SL0
     exec notify-send "Laptop docked - 2 monitors"
@@ -8,7 +8,7 @@ profile double {
 
 profile single {
     output eDP-1 disable
-    output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 1500,0 scale 2
+    output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 0,0 scale 2
     exec swaymsg focus output BNQ BenQ LCD 93J02490SL0
     exec notify-send "Laptop docked - 1 monitor"
 }
