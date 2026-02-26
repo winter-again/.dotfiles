@@ -57,22 +57,22 @@ else
     -- any file in lua/plugins/*.lua will be merged into the main plugin spec
     -- require('lazy').setup('plugins', lazy_opts)
     local lazy_opts = {
-        ui = {
-            border = 'none',
-        },
-        change_detection = {
-            enabled = true,
-            notify = false,
-        },
-        checker = {
-            enabled = true,
-            notify = false,
-        },
         dev = {
             path = '~/Documents/code/nvim-dev',
         },
         install = {
             colorscheme = { 'mellifluous', 'tokyonight' }, -- try to load one of these colorschemes when starting an installation during startup
+        },
+        ui = {
+            border = 'none',
+        },
+        checker = {
+            enabled = false,
+            notify = false,
+        },
+        change_detection = {
+            enabled = true,
+            notify = false,
         },
     }
     -- to load subdirs of lua/plugins

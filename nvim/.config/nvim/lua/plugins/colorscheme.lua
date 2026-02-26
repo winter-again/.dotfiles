@@ -6,15 +6,21 @@ return {
         config = function()
             require('mellifluous').setup({
                 -- mellifluous, alduin, mountain, and kanagawa_dragon are ok
-                color_set = 'mountain',
+                colorset = 'mountain',
                 mellifluous = {
-                    neutral = false,
-                    bg_contrast = 'hard',
+                    neutral = true,
+                    color_overrides = {
+                        dark = {
+                            fg = function(bg)
+                                return bg:darkened(2)
+                            end,
+                        },
+                    },
                 },
                 styles = {
-                    comments = { italic = true },
-                    keywords = { bold = true },
+                    main_keywords = { bold = true },
                     functions = { bold = true },
+                    comments = { italic = true },
                 },
                 highlight_overrides = {
                     dark = function(highlighter, colors)
@@ -40,6 +46,13 @@ return {
                     status_line = false,
                 },
                 plugins = {
+                    cmp = true,
+                    gitsigns = true,
+                    indent_blankline = true,
+                    nvim_tree = {
+                        enabled = true,
+                        show_root = true,
+                    },
                     neo_tree = {
                         enabled = false,
                     },

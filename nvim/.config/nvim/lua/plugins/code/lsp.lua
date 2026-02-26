@@ -42,12 +42,11 @@ return {
                     'pyright',
                     -- 'basedpyright',
                     'r_language_server',
-                    'ruff', -- newer LS than ruff-lsp
-                    -- 'ruff_lsp',
+                    'ruff', -- newer LS than ruff_lsp
                     'sqlls',
                     'tailwindcss',
                     'taplo',
-                    'tsserver', -- TODO: this should eventually be 'ts_ls'
+                    'ts_ls',
                     'yamlls',
                 },
                 automatic_installation = false,
@@ -71,7 +70,7 @@ return {
                 vim.keymap.set(mode, lhs, rhs, opts)
             end
             -- keymaps defined on attach
-            local function on_attach(client, bufnr)
+            local function lsp_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }
                 -- default in v0.10
                 map('n', 'K', vim.lsp.buf.hover, opts, 'Hover docs')
@@ -106,9 +105,9 @@ return {
                 map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
                 map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up from LspSaga
 
-                if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+                if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
                     map('n', '<leader>ih', function()
-                        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+                        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
                     end, opts, 'Toggle inlay hints')
                 end
             end
@@ -131,18 +130,15 @@ return {
             local handlers = {
                 -- default handler called for each installed server
                 function(server_name)
-                    if server_name == 'tsserver' then
-                        server_name = 'ts_ls' -- TODO: change name; see https://github.com/neovim/nvim-lspconfig/pull/3232
-                    end
                     require('lspconfig')[server_name].setup({
                         capabilities = lsp_capabilities,
-                        on_attach = on_attach,
+                        on_attach = lsp_attach,
                     })
                 end,
                 ['lua_ls'] = function()
                     require('lspconfig')['lua_ls'].setup({
                         capabilities = lsp_capabilities,
-                        on_attach = on_attach,
+                        on_attach = lsp_attach,
                         on_init = function(client)
                             local path = client.workspace_folders[1].name
                             if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
@@ -247,7 +243,7 @@ return {
                 end,
                 ['pyright'] = function()
                     require('lspconfig')['pyright'].setup({
-                        on_attach = on_attach,
+                        on_attach = lsp_attach,
                         root_dir = require('lspconfig').util.root_pattern('.venv'),
                         -- remove capabilities that ruff can provide
                         -- https://github.com/astral-sh/ruff-lsp/issues/384
