@@ -24,7 +24,7 @@ return {
             },
             ['<leader>'] = {
                 b = {
-                    name = 'Bufferline',
+                    name = 'Buffers',
                     l = {'Move buffer left in bufferline'},
                     p = {'Pin buffer to bufferline'},
                     r = {'Move buffer right in bufferline'}
@@ -37,6 +37,7 @@ return {
                     D = {'Find workspace diagnostics'},
                     d = {'Find file diagnostics'},
                     f = {'Find file'},
+                    m = {'Format file'},
                     gb = {'Find buffer git commits'},
                     gc = {'Find git commits'},
                     gs = {'Find current changes'},
