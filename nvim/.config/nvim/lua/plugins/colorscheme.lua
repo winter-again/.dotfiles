@@ -230,6 +230,18 @@ return {
         end,
     },
     {
+        'sainnhe/gruvbox-material',
+        lazy = false,
+        priority = 995,
+        config = function()
+            -- can be 'material', 'mix', or 'original'
+            vim.g.gruvbox_material_foreground = 'material'
+            vim.g.gruvbox_material_enable_bold = true
+            vim.g.gruvbox_material_enable_italic = true
+            vim.g.gruvbox_material_transparent_background = true
+        end,
+    },
+    {
         'savq/melange-nvim',
         lazy = false,
     },
@@ -282,9 +294,5 @@ return {
                 theme = 'boo',
             })
         end,
-    },
-    {
-        'nyoom-engineering/oxocarbon.nvim',
-        lazy = false,
     },
 }
