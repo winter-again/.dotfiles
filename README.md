@@ -1,8 +1,5 @@
 # .dotfiles
 
-Version control for my dotfiles
-
-Core:
 - [sway](https://swaywm.org/)
 - [Wezterm](https://wezfurlong.org/wezterm/install/linux.html)
 - [tmux](https://github.com/tmux/tmux)

@@ -108,6 +108,8 @@ return {
                     'Telescope workspace symbols'
                 )
             end
+            local bar = 'bar'
+            print(bar)
 
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
@@ -236,15 +238,13 @@ return {
                 return orig_util_open_float_prev(contents, syntax, opts, ...)
             end
 
+            -- custom signs for diagnostics
+            -- trouble.nvim can pick these up
             local sign_icons = {
                 Error = '',
-                error = '',
                 Warn = '',
-                warn = '',
-                Hint = '',
-                hint = '',
                 Info = '',
-                info = '',
+                Hint = '',
             }
             for type, icon in pairs(sign_icons) do
                 local hl = 'DiagnosticSign' .. type
@@ -271,15 +271,30 @@ return {
                     suffix = '', -- get rid of the code that is shown by default since format func handles it
                     format = diagn_format,
                 },
-                signs = true,
+                -- these show up in statuscol
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = sign_icons.Error,
+                        [vim.diagnostic.severity.WARN] = sign_icons.Warn,
+                        [vim.diagnostic.severity.INFO] = sign_icons.Info,
+                        [vim.diagnostic.severity.HINT] = sign_icons.Hint,
+                    },
+                    linehl = {
+                        [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+                    },
+                    numhl = {
+                        [vim.diagnostic.severity.WARN] = 'WarningMsg',
+                    },
+                },
                 underline = true,
-                update_in_insert = true, -- update diagnostics while in Insert mode
+                update_in_insert = false, -- update diagnostics while in Insert mode
                 severity_sort = true,
             })
         end,
     },
     {
         'glepnir/lspsaga.nvim',
+        enabled = false,
         event = 'LspAttach',
         dependencies = {
             'nvim-tree/nvim-web-devicons',
