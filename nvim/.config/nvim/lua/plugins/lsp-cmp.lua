@@ -35,7 +35,8 @@ return {
                     'bashls',
                     'cssls',
                     'dockerls',
-                    'emmet_ls',
+                    -- 'emmet_ls',
+                    'emmet_language_server',
                     'eslint',
                     'gopls',
                     'html',
@@ -63,13 +64,28 @@ return {
                     'stylua',
                 },
             })
-            -- (4)
+            -- (4) see docs: https://github.com/williamboman/mason-lspconfig.nvim/blob/09be3766669bfbabbe2863c624749d8da392c916/doc/mason-lspconfig.txt#L157
+            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
+            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
+            -- from nvim-ufo
+            lsp_capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+            }
+            -- see here for configs:
+            -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             local handlers = {
+                -- default handler called for each installed server
                 function(server_name)
-                    require('lspconfig')[server_name].setup({})
+                    require('lspconfig')[server_name].setup({
+                        capabilties = lsp_capabilties,
+                    })
                 end,
+                -- override default handler by server
                 ['lua_ls'] = function()
                     require('lspconfig')['lua_ls'].setup({
+                        capabilities = lsp_capabilties,
                         settings = {
                             Lua = {
                                 runtime = {
@@ -93,15 +109,27 @@ return {
                         },
                     })
                 end,
+                ['cssls'] = function()
+                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+                    require('lspconfig')['cssls'].setup({
+                        capabilities = lsp_capabilities,
+                    })
+                end,
+                ['html'] = function()
+                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+                    require('lspconfig')['cssls'].setup({
+                        capabilities = lsp_capabilities,
+                    })
+                end,
+                ['jsonls'] = function()
+                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
+                    require('lspconfig')['cssls'].setup({
+                        capabilities = lsp_capabilities,
+                    })
+                end,
             }
-            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
-            -- from nvim-ufo
-            lsp_capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-            }
+            -- handlers should be a table where keys are lspconfig server name and values are setup function
+            -- pass default handler by providing func w/ no key
             require('mason-lspconfig').setup_handlers(handlers)
 
             -- lspconfig appearance and behavior
@@ -275,7 +303,7 @@ return {
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
                     { name = 'path' },
-                    { name = 'buffer' },
+                    { name = 'buffer', max_item_count = 4 },
                     { name = 'nvim_lsp_signature_help' },
                     { name = 'otter' },
                 }),
