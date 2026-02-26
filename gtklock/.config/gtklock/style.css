@@ -4,21 +4,27 @@ window {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #1a1b26;
+    /* background-color: #1a1b26; */
+    background-color: #0f0f0f;
 }
 
 #window-box {
-    background: #1a1b26;
+    /* background: #1a1b26; */
+    background: #0f0f0f;
     border-radius: 10px;
     padding: 10px;
-    opacity: 0.8;
+    border-color: #8f8aac;
+    /* opacity: 0.8; */
 }
 
 #error-label {
-    color: #9d7cd8;
+    /* color: #9d7cd8; */
+    color: #ac8a8c;
 }
 
 #unlock-button {
-    color: #1a1b26;
-    background: #7aa2f7;
+    /* color: #1a1b26; */
+    /* background: #7aa2f7; */
+    color: #262626;
+    background: #8f8aac;
 }
