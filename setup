@@ -144,6 +144,7 @@ tools=(
     eza
     fd
     fzf
+    git-lfs
     jaq
     just
     openssh
@@ -162,6 +163,9 @@ tools=(
     zoxide
 )
 paru_install "${tools[@]}"
+
+echo "Running Git LFS install command..."
+git lfs install
 
 echo "Installing Lua packages..."
 lua_dev_pkgs=(

@@ -1,6 +1,11 @@
 vim.g.netrw_winsize = 20 -- size for splits
 vim.g.netrw_banner = 0 -- disable netrw banner
 vim.g.netrw_liststyle = 3 -- tree style view
+-- ignore provider healthchecks
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
 
 vim.o.winborder = "solid" -- global border setting; "none", "single", and "solid" are good choices
 vim.o.confirm = true -- ask whether to save unsaved changes

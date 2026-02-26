@@ -43,7 +43,7 @@ input "type:keyboard" {
     # xkb_options caps:escape
     # xkb_options ctrl:swapcaps
     # xkb_options caps:swapescape
-    repeat_delay 175
+    repeat_delay 180
     repeat_rate 80
 }
 
