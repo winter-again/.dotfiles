@@ -12,17 +12,20 @@ return {
             'nvim-telescope/telescope-file-browser.nvim',
         },
         config = function()
-            -- how to specify remaps for operations within Telescope
             -- local actions = require('telescope.actions')
             local telescope_config = require('telescope.config')
             local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
-            -- allow search in dotfiles
+            -- allow search in hidden files
             table.insert(vimgrep_arguments, '--hidden')
             -- leave this out of it
             table.insert(vimgrep_arguments, '--glob')
             table.insert(vimgrep_arguments, '!**/.git/*')
+
             table.insert(vimgrep_arguments, '--glob')
-            table.insert(vimgrep_arguments, '!.venv/*')
+            table.insert(vimgrep_arguments, '!**/.venv/*')
+
+            table.insert(vimgrep_arguments, '--glob')
+            table.insert(vimgrep_arguments, '!**/node_modules/*')
 
             require('telescope').setup({
                 defaults = {
@@ -47,7 +50,9 @@ return {
                             '-g',
                             '!**/.git/*',
                             '-g',
-                            '!.venv/*',
+                            '!**/.venv/*',
+                            '-g',
+                            '!**/node_modules/*',
                         },
                     },
                 },

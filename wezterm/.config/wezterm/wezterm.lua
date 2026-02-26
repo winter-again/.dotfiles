@@ -54,6 +54,13 @@ config.window_padding = {
     top = 10,
     bottom = 0,
 }
+-- config.mouse_bindings = {
+--     {
+--         event = { Up = { streak = 1, button = 'Left' } },
+--         mods = 'CTRL',
+--         action = wezterm.action.OpenLinkAtMouseCursor,
+--     },
+-- }
 -- always spawn new tab in home dir w/ shortcut; however, doesn't get honored when clicking new tab button?
 config.keys = {
     {
@@ -92,14 +99,12 @@ config.keys = {
     { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
 }
 
--- local test_plugin = wezterm.plugin.require('https://github.com/winter-again/wezterm-plugin-test')
 local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
 wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin
 
 local profile_data = require('profile_data')
 config.font_size = 12.0
 config.hide_tab_bar_if_only_one_tab = true
--- test_plugin.setup(config, 12.0, true)
 
 config.background = profile_data.background.bg_3
 

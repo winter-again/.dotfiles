@@ -122,7 +122,7 @@ obs() {
 }
 # show journalctl for rclone backup service
 bk() {
-    journalctl -u rclone_backup.service -n 30
+    journalctl -u rclone_backup.service -f -n 30
 }
 # https://github.com/junegunn/fzf/wiki/Examples#changing-directory
 cdf() {
