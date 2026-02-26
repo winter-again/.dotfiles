@@ -18,6 +18,7 @@ opt.equalalways = false -- don't reset window sizes after closing one
 opt.showmode = false -- don't show mode in status line
 opt.swapfile = false -- turn off swapfiles
 opt.backup = false -- turn off backups
+-- change from the default location of ~/.local/state/nvim/undo/
 opt.undodir = os.getenv('HOME') .. '/.nvim/undodir'
 opt.undofile = true -- save undo history to an undo file and restore from too
 -- line numbers; setting both of these together gives hybrid line numbering
