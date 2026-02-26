@@ -1,2 +1,2 @@
 python-preference = "only-managed"
-python-downloads = "manual"
+# python-downloads = "manual"        # setting this to manual affects uv python list output, only showing downloaded versions

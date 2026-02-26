@@ -13,10 +13,10 @@ return {
                 config = {
                     cmd = { "zk", "lsp" },
                     name = "zk",
-                    -- on_attach = function()
-                    --     vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-                    --     vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-                    -- end,
+                    on_attach = function(client, bufnr)
+                        -- NOTE: disable to avoid sending another request alongside marksman
+                        client.server_capabilities.definitionProvider = false
+                    end,
                 },
             },
             auto_attach = {

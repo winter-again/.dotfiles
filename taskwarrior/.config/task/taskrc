@@ -25,8 +25,14 @@ include dark-16.theme
 #include solarized-light-256.theme
 #include no-color.theme
 
-# color overrides:
+# color overrides
 color.active=green
 # color.active=green inverse
 color.alternate=on gray2
 color.label=bold
+
+# customize default report "next"
+report.next.columns=id,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.count,urgency
+report.next.labels=id,deps,prio,proj,tag,recur,schd,due,until,desc,urg
+# specifying "/" (e.g., project+/) will add empty line between project sections
+report.next.sort=start-,project+,urgency-
