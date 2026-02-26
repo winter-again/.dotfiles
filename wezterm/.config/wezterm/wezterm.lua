@@ -7,10 +7,8 @@ local config = {}
 -- config.front_end = 'WebGpu'
 config.front_end = 'OpenGL'
 config.audible_bell = 'Disabled'
--- config.enable_wayland = true
 config.default_prog = { '/usr/bin/zsh' }
 config.default_cwd = wezterm.home_dir
--- config.scrollback_lines = 0
 config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
 config.colors = {
     tab_bar = {
@@ -55,6 +53,17 @@ config.window_padding = {
     top = 10,
     bottom = 0,
 }
+local bg = require('bg')
+config.background = bg.set_bg()
+
+local profile_data = require('profile_data')
+config.font_size = 12.0
+config.hide_tab_bar_if_only_one_tab = true
+
+-- plugins
+local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
+wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin
+
 -- config.mouse_bindings = {
 --     {
 --         event = { Up = { streak = 1, button = 'Left' } },
@@ -100,16 +109,6 @@ config.keys = {
     -- { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
 }
 
-local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
-wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin
-
-local profile_data = require('profile_data')
-config.font_size = 12.0
-config.hide_tab_bar_if_only_one_tab = true
-
-local bg = require('bg')
-config.background = bg.set_bg()
-
 wezterm.on('user-var-changed', function(window, pane, name, value)
     -- get copy of the currently set overrides if they exist
     -- otherwise empty table
@@ -120,7 +119,6 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     window:set_config_overrides(overrides)
 end)
 
--- suggest this for convenience when mistakes are made while setting overrides
 wezterm.on('clear-overrides', function(window, pane)
     window:set_config_overrides({})
 end)
@@ -130,9 +128,5 @@ local override_keymap = {
     action = wezterm.action.EmitEvent('clear-overrides'),
 }
 table.insert(config.keys, override_keymap)
-
--- wezterm.on('window-config-reloaded', function(window, pane)
---   window:toast_notification('Wezterm', 'Configuration reloaded...', nil, 2000)
--- end)
 
 return config

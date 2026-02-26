@@ -208,8 +208,9 @@ exec nm-applet
 # exec xrdb -load ~/.Xresources
 exec spotify-launcher
 for_window [class="Spotify"] move window to workspace $ws7
-assign [class="Slack"] $ws8
-assign [class="obsidian"] $ws9
+# use app_id instead of class if Wayland
+assign [app_id="Slack"] $ws8
+assign [app_id="obsidian"] $ws9 
 assign [class="discord"] $ws10
 for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
