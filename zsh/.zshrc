@@ -112,9 +112,6 @@ function ff() {
 function mkd() {
     [[ "$1" ]] && mkdir -p "$1" && cd "$1"
 }
-# tt() {
-#     ~/.local/bin/tmux-sessionizer.sh
-# }
 # change wezterm bg on the fly
 # w() {
 #     # uses just fzf
@@ -142,6 +139,18 @@ function obs() {
 # show journalctl for rclone backup service
 function bk() {
     journalctl --user -fu rclone_backup.service -n 30
+}
+
+function mntbk() {
+    exec 5>&1
+    out=$(udisksctl mount -b /dev/sda1 2>&1 | tee /dev/fd/5)
+    notify-send "Mount backup drive" "$out"
+}
+
+function umntbk() {
+    exec 5>&1
+    out=$(udisksctl unmount -b /dev/sda1 2>&1 | tee /dev/fd/5)
+    notify-send "Mount backup drive" "$out"
 }
 
 # from fzf community
@@ -187,6 +196,7 @@ source /usr/share/fzf/completion.zsh # fzf fuzzy completion
 #     --color=marker:#9ece6a,spinner:#9ece6a
 #     --color=gutter:-1,border:#7aa2f7,header:-1
 #     --color=preview-fg:#c0caf5,preview-bg:-1"
+
 export FZF_DEFAULT_OPTS="--height 40%
     --layout reverse
     --preview 'bat --theme=base16 --color always {}'
@@ -198,6 +208,7 @@ export FZF_DEFAULT_OPTS="--height 40%
     --color=marker:#8aac8b,spinner:#8aac8b
     --color=gutter:-1,border:#8a98ac,header:-1
     --color=preview-fg:#f0f0f0,preview-bg:-1"
+
 # use fd, follow symlinks, include hidden files, respect .gitignore (https://github.com/junegunn/fzf#respecting-gitignore)
 export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND" # search cwd and output to stdout
