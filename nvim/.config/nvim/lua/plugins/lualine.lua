@@ -11,33 +11,38 @@ end
 
 local function get_lsp()
     local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-    local clients = vim.lsp.get_clients()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     if vim.tbl_isempty(clients) then
-        return "None active"
-    else
-        local names = {}
-        for _, client in ipairs(clients) do
-            local filetypes = client.config.filetypes
-            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 or client.config.name == "zk" then
-                table.insert(names, client.name)
-            end
-        end
-
-        return table.concat(names, ",")
+        return "Inactive"
     end
+
+    local names = {}
+    for _, client in ipairs(clients) do
+        local filetypes = client.config.filetypes
+        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 or client.config.name == "zk" then
+            table.insert(names, client.name)
+        end
+    end
+
+    return table.concat(names, ",")
 end
 
 local function get_conform()
-    -- local lsp_format = require('conform.lsp_format')
     local formatters = require("conform").list_formatters(0)
     local output = ""
     if not vim.tbl_isempty(formatters) then
         local names = {}
         for _, formatter in ipairs(formatters) do
-            table.insert(names, formatter.name)
+            local name = formatter.name
+            if formatter.name == "ruff_organize_imports" then
+                name = "ruff_imports"
+            elseif formatter.name == "ruff_format" then
+                name = "ruff_fmt"
+            end
+            table.insert(names, name)
         end
-        output = table.concat(names, ", ")
-        output = string.format("[%s]", output)
+
+        output = string.format("[%s]", table.concat(names, ","))
     end
 
     return output
@@ -49,7 +54,7 @@ local function get_nvim_lint()
         return ""
     end
 
-    return "[" .. table.concat(linters, ", ") .. "]"
+    return string.format("[%s]", table.concat(linters, ","))
 end
 
 local function display_tools()
@@ -91,7 +96,14 @@ return {
                     {
                         "diff",
                         source = diff_source,
-                        symbols = { added = " ", modified = " ", removed = " " },
+                        symbols = {
+                            added = " ",
+                            modified = " ",
+                            removed = " ",
+                            -- added = "+",
+                            -- modified = "~",
+                            -- removed = "-",
+                        },
                     },
                     {
                         "diagnostics",
@@ -125,7 +137,11 @@ return {
                 lualine_y = { "progress" },
                 lualine_z = { "location" },
             },
-            extensions = { "nvim-tree", "fugitive", "quickfix", "trouble" },
+            extensions = {
+                "fugitive",
+                "quickfix",
+                "trouble",
+            },
         })
     end,
 }
