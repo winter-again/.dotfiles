@@ -78,13 +78,13 @@ ff() {
             ~/Documents/Bansal-lab \
             ~/Documents/code \
             ~/Documents/code/nvim-dev \
-            --min-depth 1 --max-depth 1 --type d | fzf --prompt=" Directory: " --no-preview)
+            --min-depth 1 --max-depth 1 --type d | fzf --prompt=" Directory: " --no-preview --color="bg:-1")
     else
         dir=$(fd . \
             ~/Documents/Bansal-lab \
             ~/Documents/code \
             ~/Documents/code/nvim-dev \
-            --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Directory: " --no-preview)
+            --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Directory: " --no-preview --color="bg:-1")
     fi
     cd "$dir"
 }
@@ -99,16 +99,6 @@ ww() {
 wez_logs() {
     cd /run/user/1000/wezterm
 }
-# use fd and fzf to jump to dirs in .dotfiles
-dot() {
-    local dir
-    if [[ -z "${TMUX}" ]]; then
-        dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf --prompt="󱗿 Dotfiles: " --no-preview)
-    else
-        dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf-tmux --prompt="󱗿 Dotfiles: " -p --no-preview)
-    fi
-    cd "$dir"
-}
 dots() {
     cd ~/.dotfiles
 }
@@ -122,18 +112,60 @@ bk() {
     journalctl --user -u rclone_backup.service -f -n 30
 }
 
+# from fzf community
+alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | delta'"
+# fcoc_preview - checkout git commit with previews
+fcoc_preview() {
+  local commit
+  commit=$( glNoGraph |
+    fzf --no-sort --reverse --tiebreak=index --no-multi \
+        --ansi --preview="$_viewGitLogLine" ) &&
+  git checkout $(echo "$commit" | sed "s/ .*//")
+}
+# gshow - git commit browser with previews
+gshow() {
+    glNoGraph |
+        fzf --no-sort --reverse --tiebreak=index --no-multi \
+            --ansi --preview="$_viewGitLogLine" \
+                --header "enter to view, alt-y to copy hash" \
+                --bind "enter:execute:$_viewGitLogLine   | less -R" \
+                --bind "alt-y:execute:$_gitLogLineToHash | xclip"
+}
+# checkout git branch
+gbs() {
+    local branches branch
+    branches=$(git --no-pager branch -vv) &&
+    branch=$(echo "$branches" | fzf +m) &&
+    git checkout $(echo "$branch" | awk '{print $!}' | sed "s/.* //")
+}
 
 # fzf
 source /usr/share/fzf/key-bindings.zsh # fzf keybinds
 source /usr/share/fzf/completion.zsh # fzf fuzzy completion
-export FZF_DEFAULT_OPTS="--height 50% --layout=reverse
-    --border=rounded --preview 'bat --theme=base16 --color=always {}' --preview-window '50%' --preview-window noborder
-    --color=fg:#c0caf5,bg:#1a1b26,hl:#bb9af7
-	--color=fg+:#c0caf5,bg+:#292e42,hl+:#7dcfff
-	--color=info:#ff9e64,prompt:#7dcfff,pointer:#c0caf5
+# export FZF_DEFAULT_OPTS="--height 50% --layout=reverse
+#     --border=rounded
+#     --preview 'bat --theme=base16 --color=always {}'
+#     --preview-window '50%'
+#     --preview-window noborder
+#     --color=fg:#c0caf5,bg:#1a1b26,hl:#bb9af7
+# 	--color=fg+:#c0caf5,bg+:#292e42,hl+:#7dcfff
+# 	--color=info:#ff9e64,prompt:#7dcfff,pointer:#c0caf5
+# 	--color=marker:#9ece6a,spinner:#9ece6a
+#     --color=gutter:#1a1b26,border:#27a1b9,header:#7aa2f7
+#     --color=preview-fg:#c0caf5,preview-bg:#16161e"
+export FZF_DEFAULT_OPTS="--height 40%
+    --layout reverse
+    --preview 'bat --theme=base16 --color always {}'
+    --no-separator
+    --preview-window '50%'
+    --color=fg:#c0caf5,bg:-1,hl:#9d7cd8
+	--color=fg+:#c0caf5,bg+:#283457,hl+:#7dcfff
+	--color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5
 	--color=marker:#9ece6a,spinner:#9ece6a
-    --color=gutter:#1a1b26,border:#27a1b9,header:#7aa2f7
-    --color=preview-fg:#c0caf5,preview-bg:#16161e"
+    --color=gutter:-1,border:#7aa2f7,header:-1
+    --color=preview-fg:#c0caf5,preview-bg:-1"
 # use fd, follow symlinks, include hidden files, respect .gitignore (https://github.com/junegunn/fzf#respecting-gitignore)
 export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND" # search cwd and output to stdout
