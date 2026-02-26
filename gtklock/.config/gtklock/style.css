@@ -1,6 +1,6 @@
 window {
     /* use full path */
-    background-image: url("/home/andrew/Pictures/backgrounds/seola-inside-out-mood-5.jpg");
+    background-image: url("/home/andrew/Pictures/wallpapers/tokyo-night-wallpaper.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -11,7 +11,7 @@ window {
     background: #1a1b26;
     border-radius: 10px;
     padding: 10px;
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 #error-label {

@@ -214,7 +214,7 @@ exec_always pkill kanshi; exec kanshi
 exec {
 # swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
     # swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
-    swayidle -w before-sleep 'gtklock -t "%I:%m %p'
+    swayidle -w before-sleep 'gtklock -d -t "%I:%m %p"'
     # mako
     swaync
     waybar
