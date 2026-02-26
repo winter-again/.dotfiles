@@ -1,10 +1,6 @@
 local globals = require("winteragain.globals")
 local opts = { silent = true }
 
--- map('n', '<leader>pv', '<cmd>Lex<CR>', opts, 'Open Netrw to the left')
--- map("n", "<leader>w", function()
---     vim.cmd("silent! write")
--- end, opts, "Write buf")
 globals.map({ "n", "v" }, "<Space>", "<Nop>", opts, "Unbind space")
 globals.map("n", "<Esc>", "<cmd>nohlsearch<CR>", opts, "Turn off search highlights")
 -- split windows (reversed for my brain)
@@ -57,13 +53,6 @@ globals.map("n", "<leader>bd", "<cmd>bn<CR><cmd>bd#<CR>", opts, "Delete buffer w
 -- nav quickfix list
 globals.map("n", "<leader>cn", "<cmd>cnext<CR>zz", opts, "Next quickfixlist")
 globals.map("n", "<leader>cp", "<cmd>cprev<CR>zz", opts, "Prev quickfixlist")
--- with Netrw disabled, use this to follow hyperlinks
--- v0.10 now has as default
--- map('n', 'gx', '<cmd>silent !xdg-open <cfile><CR>', opts, 'Open link')
--- <cfile> is replaced with path name under cursor
--- map('n', 'gx', function()
---     vim.ui.open(vim.fn.expand('<cfile>'))
--- end, opts, 'Open link')
 globals.map("n", "<leader>x", function()
     globals.Save_exec_line()
 end, opts, "Save and exec current line of Lua file")

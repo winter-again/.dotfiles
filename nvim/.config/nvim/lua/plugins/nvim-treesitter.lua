@@ -2,11 +2,9 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        branch = "master",
         build = ":TSUpdate",
         event = { "BufReadPost", "BufNewFile" },
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter-textobjects",
-        },
         config = function()
             require("nvim-treesitter.configs").setup({
                 ensure_installed = {
@@ -24,6 +22,7 @@ return {
                     "html",
                     "javascript",
                     "json",
+                    "just",
                     "latex",
                     "lua",
                     "markdown",
@@ -97,6 +96,11 @@ return {
         end,
     },
     {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "master",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+    },
+    {
         "nvim-treesitter/nvim-treesitter-context",
         event = { "BufReadPost", "BufNewFile" },
         dependencies = "nvim-treesitter/nvim-treesitter",
@@ -121,14 +125,6 @@ return {
         dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
             require("nvim-ts-autotag").setup()
-        end,
-    },
-    {
-        "IndianBoy42/tree-sitter-just",
-        build = ":TSUpdate",
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
-        config = function()
-            require("tree-sitter-just").setup({})
         end,
     },
 }
