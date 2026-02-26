@@ -256,6 +256,9 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
 
+# make fd use same colors as eza (set $LS_COLORS)
+eval "$(dircolors -b)"
+
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 eval "$(zoxide init zsh)" # zoxide; keep at end
