@@ -284,7 +284,6 @@ return {
                 },
                 formatting = {
                     fields = { 'abbr', 'kind', 'menu' }, -- what fields show in completion item
-                    -- config lspkind
                     format = lspkind.cmp_format({
                         mode = 'symbol_text',
                         -- to also show source of the completion items
@@ -302,7 +301,7 @@ return {
                         -- called before lspkind does any mods; can put other customization here
                         -- before = function(entry, vim_item)
                         --     return vim_item
-                        -- end
+                        -- end,
                     }),
                 },
                 performance = {

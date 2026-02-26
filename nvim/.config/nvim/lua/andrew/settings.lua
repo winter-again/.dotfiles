@@ -8,7 +8,7 @@ local opt = vim.opt
 -- doesn't apply to documentation, which is nice
 -- note: setting it means cmp menu has highlight but can see text behind
 -- not setting + having transparent bg makes just the transparent background show
-opt.pumblend = 35
+-- opt.pumblend = 35
 opt.wildignore = '__pycache__'
 opt.wildignore:append({ '*.pyc', '*pycache*' })
 
