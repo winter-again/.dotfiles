@@ -13,7 +13,9 @@ return {
             automatic_installation = false,
             handlers = {}
         })
+        -- null-ls config
         require('null-ls').setup({
+            border = 'rounded',
             sources = {
                 -- anything Mason doesn't support
             }
