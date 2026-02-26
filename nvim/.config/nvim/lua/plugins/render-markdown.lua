@@ -19,10 +19,13 @@ return {
             enabled = false,
         },
         heading = {
-            enabled = false,
+            enabled = true,
             sign = false,
             position = "inline",
             width = "block",
+            icons = { " 󰉫 ", " 󰉬 ", " 󰉭 ", " 󰉮 ", " 󰉯 ", " 󰉰 " },
+            -- icons = { "󰎦 ", "󰎩 ", "󰎬 ", "󰎮 ", "󰎰 ", "󰎵 " },
+            -- left_pad = 1,
         },
         paragraph = { enabled = false },
         code = {

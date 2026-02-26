@@ -17,6 +17,12 @@ return {
                     highlights["QuickFixLine"] = { fg = colors.purple, bold = true }
                     highlights["@markup.list.checked"] = { strikethrough = true }
                     highlights["RenderMarkdownChecked"] = { strikethrough = false }
+                    highlights["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" }
+                    highlights["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" }
+                    highlights["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" }
+                    highlights["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" }
+                    highlights["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" }
+                    highlights["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" }
                 end,
             })
         end,

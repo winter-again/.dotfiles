@@ -1,5 +1,6 @@
 return {
     "tpope/vim-eunuch",
+    enabled = false,
     -- 'chrisgrieser/nvim-genghis',
     -- dependencies = {
     --     -- works w/o dressing.nvim

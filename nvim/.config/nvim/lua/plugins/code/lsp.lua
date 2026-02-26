@@ -784,6 +784,7 @@ return {
                                 -- alt: have to go one by one if preserving pyright type-checking
                                 -- see: https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
                                 -- note that some of the Pyright stuff are "hints" and can't be easily removed
+                                -- ex:
                                 diagnosticSeverityOverrides = {
                                     reportUndefinedVariable = "none",
                                 },
@@ -794,23 +795,8 @@ return {
                 ["ruff"] = {
                     capabilities = lsp_capabilities,
                     on_attach = function(client, bufnr)
-                        -- disable Ruff's hover to use Pyright instead; can't put this in on_attach
+                        -- disable Ruff's hover to use Pyright instead
                         client.server_capabilities.hoverProvider = false
-
-                        -- organize imports autocmd
-                        local group = vim.api.nvim_create_augroup("RuffWithPyright", { clear = true })
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            group = group,
-                            buffer = bufnr,
-                            callback = function()
-                                vim.lsp.buf.code_action({
-                                    context = { only = { "source.organizeImports" } },
-                                    apply = true,
-                                })
-                                vim.wait(100)
-                            end,
-                        })
-
                         lsp_attach(client, bufnr)
                     end,
                     -- NOTE: server settings here
@@ -946,8 +932,10 @@ return {
                 vim.lsp.config("marksman", {
                     capabilities = lsp_capabilities,
                     on_attach = function(client, bufnr)
-                        -- disable completion in notes dir
+                        -- disable some capabilities in notes dir to use zk/obsidian instead
                         client.server_capabilities.completionProvider = nil
+                        client.server_capabilities.hoverProvider = false
+
                         lsp_attach(client, bufnr)
                     end,
                 })

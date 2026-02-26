@@ -13,11 +13,24 @@ return {
                     find_left = "sF", -- Find surrounding (to the left)
                     highlight = "sh", -- Highlight surrounding (a search)
                     replace = "sc", -- `sc'"` replaces single with double quotes
-                    -- replace = 'sr', -- Replace surrounding
                     update_n_lines = "sn", -- Update `n_lines`
-
                     suffix_last = "l", -- Suffix to search with "prev" method
                     suffix_next = "n", -- Suffix to search with "next" method
+                },
+            })
+        end,
+    },
+    {
+        "echasnovski/mini.splitjoin",
+        -- enabled = false,
+        version = false,
+        event = { "BufReadPost", "BufNewFile" },
+        config = function()
+            require("mini.splitjoin").setup({
+                mappings = {
+                    toggle = "st",
+                    split = "",
+                    join = "",
                 },
             })
         end,
@@ -40,19 +53,6 @@ return {
                     line_down = "<M-j>",
                     line_left = "<M-h>",
                     line_right = "<M-l>",
-                },
-            })
-        end,
-    },
-    {
-        "echasnovski/mini.splitjoin",
-        enabled = false,
-        version = false,
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require("mini.splitjoin").setup({
-                mappings = {
-                    toggle = "<leader>sa",
                 },
             })
         end,
