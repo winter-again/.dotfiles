@@ -88,15 +88,20 @@ else
     local function colorize(cs_idx)
         local colorschemes = {
             "mellifluous",
+            "posterpole",
+            "vague",
             "tokyonight",
             "catppuccin",
             "rose-pine",
+            "roseprime",
             "kanagawa",
+            "kanagawa-paper", -- more muted than kanagawa
             "winter-again",
+            "lackluster-hack",
         }
         vim.cmd("colorscheme " .. colorschemes[cs_idx])
         vim.cmd("Transp")
     end
 
-    colorize(1)
+    colorize(3)
 end

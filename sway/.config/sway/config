@@ -110,12 +110,14 @@ focus_follows_mouse no
 
 # seems like we have to set this so that layout is correct on Sway start
 # not great since this assumes docked config; I guess could just manually trigger reload
-output $laptop_disp disable
+# output $laptop_disp disable
 # following the same conventions from hyprland.conf
-output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
+# output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
 # output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
 # focus monitor on launch
-focus output $primary_mon
+# focus output $primary_mon
+# output $laptop_disp enable mode 3840x2400@60Hz scale 2
+# focus output $laptop_disp
 
 # first available output will be used
 # so give laptop as fallback
@@ -276,7 +278,6 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-# execs
 exec_always pkill kanshi; exec kanshi
 exec {
     waybar
