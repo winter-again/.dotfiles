@@ -12,6 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- recommended to set mapleader before lazy so that mappings are correct
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 -- config lazy.nvim itself
 local lazy_opts = {
     ui = {
