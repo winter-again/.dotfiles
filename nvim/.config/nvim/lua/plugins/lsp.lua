@@ -302,6 +302,7 @@ return {
                                 shadow = true, -- shadowed vars
                                 unusedparams = true, -- checks for unused params of funcs
                                 unusedwrite = true, -- instances of writes to struct fields or arrays that are never read
+                                useany = true,
                             },
                             hints = {
                                 -- for inlay hints
