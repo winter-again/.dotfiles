@@ -93,9 +93,13 @@ return {
             }
             mod = transform_mod(mod)
 
+            -- force line numbers in preview
+            vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
             require("telescope").setup({
                 defaults = {
-                    border = false,
+                    border = true, -- must be true if want title
+                    borderchars = { " ", " ", " ", " ", " ", " ", " ", " " }, -- blank out
+                    dynamic_preview_title = true,
                     winblend = 0, -- opaque
                     -- command for live_grep and grep_string
                     vimgrep_arguments = {

@@ -13,7 +13,8 @@ local opt = vim.opt
 -- opt.splitbelow = true -- new window below the current
 opt.background = "dark"
 opt.inccommand = "split" -- preview substitutions live
-opt.winbar = "%{%v:lua.Winbar()%}"
+-- opt.winbar = "%{%v:lua.Winbar()%}" -- disable if using incline.nvim
+-- opt.winbar = " " -- otherwise incline.nvim will overlap first line of text
 -- (pseudo)transparency for cmp menu and I guess wildmenu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice
 -- note: setting it means cmp menu has highlight but can see text behind

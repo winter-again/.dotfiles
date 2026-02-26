@@ -22,8 +22,7 @@ config.warn_about_missing_glyphs = false
 config.audible_bell = "Disabled"
 config.default_cwd = wezterm.home_dir
 config.check_for_updates = false
--- setting this here also causes partial line problems
--- config.term = 'wezterm' -- https://wezfurlong.org/wezterm/config/lua/config/term.html
+config.term = "wezterm" -- must install wezterm terminfo file: https://wezfurlong.org/wezterm/config/lua/config/term.html
 
 local color_schemes = {
     "Tokyo Night",
@@ -34,7 +33,7 @@ local color_schemes = {
     "rose-pine",
 }
 config.color_scheme = color_schemes[2]
-config.background = utils.set_bg("29_1")
+config.background = utils.set_bg("29")
 config.font, config.font_size = utils.set_font_properties("Zed")
 -- this needs explicit setting if not the default
 -- config.xcursor_theme = 'capitaine-cursors-light'
@@ -48,42 +47,6 @@ config.window_padding = {
     bottom = 0,
 }
 config.hide_tab_bar_if_only_one_tab = true
--- config.colors = {
---     tab_bar = {
---         active_tab = {
---             bg_color = '#16161e',
---             fg_color = '#c0caf5',
---         },
---         inactive_tab = {
---             bg_color = '#1a1b26',
---             fg_color = '#737aa2',
---         },
---         inactive_tab_hover = {
---             bg_color = '#24283b',
---             fg_color = '#c0caf5',
---         },
---         inactive_tab_edge = '#c0caf5',
---         new_tab = {
---             bg_color = '#16161e',
---             fg_color = '#c0caf5',
---         },
---         new_tab_hover = {
---             bg_color = '#24283b',
---             fg_color = '#c0caf5',
---         },
---     },
--- }
---
--- config.window_frame = {
---     font = wezterm.font('ZedMono Nerd Font Mono'),
---     font_size = 10.0,
---     active_titlebar_bg = '#1d202f', -- color of the space behind tabs
---     inactive_titlebar_bg = '#1d202f',
--- }
---
--- config.use_fancy_tab_bar = true -- default
--- config.show_tab_index_in_tab_bar = true
--- mouse and keys
 config.bypass_mouse_reporting_modifiers = "CTRL" -- use CTRL to bypass app mouse repoorting (for hyperlinks)
 -- https://wezfurlong.org/wezterm/config/mouse.html#configuring-mouse-assignments
 config.mouse_bindings = {
@@ -122,50 +85,6 @@ config.keys = {
         end),
     },
 }
-
--- config.keys = {
---     {
---         key = 'N',
---         mods = 'CTRL|SHIFT',
---         action = wezterm.action.SpawnCommandInNewTab({
---             cwd = wezterm.home_dir,
---         }),
---     },
---     -- tab navigation
---     { key = 'Q', mods = 'CTRL|SHIFT', action = wezterm.action({ ActivateTab = 0 }) },
---     { key = 'W', mods = 'CTRL|SHIFT', action = wezterm.action({ ActivateTab = 1 }) },
---     { key = 'E', mods = 'CTRL|SHIFT', action = wezterm.action({ ActivateTab = 2 }) },
---     { key = 'R', mods = 'CTRL|SHIFT', action = wezterm.action({ ActivateTab = 3 }) },
---     -- tab navigation but cycling
---     { key = '{', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
---     { key = '}', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(1) },
---     -- create splits
---     {
---         key = '|',
---         mods = 'CTRL|SHIFT',
---         action = wezterm.action({ SplitHorizontal = { domain = 'CurrentPaneDomain' } }),
---     },
---     {
---         key = '_',
---         mods = 'CTRL|SHIFT',
---         action = wezterm.action({ SplitVertical = { domain = 'CurrentPaneDomain' } }),
---     },
---     -- pane navigation rebinds
---     { key = 'H', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Left') },
---     { key = 'J', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Down') },
---     { key = 'K', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Up') },
---     { key = 'L', mods = 'CTRL|SHIFT', action = wezterm.action.ActivatePaneDirection('Right') },
---     -- resize panes
---     { key = 'LeftArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Left', 2 }) },
---     { key = 'RightArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Right', 2 }) },
---     { key = 'UpArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Up', 2 }) },
---     { key = 'DownArrow', mods = 'CTRL|SHIFT', action = wezterm.action.AdjustPaneSize({ 'Down', 2 }) },
---     { key = 'M', mods = 'CTRL|SHIFT', action = wezterm.action.ToggleFullScreen },
---     -- workaround to get Ctrl-/ to work if using tmux
---     -- or when term isn't recognizing in general
---     -- paired with comment keymap that is defined using "_" instead of "/"
---     -- { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
--- }
 
 -- plugins
 -- I think because I have `$XDG_RUNTIME_DIR` set, my plugins are in ~/.local/share/wezterm/plugins

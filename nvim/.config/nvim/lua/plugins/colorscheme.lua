@@ -1,5 +1,21 @@
 return {
     {
+        "winter-again/winter-again.nvim",
+        lazy = false,
+        priority = 1001,
+        dev = true,
+        config = function()
+            require("winter-again").setup({
+                saturation = 0,
+                brightness = 0,
+                -- transparent = false,
+                -- text_styles = {
+                --     booleans = { italic = false },
+                -- },
+            })
+        end,
+    },
+    {
         "ramojus/mellifluous.nvim",
         lazy = false,
         priority = 995,
@@ -26,8 +42,8 @@ return {
                 },
                 highlight_overrides = {
                     dark = function(highlighter, colors)
-                        -- highlighter.set('Visual', { reverse = true })
                         highlighter.set("Visual", { bg = "#262626" })
+                        -- highlighter.set("Visual", { reverse = true })
                         highlighter.set("MatchParen", { bold = true })
                         highlighter.set("TreesitterContext", { bg = "#191919" })
                         highlighter.set("CursorLineNr", { fg = colors.blue })
@@ -37,11 +53,11 @@ return {
                         highlighter.set("@lsp.type.parameter", { fg = colors.yellow }) -- e.g., "highlighter" in highlighter.set
                         highlighter.set("@parameter", { fg = colors.yellow }) -- e.g., "highlighter" in highlighter.set
                         highlighter.set("TroubleNormal", { bg = "none" })
-                        highlighter.set("TroubleNormalNc", { bg = "none" })
+                        highlighter.set("TroubleNormalNC", { bg = "none" })
                     end,
                 },
                 transparent_background = {
-                    enabled = true,
+                    enabled = false, -- problems with this
                     floating_windows = false,
                     telescope = false,
                     file_tree = false,
@@ -133,6 +149,70 @@ return {
                         ["@lsp.type.unresolvedReference"] = { underdotted = true },
                     }
                 end,
+            })
+        end,
+    },
+    {
+        "sho-87/kanagawa-paper.nvim",
+        lazy = false,
+        config = function()
+            require("kanagawa-paper").setup({
+                transparent = true,
+                dimInactive = false,
+                functionStyle = { bold = true },
+                keywordStyle = { bold = true },
+                typeStyle = { italic = true },
+                overrides = function(colors)
+                    return {
+                        WinBar = { fg = colors.palette.fujiWhite },
+                        WinBarNC = { fg = colors.palette.fujiWhite },
+                    }
+                end,
+            })
+        end,
+    },
+    {
+        "vague2k/vague.nvim",
+        lazy = false,
+        config = function()
+            require("vague").setup({
+                transparent = false,
+                style = {
+                    functions = "bold",
+                    keywords = "bold",
+                    strings = "none",
+                },
+            })
+        end,
+    },
+    {
+        "cdmill/neomodern.nvim",
+        lazy = false,
+        config = function()
+            require("neomodern").setup({
+                theme = "roseprime",
+                transparent = false,
+                code_style = {
+                    functions = "bold",
+                    keywords = "bold",
+                    string = "none",
+                },
+            })
+            require("neomodern").load()
+        end,
+    },
+    {
+        "ilof2/posterpole.nvim",
+        lazy = false,
+        config = function()
+            require("posterpole").setup({
+                transparent = true,
+                colorless_bg = false, -- grayscale or not
+                dim_inactive = false, -- highlight inactive splits
+                brightness = 0, -- negative numbers - darker, positive - lighter
+                selected_tab_highlight = false, --highlight current selected tab
+                fg_saturation = 0, -- font saturation, gray colors become more brighter
+                bg_saturation = 0, -- background saturation
             })
         end,
     },
@@ -230,7 +310,6 @@ return {
                     ["@lsp.type.unresolvedReference"] = { underdotted = true },
                 },
             })
-            -- vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none', force = true })
         end,
     },
     {
@@ -254,7 +333,7 @@ return {
         "sainnhe/gruvbox-material",
         lazy = false,
         priority = 995,
-        config = function()
+        init = function()
             -- can be 'material', 'mix', or 'original'
             vim.g.gruvbox_material_foreground = "material"
             vim.g.gruvbox_material_enable_bold = true
@@ -267,14 +346,14 @@ return {
         lazy = false,
     },
     {
-        "winter-again/winter-again.nvim",
-        dev = true,
-    },
-    {
         "nyngwang/nvimgelion",
         -- 'winter-again/nvimgelion',
         -- dev = true,
         config = function() end,
+    },
+    {
+        "hachy/eva01.vim",
+        lazy = false,
     },
     {
         "winter-again/seoul256.nvim",
@@ -300,87 +379,26 @@ return {
             require("nordic").load()
         end,
     },
-    -- colorschemes that use contrasts and font variations to
-    -- distinguish code over just colors
     {
         "mcchrish/zenbones.nvim",
         lazy = false,
         dependencies = { "rktjmp/lush.nvim" },
-    },
-    {
-        "rockerBOO/boo-colorscheme-nvim",
-        lazy = false,
-        config = function()
-            require("boo-colorscheme").use({
-                italic = true,
-                theme = "boo",
-            })
-        end,
-    },
-    {
-        "hachy/eva01.vim",
-        lazy = false,
-    },
-    {
-        "cdmill/neomodern.nvim",
-        lazy = false,
-        config = function()
-            require("neomodern").setup({
-                theme = "roseprime",
-                transparent = true,
-                code_style = {
-                    functions = "bold",
-                    keywords = "bold",
-                    string = "none",
-                },
-            })
-            require("neomodern").load()
-        end,
-    },
-    {
-        "vague2k/vague.nvim",
-        lazy = false,
-        config = function()
-            require("vague").setup({
-                transparent = true,
-                style = {
-                    functions = "bold",
-                    keywords = "bold",
-                    strings = "none",
-                },
-            })
-        end,
-    },
-    {
-        "ilof2/posterpole.nvim",
-        lazy = false,
-        config = function()
-            require("posterpole").setup({
-                transparent = true,
-                colorless_bg = false, -- grayscale or not
-                dim_inactive = false, -- highlight inactive splits
-                brightness = 0, -- negative numbers - darker, positive - lighter
-                selected_tab_highlight = false, --highlight current selected tab
-                fg_saturation = 0, -- font saturation, gray colors become more brighter
-                bg_saturation = 0, -- background saturation
-            })
-        end,
-    },
-    {
-        "sho-87/kanagawa-paper.nvim",
-        lazy = false,
-        config = function()
-            require("kanagawa-paper").setup({
-                transparent = true,
-                dimInactive = false,
-                functionStyle = { bold = true },
-                keywordStyle = { bold = true },
-            })
+        init = function()
+            vim.g.zenbones_darkness = "warm"
         end,
     },
     {
         "slugbyte/lackluster.nvim",
         lazy = false,
         config = function() end,
+    },
+    {
+        "mellow-theme/mellow.nvim",
+        lazy = false,
+        init = function()
+            vim.g.mellow_bold_keywords = true
+            vim.g.mellow_bold_functions = true
+            vim.g.mellow_transparent = true
+        end,
     },
 }
