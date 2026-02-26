@@ -94,10 +94,10 @@ function Winbar()
     -- end
 
     local function word_count()
-        return vim.fn.wordcount().words .. ' W'
+        return '- [' .. vim.fn.wordcount().words .. ' W]'
     end
 
-    local file_path = vim.api.nvim_eval_statusline('%F', {}).str
+    local file_path = vim.api.nvim_eval_statusline('%f', {}).str
     local mod = vim.api.nvim_eval_statusline('%m', {}).str
     local buftype = vim.bo.filetype
     local exclude = {
@@ -108,7 +108,7 @@ function Winbar()
         return ''
     end
     if buftype == 'markdown' then
-        return string.format('%s %s - [%s]', file_path, mod, word_count())
+        return string.format('%s %s %s', file_path, word_count(), mod)
     end
     return string.format('%s %s', file_path, mod)
 end

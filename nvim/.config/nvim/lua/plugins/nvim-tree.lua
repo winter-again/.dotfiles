@@ -1,6 +1,6 @@
 return {
     'nvim-tree/nvim-tree.lua',
-    cmd = 'NvimTreeToggle',
+    keys = '<leader>pv',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     tag = 'nightly',
     config = function()
@@ -53,5 +53,6 @@ return {
                 },
             },
         })
+        Map('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }, 'Toggle nvim-tree') -- set here since the plugin is loaded on this command
     end,
 }

@@ -8,7 +8,7 @@ return {
         local devicons = require('nvim-web-devicons')
 
         local function header()
-            local date_time = os.date('%a %x %I:%M %p')
+            local date_time = os.date('%Y-%m-%d (%a) %I:%M %p')
             local version = vim.version()
             local version_info = devicons.get_icon_by_filetype('vim')
                 .. ' v'
@@ -19,7 +19,22 @@ return {
                 .. version.patch
             local plugins_tot = lazy_stats.count -- total number of plugins
 
-            return '󱛡 ' .. date_time .. ' | ' .. version_info .. ' | ' .. ' ' .. plugins_tot .. ' plugins'
+            local Checker = require('lazy.manage.checker')
+            local updates = 0
+            if require('lazy.status').has_updates() == true then
+                updates = #Checker.updated
+            end
+
+            return '󱛡 '
+                .. date_time
+                .. ' | '
+                .. version_info
+                .. ' | '
+                .. ' '
+                .. plugins_tot
+                .. ' plugins ['
+                .. updates
+                .. ']'
         end
 
         -- local function buttons()

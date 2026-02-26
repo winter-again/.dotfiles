@@ -16,8 +16,7 @@ return {
                     colors.border = colors.fg_dark
                 end,
                 on_highlights = function(highlights, colors)
-                    highlights['WinBar'] = { fg = colors.fg, bg = colors.bg_dark }
-                    -- highlights['WinBarNC'] = { fg = colors.fg_gutter, bg = colors.bg_dark }
+                    highlights['WinBar'] = { bg = 'none', italic = true }
                     highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
                     highlights['LineNr'] = { fg = '#696d87' } -- line number color
                     highlights['CursorLineNr'] = { fg = colors.fg } -- cursor line number color
@@ -37,6 +36,7 @@ return {
     {
         'rebelot/kanagawa.nvim',
         lazy = false,
+        priority = 999, -- ensure colorscheme loaded before all other start up plugins
         config = function()
             require('kanagawa').setup({
                 colors = {
@@ -58,6 +58,13 @@ return {
                     return {
                         WinSeparator = { fg = theme.ui.nontext },
                         Visual = { reverse = true },
+                        Winbar = { bg = 'none', italic = true },
+                        WinbarNC = { bg = 'none', italic = true },
+                        DiagnosticUnderlineError = { underdotted = true },
+                        DiagnosticUnderlineWarn = { underdotted = true },
+                        DiagnosticUnderlineInfo = { underdotted = true },
+                        DiagnosticUnderlineHint = { underdotted = true },
+                        ['@lsp.type.unresolvedReference'] = { underdotted = true },
                     }
                 end,
             })
@@ -66,6 +73,7 @@ return {
     {
         'catppuccin/nvim',
         name = 'catppuccin',
+        priority = 998, -- ensure colorscheme loaded before all other start up plugins
         lazy = false,
         config = function()
             require('catppuccin').setup({
@@ -73,9 +81,16 @@ return {
                 custom_highlights = function(colors)
                     return {
                         TreesitterContext = { bg = colors.surface2 },
+                        TreesitterContextLineNumber = { bg = 'none' },
                         WinSeparator = { fg = colors.surface2 },
                         LineNr = { fg = colors.surface2 },
                         Visual = { reverse = true },
+                        WinBar = { bg = 'none', italic = true },
+                        DiagnosticUnderlineError = { underdotted = true },
+                        DiagnosticUnderlineWarn = { underdotted = true },
+                        DiagnosticUnderlineInfo = { underdotted = true },
+                        DiagnosticUnderlineHint = { underdotted = true },
+                        ['@lsp.type.unresolvedReference'] = { underdotted = true },
                     }
                 end,
                 integrations = {
@@ -114,16 +129,28 @@ return {
         'rose-pine/neovim',
         name = 'rose-pine',
         lazy = false,
+        priority = 997, -- ensure colorscheme loaded before all other start up plugins
         config = function()
             require('rose-pine').setup({
-                variant = 'moon',
+                variant = 'main',
+                styles = {
+                    bold = true,
+                    italic = true,
+                },
                 highlight_groups = {
                     TreesitterContext = { bg = 'foam', blend = 10 },
+                    Visual = { reverse = true },
+                    WinBar = { bg = 'none', italic = true },
+                    WinSeparator = { fg = 'muted', bg = 'none' },
                     -- for transparency, otherwise bg remains in signcolumn
                     GitSignsAdd = { bg = 'none' },
                     GitSignsDelete = { bg = 'none' },
                     GitSignsChange = { bg = 'none' },
-                    Visual = { reverse = true },
+                    DiagnosticUnderlineError = { underdotted = true },
+                    DiagnosticUnderlineWarn = { underdotted = true },
+                    DiagnosticUnderlineInfo = { underdotted = true },
+                    DiagnosticUnderlineHint = { underdotted = true },
+                    ['@lsp.type.unresolvedReference'] = { underdotted = true },
                 },
             })
         end,
@@ -131,24 +158,46 @@ return {
     {
         'ellisonleao/gruvbox.nvim',
         lazy = false,
+        priority = 996,
         config = function()
             require('gruvbox').setup({
                 invert_selection = true,
                 overrides = {
                     WinSeparator = { bg = 'none' },
                     CursorLineNr = { bg = 'none' },
+                    WinBar = { bg = 'none', italic = true },
+                    WinBarNC = { bg = 'none', italic = true },
                 },
                 transparent_mode = true,
             })
         end,
     },
-    -- has a decent light theme
+    {
+        'winter-again/winter-again.nvim',
+        dev = true,
+    },
+    {
+        -- 'nyngwang/nvimgelion',
+        'winter-again/nvimgelion',
+        -- dev = true,
+        config = function() end,
+    },
+    {
+        'winter-again/seoul256.nvim',
+        -- dev = true,
+        branch = 'fix-indent-blankline',
+    },
+    -- {
+    --     'projekt0n/github-nvim-theme',
+    --     lazy = true,
+    -- },
     {
         'savq/melange-nvim',
         lazy = false,
     },
     {
         'shaunsingh/nord.nvim',
+        lazy = true,
         config = function()
             vim.g.nord_contrast = true
         end,
@@ -165,20 +214,15 @@ return {
                     GitSignsAdd = { bg = 'none' },
                     GitSignsDelete = { bg = 'none' },
                     GitSignsChange = { bg = 'none' },
+                    FoldColumn = { bg = 'none' },
                 },
             })
             require('nordic').load()
         end,
     },
     {
-        -- 'nyngwang/nvimgelion',
-        'winter-again/nvimgelion',
-        -- dev = true,
-        config = function() end,
-    },
-    {
         'craftzdog/solarized-osaka.nvim',
-        lazy = false,
+        lazy = true,
         config = function()
             require('solarized-osaka').setup({
                 transparent = true,
@@ -191,14 +235,5 @@ return {
     {
         'mcchrish/zenbones.nvim',
         dependencies = { 'rktjmp/lush.nvim' },
-    },
-    {
-        'winter-again/winter-again.nvim',
-        dev = true,
-    },
-    {
-        'winter-again/seoul256.nvim',
-        -- dev = true,
-        branch = 'fix-indent-blankline',
     },
 }
