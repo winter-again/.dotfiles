@@ -20,13 +20,8 @@ return {
             kind_icons = kind_icons,
         },
         completion = {
-            documentation = {
-                auto_show = true,
-                auto_show_delay_ms = 500,
-                treesitter_highlighting = true,
-            },
             list = {
-                max_items = 10,
+                max_items = 5,
                 selection = {
                     preselect = false,
                     auto_insert = false,
@@ -36,12 +31,13 @@ return {
                 min_width = 15,
                 max_height = 10,
                 border = "none",
+                scrollbar = false,
                 draw = {
                     columns = {
                         { "label", "label_description", gap = 1 },
                         { "kind_icon", "kind", gap = 2, "source_name" },
                     },
-                    padding = { 0, 0 },
+                    padding = 0,
                     components = {
                         kind_icon = {
                             text = function(ctx)
@@ -81,6 +77,11 @@ return {
                         },
                     },
                 },
+            },
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 500,
+                treesitter_highlighting = true,
             },
         },
         sources = {
