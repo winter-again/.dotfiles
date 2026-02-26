@@ -8,6 +8,7 @@ cursor_border = "#f0f0f0"
 # selection_fg = ""
 # selection_bg = ""
 split = "#4c4c4c"
+# order is crucial
 ansi = [
     "#0f0f0f", # black
     "#b36d7c", # red
@@ -15,17 +16,17 @@ ansi = [
     "#aca98a", # yellow
     "#8f8aac", # blue
     "#ac8aac", # purple 
-    "#8aabac", # cyan
+    "#7e97ab", # cyan
     "#f0f0f0", # white
 ]
 brights = [
     "#4c4c4c", # black
     "#c48282", # red
     "#8aac8b", # green
-    "#c4c19e", # yello
+    "#c4c19e", # yellow
     "#a39ec4", # blue
-    "#c49ec4", # purpl
-    "#9ec3c4", # cyan
+    "#c49ec4", # purple
+    "#a5b4cb", # cyan
     "#f0f0f0", # white
 ]
 

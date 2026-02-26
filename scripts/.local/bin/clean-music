@@ -18,7 +18,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     """
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(
-        dest="cmd",
+        dest="cmd",  # TODO: don't need this?
         help="Common operations when transferring ripped music files",
         required=True,
     )

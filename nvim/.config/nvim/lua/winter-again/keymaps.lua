@@ -44,9 +44,9 @@ globals.map("x", "<leader>p", '"_dP', opts, "Paste w/o losing")
 globals.map({ "n", "v" }, "<leader>d", '"_d', opts, "Delete to black hole register")
 -- replace word under cursor for cur buf
 globals.map("n", "<leader>rs", [[:%s/<C-r><C-w>//g<Left><Left>]], opts, "Replace cursor word")
+-- globals.map("n", "<C-a>", "gg<S-v>G", opts, "Select all")
 -- globals.map("n", "+", "<C-a>", opts, "Increment")
 -- globals.map("n", "-", "<C-x>", opts, "Decrement")
-globals.map("n", "<C-a>", "gg<S-v>G", opts, "Select all")
 -- cycle through buffers
 -- globals.map("n", "<Tab>", "<cmd>bnext<CR>", opts, "Next buffer")
 -- globals.map("n", "<S-Tab>", "<cmd>bprev<CR>", opts, "Previous buffer")

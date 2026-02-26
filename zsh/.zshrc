@@ -7,8 +7,9 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export EDITOR="/usr/local/bin/nvim"
 export VISUAL="/usr/local/bin/nvim"
 export PAGER="/usr/bin/less"
-export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
-# export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
+# color manpages with bat
+export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+# export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/.ripgreprc"
 export BROWSER="firefox"
 
@@ -18,11 +19,12 @@ export BROWSER="firefox"
 # and: https://github.com/eza-community/eza/blob/main/man/eza_colors-explanation.5.md
 # di = directories
 # ln = symlinks
-export LS_COLORS="di=1;36:ln=3;92"
+# or = symlinks with no target
+export LS_COLORS="di=1;36:ln=3;92:or=4;91"
 # EZA_COLORS supports some codes that LS_COLORS doesn't
 # da = date
-# or = symlinks with no target
-export EZA_COLORS=$LS_COLORS:"da=36:uu=1;34"
+# uu = your user
+export EZA_COLORS=$LS_COLORS:"da=35:uu=1;34:sn=33"
 
 # make fd use same colors as eza (set $LS_COLORS)
 # eval "$(dircolors -b)"
@@ -107,13 +109,11 @@ alias j="just"
 alias jg="just -g"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
-# alias fd="fd --color=always --hidden --exclude .git --exclude .venv --exclude node_modules"
 alias fd="fd --color=always --hidden --exclude '{.git,.venv,node_modules}'"
 alias bot="btm"
 alias pn="pnpm"
 alias tr="trash-put"
 alias R="R --no-save"
-alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # colorize help with bat
 alias dots="cd $HOME/.dotfiles"
 alias wez-logs="cd /run/user/1000/wezterm" # wezterm logs
 alias wez-plugs="cd $HOME/.local/share/wezterm/plugins" # wezterm plugins
@@ -121,6 +121,10 @@ alias t="task"
 alias ta="task active"
 alias tl="task +lab"
 alias tp="task +personal"
+alias tla="task +lab active"
+alias tpa="task +personal active"
+alias aur="pacman -Qqm"
+alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # color help with bat
 
 alias g="git"
 alias gp="git push"
@@ -154,6 +158,7 @@ function ff() {
         ~/Documents/code \
         ~/Documents/code/nvim-dev \
         --min-depth 1 --max-depth 1 \
+        --color=never \
         --type dir | fzf --prompt=" Directory: " --no-preview
     )
     cd "$dir"
@@ -178,8 +183,9 @@ function umntbk() {
     # udisksctl unmount -b "$drive" && notify-send "Unmounted backup drive:" "$drive"
 }
 
+# use fd, follow symlinks, include hidden files, respect .gitignore
+export FZF_DEFAULT_COMMAND="fd --type file --follow --strip-cwd-prefix --hidden --exclude '{.git,.venv,node_modules}'"
 # + = current line
-# info = match counters
 export FZF_DEFAULT_OPTS="--no-separator
     --layout reverse --height 40% --preview-window '50%'
     --preview 'bat --theme=base16 --color always {}'
@@ -188,10 +194,9 @@ export FZF_DEFAULT_OPTS="--no-separator
     --color=prompt:#8f8aac,info:#ab9a78,pointer:#cacaca,marker:#778c73
     --color=spinner:#778c73,gutter:-1,header:-1,border:#cacaca
     --color=preview-fg:#cacaca,preview-bg:-1"
-# use fd, follow symlinks, include hidden files, respect .gitignore
-export FZF_DEFAULT_COMMAND="fd --type file --follow --strip-cwd-prefix --hidden --exclude .git"
 # fuzzy find command history
 export FZF_CTRL_R_OPTS="
+    --no-preview
     --bind 'ctrl-h:execute-silent(echo -n {2..} | wl-copy --trim-newline)+abort'
     --header '<ctrl-h> to copy command to clipboard'"
 export FZF_CTRL_T_COMMAND="" # disable; don't disable FZF_ALT_C_COMMAND
@@ -244,4 +249,4 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 
-eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/omp_config.toml)"
+eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/omp-config.toml)"

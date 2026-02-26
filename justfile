@@ -26,4 +26,5 @@ default:
     stow wezterm
     stow yazi
     stow zathura
+    stow zk
     stow zsh
