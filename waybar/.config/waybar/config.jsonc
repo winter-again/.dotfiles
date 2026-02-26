@@ -28,7 +28,7 @@
     },
     "custom/spotify": {
         // "format": "<span font='16' rise='-2000'>󰓇</span> {}",
-        "format": "󰓇 {}",
+        "format": "󰓇  {}",
         "return-type": "json",
         "max-length": 50,
         "escape": false, // false allows markup tags; true used to work

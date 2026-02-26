@@ -104,7 +104,7 @@ bindsym {
     # Exit sway (logs you out of your Wayland session)
     $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Y' 'swaymsg exit'
     # swaync toggle
-    $mod+n exec swaync-client -t -sw
+    # $mod+n exec swaync-client -t -sw
     # power menu
     # $mod+Shift+p exec ~/.config/wofi/power-menu.sh
     $mod+Shift+p exec ~/.config/tofi/power-menu.sh
@@ -220,8 +220,8 @@ exec {
 # swayidle -w before-sleep 'waylock -fork-on-lock -init-color 0x16161e -input-color 0x1a1b26 -fail-color 0xdb4b4b'
     # swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
     swayidle -w before-sleep 'gtklock -d -t "%I:%m %p"'
-    # mako
-    swaync
+    mako
+    # swaync
     waybar
     nm-applet
     solaar -w hide
