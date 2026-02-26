@@ -10,15 +10,9 @@ return {
                 modes = {
                     diagnostics = {
                         win = { position = "bottom" },
-                        -- preview = {
-                        --     type = "split",
-                        --     relative = "win",
-                        --     position = "right",
-                        --     size = 0.5,
-                        -- },
                     },
                     symbols = {
-                        win = { position = "right", size = 0.25 },
+                        win = { position = "bottom" },
                         preview = {
                             type = "split",
                             relative = "win",
@@ -51,9 +45,9 @@ return {
             )
             vim.keymap.set(
                 "n",
-                "<leader>tb",
-                "<cmd>Trouble diagnostics toggle focus=false filter.buf=0<CR>",
-                { silent = true, desc = "Toggle Trouble buffer diagnostics" }
+                "<leader>tl",
+                "<cmd>Trouble qflist toggle focus=false<CR>",
+                { silent = true, desc = "Toggle Trouble qflist" }
             )
             vim.keymap.set(
                 "n",
@@ -63,15 +57,9 @@ return {
             )
             vim.keymap.set(
                 "n",
-                "<leader>tr",
-                "<cmd>Trouble lsp toggle focus=false<CR>",
-                { silent = true, desc = "Toggle Trouble LSP defns and references" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>tl",
-                "<cmd>Trouble qflist toggle focus=false<CR>",
-                { silent = true, desc = "Toggle Trouble qflist" }
+                "<leader>td",
+                "<cmd>Trouble diagnostics toggle focus=false filter.buf=0<CR>",
+                { silent = true, desc = "Toggle Trouble buffer diagnostics" }
             )
         end,
     },

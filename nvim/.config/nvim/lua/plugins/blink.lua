@@ -98,6 +98,16 @@ return {
                         { "label", "label_description", gap = 1 },
                         { "kind_icon", "kind", gap = 1, "source_name" },
                     },
+                    padding = { 0, 0 },
+                    components = {
+                        kind_icon = {
+                            -- Set the highlight priority to below cursorline's default priority of 10000
+                            -- Should allow cursorline hl to win, preventing box around kind icon
+                            highlight = function(ctx)
+                                return { { group = ctx.kind_hl, priority = 9000 } }
+                            end,
+                        },
+                    },
                 },
             },
         },
