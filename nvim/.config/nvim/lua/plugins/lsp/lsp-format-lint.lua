@@ -306,11 +306,10 @@ return {
                 ui = {
                     -- border = 'rounded',
                 },
-                -- definition = {
-                --     keys = {
-                --         edit = 'o',
-                --     },
-                -- },
+                outline = {
+                    layout = 'normal',
+                    -- layout = 'float',
+                },
                 finder = {
                     filter = {
                         ['textDocument/references'] = function(client_id, result)

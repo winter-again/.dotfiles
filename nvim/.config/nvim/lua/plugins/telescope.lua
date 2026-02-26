@@ -24,10 +24,10 @@ return {
             {
                 'nvim-telescope/telescope-ui-select.nvim',
             },
-            {
-                'paopaol/telescope-git-diffs.nvim',
-                dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
-            },
+            -- {
+            --     'paopaol/telescope-git-diffs.nvim',
+            --     dependencies = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
+            -- },
         },
         config = function()
             -- local actions = require('telescope.actions')
@@ -125,9 +125,9 @@ return {
                     },
                 },
                 extensions = {
-                    git_diffs = {
-                        git_command = { 'git', 'log', '--oneline', '--decorate', '--all', '.' },
-                    },
+                    -- git_diffs = {
+                    --     git_command = { 'git', 'log', '--oneline', '--decorate', '--all', '.' },
+                    -- },
                     undo = {
                         use_delta = true,
                         side_by_side = true,
@@ -155,20 +155,28 @@ return {
             require('telescope').load_extension('ui-select')
             require('telescope').load_extension('undo')
             require('telescope').load_extension('file_browser')
-            require('telescope').load_extension('git_diffs')
+            -- require('telescope').load_extension('git_diffs')
             -- require('telescope').load_extension('harpoon')
 
             local builtin = require('telescope.builtin')
             local opts = { silent = true }
             -- vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
-            vim.keymap.set('n', '<leader>fn', function()
+            Map('n', '<leader>fn', function()
                 builtin.find_files({ cwd = vim.fn.stdpath('config') })
-            end)
-            vim.keymap.set('n', '<leader>fmf', my_ff, opts)
-            -- list buffer's git commits with diff preview; checkout with <cr>
-            vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, opts)
-            -- current changes per file with diff preview and add action
-            vim.keymap.set('n', '<leader>fgs', builtin.git_status, opts)
+            end, opts, 'Search nvim config')
+            Map('n', '<leader>fmf', my_ff, opts, 'Custom file search with multi-select support')
+            -- git
+            Map('n', '<leader>fgs', builtin.git_status, opts, 'Search files with diff in preview')
+            Map(
+                'n',
+                '<leader>fgc',
+                builtin.git_bcommits,
+                opts,
+                'Search git commits for current buf with diff in preview'
+            )
+            Map('n', '<leader>fgb', builtin.git_branches, opts, 'Search git branches')
+            -- view diffs between commits and open them with diffview.nvim
+            -- vim.keymap.set('n', '<leader>fgc', '<cmd>Telescope git_diffs diff_commits<CR>', opts)
             -- treesitter symbols
             vim.keymap.set('n', '<leader>ft', builtin.treesitter, opts)
             -- search for string in current working dir
@@ -203,8 +211,6 @@ return {
             vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<CR>', opts)
             vim.keymap.set('n', '<leader>fp', '<cmd>Telescope persisted<CR>', opts)
             vim.keymap.set('n', '<leader>fv', '<cmd>Telescope file_browser<CR>', opts)
-            -- view diffs between commits and open them with diffview.nvim
-            vim.keymap.set('n', '<leader>fgc', '<cmd>Telescope git_diffs diff_commits<CR>', opts)
         end,
     },
 }

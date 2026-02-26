@@ -134,8 +134,10 @@ return {
     },
     {
         'rose-pine/neovim',
-        name = 'rose-pine.nvim',
-        dev = true,
+        name = 'rose-pine',
+        -- for local dev:
+        -- name = 'rose-pine.nvim',
+        -- dev = true,
         lazy = false,
         priority = 997, -- ensure colorscheme loaded before all other start up plugins
         config = function()
