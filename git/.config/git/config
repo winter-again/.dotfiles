@@ -1,5 +1,5 @@
 [user]
-    name = Andrew Tiu
+    name = winter-again
     email = 63322884+winter-again@users.noreply.github.com
 [core]
     editor = nvim
@@ -28,8 +28,8 @@
     sort = version:refname
 [help]
     autocorrect = prompt
-[column]
-    ui = auto
+; [column]
+;     ui = auto
 [branch]
     sort = -committerdate
 [color "decorate"]
