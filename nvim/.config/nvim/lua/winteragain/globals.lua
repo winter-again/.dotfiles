@@ -3,35 +3,35 @@ local M = {}
 ---Pretty print Lua table and its id (from TJ)
 ---@param tbl table
 ---@return table
--- function P(tbl)
---     print(vim.print(tbl))
---     return tbl
--- end
+function M.P(tbl)
+    print(vim.print(tbl))
+    return tbl
+end
 
 ---Make lazy.nvim reload given plugin
 ---@param plugin string
--- function R(plugin)
---     vim.cmd("Lazy reload " .. plugin)
--- end
+function M.R(plugin)
+    vim.cmd("Lazy reload " .. plugin)
+end
 
 ---Save and execute Lua file for quick iterating
--- function Save_exec()
---     local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
---     if ft == "lua" then
---         vim.cmd("silent! write")
---         vim.cmd("luafile %")
---     end
--- end
+function M.save_exec()
+    local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+    if ft == "lua" then
+        vim.cmd("silent! write")
+        vim.cmd("luafile %")
+    end
+end
 
 --Save and execute cursor line for Lua file
--- function Save_exec_line()
---     local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
---     if ft == "lua" then
---         vim.cmd("silent! write")
---         local cursor_line = vim.fn.getline(".")
---         vim.cmd("lua " .. cursor_line)
---     end
--- end
+function M.save_exec_line()
+    local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+    if ft == "lua" then
+        vim.cmd("silent! write")
+        local cursor_line = vim.fn.getline(".")
+        vim.cmd("lua " .. cursor_line)
+    end
+end
 
 ---Set custom transparency settings
 function M.transparent()
@@ -69,16 +69,9 @@ end, { desc = "Make nvim transparent" })
 --     M.Toggle_light_dark()
 -- end, { desc = "Toggle light/dark mode" })
 
----Convenience function for setting a highlight group in current buf
----@param group string
----@param hl table
--- function M.Hl(group, hl)
---     vim.api.nvim_set_hl(0, group, hl)
--- end
-
 ---Custom function for setting winbar info
 ---@return string
-function Winbar()
+function M.winbar()
     local function word_count()
         return string.format("(%s W)", vim.fn.wordcount().words)
     end
