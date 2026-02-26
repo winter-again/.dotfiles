@@ -12,6 +12,9 @@ return {
                 -- text_styles = {
                 --     booleans = { italic = false },
                 -- },
+                hl_overrides = function(highlights, colors)
+                    highlights["Visual"] = { bg = colors.cursor_line }
+                end,
             })
         end,
     },
