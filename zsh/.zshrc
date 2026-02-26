@@ -236,4 +236,4 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # source after zsh-autosuggestions
 
-eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/omp-config.toml)"
+eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/omp-config.json)"
