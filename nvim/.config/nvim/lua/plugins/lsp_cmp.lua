@@ -29,22 +29,21 @@ return {
             -- (2)
             require('mason-lspconfig').setup({
                 ensure_installed = {
-                    'lua_ls',
-                    'pyright',
-                    -- 'ruff_lsp',
-                    'r_language_server',
+                    'astro',
+                    'bashls',
+                    'cssls',
+                    'emmet_ls',
+                    'eslint',
                     'gopls',
                     'html',
-                    'emmet_ls',
-                    'cssls',
-                    'tsserver',
-                    'eslint',
-                    'astro',
                     'jsonls',
-                    'sqlls',
+                    'lua_ls',
                     'marksman',
-                    'bashls',
+                    'pyright',
+                    'r_language_server',
+                    'sqlls',
                     'taplo',
+                    'tsserver',
                     'yamlls',
                 },
                 automatic_installation = false,
@@ -79,13 +78,6 @@ return {
                         },
                     })
                 end,
-                -- ['ruff_lsp'] = function()
-                --     require('lspconfig')['ruff_lsp'].setup({
-                --         on_attach = function(client, bufnr)
-                --             client.server_capabilities.hoverProvider = false
-                --         end
-                --     })
-                -- end
             }
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -122,6 +114,62 @@ return {
                 underline = false,
                 severity_sort = true,
             })
+        end,
+    },
+    {
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        config = function()
+            require('mason-tool-installer').setup({
+                auto_update = true,
+                debounce_hours = 24,
+                ensure_installed = {
+                    'black',
+                    'isort',
+                    'stylua',
+                },
+            })
+        end,
+    },
+    {
+        'stevearc/conform.nvim',
+        event = { 'BufWritePre' },
+        cmd = { 'ConformInfo' },
+        config = function()
+            require('conform').setup({
+                formatters_by_ft = {
+                    lua = { 'stylua' },
+                    -- run sequentially
+                    python = { 'isort', 'black' },
+                },
+                format_on_save = function(bufnr)
+                    if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                        return
+                    end
+                    return { timeout_ms = 500, lsp_fallback = true }
+                end,
+            })
+            vim.keymap.set('n', '<leader>fm', function()
+                require('conform').format({ async = true, lsp_fallback = true })
+            end, { silent = true })
+            -- user commands for toggling autoformatting on save
+            vim.api.nvim_create_user_command('FormatDisable', function(args)
+                if args.bang then
+                    -- FormatDisable! will disable formatting just for this buffer
+                    vim.b.disable_autoformat = true
+                else
+                    vim.g.disable_autoformat = true
+                end
+            end, {
+                desc = 'Disable autoformat-on-save',
+                bang = true,
+            })
+            vim.api.nvim_create_user_command('FormatEnable', function()
+                vim.b.disable_autoformat = false
+                vim.g.disable_autoformat = false
+            end, {
+                desc = 'Re-enable autoformat-on-save',
+            })
+            vim.cmd('FormatDisable') -- keep off by default
         end,
     },
     {
