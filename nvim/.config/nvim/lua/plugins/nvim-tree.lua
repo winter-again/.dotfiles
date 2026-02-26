@@ -1,9 +1,22 @@
 return {
     'nvim-tree/nvim-tree.lua',
-    keys = '<leader>pv',
+    -- keys = '<leader>pv',
+    lazy = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    tag = 'nightly',
+    version = '*',
     config = function()
+        local function on_attach(bufnr)
+            local api = require('nvim-tree.api')
+            api.config.mappings.default_on_attach(bufnr)
+            local opts = { buffer = bufnr }
+            vim.keymap.set('n', 'H', api.tree.toggle_hidden_filter, opts)
+            -- refocus on nvim-tree after opening
+            vim.keymap.set('n', '<CR>', function()
+                local node = api.tree.get_node_under_cursor()
+                api.node.open.edit(node)
+                api.tree.focus()
+            end, opts)
+        end
         require('nvim-tree').setup({
             -- disable_netrw = false and hijack_netrw = true should mean netrw
             -- can be used for following links as usual but not for its file browsing functionality
@@ -54,6 +67,7 @@ return {
                     },
                 },
             },
+            on_attach = on_attach,
         })
         Map('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }, 'Toggle nvim-tree') -- set here since the plugin is loaded on this command
     end,
