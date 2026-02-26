@@ -1,4 +1,5 @@
 font = /usr/share/fonts/TTF/ZedMonoNerdFont-Regular.ttf
+# font = /usr/share/fonts/TTF/IosevkaNerdFontMono-Medium.ttf
 font-size = 14
 hint-font = false
 ascii-input = true

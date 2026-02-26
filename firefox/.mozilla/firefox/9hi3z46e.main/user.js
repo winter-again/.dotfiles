@@ -352,6 +352,10 @@ user_pref("sidebar.animation.enabled", false);
 // disable media keys, picture-in-picture, and topbar menu keys
 user_pref("media.hardwaremediakeys.enabled", false);
 user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
+user_pref(
+    "media.videocontrols.picture-in-picture.urlbar-button.enabled",
+    false
+);
 user_pref("ui.key.menuAccessKeyFocuses", false);
 // compact tab bar
 user_pref("browser.uidensity", 1);

@@ -215,22 +215,6 @@ function fzf-cd-widget() {
 source <(fzf --zsh) # fzf key bindings and fuzzy completion; should come after vi binds?
 bindkey "\C-t" fzf-cd-widget # replace Ctrl-t with functionality of Alt-c (search dir and cd)
 
-# fix uv run autocomplete for py files: https://github.com/astral-sh/uv/issues/8432
-# if type "uv" > /dev/null; then
-#     eval "$(uv generate-shell-completion zsh)"
-#     eval "$(uvx --generate-shell-completion zsh)"
-#
-#     _uv_run_mod() {
-#         if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
-#             _arguments '*:filename:_files -g "*.py"'
-#         else
-#             _uv "$@"
-#         fi
-#     }
-#
-#     compdef _uv_run_mod uv
-# fi
-
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # source after zsh-autosuggestions
