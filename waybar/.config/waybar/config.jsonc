@@ -6,7 +6,9 @@
     "spacing": 2, // Gaps between modules
     "modules-left": [
         "sway/workspaces",
-        "mpris"
+        // "mpris",
+        "custom/spotify"
+        // "custom/weather_wttr"
     ],
     "modules-center": [
         "clock"
@@ -26,15 +28,6 @@
         "all-outputs": false,
         "format": "{name}"
     },
-    "custom/weather": {
-        "format": "{icon} {}",
-        "format-icons": [
-            "<span font='16' rise='-2000'>󰅟</span>"
-        ],
-        "return-type": "json",
-        "interval": 900, // 15 min
-        "exec": "~/.config/waybar/scripts/weather.sh"
-    },
     // seems like the problem is that playerctl metadata has no valid info on fresh start of Spotify
     "mpris": {
         "player": "spotify",
@@ -42,7 +35,7 @@
             "firefox"
         ],
         "interval": 1,
-        "format": "<span font='12' rise='1000'>{status_icon}</span> <span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
+        "format": "<span font='12' rise='100'>{status_icon}</span> <span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
         "tooltip-format": "Album: \"{album}\" [{position} / {length}]",
         "status-icons": {
             "playing": "⏸",
@@ -53,6 +46,37 @@
         // "max-length": 70,
         "on-middle-click": "",
         "on-right-click": ""
+    },
+    "custom/spotify": {
+        "format": "<span font='12' rise='1000'>{icon}</span> <span font='16' rise='-2000'>󰓇</span> {}",
+        "return-type": "json",
+        "max-length": 70,
+        "format-icons": {
+            "Playing": "⏸",
+            "Paused": "▶"
+        },
+        "on-click": "playerctl --player=spotify play-pause",
+        "on-click-right": "pkill spotify",
+        "on-scroll-up": "",
+        "on-scroll-down": "",
+        "exec": "~/.config/waybar/scripts/spotify.sh",
+        "exec-if": "pgrep spotify"
+    },
+    "custom/weather": {
+        "format": "{icon} {}",
+        "format-icons": [
+            "<span font='16' rise='-2000'>󰅟</span>"
+        ],
+        "return-type": "json",
+        "interval": 900, // 15 min
+        "exec": "~/.config/waybar/scripts/weather.sh"
+    },
+    "custom/weather_wttr": {
+        "exec": "~/.config/waybar/scripts/weather-wttr.sh Berlin+Germany",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true,
+        "interval": 3600
     },
     "tray": {
         "icon-size": 14,
@@ -98,7 +122,8 @@
         "input-filename": "temp1_input",
         "critical-threshold": 80,
         // "format": " {temperatureF}F"
-        "format": " {temperatureC}C"
+        "format": " {temperatureC}C",
+        "tooltip-format": "{temperatureF}F"
     },
     "battery": {
         "bat": "BAT0",
