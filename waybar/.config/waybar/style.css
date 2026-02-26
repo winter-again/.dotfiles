@@ -39,7 +39,7 @@ tooltip {
     color: @fg;
     background: transparent;
     border-radius: 0px;
-    min-width: 1.6rem;
+    min-width: 1.5rem;
     /* to avoid sizing change for urgent workspace's border */
     /* border: 2px solid transparent; */
 }

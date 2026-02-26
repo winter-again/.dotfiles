@@ -340,6 +340,7 @@ return {
                     --     provideFormatter = false,
                     -- },
                 },
+                ["just"] = {},
                 ["taplo"] = {},
                 ["tinymist"] = {
                     settings = {

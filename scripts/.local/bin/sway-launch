@@ -16,13 +16,14 @@ export XDG_CURRENT_DESKTOP=sway:wlroots
 # works for Slack
 export ELECTRON_OZONE_PLATFORM_HINT=wayland
 
+# GTK
+# export GTK_THEME=Adwaita:dark # force Adwaita to be dark
+# May have to set dark theme pref. via config files and/or gsettings instead
+
 # Qt
 # export QT_QPA_PLATFORM=wayland # make Qt apps use Wayland backend; shouldn't be necessary
 # export QT_QPA_PLATFORMTHEME=qt5ct # pick theme from qt5ct
 # export QT_WAYLAND_DISABLE_WINDOWDECORATION=1 # disables Qt client-side decorations
 export QT_STYLE_OVERRIDE=kvantum # use kvantum to theme Qt similar to GTK
 
-# if NVIDIA
-# exec sway --unsupported-gpu --debug --verbose 2> ~/sway.log
-
-exec sway --debug --verbose 2> ~/sway.log
+exec sway --debug --verbose 2>~/sway.log

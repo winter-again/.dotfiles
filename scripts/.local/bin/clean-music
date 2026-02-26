@@ -48,22 +48,15 @@ def clean(args: argparse.Namespace) -> None:  # pyright: ignore[reportUnusedPara
 
 def move_aif_files(args: argparse.Namespace) -> None:  # pyright: ignore[reportUnusedParameter]
     if os.path.ismount(EXT_DRIVE):
-        MUSIC_LIB_EXT.mkdir(exist_ok=True)
-
         for song in MUSIC_LIB_LOCAL.rglob("*.aif"):
-            song_path_rel_to_artist = song.relative_to(MUSIC_LIB_LOCAL)
-
-            album_stem = song_path_rel_to_artist.parent
-            album_path_rel_to_ext_lib = MUSIC_LIB_EXT / album_stem
-            album_path_rel_to_ext_lib.mkdir(
+            song_rel_lib_local = song.relative_to(MUSIC_LIB_LOCAL)
+            song_rel_lib_ext = MUSIC_LIB_EXT / song_rel_lib_local
+            song_rel_lib_ext.parent.mkdir(
                 parents=True, exist_ok=True
             )  # ensure path <artist>/<album>/ exists
-
-            song_path_rel_to_ext_lib = MUSIC_LIB_EXT / song_path_rel_to_artist
             # must use shutil.move() because diff. file systems
-            shutil.move(song, song_path_rel_to_ext_lib)  # pyright: ignore[reportUnusedCallResult]
-
-            print(f"Moved {song} to {song_path_rel_to_ext_lib}")
+            shutil.move(song, song_rel_lib_ext)  # pyright: ignore[reportUnusedCallResult]
+            print(f"Moved {song} to {song_rel_lib_ext}")
     else:
         print(f"{EXT_DRIVE} not mounted")
 

@@ -231,7 +231,7 @@ install_js_pkgs() {
         vscode-json-languageserver
     )
     paru_install "${js_dev_pkgs[@]}"
-    echo "Installing Astro LSP as global package via pnpm..."
+    echo "Installing Astro language server as global package via pnpm..."
     # NOTE: seems that this fails if given path isn't in PATH
     # so I set PATH like this and it works, even if path doesn't exist
     # Seems that setting PNPM_HOME is needed as well. Though it should resolve to that path by default
@@ -254,6 +254,7 @@ echo "Installing other dev packages..."
 dev_pkgs=(
     clang
     bash-language-server
+    just-lsp
     markdownlint-cli2
     marksman
     shellcheck

@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+# pyright: reportUnusedCallResult = false, reportAny = false
+
+import argparse
+import os
+import shutil
+import subprocess
+from collections.abc import Sequence
+from pathlib import Path
+
+MUSIC_DIR = Path(os.environ["HOME"]) / "Music"
+MUSIC_LIB_LOCAL = MUSIC_DIR / "library"
+EXT_DRIVE = Path("/run/media/winteragain/ext-drive")
+MUSIC_LIB_EXT = EXT_DRIVE / "music/library"
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """
+    After adding metadata with MusicBrainz Picard, convert all .aif files for
+    a given album to .flac and move the .aif files to external drive.
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "album",
+        type=Path,
+        help="Directory containing .aif files corresponding to music album",
+    )
+    args = parser.parse_args(argv)
+
+    if not args.album.is_dir():
+        print("Must provide a directory")
+        return 1
+
+    if not os.path.ismount(EXT_DRIVE):
+        print(f"{EXT_DRIVE} not mounted")
+        return 1
+
+    convert_aif_to_flac(args.album)
+    move_aif_to_ext_drive(args.album)
+
+    return 0
+
+
+def convert_aif_to_flac(album: Path) -> None:
+    for aif in album.glob("*.aif"):
+        flac = aif.with_suffix(".flac")
+        if not flac.is_file():
+            subprocess.run(["ffmpeg", "-i", aif, flac])
+        else:
+            print(f".flac file already exists: {flac}")
+
+
+def move_aif_to_ext_drive(album: Path) -> None:
+    for aif in album.glob("*.aif"):
+        aif_rel_lib_local = aif.relative_to(MUSIC_LIB_LOCAL)
+        aif_rel_lib_ext = MUSIC_LIB_EXT / aif_rel_lib_local
+        if not aif_rel_lib_ext.is_file():
+            aif_rel_lib_ext.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(aif, aif_rel_lib_ext)
+        else:
+            print(f".aif file already exists: {aif_rel_lib_ext}")
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

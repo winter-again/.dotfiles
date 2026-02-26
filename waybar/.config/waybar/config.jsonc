@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at topmost layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    // "height": 20, // height if possible; blank for dynamic value
+    "height": 24, // height if possible; blank for dynamic value
     "spacing": 2, // Gaps between modules
     "fixed-center": true,
     "modules-left": [
@@ -46,7 +46,7 @@
         "on-click": "playerctl play-pause",
         "on-scroll-up": "",
         "on-scroll-down": "",
-        "tooltip-format": "{artist}: {album} - {length} [{player}]",
+        "tooltip-format": "[{player}] {artist}: {album} - {length}",
         "max-length": 50
     },
     "clock": {
