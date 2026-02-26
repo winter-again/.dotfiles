@@ -33,6 +33,13 @@ vim.api.nvim_create_autocmd('BufEnter', {
     end,
 })
 
+-- trying to get rid of folds in diffsplit with fugitive
+-- not perfect but it kind of works
+vim.api.nvim_create_autocmd({ 'WinEnter', 'WinLeave' }, {
+    group = au_group,
+    command = 'set nofen',
+})
+
 -- modify automatic formatting to not continue comments when you hit Enter
 -- setting it with autocmd otherwise ftplugin overrides it
 -- BufWinEnter event is late enough to override formatoptions
