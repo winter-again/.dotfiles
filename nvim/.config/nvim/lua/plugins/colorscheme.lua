@@ -12,17 +12,22 @@ return {
                 -- text_styles = {
                 --     booleans = { italic = false },
                 -- },
-                hl_overrides = function(highlights, colors)
-                    highlights["Visual"] = { bg = colors.cursor_line }
-                    highlights["QuickFixLine"] = { fg = colors.purple, bold = true }
-                    highlights["@markup.list.checked"] = { strikethrough = true }
-                    highlights["RenderMarkdownChecked"] = { strikethrough = false }
-                    highlights["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" }
-                    highlights["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" }
-                    highlights["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" }
-                    highlights["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" }
-                    highlights["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" }
-                    highlights["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" }
+                plugins = {},
+                hl_overrides = function(colors)
+                    return {
+                        -- ["MatchParen"] = { bold = false, italic = true }
+                        ["@markup.math"] = { italic = true },
+                        ["QuickFixLine"] = { bold = true },
+                        ["@keyword.luadoc"] = { bold = false },
+                        ["@markup.list.checked"] = { strikethrough = true },
+                        ["RenderMarkdownChecked"] = { strikethrough = false },
+                        ["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" },
+                        ["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" },
+                        ["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" },
+                        ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
+                        ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
+                        ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
+                    }
                 end,
             })
         end,

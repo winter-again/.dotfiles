@@ -137,19 +137,19 @@ function y() {
 
 function ff() {
     local dir
-    if [[ -z "${TMUX}" ]]; then
-        dir=$(fd . \
-            ~/Documents/Bansal-lab \
-            ~/Documents/code \
-            ~/Documents/code/nvim-dev \
-            --min-depth 1 --max-depth 1 --type d | fzf --prompt=" Directory: " --no-preview --color="bg:-1")
-    else
-        dir=$(fd . \
-            ~/Documents/Bansal-lab \
-            ~/Documents/code \
-            ~/Documents/code/nvim-dev \
-            --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Directory: " --no-preview --color="bg:-1")
-    fi
+    # if [[ -z "${TMUX}" ]]; then
+    dir=$(fd . \
+        ~/Documents/Bansal-lab \
+        ~/Documents/code \
+        ~/Documents/code/nvim-dev \
+        --min-depth 1 --max-depth 1 --type d | fzf --prompt=" Directory: " --no-preview --color="bg:-1")
+    # else
+    #     dir=$(fd . \
+    #         ~/Documents/Bansal-lab \
+    #         ~/Documents/code \
+    #         ~/Documents/code/nvim-dev \
+    #         --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Directory: " --no-preview --color="bg:-1")
+    # fi
     cd "$dir"
 }
 
@@ -163,13 +163,17 @@ function bk() {
 }
 
 function mntbk() {
-    local drive="/dev/sda1"
-    udisksctl mount -b "$drive" && notify-send "Mounted backup drive:" "$drive"
+    # local drive="/dev/sda1"
+    local UUID="312b6767-e83b-4101-a454-bb24539b7264"
+    udisksctl mount -b "/dev/disk/by-uuid/$UUID" && notify-send "Mounted backup drive:" "ext-drive"
+    # udisksctl mount -b "$drive" && notify-send "Mounted backup drive:" "$drive"
 }
 
 function umntbk() {
-    local drive="/dev/sda1"
-    udisksctl unmount -b "$drive" && notify-send "Unmounted backup drive:" "$drive"
+    # local drive="/dev/sda1"
+    local UUID="312b6767-e83b-4101-a454-bb24539b7264"
+    udisksctl unmount -b "/dev/disk/by-uuid/$UUID" && notify-send "Unmounted backup drive:" "ext-drive"
+    # udisksctl unmount -b "$drive" && notify-send "Unmounted backup drive:" "$drive"
 }
 
 # wezterm logs appear here

@@ -65,6 +65,10 @@ return {
 
         local function create_note_with_templ()
             vim.ui.input({ prompt = "Note file name: " }, function(file_name)
+                if file_name == nil then
+                    return
+                end
+
                 -- replace "-" with spaces, remove ".md" if exists, and ensure first letter capitalized
                 file_name = file_name:gsub(".md", "")
                 local title = file_name:gsub("-", " "):gsub("^%l", string.upper)
@@ -87,14 +91,18 @@ return {
                             dir = "notes",
                         })
                     elseif choice == "meeting" or choice == "meetings" or choice == "meet" then
+                        -- TODO: ideally would get rid of this and just remember to not include a date when giving
+                        -- file name
+                        if file_name:match("^%d%d%d%d%-%d%d%-%d%d%-") ~= nil then
+                            title = file_name:sub(12):gsub("-", " ")
+                        end
                         zk_cmd.get("ZkNew")({
                             title = title,
                             filenameStem = file_name,
-                            dir = "notes/meetings",
+                            dir = "meetings",
                             group = "meetings",
                         })
                     elseif choice == "leetcode" or choice == "leet" or choice == "lc" then
-                        print(file_name)
                         zk_cmd.get("ZkNew")({
                             title = title,
                             filenameStem = file_name,
