@@ -7,7 +7,7 @@ selected=$(echo -e $entries | wofi -p "Power" --width 25% --height 275 --dmenu -
 
 case $selected in
     lock)
-        swaylock --config ~/.config/swaylock/config;;
+        gtklock -t "%I:%m %p";;
     logout)
         swaymsg exit;;
     suspend)

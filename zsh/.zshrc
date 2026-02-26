@@ -48,6 +48,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # aliases
 # alias nvim-min="NVIM_APPNAME=nvim_min nvim" # alt nvim config
+alias ..="cd .."
 alias exti="exit"
 alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls
 alias ll="eza -lah --icons --color=always --group-directories-first"

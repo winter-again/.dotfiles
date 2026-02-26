@@ -3,6 +3,8 @@ return {
     -- dev = true,
     config = function()
         local wezterm_config = require('wezterm-config')
+        -- TODO: is there a way to make it so that changes in the profile_data are reflected
+        -- automatically?
         wezterm_config.setup({
             append_wezterm_to_rtp = true,
         })

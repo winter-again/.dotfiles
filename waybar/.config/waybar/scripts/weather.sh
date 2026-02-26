@@ -22,11 +22,11 @@ wind=$(echo $resp | jq .wind.speed)
 
 if [[ $(echo "$wind >= $WIND_THRESH" | bc -l) -eq 1 ]]; then
     wind_out=$(echo $wind | bc -l )
-    # output="$desc ~ $temp$TEMP_SYMBOL ~  $wind $WIND_SYMBOL"
-    output="$desc ~ $feels_like$TEMP_SYMBOL ~  $wind_out $WIND_SYMBOL"
+    # output="$desc | $temp$TEMP_SYMBOL |  $wind $WIND_SYMBOL"
+    output="$desc | $feels_like$TEMP_SYMBOL |  $wind_out $WIND_SYMBOL"
 else
-    # output="$desc ~ $temp$TEMP_SYMBOL"
-    output="$desc ~ $feels_like$TEMP_SYMBOL"
+    # output="$desc | $temp$TEMP_SYMBOL"
+    output="$desc | $feels_like$TEMP_SYMBOL"
 fi
 
 printf '{"text": "%s", "class": "custom-weather" }' "$output"

@@ -50,7 +50,7 @@
 .notification-content {
     background: @cc-bg;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 2px solid @noti-border-color;
     margin: 0;
 }
@@ -61,7 +61,7 @@
     color: @cc-bg;
     text-shadow: none;
     padding: 0;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-top: 5px;
     margin-right: 5px;
 }
@@ -186,7 +186,7 @@
 .control-center {
     background: @cc-bg;
     border: 2px solid @noti-border-color;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 /* box around the list of notif boxes */
@@ -216,7 +216,7 @@
     margin: 10px 10px 5px 10px;
     font-size: 1.5rem;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 /* button for clearing all notifs */
@@ -227,7 +227,7 @@
     background: @noti-bg;
     box-shadow: none;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .widget-title>button:hover {
@@ -241,13 +241,13 @@
     background: @noti-bg-darker;
     padding: 5px 10px;
     margin: 5px 10px 10px 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: large;
 }
 
 /* dnd toggle */
 .widget-dnd>switch {
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid @tokyo-blue;
     background: @tokyo-blue;
 }
@@ -288,12 +288,12 @@
     background: @noti-bg-darker;
     padding: 5px 10px;
     margin: 5px 10px 5px 10px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 /* unsure */
 .widget-mpris>box>button {
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 /* box around player info */
@@ -316,14 +316,14 @@
     font-size: x-large;
     padding: 5px;
     margin: 5px 10px 10px 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     background: @noti-bg-darker;
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button {
     margin: 3px;
     background: @cc-bg;
-    border-radius: 10px;
+    border-radius: 5px;
     color: @text-color;
 }
 
@@ -348,7 +348,7 @@
     background: @noti-bg-darker;
     padding: 5px;
     margin: 10px 10px 5px 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: x-large;
 }
 

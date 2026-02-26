@@ -3,8 +3,8 @@ Name=Slack
 StartupWMClass=Slack
 Comment=Slack Desktop
 GenericName=Slack Client for Linux
-# Exec=/usr/bin/slack -s --disable-gpu --ozone-platform-hint=auto %U
-Exec=prime-run /usr/bin/slack -s --ozone-platform-hint=auto %U
+Exec=/usr/bin/slack -s --disable-gpu --ozone-platform-hint=auto %U
+# Exec=prime-run /usr/bin/slack -s --ozone-platform-hint=auto %U
 Icon=slack
 Type=Application
 StartupNotify=true
