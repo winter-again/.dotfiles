@@ -1,6 +1,8 @@
 local map = require("winteragain.globals").map
 
 vim.opt_local.wrap = true
+-- wrap long lines at chars in breakat
+vim.opt_local.linebreak = true
 vim.opt_local.spell = true
 vim.opt_local.spelllang = "en_us"
 -- 1 makes concealed links look too long because it has to be a 1:1 conceal, meaning the "["

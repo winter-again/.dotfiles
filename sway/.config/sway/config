@@ -126,7 +126,7 @@ workspace 7 gaps outer 20
 # keybinds
 bindsym {
     $mod+Return exec $term
-    $mod+Shift+q kill
+    $mod+Shift+x kill
     $mod+m exec $menu
     $mod+i exec $browser
     # reload config file
@@ -182,7 +182,7 @@ bindsym {
     $mod+t layout tabbed
     # Cycle through customizable set of layouts
     # layout toggle split can act like a reset out of tabs/stack -> then just cycles through split layouts
-    $mod+e layout toggle split
+    $mod+n layout toggle split
     # using split instead of splitv and splith here means only the current split layout is considered
     # rather than cycling through both possibilities
     $mod+semicolon layout toggle split tabbed stacking
