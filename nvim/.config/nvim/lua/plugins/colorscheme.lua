@@ -237,4 +237,12 @@ return {
             })
         end,
     },
+    {
+        'EdenEast/nightfox.nvim',
+        lazy = false,
+    },
+    {
+        'nyoom-engineering/oxocarbon.nvim',
+        lazy = false,
+    },
 }
