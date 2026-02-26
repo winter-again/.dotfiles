@@ -63,7 +63,7 @@
         }
     },
     "custom/weather": {
-        "format": "{icon} {}",
+        "format": "{icon}  {}",
         "format-icons": [
             // "<span font='16' rise='-2000'>󰅟</span>",
             "󰅟"
