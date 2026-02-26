@@ -18,7 +18,6 @@ return {
                     -- highlights['FidgetTask'] = {fg=colors.fg} -- override for fidget plugin
                 end
             })
-            -- vim.cmd('colorscheme tokyonight') -- set default colorscheme after configuring
         end
     },
     {
