@@ -3,7 +3,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         -- event = { 'BufReadPre', 'BufNewFile' },
-        enabled = true,
         dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
@@ -31,9 +30,11 @@ return {
             -- (2)
             require('mason-lspconfig').setup({
                 ensure_installed = {
+                    'ansiblels',
                     'astro',
                     'bashls',
                     'cssls',
+                    'dockerls',
                     'emmet_ls',
                     'eslint',
                     'gopls',
