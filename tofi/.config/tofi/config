@@ -6,6 +6,7 @@ prompt-text = "❯ "
 hide-cursor = false
 text-cursor = false
 history = true
+fuzzy-match = false
 require-match = true
 
 width = 30%

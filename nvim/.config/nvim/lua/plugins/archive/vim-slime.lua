@@ -1,6 +1,6 @@
 return {
     'jpalardy/vim-slime',
-    -- enabled = false,
+    enabled = false,
     config = function()
         vim.g.slime_target = 'tmux'
         vim.g.slime_bracketed_paste = 1
