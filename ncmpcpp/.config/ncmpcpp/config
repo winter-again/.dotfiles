@@ -79,7 +79,7 @@ visualizer_data_source = /tmp/mpd.fifo
 ## to synchronize with audio.
 ##
 #
-visualizer_output_name = my_fifo
+visualizer_output_name = "ncmpcpp visualizer"
 #
 ##
 ## If you set format to 44100:16:2, make it 'yes'.
@@ -328,7 +328,7 @@ visualizer_look = ●▮
 ##   available.
 ##
 #
-#song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
+song_columns_list_format = (30)[magenta]{t|f:Title} (20)[blue]{a} (10)[cyan]{b} (7f)[green]{l}
 #
 ##### various settings #####
 #
@@ -357,13 +357,13 @@ visualizer_look = ●▮
 ##
 ## Note: Possible display modes: classic, columns.
 ##
-#playlist_display_mode = columns
+playlist_display_mode = "columns"
 #
-#browser_display_mode = classic
+browser_display_mode = "columns"
 #
-#search_engine_display_mode = classic
+search_engine_display_mode = "columns"
 #
-#playlist_editor_display_mode = classic
+playlist_editor_display_mode = "columns"
 #
 #discard_colors_if_item_is_selected = yes
 #
@@ -391,7 +391,7 @@ visualizer_look = ●▮
 #
 ## Available values: classic, alternative.
 ##
-#user_interface = classic
+user_interface = "alternative"
 #
 #data_fetching_delay = yes
 #
@@ -399,7 +399,7 @@ visualizer_look = ●▮
 ##
 #media_library_primary_tag = artist
 #
-#media_library_albums_split_by_date = yes
+media_library_albums_split_by_date = no
 #
 #media_library_hide_album_dates = no
 #
@@ -593,11 +593,11 @@ visualizer_look = ●▮
 ## are used there is a possibility that you'll be able to use only colors with
 ## transparent background.
 #
-#colors_enabled = yes
+colors_enabled = "yes"
 #
 #empty_tag_color = cyan
 #
-#header_window_color = default
+header_window_color = "magenta"
 #
 #volume_color = default
 #
@@ -605,7 +605,7 @@ visualizer_look = ●▮
 #
 #state_flags_color = default:b
 #
-#main_window_color = yellow
+main_window_color = "white"
 #
 #color1 = white
 #

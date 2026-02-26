@@ -89,7 +89,7 @@ set {
     # $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
     $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
-    # seems like the output names above change sometimes
+    # seems like the output names change sometimes
     $primary_mon "BNQ BenQ LCD 93J02490SL0"
     $secondary_mon "BNQ BenQ LCD E2H03452SL0"
     # set $primary_mon "DP-6"
@@ -278,12 +278,15 @@ mode "resize" {
 }
 
 exec_always pkill kanshi; exec kanshi
+# exec_always kill -1 $(pidof kanshi)
 exec {
+    # kanshi
     waybar
     nm-applet
     solaar -w hide
     mako
     swayidle -w before-sleep 'gtklock -d'
+    playerctld daemon
 
     # for xwayland, maybe also for nsxiv
     # xrdb -load ~/.Xresources

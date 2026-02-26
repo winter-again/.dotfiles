@@ -5,3 +5,4 @@ wezterm/.config/wezterm/bg.lua
 scratch.lua
 flow/
 nvim/.config/nvim/scratch/
+ncmpcpp/.config/ncmpcpp/error.log

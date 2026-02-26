@@ -6,7 +6,8 @@
     "fixed-center": true,
     "modules-left": [
         "sway/workspaces",
-        "custom/spotify"
+        // "custom/spotify",
+        "mpris"
     ],
     "modules-center": [
         "clock"
@@ -39,6 +40,14 @@
         "on-scroll-down": "",
         "exec": "~/.config/waybar/scripts/spotify.sh",
         "exec-if": "pgrep spotify"
+    },
+    "mpris": {
+        "format": "  {title} | {artist}",
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "",
+        "on-scroll-down": "",
+        "tooltip-format": "({player}) - {album}: [{length} {position}]",
+        "max-length": 50
     },
     "clock": {
         "timezone": "America/New_York",
