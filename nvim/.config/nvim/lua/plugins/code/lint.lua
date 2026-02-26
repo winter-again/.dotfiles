@@ -9,6 +9,7 @@ return {
             typescript = { "eslint" },
             typescriptreact = { "eslint" },
             sh = { "shellcheck" },
+            markdown = { "markdownlint-cli2" },
         }
 
         -- autocommand that triggers linting

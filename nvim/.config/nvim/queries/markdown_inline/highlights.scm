@@ -6,7 +6,7 @@
 ; (inline_link "]" @conceal (#set! conceal ""))
 ; (inline_link "(" @conceal (#set! conceal ""))
 ; (inline_link ")" @conceal (#set! conceal ""))
-;
+
 ; wikilinks
 (shortcut_link (link_text) @markup.wikilink.url) @markup.wikilink.label
 (shortcut_link "[" @markup.wikilink.brack_open (#offset! @markup.wikilink.brack_open 0 -1 0 0) (#set! conceal ""))

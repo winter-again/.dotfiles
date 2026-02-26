@@ -32,37 +32,37 @@ return {
                 --     end,
                 --     opts = { noremap = false, expr = true, buffer = true },
                 -- },
-                ["<leader>fn"] = {
-                    action = function()
-                        vim.cmd("ObsidianQuickSwitch")
-                    end,
-                    opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by title" },
-                },
-                ["<leader>fs"] = {
-                    action = function()
-                        vim.cmd("ObsidianSearch")
-                    end,
-                    opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by content" },
-                },
+                -- ["<leader>fn"] = {
+                --     action = function()
+                --         vim.cmd("ObsidianQuickSwitch")
+                --     end,
+                --     opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by title" },
+                -- },
+                -- ["<leader>fs"] = {
+                --     action = function()
+                --         vim.cmd("ObsidianSearch")
+                --     end,
+                --     opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by content" },
+                -- },
                 ["<leader>ft"] = {
                     action = function()
                         vim.cmd("ObsidianTags")
                     end,
                     opts = { silent = true, noremap = true, buffer = true, desc = "Search notes by tag" },
                 },
-                ["<leader>ol"] = {
+                ["<leader>nl"] = {
                     action = function()
                         vim.cmd("ObsidianLinks")
                     end,
                     opts = { silent = true, noremap = true, buffer = true, desc = "Search buffer links" },
                 },
-                ["<leader>ob"] = {
+                ["<leader>nb"] = {
                     action = function()
                         vim.cmd("ObsidianBacklinks")
                     end,
                     opts = { silent = true, noremap = true, buffer = true, desc = "Search buffer backlinks" },
                 },
-                ["<leader>ot"] = {
+                ["<leader>nt"] = {
                     action = function()
                         vim.cmd("ObsidianTemplate")
                     end,
