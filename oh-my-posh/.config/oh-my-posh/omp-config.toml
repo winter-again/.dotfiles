@@ -1,7 +1,11 @@
-#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
 version = 3
 final_space = true
-auto_upgrade = false
+async = true
+
+[upgrade]
+notice = false
+auto = false
 
 [[blocks]]
 type = "prompt"
@@ -20,42 +24,38 @@ style = "full"
 type = "git"
 style = "plain"
 foreground = "p:red"
-# note: .Working.Added isn't possible? .Working.Untracked is the only one that makes sense
-# .Working, .Staging
-# .Untracked, .Added, .Modified, .Deleted, .Changed
-# full spec: main ⇣ 1 ⇡ 1 +5 !10 ?4 stash 2 merge rebase
-template = " {{ .HEAD }}{{ if gt .Behind 0 }} ⇣ {{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} ⇡ {{ .Ahead }}{{ end }}{{ if .Staging.Changed }} +{{ add .Staging.Added .Staging.Modified .Staging.Deleted }}{{ end }}{{ if .Working.Changed }} !{{ add .Working.Modified .Working.Deleted }}{{ end }}{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}{{ if gt .StashCount 0 }} stash {{ .StashCount }}{{ end }}{{ if .Merge }} merge{{ end }}{{ if .Rebase }} rebase{{ end }}"
+template = " {{ .HEAD }}{{ if .Working.Changed }} {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} stash {{ .StashCount }}{{ end }}"
 
 [blocks.segments.properties]
 branch_icon = " "
 commit_icon = "@"
 tag_icon = " "
-fetch_status = true
 source = "cli"
+fetch_status = true
 
 [[blocks]]
 type = "prompt"
 alignment = "right"
 overflow = "hide"
 
-[[blocks.segments]]
-type = "go"
-style = "plain"
-foreground = "p:blue"
-template = " {{ .Full }} "
+# [[blocks.segments]]
+# type = "go"
+# style = "plain"
+# foreground = "p:blue"
+# template = " {{ .Full }} "
 
-[[blocks.segments]]
-type = "rust"
-style = "plain"
-template = "󱘗 {{ .Full }} "
-foreground = "p:orange"
+# [[blocks.segments]]
+# type = "rust"
+# style = "plain"
+# template = "󱘗 {{ .Full }} "
+# foreground = "p:orange"
 
-[[blocks.segments]]
-type = "python"
-style = "plain"
-template = " {{ .Venv }}({{ .Full }}) "
-foreground = "p:yellow"
-display_mode = "environment"
+# [[blocks.segments]]
+# type = "python"
+# style = "plain"
+# template = " {{ .Venv }}({{ .Full }}) "
+# foreground = "p:yellow"
+# display_mode = "environment"
 
 [[blocks.segments]]
 type = "executiontime"
@@ -66,6 +66,7 @@ foreground = "p:green"
 [blocks.segments.properties]
 threshold = 5000
 format = "austin"
+always_enabled = true
 
 [[blocks.segments]]
 type = "time"
@@ -85,13 +86,9 @@ newline = true
 type = "text"
 style = "plain"
 foreground = "p:blue"
-foreground_templates = ["{{ if gt .Code 0}}p:red{{end}}"]
-template = "<b>></b>"                                     # or ❯
-
-# [transient_prompt]
-# foreground = "p:green"
-# background = "transparent"
-# template = ">"
+foreground_templates = ["{{ if gt .Code 0 }}p:red{{ end }}"]
+template = "<b>></b>"
+# or use ❯
 
 [palette]
 fg = "#f0f0f0"
@@ -103,4 +100,3 @@ red = "#b36d7c"
 orange = "#c6a679"
 green = "#778c73"
 blue = "#7e97ab"
-# cyan = "#8aacab"

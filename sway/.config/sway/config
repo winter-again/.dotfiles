@@ -129,6 +129,7 @@ bindsym {
     $mod+Shift+q kill
     $mod+m exec $menu
     $mod+i exec $browser
+    $mod+o exec nemo
     # reload config file
     $mod+Shift+r reload
     $mod+Shift+w exec killall -SIGUSR2 waybar

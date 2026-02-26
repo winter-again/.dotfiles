@@ -70,6 +70,10 @@ return {
                         local id = ctx.partial_note.id
                         return id:gsub("-", " "):gsub("^%l", string.upper)
                     end,
+                    meeting_note_title = function(ctx)
+                        local id = ctx.partial_note.id
+                        return id:sub(12, -1)
+                    end,
                 },
                 customizations = {
                     ["meeting-templ"] = {
