@@ -1,17 +1,40 @@
 profile laptop {
     output eDP-1 enable mode 3840x2400@60Hz position 0,0 scale 2
+    exec swaymsg workspace 1, move workspace to eDP-1
+    exec swaymsg workspace 2, move workspace to eDP-1 
+    exec swaymsg workspace 3, move workspace to eDP-1 
+    exec swaymsg workspace 4, move workspace to eDP-1 
+    exec swaymsg workspace 5, move workspace to eDP-1
+    exec swaymsg workspace 6, move workspace to eDP-1 
+    exec swaymsg workspace 7, move workspace to eDP-1 
+    exec swaymsg workspace 8, move workspace to eDP-1 
+    exec swaymsg workspace 9, move workspace to eDP-1 
+    exec swaymsg workspace 10, move workspace to eDP-1
+
     exec swaymsg focus output eDP-1; notify-send "Laptop only"
 }
 
 profile single {
     output eDP-1 disable
-    output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 0,0 scale 2
-    exec swaymsg focus output BNQ BenQ LCD 93J02490SL0; notify-send "Laptop docked - 1 monitor"
+    output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 2000,0 scale 2
+    exec swaymsg workspace 1, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 2, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 3, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 4, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 5, move workspace to '"BNQ BenQ LCD 93J02490SL0"'
+    exec swaymsg workspace 6, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 7, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 8, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 9, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+    exec swaymsg workspace 10, move workspace to '"BNQ BenQ LCD 93J02490SL0"' 
+
+    exec swaymsg focus output BNQ BenQ LCD 93J02490SL0; notify-send "Laptop docked" "1 monitor"
 }
 
 profile double {
     output eDP-1 disable
     output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 0,0 scale 2
     output "BNQ BenQ LCD E2H03452SL0" mode 3840x2160@60Hz position 3420,0 scale 2
-    exec swaymsg focus output BNQ BenQ LCD 93J02490SL0; notify-send "Laptop docked - 2 monitors"
+
+    exec swaymsg focus output BNQ BenQ LCD 93J02490SL0; notify-send "Laptop docked" "2 monitors"
 }
