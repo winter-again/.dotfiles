@@ -59,8 +59,8 @@ map('n', '<Tab>', '<cmd>bnext<CR>', opts, 'Next buffer')
 map('n', '<S-Tab>', '<cmd>bprev<CR>', opts, 'Previous buffer')
 map('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>', opts, 'Delete buffer w/o closing window')
 -- nav quickfix list
-map('n', '<leader>qn', '<cmd>cnext<CR>zz', opts, 'Next quickfixlist')
-map('n', '<leader>qp', '<cmd>cprev<CR>zz', opts, 'Prev quickfixlist')
+map('n', '<leader>cn', '<cmd>cnext<CR>zz', opts, 'Next quickfixlist')
+map('n', '<leader>cp', '<cmd>cprev<CR>zz', opts, 'Prev quickfixlist')
 -- with Netrw disabled, use this to follow hyperlinks
 -- v0.10 now has as default
 -- map('n', 'gx', '<cmd>silent !xdg-open <cfile><CR>', opts, 'Open link')

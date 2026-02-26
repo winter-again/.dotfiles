@@ -89,12 +89,26 @@ return {
                     vim.diagnostic.open_float({ scope = 'line' })
                 end, opts, 'Get line diagnostics')
 
-                map('n', 'gd', require('fzf-lua').lsp_definitions, opts, 'Go to definition')
-                map('n', 'gr', require('fzf-lua').lsp_references, opts, 'Go to references')
-                map('n', 'gI', require('fzf-lua').lsp_implementations, opts, 'Go to implementations')
-                map('n', '<leader>D', require('fzf-lua').lsp_typedefs, opts, 'Type defs.')
-                map('n', '<leader>ds', require('fzf-lua').lsp_document_symbols, opts, 'Document symbols')
-                map('n', '<leader>ws', require('fzf-lua').lsp_live_workspace_symbols, opts, 'Workspace symbols')
+                local ok_telescope, builtin = pcall(require, 'telescope.builtin')
+                local ok_fzf_lua, fzf_lua = pcall(require, 'fzf-lua')
+                if ok_telescope then
+                    map('n', 'gd', builtin.lsp_definitions, opts, 'LSP definitions')
+                    map('n', 'gr', builtin.lsp_references, opts, 'LSP references')
+                    map('n', 'gI', builtin.lsp_implementations, opts, 'LSP implementations')
+                    map('n', '<leader>D', builtin.lsp_type_definitions, opts, 'LSP type defns.')
+                    map('n', '<leader>ds', builtin.lsp_document_symbols, opts, 'LSP doc. symbols')
+                    map('n', '<leader>ws', builtin.lsp_workspace_symbols, opts, 'LSP workspace symbols')
+                elseif ok_fzf_lua then
+                    print('Using fzf-lua for LSP keymaps')
+                    map('n', 'gd', fzf_lua.lsp_definitions, opts, 'LSP definitions')
+                    map('n', 'gr', fzf_lua.lsp_references, opts, 'LSP references')
+                    map('n', 'gI', fzf_lua.lsp_implementations, opts, 'LSP implementations')
+                    map('n', '<leader>D', fzf_lua.lsp_typedefs, opts, 'LSP type defns.')
+                    map('n', '<leader>ds', fzf_lua.lsp_document_symbols, opts, 'LSP doc. symbols')
+                    map('n', '<leader>ws', fzf_lua.lsp_live_workspace_symbols, opts, 'Workspace symbols')
+                else
+                    print('Neither telescope.nvim nor fzf-lua installed...')
+                end
 
                 -- map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Go to definition')
                 map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
