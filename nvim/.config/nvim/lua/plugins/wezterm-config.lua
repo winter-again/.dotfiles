@@ -4,6 +4,8 @@ return {
     config = function()
         local wezterm_config = require('wezterm-config')
         -- NOTE: changes to profile_data should be hot-reloaded somehow?
+        -- prob better to just have some function that can reload the specific Lua
+        -- data file
         wezterm_config.setup({
             append_wezterm_to_rtp = true,
         })

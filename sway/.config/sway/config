@@ -15,7 +15,6 @@ seat seat0 xcursor_theme capitaine-cursors-light 32
 # new view indic
 # view border (entire window)
 client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9d7cd8 #7aa2f7
-# client.focused          #7aa2f7 #3b4261 #c0caf5 #9d7cd8 #7aa2f7
 client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261 #3b4261
 client.unfocused        #3b4261 #1a1b26 #c0caf5 #1a1b26 #1a1b26
 client.urgent           #f7768e #f7768e #1a1b26 #f7768e #f7768e
@@ -51,7 +50,7 @@ set {
     # $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
     $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
-    # seems like the output names above change on boot/suspend etc...
+    # seems like the output names above change sometimes
     $primary_mon "BNQ BenQ LCD 93J02490SL0"
     $secondary_mon "BNQ BenQ LCD E2H03452SL0"
     # set $primary_mon "DP-6"
@@ -77,7 +76,7 @@ focus_follows_mouse no
 output $laptop_disp disable
 # following the same conventions from hyprland.conf
 output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
-output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
+# output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
 # focus monitor on launch
 focus output $primary_mon
 # first available output will be used
@@ -92,6 +91,11 @@ workspace 7 output $secondary_mon $laptop_disp
 workspace 8 output $secondary_mon $laptop_disp
 workspace 9 output $secondary_mon $laptop_disp
 workspace 10 output $secondary_mon $laptop_disp
+# workspace 6 output $primary_mon $laptop_disp
+# workspace 7 output $primary_mon $laptop_disp
+# workspace 8 output $primary_mon $laptop_disp
+# workspace 9 output $primary_mon $laptop_disp
+# workspace 10 output $primary_mon $laptop_disp
 
 # keybinds
 bindsym {
@@ -117,7 +121,7 @@ bindsym {
     # using satty
     # $mod+c exec grim -g "$(slurp -d)" - | satty --filename - --fullscreen --early-exit
     # open Obsidian
-    $mod+o exec obsidian --ozone-platform-hint=auto
+    # $mod+o exec obsidian --ozone-platform-hint=auto
     # pick color and copy to clipboard; send simple noti too
     # $mod+i exec hyprpicker -azn | xargs -I {} notify-send "hyprpicker" "<b>{}</b>"
 

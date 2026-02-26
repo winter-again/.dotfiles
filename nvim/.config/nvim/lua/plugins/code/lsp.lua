@@ -225,6 +225,17 @@ return {
                         },
                     })
                 end,
+                ['taplo'] = function()
+                    require('lspconfig')['taplo'].setup({
+                        capabilities = lsp_capabilities,
+                        on_attach = function(client, bufnr)
+                            -- disable autoformatting
+                            if client.name == 'taplo' then
+                                client.server_capabilities.documentFormattingProvider = false
+                            end
+                        end,
+                    })
+                end,
                 ['ruff_lsp'] = function()
                     require('lspconfig')['ruff_lsp'].setup({
                         capabilities = lsp_capabilities,

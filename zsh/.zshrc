@@ -207,6 +207,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" # from pyenv section on zsh
 eval "$(pyenv init -)"
 
+# pdm
+
 unsetopt beep autocd
 setopt hist_ignore_all_dups # delete old even if new one is dup
 setopt hist_ignore_dups
