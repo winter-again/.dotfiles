@@ -6,18 +6,23 @@ return {
         config = function()
             require('tokyonight').setup({
                 style = 'night',
+                styles = {
+                    sidebars = 'dark',
+                    floats = 'dark',
+                },
                 lualine_bold = true,
                 on_colors = function(colors)
-                    colors.border = '#696d87' -- override window border color
+                    colors.border = colors.fg_dark
                 end,
                 -- from here: https://github.com/folke/tokyonight.nvim/issues/289
                 -- doing this allows my cursorline to not get overriden when cursor is in a code block
                 on_highlights = function(highlights, colors)
                     -- using this keeps cursorline highlight from getting overriden in markdown code blocks
                     -- highlights['@text.literal.markdown'] = { link = '@punctuation.delimiter.markdown' }
-                    highlights['Visual'] = { bg = '#45475a' }
+                    highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
                     highlights['LineNr'] = { fg = '#696d87' } -- line number color
-                    highlights['CursorLineNr'] = { fg = '#c0caf5' } -- cursor line number color
+                    highlights['CursorLineNr'] = { fg = colors.fg } -- cursor line number color
+                    highlights['TelescopeSelection'] = { bg = colors.bg_visual }
                 end,
             })
         end,
@@ -45,6 +50,7 @@ return {
                     local theme = colors.theme
                     return {
                         WinSeparator = { fg = theme.ui.nontext },
+                        Visual = { reverse = true },
                     }
                 end,
             })
@@ -62,16 +68,9 @@ return {
                         TreesitterContext = { bg = colors.surface2 },
                         WinSeparator = { fg = colors.surface2 },
                         LineNr = { fg = colors.surface2 },
+                        Visual = { reverse = true },
                     }
                 end,
-                -- overrides for stark black bg
-                -- color_overrides = {
-                --     mocha = {
-                --         base = '#000000',
-                --         mantle = '#000000',
-                --         crust = '#000000'
-                --     }
-                -- },
                 integrations = {
                     treesitter = true,
                     cmp = true,
@@ -117,17 +116,72 @@ return {
                     GitSignsAdd = { bg = 'none' },
                     GitSignsDelete = { bg = 'none' },
                     GitSignsChange = { bg = 'none' },
+                    Visual = { reverse = true },
                 },
             })
         end,
     },
     {
+        'ellisonleao/gruvbox.nvim',
+        lazy = false,
+        config = function()
+            require('gruvbox').setup({
+                invert_selection = true,
+                overrides = {
+                    WinSeparator = { bg = 'none' },
+                    CursorLineNr = { bg = 'none' },
+                },
+                transparent_mode = true,
+            })
+        end,
+    },
+    -- has a decent light theme
+    {
         'savq/melange-nvim',
         lazy = false,
     },
     {
-        'ellisonleao/gruvbox.nvim',
+        'shaunsingh/nord.nvim',
+        config = function()
+            vim.g.nord_contrast = true
+        end,
+    },
+    {
+        'AlexvZyl/nordic.nvim',
         lazy = false,
-        config = true,
+        config = function()
+            local palette = require('nordic.colors')
+            require('nordic').setup({
+                override = {
+                    WinSeparator = { fg = palette.white0, bg = 'none' },
+                    Visual = { reverse = true },
+                    GitSignsAdd = { bg = 'none' },
+                    GitSignsDelete = { bg = 'none' },
+                    GitSignsChange = { bg = 'none' },
+                },
+            })
+            require('nordic').load()
+        end,
+    },
+    -- have issues with indent markers
+    {
+        'nyngwang/nvimgelion',
+        config = function() end,
+    },
+    {
+        'craftzdog/solarized-osaka.nvim',
+        lazy = false,
+        config = function()
+            require('solarized-osaka').setup({
+                transparent = true,
+                lualine_bold = true,
+            })
+        end,
+    },
+    -- collection of colorschemes that uses contrasts and font variations to
+    -- distinguish code
+    {
+        'mcchrish/zenbones.nvim',
+        dependencies = { 'rktjmp/lush.nvim' },
     },
 }

@@ -3,10 +3,9 @@
     // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 26, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
+    "spacing": 2, // Gaps between modules
     "modules-left": [
-        "hyprland/workspaces",
+        "sway/workspaces",
         // "custom/media",
         "mpris"
     ],
@@ -24,8 +23,9 @@
         // "bluetooth",
         "tray"
     ],
-    "hyprland/workspaces": {
-        "active-only": false
+    "sway/workspaces": {
+        "all-outputs": false,
+        "format": "{name}"
     },
     "custom/weather": {
         "format": "{icon} {}",
@@ -55,18 +55,15 @@
         "interval": 1,
         // can specify icon color in span too
         "format": "<span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
-        // "format-playing": "<span font='16' rise='-2000'> 󰓇</span> {artist} | {title}",
-        // "format-paused": "<span font='16' rise='-2000'> 󰓇</span> {artist} | {title}",
-        // "format-stopped": "<span font='16' rise='-2000'>󰓇</span>",
         "title-len": 30,
         "max-length": 70,
-        "tooltip-format": "{album} [{position}/{length}]",
+        "tooltip-format": "Album: \"{album}\" ~ [{position} / {length}]",
         "on-middle-click": "",
         "on-right-click": "",
         "escape": true
     },
     "tray": {
-        "icon-size": 20,
+        "icon-size": 14,
         "spacing": 10
     },
     "clock": {
@@ -108,7 +105,7 @@
         "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
         "input-filename": "temp1_input",
         "critical-threshold": 80,
-        "format": " {temperatureF} 󰔅"
+        "format": " {temperatureF}F"
     },
     "battery": {
         "bat": "BAT0",
@@ -130,30 +127,22 @@
         ]
     },
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "interval": 5,
-        "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {essid} ({signalStrength}%)",
+        "interval": 10,
+        "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {signalStrength}%",
         "format-ethernet": "<span font='16' rise='-2000'>󰈀</span> {bandwidthTotalBytes}",
         "tooltip-format-wifi": "󰖩 {essid}",
-        "tooltip-format-ethernet": "󰈀 {ifname} {bandwidthUpBytes} {bandwidthDownBytes}",
+        "tooltip-format-ethernet": "󰈀 {ifname}  {bandwidthUpBytes}  {bandwidthDownBytes}",
         "format-linked": "{ifname} (No IP)",
         "format-disconnected": "󰈂"
     },
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
         "format": "<span font='16' rise='-2000'>{icon}</span> {volume}%",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format-muted": "<span font='16' rise='-2000'>󰝟</span> {volume}%",
+        "format-bluetooth": "<span font='16' rise='-2000'>{icon}</span> {format_source} {volume}%",
+        "format-bluetooth-muted": "󰝟 {icon} {format_source}",
+        // "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "hands-free": " ",
-            "headset": "",
-            "phone": " ",
-            "portable": " ",
-            "car": " ",
             "default": [
                 " ",
                 " ",

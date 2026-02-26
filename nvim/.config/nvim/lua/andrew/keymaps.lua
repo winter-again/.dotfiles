@@ -9,8 +9,6 @@ vim.keymap.set('n', '<C-h>', '<C-w>h', opts)
 vim.keymap.set('n', '<C-j>', '<C-w>j', opts)
 vim.keymap.set('n', '<C-k>', '<C-w>k', opts)
 vim.keymap.set('n', '<C-l>', '<C-w>l', opts)
--- close window
-vim.keymap.set('n', '<leader><leader>c', '<cmd>close<CR>', opts)
 -- resize window
 vim.keymap.set('n', '<C-Up>', ':resize +2<CR>', opts) -- make active window longer
 vim.keymap.set('n', '<C-Down>', ':resize -2<CR>') -- make active window shorter
@@ -66,7 +64,10 @@ vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', { silent = true })
 vim.keymap.set('n', '<S-Tab>', '<cmd>bprev<CR>', { silent = true })
 -- with Netrw disabled, use this to follow hyperlinks
 vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
-vim.keymap.set('n', '<leader><leader>o', '<cmd>lua Transp()<CR>') -- set transparency
 vim.keymap.set('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>') -- delete buffer without losing window layout
 vim.keymap.set('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }) -- set here since plugin only loaded on command
-vim.keymap.set('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>') -- set transparency
+
+vim.keymap.set('n', '<leader><leader>c', '<cmd>close<CR>', opts) -- close window
+vim.keymap.set('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>') -- save and exec a Lua file
+vim.keymap.set('n', '<leader><leader>t', '<cmd>lua Transp()<CR>') -- set transparency
+vim.keymap.set('n', '<leader><leader>d', '<cmd>lua Toggle_light_dark()<CR>')

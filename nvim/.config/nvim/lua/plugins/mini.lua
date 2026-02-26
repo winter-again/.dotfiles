@@ -40,4 +40,8 @@ return {
             require('mini.surround').setup()
         end,
     },
+    {
+        'echasnovski/mini.base16',
+        version = false,
+    },
 }
