@@ -59,7 +59,7 @@ vim.filetype.add({
 })
 
 -- vim.cmd('colorscheme winter-again')
--- vim.cmd('colorscheme tokyonight')
-vim.cmd('colorscheme catppuccin')
+vim.cmd('colorscheme tokyonight')
+-- vim.cmd('colorscheme catppuccin')
 -- vim.cmd('colorscheme rose-pine')
 vim.cmd('Transp')

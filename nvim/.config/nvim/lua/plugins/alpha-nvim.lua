@@ -1,6 +1,6 @@
 return {
     'goolord/alpha-nvim',
-    event = 'VimEnter',
+    event = 'VimEnter', -- not really useful
     config = function()
         local alpha = require('alpha')
         local dashboard = require('alpha.themes.dashboard')
@@ -27,13 +27,14 @@ return {
 
         -- print lazy.nvim stats to alpha buffer
         vim.api.nvim_create_autocmd('User', {
+            once = true, -- seems like adding this takes care of probs w/ fzf-lua
             group = vim.api.nvim_create_augroup('WinterAgain', { clear = false }),
             callback = function()
                 local stats = require('lazy').stats()
                 local ms = math.floor(stats.startuptime * 100) / 100
                 dashboard.section.footer.val =
                     string.format(' Loaded %d / %d plugins in %.3f ms', stats.loaded, stats.count, ms)
-                vim.cmd([[AlphaRedraw]])
+                pcall(vim.cmd([[AlphaRedraw]]))
             end,
         })
     end,

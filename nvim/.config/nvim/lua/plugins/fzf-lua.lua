@@ -1,7 +1,6 @@
 return {
-    -- 'https://gitlab.com/ibhagwan/fzf-lua',
     'ibhagwan/fzf-lua',
-    enabled = false,
+    -- 'https://gitlab.com/ibhagwan/fzf-lua', -- Gitlab alt
     keys = {
         '<leader>ff',
         '<leader>fzf',
@@ -10,7 +9,7 @@ return {
     },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-        local actions = require('fzf-lua.actions')
+        -- local actions = require('fzf-lua.actions')
         require('fzf-lua').setup()
         local opts = { silent = true }
         Map('n', '<leader>ff', '<cmd>lua require("fzf-lua").files()<CR>', opts, 'fzf-lua')
