@@ -99,6 +99,7 @@ return {
                 else
                     choices = { "background", "font" }
                 end
+
                 return choices
             end,
             desc = "Send Wezterm overrides from presets",

@@ -120,11 +120,8 @@ workspace 8 output $secondary_mon $laptop_disp
 workspace 9 output $secondary_mon $laptop_disp
 workspace 10 output $secondary_mon $laptop_disp
 
-# workspace 6 output $primary_mon $laptop_disp
-# workspace 7 output $primary_mon $laptop_disp
-# workspace 8 output $primary_mon $laptop_disp
-# workspace 9 output $primary_mon $laptop_disp
-# workspace 10 output $primary_mon $laptop_disp
+workspace 7 gaps inner 20
+workspace 7 gaps outer 20
 
 # keybinds
 bindsym {

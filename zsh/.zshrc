@@ -48,7 +48,7 @@ alias gs="git status"
 alias ga="git add"
 alias gb="git branch --all -v"
 alias gc="git commit"
-alias gco="git checkout"
+alias gc="git checkout"
 alias gu="git restore --staged" # recommended undo for staged file
 alias gd="git diff"
 alias gds="git diff --staged" # staged changes
@@ -61,6 +61,13 @@ alias glf="git log --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C
 alias gpull="git pull"
 alias gpush="git push"
 alias ggrep="git ls-files | grep -i"
+# taskwarrior
+alias t="task"
+alias ta="task active"
+alias tl="task +lab"
+alias tp="task +personal"
+alias tal="task add +lab"
+alias tap="task add +personal"
 
 # functions
 # let yazi change dir
