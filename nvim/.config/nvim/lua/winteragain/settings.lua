@@ -6,8 +6,8 @@ vim.o.winborder = "none"
 local opt = vim.opt
 
 -- opt.guicursor = "" -- disable cursor change on mode change
-opt.splitright = true -- open new window to the right of current
-opt.splitbelow = true -- open new window below the current
+-- opt.splitright = true -- open new window to the right of current
+-- opt.splitbelow = true -- open new window below the current
 opt.background = "dark"
 opt.inccommand = "split" -- preview substitutions live
 -- opt.winbar = "%{%v:lua.Winbar()%}" -- disable if using incline.nvim
