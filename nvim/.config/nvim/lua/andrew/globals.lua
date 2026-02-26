@@ -1,39 +1,45 @@
 -- helpful for displaying Lua table contents (from TJ)
-P = function(v)
+function P(v)
     print(vim.print(v))
     return v
 end
 
 -- reload packages during dev (from TJ)
-local require = require
-local ok, plenary_reload = pcall(require, 'plenary.reload')
-local reloader = require
-if ok then
-    reloader = plenary_reload.reload_module
-end
+-- local require = require
+-- local ok, plenary_reload = pcall(require, 'plenary.reload')
+-- local reloader = require
+-- if ok then
+--     reloader = plenary_reload.reload_module
+-- end
+--
+-- RELOAD = function(...)
+--     local ok, plenary_reload = pcall(require, 'plenary.reload')
+--     if ok then
+--         reloader = plenary_reload.reload_module
+--     end
+--
+--     return reloader(...)
+-- end
+--
+-- R = function(name)
+--     RELOAD(name)
+--     return require(name)
+-- end
 
-RELOAD = function(...)
-    local ok, plenary_reload = pcall(require, 'plenary.reload')
-    if ok then
-        reloader = plenary_reload.reload_module
-    end
-
-    return reloader(...)
-end
-
-R = function(name)
-    RELOAD(name)
-    return require(name)
+function R(plugin)
+    vim.cmd('Lazy reload ' .. plugin)
 end
 
 -- save and execute lua file for quick iterating
-Save_exec = function()
+function Save_exec()
     vim.cmd('silent! write')
     vim.cmd('luafile %')
 end
 
 -- transparency
-Transp = function()
+-- TODO: I think need to fix this so that not every
+-- prop is overwritten
+function Transp()
     local highlights = {
         'Normal',
         'NormalNC', -- unfocused windows
@@ -50,11 +56,15 @@ Transp = function()
     end
 end
 
-Toggle_light_dark = function()
+function Toggle_light_dark()
     local curr_set = vim.api.nvim_get_option('background')
     if curr_set == 'dark' then
         vim.opt.background = 'light'
     else
         vim.opt.background = 'dark'
     end
+end
+
+function Hl(group, hl)
+    vim.api.nvim_set_hl(0, group, hl)
 end
