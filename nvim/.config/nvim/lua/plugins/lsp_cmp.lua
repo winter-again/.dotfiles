@@ -3,6 +3,7 @@ return {
     {
         'neovim/nvim-lspconfig',
         event = {'BufReadPre', 'BufNewFile'},
+	    enabled = false,
         dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
@@ -26,9 +27,19 @@ return {
                 }
             })
             -- (2)
+            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
+            -- from kickstart.nvim
+            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
+            -- from nvim-ufo
+            lsp_capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
+            }
             -- setup LSPs:
             -- if using below setup functionality, shouldn't use direct setup from lspconfig
             -- see docs here (search `setup_handlers`): https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
+
             require('mason-lspconfig').setup({
                 ensure_installed = {
                     'lua_ls',
@@ -48,15 +59,6 @@ return {
                 }, -- install from table above
                 automatic_installation = false -- don't autoinstall when opening file
             })
-            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            -- from kickstart.nvim
-            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
-            -- from nvim-ufo
-            lsp_capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true
-            }
 
             local lspconfig = require('lspconfig')
             require('mason-lspconfig').setup_handlers({
@@ -88,6 +90,15 @@ return {
                                 }
                             }
                         }
+                    })
+                end,
+                ['ruff_lsp'] = function()
+                    local on_attach = function(client, bufnr)
+                        -- disable hover in favor of pyright
+                        client.server_capabilities.hoverProvider = false
+                    end
+                    require('ruff_lsp').setup({
+                        on_attach = on_attach
                     })
                 end
             })
