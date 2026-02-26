@@ -1,0 +1,58 @@
+{
+    "wrap_tab_navigation": false,
+    "save_workspace": "never",
+    "load_workspace": false,
+    "initial_working_directory": "~",
+    "always_save_history": false,
+    "num_spaces_for_tab": 4,
+    "highlight_selected_word": false,
+    "highlight_selected_line": true,
+    "relative_line_numbers": true,
+    "blinking_cursor": false,
+    "enable_text_drag": false,
+    "highlight_r_function_calls": true,
+    "strip_trailing_whitespace": true,
+    "check_arguments_to_r_function_calls": true,
+    "check_unexpected_assignment_in_function_call": true,
+    "warn_if_no_such_variable_in_scope": true,
+    "warn_variable_defined_but_not_used": true,
+    "editor_keybindings": "vim",
+    "indent_guides": "gray",
+    "syntax_color_console": true,
+    "console_double_click_select": true,
+    "font_size_points": 12,
+    "pdf_previewer": "none",
+    "posix_terminal_shell": "zsh",
+    "editor_theme": "Pastel On Dark (Mod)",
+    "panes": {
+        "quadrants": [
+            "Source",
+            "Console",
+            "TabSet1",
+            "TabSet2"
+        ],
+        "tabSet1": [
+            "Environment",
+            "History",
+            "Connections",
+            "Build",
+            "VCS",
+            "Tutorial",
+            "Presentation"
+        ],
+        "tabSet2": [
+            "Files",
+            "Plots",
+            "Packages",
+            "Help",
+            "Viewer",
+            "Presentations"
+        ],
+        "hiddenTabSet": [],
+        "console_left_on_top": false,
+        "console_right_on_top": true,
+        "additional_source_columns": 1
+    },
+    "terminal_track_environment": false,
+    "terminal_bell_style": "none"
+}
