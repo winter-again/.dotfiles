@@ -59,11 +59,7 @@ return {
                     -- "goimports",
                 },
             })
-            local function map(mode, lhs, rhs, opts, desc)
-                opts = opts or {}
-                opts.desc = desc
-                vim.keymap.set(mode, lhs, rhs, opts)
-            end
+            local map = require("winteragain.globals").map
             -- keymaps defined on attach
             local function lsp_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }

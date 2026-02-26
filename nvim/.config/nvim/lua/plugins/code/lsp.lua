@@ -8,18 +8,7 @@ return {
             ---@param client vim.lsp.Client
             ---@param bufnr integer
             local function lsp_attach(client, bufnr)
-                --- Keymap helper function
-                ---@param mode string | string[]
-                ---@param lhs string
-                ---@param rhs string | function
-                ---@param opts? vim.keymap.set.Opts
-                ---@param desc string
-                local function map(mode, lhs, rhs, opts, desc)
-                    opts = opts or {}
-                    opts.desc = desc
-                    vim.keymap.set(mode, lhs, rhs, opts)
-                end
-
+                local map = require("winteragain.globals").map
                 local opts = { silent = true, buffer = bufnr }
 
                 -- some of these became default keymaps
@@ -221,6 +210,7 @@ return {
                                 "${3rd}/luv/library", -- seems like I need this to see vim.uv
                                 "$XDG_DATA_HOME/nvim/lazy/lazy.nvim/lua",
                                 "$XDG_DATA_HOME/nvim/lazy/nvim-cmp/lua",
+                                "$XDG_DATA_HOME/nvim/lazy/snacks.nvim/lua",
                             },
                         },
                         telemetry = {
@@ -402,8 +392,8 @@ return {
             lspconfig["taplo"].setup({
                 capabilities = lsp_capabilities,
                 on_attach = function(client, bufnr)
-                    -- NOTE: taplo includes formatting capabilities; disable it
-                    client.server_capabilities.documentFormattingProvider = false
+                    -- NOTE: taplo includes formatting capabilities; can disable
+                    client.server_capabilities.documentFormattingProvider = true
                     lsp_attach(client, bufnr)
                 end,
             })

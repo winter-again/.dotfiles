@@ -10,17 +10,11 @@ globals:
   R:
     args:
       - type: string
+  Snacks:
+    any: true
   Save_exec:
     any: true
   Save_exec_line:
     any: true
-  Transp:
-    any: true
-  Toggle_light_dark:
-    any: true
-  Hl:
-    args:
-      - type: string
-      - type: table
   Winbar:
     any: true

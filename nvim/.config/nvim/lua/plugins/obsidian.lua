@@ -96,7 +96,7 @@ return {
                 local out = { { title = "foo" }, { created = "today" }, { tags = "bar" }, { desc = "baz" } }
                 -- `note.metadata` contains any manually added fields in the frontmatter.
                 -- So here we just make sure those fields are kept in the frontmatter.
-                P(note.metadata)
+                -- P(note.metadata)
                 -- if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
                 --     for k, v in pairs(note.metadata) do
                 --         out[k] = v

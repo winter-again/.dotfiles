@@ -9,20 +9,34 @@ return {
         fzf_lua.setup({
             defaults = {
                 formatter = "path.dirname_first",
-                -- hls = {
-                --     dir_part = "FzfLuaNormal",
-                --     file_part = "FzfLuaFzfPrompt",
-                -- },
+                winopts = {
+                    height = 0.33,
+                    width = 1,
+                    row = 1,
+                    col = 16,
+                    border = "none",
+                    backdrop = 100, -- don't dim buffers
+                    preview = {
+                        border = "none",
+                        vertical = "down:40%",
+                        horizontal = "right:40%",
+                    },
+                },
             },
             -- NOTE: for fzf only; can override the env var defaults
             -- fzf_colors = {
             -- },
+            actions = {
+                -- many pickers inherit from this table
+                files = {
+                    ["enter"] = actions.file_edit,
+                },
+            },
             files = {
                 -- fd_opts = "--color=always --type f --type l --hidden --follow",
                 fd_opts = "--color=never --hidden --type f --type l --exclude .git",
                 actions = {
-                    -- ["default"] = actions.file_edit,
-                    ["enter"] = actions.file_edit_or_qf,
+                    -- NOTE: inherits from actions.files
                     ["ctrl-g"] = actions.toggle_ignore,
                 },
             },
@@ -38,13 +52,8 @@ return {
             },
         })
 
-        local function map(mode, lhs, rhs, opts, desc)
-            opts = opts or {}
-            opts.desc = desc
-            vim.keymap.set(mode, lhs, rhs, opts)
-        end
+        local map = require("winteragain.globals").map
         local opts = { silent = true }
-
         -- main keymaps
         map("n", "<leader>ff", fzf_lua.files, opts, "Search files")
         map("n", "<leader>fl", fzf_lua.buffers, opts, "Search buffers")

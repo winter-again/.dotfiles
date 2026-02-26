@@ -11,12 +11,8 @@ return {
         })
         local profile_data = require("profile_data")
 
-        local function map(mode, lhs, rhs, opts, desc)
-            opts = opts or {}
-            opts.desc = desc
-            vim.keymap.set(mode, lhs, rhs, opts)
-        end
-        local opts = { silent = true }
+        -- local map = require("winteragain.globals").map
+        -- local opts = { silent = true }
 
         -- NOTE: doesn't seem to work
         -- local reload = require('plenary.reload').reload_module

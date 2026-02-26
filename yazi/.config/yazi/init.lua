@@ -1,18 +1,16 @@
-function Status:name()
-    local h = cx.active.current.hovered
-    if h == nil then
-        return ui.Span("")
+-- show symlink in status bar
+Status:children_add(function(self)
+    local h = self._current.hovered
+    if h and h.link_to then
+        return " -> " .. tostring(h.link_to)
+    else
+        return ""
     end
+end, 3300, Status.LEFT)
 
-    local linked = ""
-    if h.link_to ~= nil then
-        linked = " -> " .. tostring(h.link_to)
-    end
-    return ui.Span(" " .. h.name .. linked)
-end
-
+-- custom linemode
 function Linemode:size_and_mtime()
-    local time = math.floor(self._file.cha.modified or 0)
+    local time = math.floor(self._file.cha.mtime or 0)
     if time == 0 then
         time = ""
     elseif os.date("%Y", time) == os.date("%Y") then
@@ -22,5 +20,5 @@ function Linemode:size_and_mtime()
     end
 
     local size = self._file:size()
-    return ui.Line(string.format("%s %s", size and ya.readable_size(size) or "-", time))
+    return string.format("%s %s", size and ya.readable_size(size) or "-", time)
 end
