@@ -19,7 +19,7 @@ export XDG_SESSION_DESKTOP=sway
 # Firefox
 export MOZ_ENABLE_WAYLAND=1
 
-# NVIDIA? already put in conf...not sure if needed
+# NVIDIA
 export LIBVA_DRIVER_NAME=nvidia
 export XDG_SESSION_TYPE=wayland
 

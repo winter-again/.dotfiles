@@ -7,6 +7,7 @@ return {
             require('tokyonight').setup({
                 style = 'night',
                 styles = {
+                    functions = { bold = true },
                     sidebars = 'dark',
                     floats = 'dark',
                 },

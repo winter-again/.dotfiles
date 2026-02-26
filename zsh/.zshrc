@@ -37,8 +37,9 @@ alias grep="grep --color=auto"
 alias tv="tidy-viewer"
 alias keys="bash ~/.local/bin/keyboard-settings.sh"
 alias R="R --no-save" # never prompt to save workspace image
-# for starting rstudio with flags for Wayland
+# for starting rstudio with flags for Wayland; shouldn't need this now that the .desktop file works
 alias rstd="/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland &"
+alias yz="yazi"
 
 # git aliases
 alias gs="git status"

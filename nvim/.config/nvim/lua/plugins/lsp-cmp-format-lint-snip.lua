@@ -261,7 +261,7 @@ return {
                 },
                 signs = true,
                 underline = true,
-                update_in_insert = false, -- update diagnostics while in Insert mode
+                update_in_insert = true, -- update diagnostics while in Insert mode
                 severity_sort = true,
             })
         end,
@@ -276,6 +276,8 @@ return {
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
+            'hrsh7th/cmp-nvim-lsp-document-symbol',
+            'chrisgrieser/cmp-nerdfont',
             'saadparwaiz1/cmp_luasnip', -- snippet cmp integration
             'onsails/lspkind.nvim', -- completion menu icons
         },
@@ -296,13 +298,14 @@ return {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered(),
                 },
+                experimental = {
+                    ghost_text = false,
+                },
                 formatting = {
                     fields = { 'abbr', 'kind', 'menu' }, -- what fields show in completion item
                     format = lspkind.cmp_format({
                         mode = 'symbol_text',
-                        -- to also show source of the completion items
                         menu = {
-                            -- define labels
                             nvim_lsp = '[LSP]',
                             luasnip = '[LuaSnip]',
                             path = '[path]',
@@ -329,6 +332,7 @@ return {
                     { name = 'path' },
                     { name = 'buffer', max_item_count = 4 },
                     { name = 'nvim_lsp_signature_help' },
+                    { name = 'nerdfont' },
                     { name = 'otter' },
                 }),
                 -- copied from TJ; currently no docs so would have to read source for explanation
@@ -373,6 +377,14 @@ return {
                 sources = {
                     { name = 'buffer' },
                 },
+            })
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp_document_symbol' },
+                }, {
+                    { name = 'buffer' },
+                }),
             })
             -- use cmdline & path sources for ':'
             cmp.setup.cmdline(':', {

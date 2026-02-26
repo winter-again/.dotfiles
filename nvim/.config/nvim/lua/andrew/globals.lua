@@ -54,6 +54,9 @@ function Transp()
         vim.api.nvim_set_hl(0, hl, new_hl)
     end
 end
+vim.api.nvim_create_user_command('Transparent', function()
+    Transp()
+end, {})
 
 function Toggle_light_dark()
     local curr_set = vim.api.nvim_get_option('background')
@@ -63,7 +66,16 @@ function Toggle_light_dark()
         vim.opt.background = 'dark'
     end
 end
+vim.api.nvim_create_user_command('ToggleLightDark', function()
+    Toggle_light_dark()
+end, {})
 
 function Hl(group, hl)
     vim.api.nvim_set_hl(0, group, hl)
+end
+
+function Map(mode, lhs, rhs, opts, desc)
+    opts = opts or {}
+    opts.desc = desc
+    vim.keymap.set(mode, lhs, rhs, opts)
 end
