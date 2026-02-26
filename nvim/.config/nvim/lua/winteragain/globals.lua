@@ -94,14 +94,6 @@ function M.winbar()
         winbar = base .. " 󰌾"
     end
 
-    local exclude = {
-        "NvimTree",
-        "alpha",
-    }
-    if vim.list_contains(exclude, ft) then
-        return ""
-    end
-
     return winbar
 end
 

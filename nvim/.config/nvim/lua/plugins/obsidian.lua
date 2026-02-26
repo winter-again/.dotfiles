@@ -1,4 +1,3 @@
---- @diagnostic disable: missing-fields
 return {
     "epwalsh/obsidian.nvim",
     enabled = false,
