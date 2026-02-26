@@ -42,7 +42,6 @@
     },
     "clock": {
         "timezone": "America/New_York",
-        // "format": "{:%a %Y-%m-%d (%b) | %I:%M %p}",
         "format": "{:%a %Y-%m-%d | %I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
@@ -51,11 +50,16 @@
             "weeks-pos": "right",
             "on-scroll": 1,
             "format": {
-                "months": "<span color='#7aa2f7'><b>{}</b></span>",
-                "days": "<span color='#c0caf5'><b>{}</b></span>",
-                "weeks": "<span color='#7dcfff'><b>W{}</b></span>",
-                "weekdays": "<span color='#9d7cd8'><b>{}</b></span>",
-                "today": "<span color='#db4b4b'><b><u>{}</u></b></span>"
+                // "months": "<span color='#7aa2f7'><b>{}</b></span>",
+                // "days": "<span color='#c0caf5'><b>{}</b></span>",
+                // "weeks": "<span color='#7dcfff'><b>W{}</b></span>",
+                // "weekdays": "<span color='#9d7cd8'><b>{}</b></span>",
+                // "today": "<span color='#db4b4b'><b><u>{}</u></b></span>"
+                "months": "<span color='#8f8aac'><b>{}</b></span>",
+                "days": "<span color='#f0f0f0'><b>{}</b></span>",
+                "weeks": "<span color='#8a98ac'><b>W{}</b></span>",
+                "weekdays": "<span color='#ac8aac'><b>{}</b></span>",
+                "today": "<span color='#c6a679'><b><u>{}</u></b></span>"
             }
         },
         "actions": {
