@@ -17,8 +17,8 @@ MUSIC_LIB_EXT = EXT_DRIVE / "music/library"
 
 def main(argv: Sequence[str] | None = None) -> int:
     """
-    After adding metadata with MusicBrainz Picard, convert all .aif files for
-    a given album to .flac and move the .aif files to external drive.
+    Convert all AIF files in a given album folder to FLAC
+    and move the AIF or FLACC files to their proper final location.
     """
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -26,6 +26,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         type=Path,
         help="Directory containing .aif files corresponding to music album",
     )
+    parser.add_argument("-e", "--ext-to-local", action="store_true")
+    parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
 
     if not args.album.is_dir():
@@ -36,30 +38,58 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"{EXT_DRIVE} not mounted")
         return 1
 
-    convert_aif_to_flac(args.album)
-    move_aif_to_ext_drive(args.album)
+    convert_aif_to_flac(args.album, args.dry_run)
+
+    if args.ext_to_local:
+        move_flac_to_local(args.album, args.dry_run)
+    else:
+        move_aif_to_ext_drive(args.album, args.dry_run)
 
     return 0
 
 
-def convert_aif_to_flac(album: Path) -> None:
+def convert_aif_to_flac(album: Path, dry_run: bool) -> None:
     for aif in album.glob("*.aif"):
         flac = aif.with_suffix(".flac")
         if not flac.is_file():
-            subprocess.run(["ffmpeg", "-i", aif, flac])
+            if dry_run:
+                print(f"Convert .aif to .flac: {aif} -> {flac}")
+            else:
+                subprocess.run(["ffmpeg", "-i", aif, flac])
         else:
             print(f".flac file already exists: {flac}")
 
 
-def move_aif_to_ext_drive(album: Path) -> None:
+def move_aif_to_ext_drive(album: Path, dry_run: bool) -> None:
     for aif in album.glob("*.aif"):
         aif_rel_lib_local = aif.relative_to(MUSIC_LIB_LOCAL)
         aif_rel_lib_ext = MUSIC_LIB_EXT / aif_rel_lib_local
         if not aif_rel_lib_ext.is_file():
-            aif_rel_lib_ext.parent.mkdir(parents=True, exist_ok=True)
-            shutil.move(aif, aif_rel_lib_ext)
+            if dry_run:
+                if not aif_rel_lib_ext.parent.exists():
+                    print(f"Create parent directory: {aif_rel_lib_ext.parent}")
+                print(f"Move .aif: {aif} -> {aif_rel_lib_local}")
+            else:
+                aif_rel_lib_ext.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(aif, aif_rel_lib_ext)
         else:
             print(f".aif file already exists: {aif_rel_lib_ext}")
+
+
+def move_flac_to_local(album: Path, dry_run: bool) -> None:
+    for flac in album.glob("*.flac"):
+        flac_rel_lib_ext = flac.relative_to(MUSIC_LIB_EXT)
+        flac_rel_lib_local = MUSIC_LIB_LOCAL / flac_rel_lib_ext
+        if not flac_rel_lib_local.is_file():
+            if dry_run:
+                if not flac_rel_lib_local.parent.exists():
+                    print(f"Create parent directory: {flac_rel_lib_local.parent}")
+                print(f"Move .flac: {flac} -> {flac_rel_lib_local}")
+            else:
+                flac_rel_lib_local.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(flac, flac_rel_lib_local)
+        else:
+            print(f".flac file already exists: {flac_rel_lib_local}")
 
 
 if __name__ == "__main__":

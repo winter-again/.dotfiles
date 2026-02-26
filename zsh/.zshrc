@@ -11,9 +11,9 @@ export PAGER="less"
 # -X = don't clear screen on quit
 # -F =  quit if one screen
 # -R = use limited set of esc sequences
-# export LESS="-XFR --use-color --ignore-case --incsearch"
+export LESS="-XFR --use-color --ignore-case --incsearch"
 # export LESS="-F --ignore-case --incsearch -R --use-color" # need -R for git diff colors
-# export MANPAGER="nvim +Man!"
+export MANPAGER="nvim +Man!"
 # color manpages with bat
 # export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 # export DIFFPROG="nvim -d"
