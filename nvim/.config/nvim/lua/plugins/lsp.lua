@@ -354,6 +354,10 @@ return {
                         },
                     },
                 },
+                ["clangd"] = {
+                    capabilities = lsp_capabilities,
+                    on_attach = lsp_attach,
+                },
                 ["html"] = {
                     capabilities = lsp_capabilities,
                     on_attach = lsp_attach,
