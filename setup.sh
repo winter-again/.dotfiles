@@ -4,7 +4,7 @@ set -e
 
 # NOTE: post-install as root
 
-BUILD_REPOS="$HOME/Documents/build-repos"
+BUILD_REPOS="$HOME/build-repos"
 PARU_REPO="$BUILD_REPOS/paru"
 
 pacman_pkg() {
@@ -173,7 +173,7 @@ xdg-user-dirs-update
 # echo "Setting up GitHub SSH key..."
 # mkdir "$HOME/.ssh"
 # ssh-keygen -t ed25519 -f "$HOME/.ssh/github" -C "github"
-# cat "$HOME/.ssh/github.pub" > wl-copy
+# cat "$HOME/.ssh/github.pub" | wl-copy
 # read -r -p "Public SSH key copied to clipboard. Add to GitHub and press 'y' when done to continue: " confirm && [[ $confirm = [yY] ]]
 # echo "Testing SSH key..."
 # ssh -T git@github.com

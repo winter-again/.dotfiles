@@ -17,13 +17,13 @@ vim.opt_local.spell = true
 local root = vim.fs.root(0, ".git")
 local notebook_dir = vim.fs.normalize("~/Documents/notebook")
 
-if root ~= nil and root == notebook_dir then
-    -- use local spellfile
-    vim.opt_local.spellfile = vim.uv.cwd() .. "/spell/en.utf-8.add"
-else
-    -- TODO: stopped working, maybe because of treesitter change?
-    -- activate otter.nvim for JS in specific case
-    if vim.uv.fs_stat(root .. "/package.json") then
+if root ~= nil then
+    if root == notebook_dir then
+        -- use local spellfile
+        vim.opt_local.spellfile = vim.uv.cwd() .. "/spell/en.utf-8.add"
+    elseif vim.uv.fs_stat(root .. "/package.json") then
+        -- TODO: stopped working, maybe because of treesitter change?
+        -- activate otter.nvim for JS in specific case
         local otter = require("otter")
         otter.activate({ "javascript" })
     end
