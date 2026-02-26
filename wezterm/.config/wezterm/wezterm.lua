@@ -97,28 +97,18 @@ local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-ag
 -- callbacks
 wezterm.on("user-var-changed", function(window, pane, name, value)
     local overrides = window:get_config_overrides() or {}
-    -- print('OVERRIDES PRE:')
+    -- print("OVERRIDES PRE:")
     -- print(overrides)
-    -- print('USER VAR NAME:')
+    -- print("USER VAR NAME:")
     -- print(name)
-
-    -- NOTE: still triggered for user vars not overridden from nvim
-    -- and those won't be JSON
-    -- if not wezterm_config_nvim.is_shell_integ_user_var(name) then
-    -- print('RAW VALUE:')
     -- print(value)
 
-    local parsed_val = wezterm.json_parse(value)
+    -- local parsed_val = wezterm.json_parse(value)
     -- local ok, parsed_val = pcall(wezterm.json_parse, value)
-    local parsed_val_type = type(parsed_val)
-    print(string.format("PARSED DATA: %s = %s (type: %s)", name, parsed_val, parsed_val_type))
-    print(parsed_val)
-
+    -- local parsed_val_type = type(parsed_val)
+    -- print(string.format("PARSED DATA: %s = %s (type: %s)", name, parsed_val, parsed_val_type))
+    -- print(parsed_val)
     overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
-
-    -- print('OVERRIDES POST:')
-    -- print(overrides)
-
     window:set_config_overrides(overrides)
 end)
 
