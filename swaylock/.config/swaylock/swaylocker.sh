@@ -2,6 +2,7 @@
 
 # actually using swaylock-effects, a fork of swaylock
 swaylock \
+    -- daemonize \
     --font "Hack Nerd Font Mono" \
     --clock \
     --datestr "%Y-%m-%d (%b)" \
