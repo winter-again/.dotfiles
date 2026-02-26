@@ -233,35 +233,33 @@ user_pref("layout.word_select.eat_space_to_next_word", false);
 // visit https://github.com/yokoffing/Betterfox/wiki/Optional-Hardening
 // Enter your personal overrides below this line:
 
-// both of these below can configured to allow only for certain sites to request
-// allow sites to ASK for location
+// PREF: allow websites to ask you for your location
 user_pref("permissions.default.geo", 0);
-// allow sites to ASK about notifs
+// PREF: allow websites to ask you to receive site notifications
 user_pref("permissions.default.desktop-notification", 0);
-// show shortcuts on new tab page but remove sponsored stuff
-user_pref("browser.newtabpage.activity-stream.feeds.topsites", true); // Shortcuts
-user_pref("browser.newtabpage.activity-stream.default.sites", ""); // remove default top sites
+
+// PREF: restore Top Sites on New Tab page
+user_pref("browser.newtabpage.activity-stream.feeds.topsites", true);
+// PREF: remove default Top Sites (Facebook, Twitter, etc.)
+// This does not block you from adding your own.
+user_pref("browser.newtabpage.activity-stream.default.sites", "");
+// PREF: remove sponsored content on New Tab page
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // Sponsored shortcuts
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false); // Recommended by Pocket
 user_pref("browser.newtabpage.activity-stream.showSponsored", false); // Sponsored Stories
 
-// get rid of weather widgets in new tab
-user_pref("browser.newtabpage.activity-stream.showWeather", false);
-
-// enable container tabs if you want to login to same site under diff acounts
-// also would install Multi-Account Containers extension
-// user_pref("privacy.userContext.enabled", true);
+// PREF: enable container tabs
+// can also install Multi-Account containers extension
+user_pref("privacy.userContext.enabled", true);
 
 // PREF: disable Firefox Sync
 user_pref("identity.fxaccounts.enabled", false);
-
 // PREF: disable the Firefox View tour from popping up
-// can no longer disable FF view just remove icon
 user_pref("browser.firefox-view.feature-tour", '{"screen":"","complete":true}');
 
-// disable login manager
+// PREF: disable login manager
 user_pref("signon.rememberSignons", false);
-// disable address and credit card manager
+// PREF: disable address and credit card manager
 user_pref("extensions.formautofill.addresses.enabled", false);
 user_pref("extensions.formautofill.creditCards.enabled", false);
 
@@ -280,16 +278,15 @@ user_pref(
     "https://dns.dnswarden.com/00000000000000000000048"
 ); // Hagezi Light + TIF
 // PREF: enforce DNS-over-HTTPS (DoH)
-// increased protection option
-user_pref("network.trr.mode", 2); // use TRR first; if fails, use native resolver as fallback
+// increased protection will switch back to local provider if any issues arise
+user_pref("network.trr.mode", 2);
 user_pref("network.trr.max-fails", 5);
 // max protection option
 // PREF: enforce DNS-over-HTTPS (DoH)
 // user_pref("network.trr.mode", 3);
 
-// PREF: ask where to save every file
+// PREF: always ask where to save every file
 user_pref("browser.download.useDownloadDir", false);
-user_pref("browser.downloads.useDownloadDir", false);
 // PREF: ask whether to open or save new file types
 user_pref("browser.download.always_ask_before_handling_new_types", true);
 
@@ -301,6 +298,21 @@ user_pref("extensions.postDownloadThirdPartyPrompt", false);
 // 1 = allow user MiTM (such as your antivirus) (default)
 // 2 = strict
 user_pref("security.cert_pinning.enforcement_level", 2);
+
+// PREF: delete cookies, cache, and site data on shutdown
+// manually set any exceptions
+user_pref("privacy.sanitize.sanitizeOnShutdown", true);
+user_pref("privacy.clearOnShutdown_v2.cache", true); // DEFAULT
+user_pref("privacy.clearOnShutdown_v2.cookiesAndStorage", true); // DEFAULT
+// NOTE: retains browser history
+user_pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", false);
+
+// PREF: after crashes or restarts, do not save extra session data
+// such as form content, scrollbar positions, and POST data
+user_pref("browser.sessionstore.privacy_level", 2);
+
+/****************************************************************************/
+// from arkenfox user.js
 
 // PREF: require safe negotiation
 // [ERROR] SSL_ERROR_UNSAFE_NEGOTIATION
@@ -320,8 +332,8 @@ user_pref("security.cert_pinning.enforcement_level", 2);
 user_pref("security.ssl.require_safe_negotiation", true);
 
 /****************************************************************************/
-
 // not privacy-related:
+
 // disable media keys, picture-in-picture, and topbar menu keys
 user_pref("media.hardwaremediakeys.enabled", false);
 user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
@@ -342,20 +354,14 @@ user_pref("media.ffmpeg.vaapi.enabled", true);
 user_pref("widget.gtk.ignore-bogus-leave-notify", 1);
 // allow suggestions from bookmarks
 user_pref("browser.urlbar.suggest.bookmark", true);
+// whether to show bookmarks bar: always, never, or newtab
+user_pref("browser.toolbars.bookmarks.visibility", "never");
 
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *
  ****************************************************************************/
 // visit https://github.com/yokoffing/Betterfox/blob/main/Smoothfox.js
 // Enter your scrolling overrides below this line:
-// credit: https://github.com/black7375/Firefox-UI-Fix
-// only sharpen scrolling
-// user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
-// user_pref("general.smoothScroll", true); // DEFAULT
-// user_pref("mousewheel.min_line_scroll_amount", 10); // 10-40; adjust this number to your liking; default=5
-// user_pref("general.smoothScroll.mouseWheel.durationMinMS", 80); // default=50
-// user_pref("general.smoothScroll.currentVelocityWeighting", "0.15"); // default=.25
-// user_pref("general.smoothScroll.stopDecelerationWeighting", "0.6"); // default=.4
 
 /****************************************************************************
  * END: BETTERFOX                                                           *
