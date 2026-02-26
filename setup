@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
-# TODO: review
 set -uo pipefail
 
 pacman_install() {
-    pacman -S --needed --noconfirm "$1"
+    sudo pacman -S --needed --noconfirm "$1"
 }
 
 paru_install() {
-    paru -S --needed --noconfirm "$1"
+    sudo paru -S --needed --noconfirm "$1"
 }
 
 # NOTE: run as newly created user
@@ -35,27 +34,27 @@ pacman_install "${zsh_pkgs[@]}"
 chsh -s /usr/bin/zsh "$USER"
 
 echo "Configuring /etc/pacman.conf..."
-sed -i "/Color/s/^#//g" /etc/pacman.conf
-sed -i "/VerbosePkgLists/s/^#//g" /etc/pacman.conf
+sudo sed -i "/Color/s/^#//g" /etc/pacman.conf
+sudo sed -i "/VerbosePkgLists/s/^#//g" /etc/pacman.conf
 
 echo "Updating before proceeding..."
-pacman -Syu --noconfirm
+sudo pacman -Syu --noconfirm
 clear
 
 echo "Installing and configuring reflector. Activating reflector.timer..."
 pacman_install reflector
-cat <<EOF > /etc/xdg/reflector/reflector.conf
+sudo tee /etc/xdg/reflector/reflector.conf > /dev/null <<"EOF"
 --protocol https
 --country US,CA
 --latest 10
 --sort rate
 --save /etc/pacman.d/mirrorlist
 EOF
-systemctl enable --now reflector.timer
+sudo systemctl enable --now reflector.timer
 
 echo "Installing pacman-contrib and activating paccache.timer..."
 pacman_install pacman-contrib
-systemctl enable --now paccache.timer
+sudo systemctl enable --now paccache.timer
 
 echo "Setting up xdg-user-dirs and installing xdg-utils..."
 pacman_install xdg-user-dirs xdg-utils
@@ -107,9 +106,9 @@ sys_maint_pkgs=(
 )
 paru_install "${sys_maint_pkgs[@]}"
 echo "Enabling and starting thermald.service..."
-systemctl enable --now thermald.service
+sudo systemctl enable --now thermald.service
 echo "Enabling and starting fstrim.timer..."
-systemctl enable --now fstrim.timer
+sudo systemctl enable --now fstrim.timer
 
 echo "Installing networking packages..."
 network_pkgs=(
@@ -120,7 +119,7 @@ paru_install "${network_pkgs[@]}"
 
 echo "Mapping caps lock to escape and control..."
 paru_install keyd
-cat <<EOF > /etc/keyd/default.conf
+sudo tee /etc/keyd/default.conf > /dev/null <<"EOF"
 [ids]
 
 *
@@ -167,7 +166,7 @@ terminals=(
 paru_install "${terminals[@]}"
 
 echo "Installing core tools..."
-tools_pkgs=(
+tools=(
     bat
     bc
     bottom
@@ -191,7 +190,7 @@ tools_pkgs=(
     zip
     zoxide
 )
-paru_install "${tools_pkgs[@]}"
+paru_install "${tools[@]}"
 
 echo "Installing Lua packages..."
 lua_dev_pkgs=(
@@ -233,7 +232,7 @@ js_dev_pkgs=(
     vscode-json-languageserver
 )
 paru_install  "${js_dev_pkgs[@]}"
-echo "Installing Astro LSP as global package..."
+echo "Installing Astro LSP as global package via pnpm..."
 pnpm install -g @astrojs/language-server
 
 echo "Installing Rust packages..."
@@ -266,20 +265,21 @@ paru_install "${nvim_pkgs[@]}"
 git clone https://github.com/neovim/neovim.git "$BUILD_REPOS/neovim"
 cd "$BUILD_REPOS/neovim" || exit 1
 git remote set-url origin git@github.com:neovim/neovim.git
+git remote set-url --push origin git@github.com:neovim/neovim.git
 git checkout nightly
 make CMAKE_BUILD_TYPE=RelWithDebInfo
-make install
+sudo make install
 cd "$HOME" || exit 1
 
-echo "Installing theming packages. Must still set theme manually..."
-theming_pkgs=(
-    kvantum
-    kvantum-qt5
-    kvantum-theme-materia
-    materia-gtk-theme
-    nwg-look
-)
-paru_install "${theming_pkgs[@]}"
+# echo "Installing theming packages. Must still set theme manually..."
+# theming_pkgs=(
+#     kvantum
+#     kvantum-qt5
+#     kvantum-theme-materia
+#     materia-gtk-theme
+#     nwg-look
+# )
+# paru_install "${theming_pkgs[@]}"
 
 echo "Installing XDG desktop portals..."
 xdg_portal_pkgs=(
@@ -293,10 +293,9 @@ echo "Installing Nemo and setting as default file manager..."
 paru_install nemo
 # set as default file browser
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
-# set Wezterm as terminal for Nemo
+# set Wezterm as default terminal for Nemo
 gsettings set org.cinnamon.desktop.default-applications.terminal exec wezterm
 
-# TODO: handle having to choose OCR lang
 echo "Installing other apps..."
 app_pkgs=(
     amberol
@@ -312,7 +311,7 @@ app_pkgs=(
     zathura-pdf-mupdf
 )
 paru_install "${app_pkgs[@]}"
-echo "30" | paru_install "${sound_pkgs[@]}"
+echo 30 | paru_install "${sound_pkgs[@]}"
 
 echo "Setting SSH URL for dotfiles repo and stowing dotfiles..."
 cd "$HOME/.dotfiles" || exit 1
@@ -321,21 +320,22 @@ git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
 just stow
 cd "$HOME" || exit 1
 
-echo "Installing rclone and restic for backups..."
-paru_install rclone restic
-# NOTE: if no SSH key added, can't use this URL for clone
-# git clone git@github.com:winter-again/backups.git
-git clone https://github.com/winter-again/backups.git "$HOME/Documents/code/backups"
-cd "$HOME/Documents/code/backups" || exit 1
-just lab
-just personal
-git remote set-url origin git@github.com:winter-again/backups.git
-cd "$HOME" || exit 1
+# echo "Installing ufw and activating firewall..."
+# paru_install ufw
+# sudo systemctl enable --now ufw.service
+# sudo ufw enable
 
-echo "Installing ufw and activating firewall..."
-paru_install ufw
-systemctl enable --now ufw.service
-ufw enable
+# TODO: consider removing the below
+
+# echo "Installing rclone, restic, and rsync for backups..."
+# paru_install rclone restic rsync
+# git clone https://github.com/winter-again/backups.git "$HOME/Documents/code/backups"
+# cd "$HOME/Documents/code/backups" || exit 1
+# git remote set-url origin git@github.com:winter-again/backups.git
+# git remote set-url --push origin git@github.com:winter-again/backups.git
+# just lab
+# just personal
+# cd "$HOME" || exit 1
 
 echo
 echo "Done. Reboot the system..."
