@@ -14,9 +14,20 @@ return {
             view_options = {
                 show_hidden = true,
             },
+            float = {
+                max_width = 50,
+                max_height = 600,
+                win_options = { winblend = 30 },
+                override = function(conf)
+                    conf.relative = "editor"
+                    conf.row = 0
+                    conf.col = 159
+                    return conf
+                end,
+            },
         })
         vim.keymap.set("n", "<leader>pv", require("oil").toggle_float, { desc = "Open Oil in floating window" })
-        vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory in Oil" })
+        vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory of current file in Oil" })
         vim.keymap.set("n", "<leader>oh", "<cmd>split | Oil<CR>", { desc = "Open Oil in split" })
     end,
 }
