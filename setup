@@ -137,7 +137,6 @@ zsh_pkgs=(
 )
 paru_install "${zsh_pkgs[@]}"
 
-# TODO: review tools
 echo "Installing core tools..."
 tools=(
     bat
