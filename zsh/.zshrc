@@ -6,12 +6,10 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # load prompt config
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # laod p10k itself
 #######################
 
-# p10k
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # checks if ~/.p10k.zsh is setup
 
 export HISTFILE=~/.zsh_history
 export HISTSIZE=1000000
@@ -23,14 +21,19 @@ export TERM=wezterm # for undercurl supp
 export SHELL=/bin/zsh
 export EDITOR="nvim"
 export VISUAL="nvim"
+
 # Java for pyspark
 export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
+
 # Go
 export GOPATH=$HOME/go # should already be default
 export GOBIN="$GOPATH/bin" # should also be default
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin # loc of installed binaries
 # export PATH="$HOME/.local/bin:$PATH" # for zoxide and others; don't think needed
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # aliases
 # alias nvim-min="NVIM_APPNAME=nvim_min nvim" # alt nvim config
@@ -188,3 +191,4 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 eval "$(zoxide init zsh)" # zoxide; keep at end
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # keep at end
+# eval "$(starship init zsh)"
