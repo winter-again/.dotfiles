@@ -103,10 +103,10 @@ alias rm="rm -i"
 alias tree="eza -la --no-permissions --tree --level=2 --ignore-glob='.git|.venv|node_modules'"
 alias open="xdg-open"
 alias grep="grep --color=auto"
-alias xv="xan view -l 10"
+alias x="xan"
+alias xv="xan view -l 15"
 alias tv="tidy-viewer"
 alias j="just"
-alias jg="just -g"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
 alias fd="fd --color=always --hidden --exclude '{.git,.venv,node_modules}'"
@@ -137,10 +137,8 @@ alias gds="git diff --staged" # staged changes
 alias gdh="git diff HEAD~" # diff latest commit with previous
 alias gu="git rm --cached" # stop tracking given file
 alias gl="git log --stat"
-alias glg="git log --all --graph --oneline"
-alias glp="git log --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)'"
-alias glf="git log --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
-alias ggrep="git ls-files | grep -i"
+alias glg="git log --graph --abbrev-commit --decorate --date=format-local:'%Y-%m-%d (%a) %I:%M:%S %p' --format=format:'%C(bold blue)%h%C(reset) - %C(bold magenta)%ad%C(reset) %C(yellow)(%ar)%C(reset) %C(bold cyan)%an%C(reset)%C(auto)%d%C(reset)%C(white): %s%C(reset)'"
+alias gls="git log --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
 
 # change cwd on exit; use Q instead of q to prevent
 function y() {
@@ -152,15 +150,8 @@ function y() {
     rm -f -- "$tmp"
 }
 
-function ff() {
-    local dir=$(fd . \
-        ~/Documents/Bansal-lab \
-        ~/Documents/code \
-        ~/Documents/code/nvim-dev \
-        --min-depth 1 --max-depth 1 \
-        --color=never \
-        --type dir | fzf --prompt=" Directory: " --no-preview
-    )
+function f() {
+    local dir=$(flow find | fzf --prompt=" Directory: " --no-preview)
     cd "$dir"
 }
 

@@ -52,7 +52,6 @@ foreground = "p:green"
 [blocks.segments.properties]
 threshold = 5000
 format = "austin"
-always_enabled = true
 
 [[blocks.segments]]
 type = "time"
