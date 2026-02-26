@@ -1,5 +1,6 @@
 ---
 base: lua51
+
 globals:
   vim:
     any: true
@@ -11,6 +12,8 @@ globals:
       - type: string
   Save_exec:
     any: true
+  Save_exec_line:
+    any: true
   Transp:
     any: true
   Toggle_light_dark:
@@ -19,12 +22,5 @@ globals:
     args:
       - type: string
       - type: table
-  Map:
-    args:
-      - type: string
-      - type: string
-      - type: string | function
-      - type: table
-      - type: string
   Winbar:
     any: true

@@ -2,7 +2,7 @@
 return {
     'hrsh7th/nvim-cmp',
     version = false,
-    event = 'InsertEnter',
+    lazy = false,
     dependencies = {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
@@ -32,13 +32,12 @@ return {
                 require('luasnip').setup({
                     update_events = { 'TextChanged', 'TextChangedI' },
                 })
-
-                vim.keymap.set({ 'i', 's' }, '<C-l>', function()
-                    require('luasnip').jump(1)
-                end, { silent = true, desc = 'Jump to next snippet node' })
                 vim.keymap.set({ 'i', 's' }, '<C-h>', function()
                     require('luasnip').jump(-1)
                 end, { silent = true, desc = 'Jump to previous snippet node' })
+                vim.keymap.set({ 'i', 's' }, '<C-l>', function()
+                    require('luasnip').jump(1)
+                end, { silent = true, desc = 'Jump to next snippet node' })
             end,
         },
         'saadparwaiz1/cmp_luasnip', -- snippet cmp integration
@@ -171,8 +170,5 @@ return {
                 { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
             }),
         })
-        -- automatically insert parentheses after cmp selection (functions/method items)
-        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-        cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
     end,
 }

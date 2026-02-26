@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd ~
+cd ~ || exit
 # XDG spec
 export XDG_SESSION_TYPE=wayland
 export XDG_SESSION_DESKTOP=sway

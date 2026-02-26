@@ -12,6 +12,15 @@ function R(plugin)
     vim.cmd('Lazy reload ' .. plugin)
 end
 
+---Save and execute Lua file for quick iterating
+function Save_exec()
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+    if ft == 'lua' then
+        vim.cmd('silent! write')
+        vim.cmd('luafile %')
+    end
+end
+
 --Save and execute cursor line for Lua file
 function Save_exec_line()
     local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
@@ -19,15 +28,6 @@ function Save_exec_line()
         vim.cmd('silent! write')
         local cursor_line = vim.fn.getline('.')
         vim.cmd('lua ' .. cursor_line)
-    end
-end
-
----Save and execute Lua file for quick iterating
-function Save_exec()
-    local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-    if ft == 'lua' then
-        vim.cmd('silent! write')
-        vim.cmd('luafile %')
     end
 end
 
