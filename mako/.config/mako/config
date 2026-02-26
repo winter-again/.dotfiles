@@ -1,0 +1,27 @@
+sort=-time
+output=BNQ BenQ LCD 93J02490SL0
+layer=overlay
+text-color=#c0caf5
+background-color=#1a1b26
+width=400
+height=300
+border-size=2
+border-color=#9d7cd8
+border-radius=10
+icons=1
+icon-path="/usr/share/icons/Papirus"
+max-icon-size=64
+default-timeout=5000
+ignore-timeout=1
+font=Hack Nerd Font Mono 10
+
+[urgency=low]
+border-color=#9d7cd8
+
+[urgency=normal]
+border-color=#9d7cd8
+
+[urgency=high]
+border-color=#db4b4b
+default-timeout=0
+

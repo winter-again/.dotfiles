@@ -202,7 +202,8 @@ bindsym $mod+r mode "resize"
 
 # execs
 exec_always pkill kanshi; exec kanshi
-exec dunst -config ~/.config/dunst/dunstrc_hypr
+# exec dunst -config ~/.config/dunst/dunstrc_hypr
+exec mako
 exec waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
 # exec swaybg -c #16161e
 exec nm-applet
