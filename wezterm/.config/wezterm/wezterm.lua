@@ -34,7 +34,7 @@ config.check_for_updates = false
 --     'rose-pine',
 -- }
 config.color_scheme = 'Tokyo Night' -- builtin colorscheme (Folke ver)
-config.background = utils.set_bg('15_7')
+config.background = utils.set_bg('15_4')
 config.font, config.font_size = utils.set_font_properties('Zed')
 -- config.font_size = 12.0
 -- this needs explicit setting if not the default

@@ -1,4 +1,5 @@
 return {
+    'tpope/vim-eunuch',
     -- 'chrisgrieser/nvim-genghis',
     -- dependencies = {
     --     -- works w/o dressing.nvim
@@ -8,6 +9,4 @@ return {
     --     'hrsh7th/cmp-omni',
     -- },
     -- config = function() end,
-    -- the alt:
-    'tpope/vim-eunuch',
 }
