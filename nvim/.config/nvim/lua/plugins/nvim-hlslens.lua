@@ -55,6 +55,5 @@ return {
         -- like the above but allows partial matching of word
         vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], opts)
         vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], opts)
-        vim.keymap.set('n', '<leader><leader>h', '<Cmd>noh<CR>', opts) -- to turn off the mode
     end,
 }

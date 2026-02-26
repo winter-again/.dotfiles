@@ -1,5 +1,6 @@
 local opts = { silent = true }
 Map({ 'n', 'v' }, '<Space>', '<Nop>', opts, 'Unbind space')
+Map('n', '<Esc>', '<cmd>nohlsearch<CR>', opts, 'Turn off search highlights')
 -- split windows (reversed for my brain)
 Map('n', '<leader>sh', ':split<CR><C-w>w', opts, 'Horizontal split')
 Map('n', '<leader>sv', ':vsplit<CR><C-w>w', opts, 'Vertical split')

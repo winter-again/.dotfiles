@@ -5,6 +5,10 @@
 local opt = vim.opt
 
 opt.background = 'dark'
+opt.equalalways = false
+opt.splitright = true -- new window to the right of current
+-- opt.splitbelow = true -- new window below the current
+opt.inccommand = 'split' -- preview substitutions live
 -- opt.guicursor = '' -- disable cursor change on mode change
 opt.winbar = '%{%v:lua.Winbar()%}'
 -- (pseudo)transparency for cmp menu (0 = fully opaque, 100 = fully transparent)
@@ -42,7 +46,8 @@ opt.incsearch = true -- show search result while typing the search term
 opt.termguicolors = true -- nice colors
 opt.scrolloff = 4 -- always keep at least this number of lines above/below the cursor when scrolling
 -- vim.opt.clipboard = 'unnamedplus' -- makes all yanking use clipboard
-opt.updatetime = 1000 -- faster updatetime for triggering plugins; default is 4000 ms
+opt.updatetime = 250 -- faster updatetime for triggering plugins; default is 4000 ms
+opt.timeoutlen = 300
 -- settings for which-key plugin
 opt.laststatus = 3 -- global statusline
 -- better completion experience

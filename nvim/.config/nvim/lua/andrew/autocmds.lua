@@ -3,7 +3,6 @@ local au_group = vim.api.nvim_create_augroup('WinterAgain', { clear = true })
 -- highlight the text you just yanked (visual cue)
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = au_group,
-    pattern = '*',
     callback = function()
         vim.highlight.on_yank()
     end,
