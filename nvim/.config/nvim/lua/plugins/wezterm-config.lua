@@ -18,9 +18,11 @@ return {
         end
         local opts = { silent = true }
 
-        map('n', '<leader><leader>r', function()
-            reload('profile_data', false)
-        end)
+        -- not sure how well this works
+        -- map('n', '<leader><leader>r', function()
+        --     reload('profile_data', false)
+        -- end)
+
         map('n', '<leader><leader>d', function()
             wezterm_config.set_wezterm_user_var('background', profile_data.background.default.background)
         end, opts, '')
