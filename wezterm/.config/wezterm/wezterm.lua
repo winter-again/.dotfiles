@@ -57,11 +57,13 @@ config.window_frame = {
 -- }
 config.use_fancy_tab_bar = true -- default
 config.show_tab_index_in_tab_bar = true
+-- config.enable_tab_bar = false -- disable tab bar
+config.hide_tab_bar_if_only_one_tab = true
 config.cursor_blink_rate = 0 -- disable blinking
 config.window_padding = {
-    left = 5,
-    right = 5,
-    top = 0,
+    left = 2,
+    right = 2,
+    top = 10,
     bottom = 0
 }
 -- config.enable_scroll_bar = true
