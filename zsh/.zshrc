@@ -100,16 +100,16 @@ ff() {
     fi
     cd "$dir"
 }
-tt() {
-    ~/.local/bin/tmux-sessionizer.sh
-}
+# tt() {
+#     ~/.local/bin/tmux-sessionizer.sh
+# }
 # change wezterm bg on the fly
-w() {
-    # uses just fzf
-    # ~/.local/bin/wezterm-bg-config.sh
-    # uses charm's gum
-    ~/.local/bin/wezterm-bg
-}
+# w() {
+#     # uses just fzf
+#     # ~/.local/bin/wezterm-bg-config.sh
+#     # uses charm's gum
+#     ~/.local/bin/wezterm-bg
+# }
 # wezterm logs appear here
 wez-logs() {
     cd /run/user/1000/wezterm
