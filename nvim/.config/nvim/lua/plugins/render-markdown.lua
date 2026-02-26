@@ -26,7 +26,17 @@ return {
             -- disable rendering for the cursor line
             enabled = true,
             -- can retain rendering for some
-            ignore = { bullet = false, check_icon = false },
+            ignore = {
+                bullet = true,
+                check_icon = false, -- looks bad unless concealcursor set more aggressively
+                dash = true,
+                latex = true,
+                quote = true,
+            },
+        },
+        win_options = {
+            conceallevel = { rendered = 2 },
+            concealcursor = { rendered = "" },
         },
         latex = {
             enabled = false,

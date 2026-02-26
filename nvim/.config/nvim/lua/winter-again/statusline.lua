@@ -96,7 +96,7 @@ function M.git_status()
 end
 
 ---@return string
-function M.file()
+function M.file_name()
     -- NOTE: modifiers:
     -- :p = full path; use "~/" for home dir
     -- :~ = reduce to be relative to home dir
@@ -105,16 +105,10 @@ function M.file()
     if file_name == "" then
         file_name = "[untitled]"
     end
-    local file_type = vim.bo.filetype
-    local icon, hl = mini_icons.get("filetype", file_type)
-    local file_icon = hl_segment(icon, hl)
-
     local modified = vim.bo.modified
     local read_only = vim.api.nvim_get_option_value("readonly", { buf = 0 })
 
     return table.concat({
-        " ",
-        file_icon,
         " ",
         file_name,
         modified and " [+]" or "",
@@ -221,6 +215,13 @@ function M.qf_list()
 end
 
 ---@return string
+function M.filetype()
+    local file_type = vim.bo.filetype
+    local icon, hl = mini_icons.get("filetype", file_type)
+    return string.format("%s %s ", hl_segment(icon, hl), file_type)
+end
+
+---@return string
 function M.encoding()
     local encoding = vim.opt.fileencoding:get()
     -- return encoding ~= "" and string.format("%%#StatuslineSectionInner# %s ", encoding) or ""
@@ -256,12 +257,12 @@ function M.render()
     return table.concat({
         M.mode(),
         M.git_status(),
-        M.file(),
+        M.file_name(),
         "%#Statusline#%=",
         M.diagnostics(),
         M.tools(),
         M.qf_list(),
-        -- M.filetype(),
+        M.filetype(),
         M.encoding(),
         M.cursor_pos(),
     })

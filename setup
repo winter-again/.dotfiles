@@ -186,7 +186,7 @@ echo "Installing uv tools..."
 uv python --managed-python install # installs latest Python
 uv_tools=(
     basedpyright
-    sqruff
+    # sqruff
 )
 uv tool install "${uv_tools[@]}"
 
