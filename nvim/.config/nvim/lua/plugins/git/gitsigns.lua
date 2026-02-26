@@ -24,7 +24,6 @@ return {
                     end)
                     return '<Ignore>'
                 end, { expr = true })
-
                 map('n', '[h', function()
                     if vim.wo.diff then
                         return '[h'
@@ -36,24 +35,20 @@ return {
                 end, { expr = true })
 
                 local opts = { silent = true }
-                vim.keymap.set('n', '<leader>gb', gs.toggle_current_line_blame, opts)
-                -- diff: working tree vs. index
-                -- vim.keymap.set('n', '<leader>gd', gs.diffthis, opts)
-                -- diff: working tree vs. the last commit
-                vim.keymap.set('n', '<leader>gD', function()
-                    gs.diffthis('~')
-                end, opts)
-                -- vim.keymap.set('n', '<leader>gd', gs.toggle_deleted, opts)
-                vim.keymap.set('n', '<leader>ghs', gs.stage_hunk, opts)
-                vim.keymap.set('n', '<leader>ghu', gs.undo_stage_hunk, opts)
-                vim.keymap.set('n', '<leader>ghr', gs.reset_hunk, opts)
-                vim.keymap.set('v', '<leader>ghs', function()
+                Map('n', '<leader>gb', gs.toggle_current_line_blame, opts, 'Toggle git blame for current line')
+                -- Map('n', '<leader>hd', gs.diffthis, opts, 'Diff this file')
+                Map('n', '<leader>td', gs.toggle_deleted, opts, 'Toggle showing deletions inline')
+
+                Map('n', '<leader>hp', gs.preview_hunk, opts, 'Show hunk diff')
+                Map('n', '<leader>hs', gs.stage_hunk, opts, 'Stage hunk')
+                Map('v', '<leader>hs', function()
                     gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-                end, opts)
-                vim.keymap.set('v', '<leader>ghr', function()
+                end, opts, 'Stage hunk')
+                Map('n', '<leader>hu', gs.undo_stage_hunk, opts, 'Undo stage hunk')
+                Map('n', '<leader>hr', gs.reset_hunk, opts, 'Reset hunk')
+                Map('v', '<leader>hr', function()
                     gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-                end, opts)
-                vim.keymap.set('n', '<leader>ghp', gs.preview_hunk, opts)
+                end, opts, 'Reset hunk')
             end,
             preview_config = {
                 border = 'none',

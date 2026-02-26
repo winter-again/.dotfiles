@@ -2,12 +2,11 @@
     name = Andrew Tiu
     email = 63322884+winter-again@users.noreply.github.com
 [core]
-	editor = nvim
+    editor = nvim
     pager = delta
-	autocrlf = input
-	; excludesfile = /home/andrew/.gitignore
+    autocrlf = input
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [delta]
     navigate = true
     light = false
@@ -19,9 +18,7 @@
 [diff]
     colorMoved = default
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-; [credential]
-; 	helper = cache
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
