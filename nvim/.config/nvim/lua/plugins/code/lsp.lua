@@ -269,19 +269,18 @@ return {
                             end
                             on_attach(client, bufnr)
                             local group = vim.api.nvim_create_augroup('RuffSortImportsOnSave', { clear = true })
-                            local ruff_lsp_client = require('lspconfig.util').get_active_client_by_name(bufnr, 'ruff')
-                            P(ruff_lsp_client)
-                            local request = function(method, params)
-                                ruff_lsp_client.request(method, params, nil, bufnr)
-                            end
-                            local sort_imports = function()
-                                request('workspace/executeCommand', {
-                                    command = 'ruff.applyOrganizeImports',
-                                    arguments = {
-                                        { uri = vim.uri_from_bufnr(bufnr) },
-                                    },
-                                })
-                            end
+                            -- local ruff_lsp_client = require('lspconfig.util').get_active_client_by_name(bufnr, 'ruff')
+                            -- local request = function(method, params)
+                            --     ruff_lsp_client.request(method, params, nil, bufnr)
+                            -- end
+                            -- local sort_imports = function()
+                            --     request('workspace/executeCommand', {
+                            --         command = 'ruff.applyOrganizeImports',
+                            --         arguments = {
+                            --             { uri = vim.uri_from_bufnr(bufnr) },
+                            --         },
+                            --     })
+                            -- end
                             vim.api.nvim_create_autocmd('BufWritePre', {
                                 group = group,
                                 buffer = bufnr,
