@@ -52,7 +52,10 @@ return {
             grep = {
                 prompt = "rg: ",
                 -- rightfully ignores .ripgreprc
-                rg_opts = [[--hidden --follow --smart-case --line-number --column --color=always --colors=line:fg:green --colors=column:fg:yellow --max-columns=4096 --glob="!{.git,.venv,node_modules}/*"]],
+                rg_opts = [[--hidden --follow --smart-case --line-number --column --color=always --colors=line:fg:green --colors=column:fg:yellow --max-columns=4096 --glob="!{.git,.venv,node_modules}/*" --glob="!*.csv"]],
+                rg_glob = true,
+                glob_flag = "--iglob",
+                glob_separator = "%s%-%-",
                 -- NOTE: grep.files inherits from actions.files, but it seems to have its own defaults
                 -- so I have to set ctrl-g again
                 actions = {
@@ -73,7 +76,7 @@ return {
         map("n", "<leader>ff", fzf_lua.files, opts, "Search files")
         map("n", "<leader>fl", fzf_lua.buffers, opts, "Search buffers")
         map("n", "<leader>fs", function()
-            require("fzf-lua").live_grep_native({ exec_empty_query = true })
+            require("fzf-lua").live_grep({ exec_empty_query = true })
         end, opts, "Live grep")
         map("n", "<leader>/", fzf_lua.lgrep_curbuf, opts, "Find in current buffer")
 
