@@ -15,11 +15,7 @@ return {
                 on_colors = function(colors)
                     colors.border = colors.fg_dark
                 end,
-                -- from here: https://github.com/folke/tokyonight.nvim/issues/289
-                -- doing this allows my cursorline to not get overriden when cursor is in a code block
                 on_highlights = function(highlights, colors)
-                    -- using this keeps cursorline highlight from getting overriden in markdown code blocks
-                    -- highlights['@text.literal.markdown'] = { link = '@punctuation.delimiter.markdown' }
                     highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
                     highlights['LineNr'] = { fg = '#696d87' } -- line number color
                     highlights['CursorLineNr'] = { fg = colors.fg } -- cursor line number color

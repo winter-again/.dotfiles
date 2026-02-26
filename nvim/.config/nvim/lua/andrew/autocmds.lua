@@ -1,10 +1,24 @@
+local hl_group = vim.api.nvim_create_augroup('WinterAgain', { clear = true })
+
 -- highlight the text you just yanked (visual cue)
-local hl_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = hl_group,
     pattern = '*',
     callback = function()
         vim.highlight.on_yank()
+    end,
+})
+
+-- from lazyvim
+-- auto create dir when saving a file, in case some intermediate directory does not exist
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+    group = hl_group,
+    callback = function(event)
+        if event.match:match('^%w%w+://') then
+            return
+        end
+        local file = vim.loop.fs_realpath(event.match) or event.match
+        vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
     end,
 })
 

@@ -3,14 +3,16 @@ return {
     'epwalsh/obsidian.nvim',
     version = '*',
     lazy = true,
+    -- only load plugin for .md files in vault
     event = {
-        'BufReadPre ' .. vim.fn.expand('~') .. '/Documents/andrew-obsidian/**.md',
-        'BufNewFile ' .. vim.fn.expand('~') .. '/Documents/andrew-obsidian/**.md',
+        'BufReadPre ' .. vim.fn.expand('~') .. '/Documents/obsidian-vault/**.md',
+        'BufNewFile ' .. vim.fn.expand('~') .. '/Documents/obsidian-vault/**.md',
     },
     dependencies = {
         'nvim-lua/plenary.nvim',
     },
     config = function()
+        vim.opt_local.conceallevel = 1 -- conceal level for buffer; only want for the Obsidian vault
         require('obsidian').setup({
             workspaces = {
                 {

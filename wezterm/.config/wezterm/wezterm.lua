@@ -36,7 +36,17 @@ config.colors = {
     },
 }
 
-config.font = wezterm.font('Hack Nerd Font Mono')
+local profile_data = require('profile_data')
+local utils = require('utils')
+config.background = utils.set_bg()
+
+config.font = profile_data.font.font_2
+config.font_size = 12.0
+-- config.font = profile_data.font.font_2.font
+-- config.font_size = profile_data.font.font_2.font_size
+-- config.font, config.font_size = utils.set_font('font_1')
+
+config.hide_tab_bar_if_only_one_tab = true
 config.freetype_load_flags = 'NO_HINTING' -- use this to keep curly braces {} nicely aligned
 config.window_frame = {
     font = wezterm.font('Hack Nerd Font Mono'),
@@ -50,15 +60,9 @@ config.cursor_blink_rate = 0
 config.window_padding = {
     left = 2,
     right = 2,
-    top = 10,
+    top = 2,
     bottom = 0,
 }
-local bg = require('bg')
-config.background = bg.set_bg()
-
-local profile_data = require('profile_data')
-config.font_size = 12.0
-config.hide_tab_bar_if_only_one_tab = true
 
 -- plugins
 local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')

@@ -2,7 +2,6 @@
 return {
     {
         'neovim/nvim-lspconfig',
-        -- event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
@@ -79,28 +78,31 @@ return {
             }
 
             -- global keymaps
-            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-
+            Map('n', '[d', vim.diagnostic.goto_prev, { silent = true }, 'Go to previous diagnostic message')
+            Map('n', ']d', vim.diagnostic.goto_next, { silent = true }, 'Go to next diagnostic message')
             -- keymaps defined on attach
-            -- some are replaced with lsp saga alternative
             local function on_attach(_, bufnr)
-                local nmap = function(keys, func, desc)
-                    vim.keymap.set('n', keys, func, { buffer = bufnr, silent = true, desc = desc })
-                end
-                nmap('K', vim.lsp.buf.hover, 'Hover docs')
-                -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Sig. help')
-                nmap('<leader><leader>rn', vim.lsp.buf.rename, 'LSP def. rename') -- default rename
-                -- nmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
-
-                nmap('gl', vim.diagnostic.open_float, 'Get diagn.')
-                nmap('gd', require('telescope.builtin').lsp_definitions, 'Get defn.')
-                nmap('gr', require('telescope.builtin').lsp_references, 'Get refs.')
-                nmap('gi', require('telescope.builtin').lsp_implementations, 'Get imps.')
-
-                nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type defns.')
-                nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Doc symbols')
-                nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
+                local opts = { silent = true, buffer = bufnr }
+                Map('n', 'K', vim.lsp.buf.hover, opts, 'Hover docs')
+                Map('n', 'gs', function()
+                    vim.diagnostic.open_float({ scope = 'cursor' })
+                end, opts, 'Get cursor diagnostics')
+                Map('n', 'gl', function()
+                    vim.diagnostic.open_float({ scope = 'line' })
+                end, opts, 'Get line diagnostics')
+                Map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Telescope LSP defns.')
+                Map('n', 'gr', require('telescope.builtin').lsp_references, opts, 'Telescope LSP refs.')
+                Map('n', 'gi', require('telescope.builtin').lsp_implementations, opts, 'Telescope find impls.')
+                Map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up
+                Map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, opts, 'Telescope type defns.')
+                Map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, opts, 'Telescope doc symbols')
+                Map(
+                    'n',
+                    '<leader>ws',
+                    require('telescope.builtin').lsp_dynamic_workspace_symbols,
+                    opts,
+                    'Telescope workspace symbols'
+                )
             end
 
             -- see here for configs:
@@ -216,9 +218,10 @@ return {
             require('mason-lspconfig').setup_handlers(handlers)
 
             -- lspconfig appearance and behavior
-            -- global floating window borders:
+            -- global floating window borders by replacing the orig. function
+            -- see here: https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
             local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
-            function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+            vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
                 opts = opts or {}
                 opts.border = 'rounded'
                 return orig_util_open_float_prev(contents, syntax, opts, ...)
@@ -250,12 +253,12 @@ return {
             vim.diagnostic.config({
                 virtual_text = {
                     spacing = 4,
-                    prefix = '',
+                    prefix = '󱓻',
                     format = diagn_format,
                 },
                 float = {
                     border = 'rounded',
-                    prefix = ' ',
+                    prefix = '󰉹',
                     suffix = '', -- get rid of the code that is shown by default since format func handles it
                     format = diagn_format,
                 },
@@ -430,9 +433,9 @@ return {
             })
 
             -- manually trigger formatting
-            vim.keymap.set('n', '<leader><leader>fm', function()
+            Map('n', '<leader><leader>fm', function()
                 require('conform').format({ async = true, lsp_fallback = true })
-            end, { silent = true })
+            end, { silent = true }, 'Manually format buffer with conform.nvim')
             -- user commands for toggling autoformatting on save
             vim.api.nvim_create_user_command('FormatDisable', function(args)
                 if args.bang then
@@ -478,9 +481,9 @@ return {
             })
 
             -- manually trigger linting
-            vim.keymap.set('n', '<leader><leader>l', function()
+            Map('n', '<leader><leader>l', function()
                 require('lint').try_lint()
-            end, { silent = true })
+            end, { silent = true }, 'Manually trigger nvim-lint')
         end,
     },
     {
@@ -499,12 +502,12 @@ return {
                 update_events = { 'TextChanged', 'TextChangedI' },
             })
 
-            vim.keymap.set({ 'i', 's' }, '<C-n>', function()
+            Map({ 'i', 's' }, '<C-n>', function()
                 require('luasnip').jump(1)
-            end, { silent = true })
-            vim.keymap.set({ 'i', 's' }, '<C-p>', function()
+            end, { silent = true }, 'Jump to next snippet node')
+            Map({ 'i', 's' }, '<C-p>', function()
                 require('luasnip').jump(-1)
-            end, { silent = true })
+            end, { silent = true }, 'Jump to previous snippet node')
         end,
     },
 }

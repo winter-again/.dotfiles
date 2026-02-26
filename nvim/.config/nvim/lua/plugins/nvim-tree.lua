@@ -14,10 +14,11 @@ return {
                 -- preserve_window_proportions = true,
                 float = {
                     enable = true,
+                    quit_on_focus_loss = false,
                     open_win_config = {
                         relative = 'editor',
                         border = 'rounded',
-                        width = 25,
+                        width = 30,
                         height = 50,
                         row = 0,
                         col = 1,

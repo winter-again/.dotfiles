@@ -1,6 +1,7 @@
 return {
     {
         'echasnovski/mini.move',
+        enabled = false,
         event = { 'BufReadPost', 'BufNewFile' },
         version = false,
         config = function()
@@ -39,11 +40,6 @@ return {
         config = function()
             require('mini.surround').setup()
         end,
-    },
-    {
-        'echasnovski/mini.base16',
-        enabled = false,
-        version = false,
     },
     -- alt to nvim-tree
     {
