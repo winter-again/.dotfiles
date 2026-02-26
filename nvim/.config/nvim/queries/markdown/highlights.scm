@@ -1,16 +1,16 @@
 ;; extends
 
-; turn off spell check for specific nodes
-; this is useful for mdx files treated as markdown
-((inline) @_inline (#lua-match? @_inline "^%s*import")) @nospell
-((inline) @_inline (#lua-match? @_inline "^%s*export")) @nospell
-
-; override code block query to prevent default conceal
+; override code block query; may help to prevent default conceal
 (fenced_code_block
   (fenced_code_block_delimiter) @codeblock.delim
   (info_string (language) @codeblock.lang)
   (code_fence_content) @codeblock.inner
 ) @codeblock.outer
+
+; turn off spell check for specific nodes starting with "import"
+; this is useful for mdx files treated as markdown
+((inline) @_import (#lua-match? @_import "^%s*import")) @nospell
+((inline) @_export (#lua-match? @_export "^%s*export")) @nospell
 
 ; relink these nodes to what's described here: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#markup
 ; (atx_heading (atx_h1_marker) @markup.heading.1.marker (inline) @markup.heading.1)

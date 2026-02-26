@@ -1,0 +1,47 @@
+[user]
+    name = Andrew Tiu
+    email = 63322884+winter-again@users.noreply.github.com
+[core]
+    editor = nvim
+    autocrlf = input ; replace CRLF with LF when writing, but read as-is
+    whitespace = error
+[init]
+    defaultBranch = main
+[status]
+    branch = true
+    showStash = true
+[diff]
+    algorithm = histogram
+    mnemonicPrefix = true
+    renames = true
+[commit]
+    verbose = true
+[push]
+    default = current
+    followTags = true
+[pull]
+    default = current
+    rebase = true ; rebase branches on top of the fetched branch
+[rebase]
+    autoStash = true ; auto stash/pop on rebase
+[tag]
+    sort = version:refname
+[help]
+    autocorrect = prompt
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[color "decorate"]
+    head = bold magenta
+    branch = bold blue
+    tag = bold green
+[color "branch"]
+    current = bold magenta
+    local = bold blue
+    remote = bold red
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

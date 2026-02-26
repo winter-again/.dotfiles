@@ -26,6 +26,7 @@ return {
         "nvim-mini/mini.surround",
         version = false,
         event = { "BufReadPost", "BufNewFile" },
+        enabled = false,
         config = function()
             require("mini.surround").setup({
                 -- Module mappings. Use `""` (empty string) to disable one.

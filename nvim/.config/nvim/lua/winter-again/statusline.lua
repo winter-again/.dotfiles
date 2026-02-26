@@ -73,7 +73,7 @@ end
 ---@return string
 function M.git_status()
     local status = vim.b.gitsigns_status_dict
-    if not status then
+    if status == nil or status.head == "" then
         return ""
     end
 

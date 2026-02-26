@@ -279,10 +279,11 @@ return {
                     },
                 },
                 ["marksman"] = {
-                    on_attach = function(client, bufnr)
+                    on_init = function(client)
                         if vim.uv.cwd() == vim.fs.normalize("~/Documents/notebook") then
-                            -- disable some capabilities in notes dir to use zk/obsidian instead
-                            client.server_capabilities.completionProvider = nil
+                            -- if vim.fs.root(0, ".zk") ~= nil then
+                            -- disable some capabilities in notes dir to use obsidian/zk instead
+                            client.server_capabilities.completionProvider = false
                             client.server_capabilities.hoverProvider = false
                         end
                     end,

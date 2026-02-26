@@ -33,7 +33,6 @@ local parsers = {
     "javascript",
     "jsdoc",
     "json",
-    "jsonc",
     "jsx",
     "just",
     "latex",

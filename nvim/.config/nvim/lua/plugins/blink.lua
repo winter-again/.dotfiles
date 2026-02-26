@@ -40,7 +40,7 @@ return {
                     -- treesitter = { "lsp" }, -- use treesitter to highlight label text for these sources (e.g., function colored)
                     columns = {
                         { "label", "label_description", gap = 1 },
-                        { "kind_icon", "kind", gap = 2, "source_name" },
+                        { "kind_icon", "kind", gap = 1, "source_name" },
                     },
                     components = {
                         kind_icon = {
@@ -131,7 +131,11 @@ return {
                 "path",
                 "snippets",
                 "buffer",
-                "lazydev",
+            },
+            per_filetype = {
+                lua = { inherit_defaults = true, "lazydev" },
+                -- NOTE: I think have to specify inherit_defaults? See https://github.com/obsidian-nvim/obsidian.nvim/issues/430
+                -- markdown = { inherit_defaults = true, "obsidian" },
             },
             providers = {
                 lsp = {

@@ -3,7 +3,6 @@ return {
     "ibhagwan/fzf-lua",
     -- "https://gitlab.com/ibhagwan/fzf-lua", -- Gitlab alt
     dependencies = { "nvim-mini/mini.icons" },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VimEnter",
     config = function()
         local fzf_lua = require("fzf-lua")
@@ -35,10 +34,12 @@ return {
                 -- NOTE: Many pickers inherit from this table; must explicitly define actions here
                 -- b/c it doesn't get merged with global defaults
                 files = {
-                    ["default"] = actions.file_edit,
+                    ["default"] = actions.file_edit_or_qf,
+                    -- ["default"] = actions.file_edit,
                     ["ctrl-h"] = actions.file_split,
                     ["ctrl-v"] = actions.file_vsplit,
                     ["ctrl-q"] = actions.file_sel_to_qf,
+                    ["ctrl-a"] = { fn = actions.file_sel_to_qf, prefix = "select-all" },
                     ["ctrl-g"] = actions.toggle_ignore,
                 },
             },
@@ -54,8 +55,10 @@ return {
             grep = {
                 prompt = "rg: ",
                 -- rightfully ignores .ripgreprc
-                rg_opts = [[--hidden --follow --smart-case --line-number --column --color=always --colors=line:fg:green --colors=column:fg:yellow --max-columns=4096 --glob="!{.git,.venv,node_modules}/*" --glob="!*.csv"]],
+                rg_opts = [[--smart-case --line-number --column --color=always --colors=line:fg:green --colors=column:fg:yellow --max-columns=4096 --glob="!{.git,.venv,node_modules}/*" --glob="!*.csv"]],
                 rg_glob = true,
+                hidden = true,
+                follow = true,
                 glob_flag = "--iglob",
                 glob_separator = "%s%-%-",
                 -- NOTE: grep.files inherits from actions.files, but it seems to have its own defaults
@@ -81,6 +84,8 @@ return {
             require("fzf-lua").live_grep({ exec_empty_query = true })
         end, opts, "Live grep")
         map("n", "<leader>/", fzf_lua.lgrep_curbuf, opts, "Find in current buffer")
+
+        map("n", "z=", fzf_lua.spell_suggest, opts, "Spelling suggestions")
 
         map("n", "<leader>hl", fzf_lua.highlights, opts, "Search hl groups")
         map("n", "<leader>fc", fzf_lua.colorschemes, opts, "Search colorschemes")
