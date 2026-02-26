@@ -1,6 +1,8 @@
 -- disable Netrw as advised for nvim-tree
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
+-- vim.g.netrw_banner = 0 -- disable netrw banner
+-- vim.g.netrw_liststyle = 3 -- tree style view
 
 local opt = vim.opt
 
@@ -64,4 +66,4 @@ opt.foldenable = false
 -- opt.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
 opt.fillchars:append({ eob = ' ' })
 -- what gets saved in sessions
-opt.sessionoptions = 'buffers,curdir,folds,globals,winpos,winsize'
+opt.sessionoptions = 'buffers,curdir,winpos,winsize'

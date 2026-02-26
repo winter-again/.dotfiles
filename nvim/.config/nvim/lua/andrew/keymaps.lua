@@ -1,4 +1,5 @@
 local opts = { silent = true }
+-- Map('n', '<leader>pv', '<cmd>Lex<CR>', { silent = true }, 'Open Netrw to the left')
 Map({ 'n', 'v' }, '<Space>', '<Nop>', opts, 'Unbind space')
 Map('n', '<Esc>', '<cmd>nohlsearch<CR>', opts, 'Turn off search highlights')
 -- split windows (reversed for my brain)
