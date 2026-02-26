@@ -54,10 +54,12 @@ return {
             -- (3)
             require('mason-tool-installer').setup({
                 auto_update = true,
-                debounce_hours = 24,
+                -- debounce_hours = 24,
                 ensure_installed = {
                     'black',
+                    'eslint_d',
                     'isort',
+                    'prettierd',
                     'stylua',
                 },
             })
@@ -131,11 +133,15 @@ return {
     },
     {
         'stevearc/conform.nvim',
-        event = { 'BufWritePre' },
+        -- event = { 'BufWritePre' },
+        event = { 'BufReadPre', 'BufNewFile' },
         cmd = { 'ConformInfo' },
         config = function()
             require('conform').setup({
                 formatters_by_ft = {
+                    css = { 'prettierd' },
+                    html = { 'prettierd' },
+                    javascript = { 'prettierd' },
                     lua = { 'stylua' },
                     -- run sequentially
                     python = { 'isort', 'black' },
@@ -168,7 +174,30 @@ return {
             end, {
                 desc = 'Re-enable autoformat-on-save',
             })
-            vim.cmd('FormatDisable') -- keep off by default
+            -- vim.cmd('FormatDisable') -- keep off by default
+        end,
+    },
+    {
+        'mfussenegger/nvim-lint',
+        event = { 'BufReadPre', 'BufNewFile' },
+        config = function()
+            require('lint').linters_by_ft = {
+                javascript = { 'eslint' },
+                typescript = { 'eslint' },
+            }
+
+            local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
+            vim.api.nvim_create_autocmd({ 'BufWritePost', 'InsertLeave' }, {
+                group = lint_group,
+                callback = function()
+                    require('lint').try_lint()
+                end,
+            })
+
+            -- manually trigger linting
+            vim.keymap.set('n', '<leader>l', function()
+                require('lint').try_lint()
+            end, { silent = true })
         end,
     },
     {
