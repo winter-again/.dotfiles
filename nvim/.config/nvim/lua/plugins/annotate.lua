@@ -1,8 +1,7 @@
 return {
     'winter-again/annotate.nvim',
     dependencies = { 'kkharji/sqlite.lua' },
-    dev = true,
-    -- enabled = true,
+    enabled = false,
     config = function()
         require('annotate').setup({
             -- db_uri = vim.fn.stdpath('data') .. '/annotations_db', -- default

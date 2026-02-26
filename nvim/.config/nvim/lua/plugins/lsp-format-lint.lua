@@ -273,7 +273,6 @@ return {
                     suffix = '', -- get rid of the code that is shown by default since format func handles it
                     format = diagn_format,
                 },
-                -- these show up in statuscol
                 signs = {
                     text = {
                         [vim.diagnostic.severity.ERROR] = sign_icons.Error,
@@ -296,7 +295,6 @@ return {
     },
     {
         'glepnir/lspsaga.nvim',
-        -- enabled = false,
         dev = true,
         event = 'LspAttach',
         dependencies = {
@@ -308,6 +306,11 @@ return {
                 ui = {
                     -- border = 'rounded',
                 },
+                -- definition = {
+                --     keys = {
+                --         edit = 'o',
+                --     },
+                -- },
                 finder = {
                     filter = {
                         ['textDocument/references'] = function(client_id, result)
@@ -344,6 +347,7 @@ return {
             Map('n', '<leader>rn', '<cmd>Lspsaga rename<CR>', { silent = true }, 'LspSaga rename')
             -- code action
             Map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', { silent = true }, 'LspSaga code action')
+            Map('n', '<leader>gd', '<cmd>Lspsaga peek_definition<CR>', { silent = true }, 'LspSaga peek defn')
         end,
     },
     {

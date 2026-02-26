@@ -96,6 +96,7 @@ return {
                         ['@lsp.type.unresolvedReference'] = { underdotted = true },
                         RenameMatch = { link = 'Search' },
                         Pmenu = { bg = colors.crust },
+                        TroubleNormal = { bg = 'none' },
                     }
                 end,
                 integrations = {
@@ -109,6 +110,7 @@ return {
                         colored_indent_levels = false,
                     },
                     lsp_saga = true,
+                    lsp_trouble = true,
                     native_lsp = {
                         enabled = true,
                         virtual_text = {
@@ -132,7 +134,8 @@ return {
     },
     {
         'rose-pine/neovim',
-        name = 'rose-pine',
+        name = 'rose-pine.nvim',
+        dev = true,
         lazy = false,
         priority = 997, -- ensure colorscheme loaded before all other start up plugins
         config = function()

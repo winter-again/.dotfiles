@@ -10,9 +10,40 @@ return {
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-nvim-lsp-signature-help',
         'hrsh7th/cmp-nvim-lsp-document-symbol',
-        'chrisgrieser/cmp-nerdfont',
+        {
+            'L3MON4D3/LuaSnip',
+            version = '2.*',
+            build = (function()
+                -- build step needed for optional regex support in snipppets
+                if vim.fn.executable('make') == 0 then
+                    return
+                end
+                return 'make install_jsregexp'
+            end)(),
+            -- ensure friendly-snippets is a dep
+            -- lazy_load to speed up startup time
+            dependencies = {
+                'rafamadriz/friendly-snippets',
+                config = function()
+                    require('luasnip.loaders.from_vscode').lazy_load()
+                end,
+            },
+            config = function()
+                require('luasnip').setup({
+                    update_events = { 'TextChanged', 'TextChangedI' },
+                })
+
+                Map({ 'i', 's' }, '<C-n>', function()
+                    require('luasnip').jump(1)
+                end, { silent = true }, 'Jump to next snippet node')
+                Map({ 'i', 's' }, '<C-p>', function()
+                    require('luasnip').jump(-1)
+                end, { silent = true }, 'Jump to previous snippet node')
+            end,
+        },
         'saadparwaiz1/cmp_luasnip', -- snippet cmp integration
         'onsails/lspkind.nvim', -- completion menu icons
+        'chrisgrieser/cmp-nerdfont',
     },
     config = function()
         local cmp = require('cmp')
@@ -40,7 +71,7 @@ return {
                     mode = 'symbol_text',
                     menu = {
                         nvim_lsp = '[LSP]',
-                        luasnip = '[LuaSnip]',
+                        luasnip = '[snip]',
                         path = '[path]',
                         buffer = '[buf]',
                         cmdline = '[cmd]',
@@ -103,6 +134,17 @@ return {
                 ['<CR>'] = cmp.mapping.confirm({ select = false }),
                 ['<C-y>'] = cmp.config.disable,
                 ['<C-e>'] = cmp.mapping.abort(),
+                -- nav snippet expansion locs
+                ['<C-l>'] = cmp.mapping(function()
+                    if luasnip.expand_or_locally_jumpable() then
+                        luasnip.expand_or_jump()
+                    end
+                end, { 'i', 's' }),
+                ['<C-h>'] = cmp.mapping(function()
+                    if luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
+                    end
+                end, { 'i', 's' }),
             }),
         })
         -- use buffer source for '/' and '?'

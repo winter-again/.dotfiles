@@ -108,7 +108,7 @@ function Winbar()
         winbar = string.format('%s%s', winbar, word_count())
     end
     if read_only == true then
-        winbar = winbar .. '󰌾'
+        winbar = winbar .. ' 󰌾'
     end
 
     local exclude = {

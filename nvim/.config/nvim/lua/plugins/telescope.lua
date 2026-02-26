@@ -1,21 +1,29 @@
 return {
     {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-            return vim.fn.executable('make') == 1
-        end,
-    },
-    {
-        'nvim-telescope/telescope-ui-select.nvim',
+        'nvim-telescope/telescope-file-browser.nvim',
+        dependencies = {
+            'nvim-telescope/telescope.nvim',
+            'nvim-lua/plenary.nvim',
+        },
     },
     {
         'nvim-telescope/telescope.nvim',
         branch = '0.1.x', -- this is supp to be the stable branch
         dependencies = {
             'nvim-lua/plenary.nvim',
-            'debugloop/telescope-undo.nvim',
-            'nvim-telescope/telescope-file-browser.nvim',
+            {
+                'debugloop/telescope-undo.nvim',
+            },
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'make',
+                cond = function()
+                    return vim.fn.executable('make') == 1
+                end,
+            },
+            {
+                'nvim-telescope/telescope-ui-select.nvim',
+            },
         },
         config = function()
             -- local actions = require('telescope.actions')
@@ -139,15 +147,15 @@ return {
             require('telescope').load_extension('fzf')
             require('telescope').load_extension('ui-select')
             require('telescope').load_extension('undo')
-            -- require('telescope').load_extension('persisted')
             require('telescope').load_extension('file_browser')
             -- require('telescope').load_extension('harpoon')
 
             local builtin = require('telescope.builtin')
             local opts = { silent = true }
-            -- use '<leader>ff' to find among ALL files; respects .gitignore
             -- vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
-            -- use '<leader>fg' to find among git files; again respects .gitignore
+            vim.keymap.set('n', '<leader>fn', function()
+                builtin.find_files({ cwd = vim.fn.stdpath('config') })
+            end)
             vim.keymap.set('n', '<leader>fmf', my_ff, opts)
             vim.keymap.set('n', '<leader>fgc', builtin.git_commits, opts)
             vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, opts)
