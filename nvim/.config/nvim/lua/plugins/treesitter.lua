@@ -1,10 +1,8 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-        'JoosepAlviste/nvim-ts-context-commentstring'
-    },
     build = ':TSUpdate',
     event = {'BufReadPost', 'BufNewFile'},
+    dependencies = 'JoosepAlviste/nvim-ts-context-commenstring',
     config = function()
         require('nvim-treesitter.configs').setup({
             -- first 5 are advised to always be installed
@@ -47,12 +45,6 @@ return {
                 -- disable = {'r'}
             },
             additional_vim_regex_highlighting = false,
-            -- treesitter playground module
-            playground = {
-                enable = true,
-                updatetime = 25,
-                persist_queries = false
-            },
             context_commentstring = {
                 enable = true,
                 enable_autocmd = false
