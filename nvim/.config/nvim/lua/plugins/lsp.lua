@@ -354,6 +354,10 @@ return {
                         },
                     },
                 },
+                ["astro"] = {
+                    capabilities = lsp_capabilities,
+                    on_attach = lsp_attach,
+                },
                 ["clangd"] = {
                     capabilities = lsp_capabilities,
                     on_attach = lsp_attach,
