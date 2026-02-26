@@ -120,8 +120,8 @@ return {
             -- seems to behave incorrectly when there's a Python function defn in the block
             -- 'vib' fails to include the function defn. line
             -- or at least it behaves strangely dep on cursor loc in the block...
-            map({ "x", "o" }, "ab", select("@codeblock.outer"), opts, "Around code block")
-            map({ "x", "o" }, "ib", select("@codeblock.inner"), opts, "Inside code block")
+            map({ "x", "o" }, "ab", select("@codeblock.outer"), opts, "Select around code block")
+            map({ "x", "o" }, "ib", select("@codeblock.inner"), opts, "Select inside code block")
 
             local function goto_next(textobj)
                 return function()
@@ -141,7 +141,8 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
-        event = { "BufReadPost", "BufNewFile" },
+        -- enabled = false,
+        -- event = { "BufReadPost", "BufNewFile" },
         dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
             require("treesitter-context").setup({
@@ -149,6 +150,12 @@ return {
                 multiwindow = true,
                 max_lines = 2,
                 line_numbers = true,
+                on_attach = function(bufnr)
+                    print(bufnr)
+                    -- disable b/c poor scrolling perf in markdown
+                    print(vim.bo[bufnr].filetype)
+                    return vim.bo[bufnr].filetype ~= "markdown"
+                end,
             })
         end,
     },

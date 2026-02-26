@@ -14,5 +14,5 @@ vim.filetype.add({
         ["env"] = "dotenv",
         ["tsconfig.json"] = "jsonc",
     },
-    pattern = {},
+    -- pattern = {},
 })

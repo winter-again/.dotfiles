@@ -3,17 +3,16 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
         require("lint").linters_by_ft = {
-            lua = { "selene" },
             javascript = { "eslint" },
             javascriptreact = { "eslint" },
+            lua = { "selene" },
+            markdown = { "markdownlint-cli2" },
+            sh = { "shellcheck" },
             typescript = { "eslint" },
             typescriptreact = { "eslint" },
-            sh = { "shellcheck" },
-            markdown = { "markdownlint-cli2" },
         }
 
-        -- autocommand that triggers linting
-        local lint_group = vim.api.nvim_create_augroup("Lint", { clear = true })
+        local lint_group = vim.api.nvim_create_augroup("lint", { clear = true })
         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
             group = lint_group,
             callback = function()
@@ -23,8 +22,8 @@ return {
                 require("lint").try_lint(nil, { ignore_errors = true })
             end,
         })
-        -- manually trigger linting
-        vim.keymap.set("n", "<leader><leader>l", function()
+
+        vim.keymap.set("n", "<leader>l", function()
             require("lint").try_lint()
         end, { silent = true, desc = "Manually trigger nvim-lint" })
     end,

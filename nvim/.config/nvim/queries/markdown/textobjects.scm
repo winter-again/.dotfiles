@@ -1,3 +1,5 @@
+;; extends
+
 ; define code block components as textobjects
 (fenced_code_block
     (info_string (language) @codeblock.lang)

@@ -11,21 +11,24 @@ return {
                     },
                 },
             },
+            {
+                "smjonas/inc-rename.nvim",
+                opts = {},
+            },
         },
         config = function()
             local methods = vim.lsp.protocol.Methods
 
+            local map = require("winteragain.globals").map
             local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
             vim.api.nvim_create_autocmd("LspAttach", {
                 group = au_group,
                 callback = function(event)
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
                     local bufnr = event.buf
-
-                    local map = require("winteragain.globals").map
                     local opts = { silent = true, buffer = bufnr }
 
-                    -- NOTE: some of these became default keymaps
+                    -- NOTE: some of these are now default keymaps
                     if client and client:supports_method(methods.textDocument_hover) then
                         map("n", "K", vim.lsp.buf.hover, opts, "Hover docs")
                     end
@@ -102,19 +105,8 @@ return {
                 end,
             })
 
-            -- lspconfig appearance and behavior
-            -- global floating window borders by replacing the orig. function
-            -- see here: https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
-            local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
-            vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
-                opts = opts or {}
-                -- opts.border = "rounded"
-                return orig_util_open_float_prev(contents, syntax, opts, ...)
-            end
-
             -- NOTE: https://neovim.io/doc/user/diagnostic.html
-            -- custom signs for diagnostics
-            -- trouble.nvim can use too
+            -- custom signs for diagnostics; trouble.nvim can use too
             local diagnostic_icons = {
                 Error = "",
                 Warn = "",
@@ -126,7 +118,7 @@ return {
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
             end
 
-            local function diagn_format(diagnostic)
+            local function diag_format(diagnostic)
                 return string.format(
                     "%s [%s]  %s",
                     diagnostic.message or "",
@@ -140,10 +132,9 @@ return {
                     spacing = 4,
                     prefix = "󰝤",
                     -- prefix = "󱓻",
-                    format = diagn_format,
+                    format = diag_format,
                 },
                 float = {
-                    -- border = "rounded",
                     prefix = function(diagnostic, i, total)
                         local severity_upper = vim.diagnostic.severity[diagnostic.severity]
                         local severity = severity_upper:sub(1, 1) .. severity_upper:sub(2):lower()
@@ -153,7 +144,7 @@ return {
                         return prefix, "Diagnostic" .. severity
                     end,
                     suffix = "", -- get rid of the code that is shown by default since format func handles it
-                    format = diagn_format,
+                    format = diag_format,
                 },
                 signs = {
                     text = {
@@ -225,6 +216,7 @@ return {
                 ["basedpyright"] = {
                     settings = {
                         basedpyright = {
+                            -- see settings: https://github.com/microsoft/pyright/blob/54f7da25f9c2b6253803602048b04fe0ccb13430/docs/settings.md
                             disableOrganizeImports = true, -- use Ruff instead
                             analysis = {
                                 autoSearchPaths = true,
@@ -238,31 +230,6 @@ return {
                         },
                     },
                 },
-                -- ["pyright"] = {
-                --     -- TODO: why this?
-                --     -- root_dir = require("lspconfig").util.root_pattern(".venv"),
-                --     -- remove capabilities that ruff can provide
-                --     -- https://github.com/astral-sh/ruff-lsp/issues/384
-                --     -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-                --     settings = {
-                --         -- see settings: https://github.com/microsoft/pyright/blob/54f7da25f9c2b6253803602048b04fe0ccb13430/docs/settings.md
-                --         pyright = {
-                --             disableOrganizeImports = true, -- use Ruff instead
-                --         },
-                --         python = {
-                --             analysis = {
-                --                 -- ignore = { '*' }, -- use Ruff for linting; disables all pyright
-                --                 -- alt: have to go one by one if preserving pyright type-checking
-                --                 -- see: https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
-                --                 -- note that some of the Pyright stuff are "hints" and can't be easily removed
-                --                 -- ex:
-                --                 diagnosticSeverityOverrides = {
-                --                     reportUndefinedVariable = "none",
-                --                 },
-                --             },
-                --         },
-                --     },
-                -- },
                 ["ruff"] = {
                     on_attach = function(client, bufnr)
                         -- disable Ruff's hover to use Pyright instead
@@ -379,15 +346,11 @@ return {
             require("fidget").setup({
                 notification = {
                     window = {
-                        normal_hl = "Comment",
+                        normal_hl = "Normal",
                         winblend = 0,
                     },
                 },
             })
         end,
-    },
-    {
-        "smjonas/inc-rename.nvim",
-        opts = {},
     },
 }

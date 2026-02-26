@@ -1,4 +1,5 @@
 ;; extends
+
 ; inject SQL highlighting into Python strings
 (string 
   (string_content) @injection.content

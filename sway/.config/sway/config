@@ -21,7 +21,7 @@ set {
     # yoru
     $bg #0f0f0f
     # iwa
-    $bg_alt #262626
+    $bg_alt #393939
     # yuki
     $fg #f0f0f0
     # ume

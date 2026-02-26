@@ -13,6 +13,12 @@ return {
             lsp = { enabled = false },
         },
         render_modes = true, -- retain rendering in all modes; less jarring
+        patterns = {
+            markdown = {
+                -- NOTE: not sure why but seem to need this for my custom queries to consistently apply
+                disable = true,
+            },
+        },
         anti_conceal = {
             -- disable rendering for the cursor line
             enabled = true,
@@ -27,14 +33,15 @@ return {
             sign = false,
             position = "inline",
             width = "block",
-            -- icons = { " 󰉫 ", " 󰉬 ", " 󰉭 ", " 󰉮 ", " 󰉯 ", " 󰉰 " },
             icons = { "󰎦 ", "󰎩 ", "󰎬 ", "󰎮 ", "󰎰 ", "󰎵 " },
+            -- icons = { " 󰉫 ", " 󰉬 ", " 󰉭 ", " 󰉮 ", " 󰉯 ", " 󰉰 " },
             -- left_pad = 1,
         },
         paragraph = { enabled = false },
         code = {
             enabled = false,
             sign = false,
+            -- conceal_delimiters = false,
             style = "language",
             border = "none",
         },
@@ -55,7 +62,7 @@ return {
             },
             checked = {
                 icon = "",
-                scoped_highlight = "@markup.list.checked_item",
+                scoped_highlight = "@markup.list.checked_item", -- custom highlight
             },
         },
         quote = {

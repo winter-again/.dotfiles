@@ -4,34 +4,42 @@ return {
         event = { "BufWritePre" },
         config = function()
             require("conform").setup({
+                -- NOTE: conform can find local formatters like prettier installed as dev dep
                 formatters_by_ft = {
+                    css = { "prettierd", "prettier", stop_after_reset = true },
+                    go = { "goimports", "gofmt" }, -- sequential
+                    html = { "prettierd", "prettier", stop_after_reset = true },
+                    javascript = { "prettierd", "prettier", stop_after_first = true },
+                    javascriptreact = { "prettierd", "prettier", stop_after_reset = true },
+                    just = { "just" },
                     lua = { "stylua" },
-                    python = { "ruff_organize_imports", "ruff_format", lsp_format = "fallback" },
-                    go = { "goimports", "gofmt" },
-                    html = { "prettier" },
-                    css = { "prettier" },
-                    javascript = { "prettier" },
-                    javascriptreact = { "prettier" },
-                    typescript = { "prettier" },
-                    typescriptreact = { "prettier" },
-                    rust = { "rustfmt", lsp_format = "fallback" },
+                    python = {
+                        "ruff_organize_imports",
+                        "ruff_format",
+                        -- lsp_format = "fallback"
+                    },
+                    rust = {
+                        "rustfmt",
+                        -- lsp_format = "fallback"
+                    },
+                    typescript = { "prettierd", "prettier", stop_after_reset = true },
+                    typescriptreact = { "prettierd", "prettier", stop_after_reset = true },
                     -- 'injected' allows formatting of code fence blocks
-                    -- could even have it in python to format sql inside of queries
+                    -- or in python to format sql inside of queries
                     -- see: https://github.com/stevearc/conform.nvim/blob/c36fc6492be27108395443a67bcbd2b3280f29c5/doc/advanced_topics.md
-                    -- markdown = { 'injected' },
+                    -- markdown = { "injected" },
                 },
                 format_on_save = function(bufnr)
                     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
                         return
                     end
 
-                    return { timeout_ms = 500, lsp_fallback = true }
+                    return { timeout_ms = 500, lsp_fallback = false }
                 end,
             })
 
-            -- manually trigger formatting
-            vim.keymap.set("n", "<leader><leader>fm", function()
-                require("conform").format({ async = true, lsp_fallback = true })
+            vim.keymap.set("n", "<leader><leader>f", function()
+                require("conform").format({ async = true, lsp_fallback = false })
             end, { silent = true, desc = "Manually format buffer with conform.nvim" })
 
             -- user commands for toggling autoformatting on save

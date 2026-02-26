@@ -1,13 +1,17 @@
 local map = require("winteragain.globals").map
 
 vim.opt_local.wrap = true
--- wrap long lines at chars in breakat
+-- wrap long lines at chars in 'breakat'
 vim.opt_local.linebreak = true
+-- wrapped lines keep any indents
+vim.opt_local.breakindent = true
+
 vim.opt_local.spell = true
 vim.opt_local.spelllang = "en_us"
+
 -- 1 makes concealed links look too long because it has to be a 1:1 conceal, meaning the "["
 -- is concealed with just a blank
-vim.opt_local.conceallevel = 2
+-- vim.opt_local.conceallevel = 2
 -- vim.opt_local.concealcursor = "nc" -- modes in which text in cursor line can remain concealed
 
 -- toggle checkbox and keep cursor in place
