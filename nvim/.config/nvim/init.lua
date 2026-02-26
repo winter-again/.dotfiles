@@ -46,7 +46,7 @@ local lazy_opts = {
         notify = false,
     },
     change_detection = {
-        enabled = true,
+        enabled = false,
         notify = false,
     },
 }
