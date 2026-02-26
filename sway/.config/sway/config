@@ -66,7 +66,7 @@ set {
     $browser firefox
     $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
-    # seems like the output names change sometimes
+    # use make, model, and serial since output names can change
     $primary_mon "BNQ BenQ LCD 93J02490SL0"
     $secondary_mon "BNQ BenQ LCD E2H03452SL0"
     $ws1 "1"
@@ -81,18 +81,17 @@ set {
     $ws10 "10"
 }
 
-# first available output will be used, so give laptop as fallback
+# first available output will be used
 workspace 1 output $primary_mon $laptop_disp
 workspace 2 output $primary_mon $laptop_disp
 workspace 3 output $primary_mon $laptop_disp
 workspace 4 output $primary_mon $laptop_disp
 workspace 5 output $primary_mon $laptop_disp
-
-workspace 6 output $secondary_mon $laptop_disp
-workspace 7 output $secondary_mon $laptop_disp
-workspace 8 output $secondary_mon $laptop_disp
-workspace 9 output $secondary_mon $laptop_disp
-workspace 10 output $secondary_mon $laptop_disp
+workspace 6 output $primary_mon $laptop_disp
+workspace 7 output $primary_mon $laptop_disp
+workspace 8 output $primary_mon $laptop_disp
+workspace 9 output $primary_mon $laptop_disp
+workspace 10 output $primary_mon $laptop_disp
 
 workspace 7 gaps inner 20
 workspace 7 gaps outer 20
