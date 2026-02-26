@@ -12,11 +12,17 @@ export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/.ripgreprc"
 export BROWSER="firefox"
 
-# override defaults
-# see: https://github.com/eza-community/eza/blob/d477699f89f2346be712f287287a7205f37933e9/man/eza_colors.5.md
-export LS_COLORS="di=1;36"
-# seems only EZA_COLORS has "da" option
-export EZA_COLORS="da=1;36"
+# override some eza colors
+# fd reads LS_COLORS, not EZA_COLORS
+# see: https://github.com/eza-community/eza/blob/main/man/eza_colors.5.md
+# and: https://github.com/eza-community/eza/blob/main/man/eza_colors-explanation.5.md
+# di = directories
+# ln = symlinks
+export LS_COLORS="di=1;36:ln=3;92"
+# EZA_COLORS supports some codes that LS_COLORS doesn't
+# da = date
+# or = symlinks with no target
+export EZA_COLORS=$LS_COLORS:"da=36:uu=1;34"
 
 # make fd use same colors as eza (set $LS_COLORS)
 # eval "$(dircolors -b)"
@@ -63,8 +69,8 @@ typeset -U path PATH # prevent path duplicates (keeps only leftmost occurrence)
 path+=("$HOME/.local/bin")
 
 # Go
-export GOPATH="$HOME/go" # $HOME/go is already the default
-export GOBIN="$GOPATH/bin" # binaries installed here, not set by default
+export GOPATH="$HOME/go" # $HOME/go is the default
+export GOBIN="$GOPATH/bin" # not set by default
 path+=("$(go env GOBIN)")
 # export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # only necessary if they differ
 
@@ -88,20 +94,21 @@ export PATH
 
 # -a = show hidden files
 alias ls="eza -a --icons --color=always --group-directories-first"
-alias ll="eza -lahM --icons --color=always --group-directories-first"
+alias ll="eza -lahM --icons --color=always --group-directories-first --time-style=long-iso"
 alias cp="cp -vi"
 alias mv="mv -vi"
 alias rm="rm -i"
 alias tree="eza -la --no-permissions --tree --level=2 --ignore-glob='.git|.venv|node_modules'"
 alias open="xdg-open"
 alias grep="grep --color=auto"
-alias xv="xan view --limit 20"
+alias xv="xan view -l 10"
 alias tv="tidy-viewer"
 alias j="just"
 alias jg="just -g"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
-alias fd="fd --hidden"
+# alias fd="fd --color=always --hidden --exclude .git --exclude .venv --exclude node_modules"
+alias fd="fd --color=always --hidden --exclude '{.git,.venv,node_modules}'"
 alias bot="btm"
 alias pn="pnpm"
 alias tr="trash-put"
