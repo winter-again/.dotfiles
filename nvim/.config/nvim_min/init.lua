@@ -27,7 +27,7 @@ local lazy_opts = {
         path = '~/Documents/projects/nvim-dev',
     },
     install = {
-        colorscheme = { 'kanagawa' }, -- try to load one of these colorschemes when starting an installation during startup
+        colorscheme = { 'catppuccin' }, -- try to load one of these colorschemes when starting an installation during startup
     },
 }
 -- get plugin specs from their individual files in the plugins directory
@@ -38,5 +38,5 @@ require('andrew.keymaps')
 require('andrew.globals')
 require('andrew.autocmds')
 
-vim.cmd('colorscheme kanagawa') -- default colorscheme
+vim.cmd('colorscheme catppuccin') -- default colorscheme
 Transp()
