@@ -6,6 +6,7 @@ return {
         config = function()
             require('tokyonight').setup({
                 style = 'night',
+                lualine_bold = true,
                 on_colors = function(colors)
                     colors.border = '#696d87' -- override window border color
                 end,
@@ -14,7 +15,7 @@ return {
                 on_highlights = function(highlights, colors)
                     -- using this keeps cursorline highlight from getting overriden in markdown code blocks
                     highlights['@text.literal.markdown'] = {link = '@punctuation.delimiter.markdown'}
-                    highlights['FidgetTask'] = {fg=colors.fg} -- override for fidget plugin
+                    -- highlights['FidgetTask'] = {fg=colors.fg} -- override for fidget plugin
                 end
             })
             -- vim.cmd('colorscheme tokyonight') -- set default colorscheme after configuring
@@ -39,7 +40,7 @@ return {
                     return {
                         WinSeparator = {fg = theme.ui.nontext}
                     }
-                end,
+                end
             })
         end
     },
@@ -105,7 +106,7 @@ return {
                 variant = 'moon',
                 highlight_groups = {
                     TreesitterContext = {bg='foam', blend=10},
-                    -- for transparency, otherwise bg remains
+                    -- for transparency, otherwise bg remains in signcolumn
                     GitSignsAdd = {bg='none'},
                     GitSignsDelete = {bg='none'},
                     GitSignsChange = {bg='none'},
