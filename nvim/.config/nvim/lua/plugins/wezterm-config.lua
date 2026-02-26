@@ -3,12 +3,41 @@ return {
     -- dev = true,
     config = function()
         local wezterm_config = require('wezterm-config')
+
+        -- simplified version using a user command
+        vim.api.nvim_create_user_command('Bg', function(opts)
+            local bg_profile = 'bg_' .. tostring(opts.fargs[1])
+            wezterm_config.set_wezterm_user_var('profile_background', bg_profile)
+        end, {
+            nargs = 1,
+            complete = function(ArgLead, CmdLine, CursorPos)
+                -- hard-coded for now...
+                return {
+                    'default',
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '5_1',
+                    '6',
+                    '7',
+                    '7_1',
+                    '8',
+                    '9',
+                    '10',
+                    '11',
+                }
+            end,
+            desc = 'Set Wezterm background',
+        })
+
         local function set_bg_colorscheme(bg)
             local mapper = {
-                ['tokyonight'] = { 'bg_1', 'bg_4', 'bg_6' },
-                ['rose-pine'] = { 'bg_5', 'bg_6', 'bg_8', 'bg_9', 'bg_10' },
+                ['tokyonight'] = { 'bg_1', 'bg_4' },
+                ['rose-pine'] = { 'bg_5', 'bg_6', 'bg_7', 'bg_9', 'bg_10' },
                 ['catppuccin'] = { 'bg_3' },
-                ['kanagawa'] = { 'bg_7' },
+                ['kanagawa'] = { 'bg_8' },
                 ['gruvbox'] = { 'bg_2' },
             }
             for colorscheme, bgs in pairs(mapper) do

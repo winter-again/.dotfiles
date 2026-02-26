@@ -38,7 +38,7 @@ config.colors = {
 
 local profile_data = require('profile_data')
 local utils = require('utils')
-config.background = utils.set_bg(5)
+config.background = utils.set_bg(7)
 
 -- this needs explicit setting if not the default
 -- config.xcursor_theme = 'Bibata-Modern-Ice'
