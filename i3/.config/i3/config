@@ -1,5 +1,5 @@
 set $mod Mod1
-# font pango:Hack Nerd Font Mono 10
+font pango:Hack Nerd Font Mono 10
 exec --no-startup-id xss-lock --transfer-sleep-lock -- betterlockscreen --lock dim
 exec --no-startup-id nm-applet
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
@@ -138,10 +138,10 @@ bindsym $mod+r mode "resize"
 # minimize borders
 for_window [class="^.*"] border pixel 2
 #                       border  bg      text    indic   child_border
-client.focused          #7aa2f7 #7aa2f7 #c0caf5 #9ece6a
-client.focused_inactive #3b4261 #3b4261 #c0caf5 #484e50   #3b4261
-client.unfocused        #3b4261 #3b4261 #c0caf5 #3b4261   #3b4261
-client.urgent           #f7768e #f7768e #3b4261 #f7768e   #f7768e
+client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9ece6a
+client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261   #3b4261
+client.unfocused        #1a1b26 #1a1b26 #c0caf5 #1a1b26   #1a1b26
+client.urgent           #f7768e #f7768e #1a1b26 #f7768e   #f7768e
 client.placeholder      #000000 #000000 #c0caf5 #000000   #000000
 focus_follows_mouse no
 
