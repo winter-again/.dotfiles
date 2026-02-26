@@ -1,6 +1,6 @@
 -- NOTE: this is just for testing purposes to avoid
 -- having to mess with the wezterm plugin repos/directory directly
-local wezterm = require('wezterm')
+local wezterm = require("wezterm")
 local M = {}
 
 ---Interpret the Wezterm user var that got overridden and use a specific helper
@@ -20,13 +20,13 @@ function M.override_user_var(overrides, name, value)
     -- otherwise it returns 1 (?) so I guess an error code or at least
     -- something with type == 'number'
     local parsed_val = wezterm.json_parse(value)
-    if type(parsed_val) == 'table' then
+    if type(parsed_val) == "table" then
         overrides[name] = parsed_val
     else
-        if value == 'true' or value == 'false' then
+        if value == "true" or value == "false" then
             -- convert to bool
-            value = value == 'true'
-        elseif string.match(value, '^%d*%.?%d+$') then
+            value = value == "true"
+        elseif string.match(value, "^%d*%.?%d+$") then
             -- convert to number
             value = tonumber(value)
         end

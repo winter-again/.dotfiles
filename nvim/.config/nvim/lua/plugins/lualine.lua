@@ -78,8 +78,6 @@ return {
             options = {
                 theme = "auto",
                 globalstatus = true,
-                -- component_separators = { left = '', right = '' },
-                -- section_separators = { left = '', right = '' },
                 component_separators = { left = "", right = "" },
                 section_separators = { left = "", right = "" },
             },
@@ -116,9 +114,12 @@ return {
                     },
                 },
                 lualine_x = {
-                    "encoding",
+                    -- "encoding",
                     "filetype",
-                    { display_tools, icon = { " LSP:" } },
+                    {
+                        display_tools,
+                        icon = { " LSP:" },
+                    },
                     { qflist, icon = { " QF:" } },
                 },
                 lualine_y = { "progress" },
