@@ -1,18 +1,22 @@
 sort=-time
-output=BNQ BenQ LCD 93J02490SL0
-layer=overlay
+
+on-button-left=invoke-default-action
+on-button-right=dismiss
+
+font=ZedMono Nerd Font Mono 12
+background-color=#0f0f0f
+text-color=#f0f0f0
 width=400
 height=300
 border-size=2
+border-color=#8a98ac
 icons=0
-font=ZedMono Nerd Font Mono 12
-max-icon-size=64
+max-visible=5
+# output=BNQ BenQ LCD 93J02490SL0
 default-timeout=5000
 ignore-timeout=1
-
-text-color=#f0f0f0
-background-color=#0f0f0f
-border-color=#8a98ac
+layer=overlay
+anchor=top-right
 
 [urgency=low]
 border-color=#8a98ac

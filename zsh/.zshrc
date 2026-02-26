@@ -7,7 +7,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export SHELL=/usr/bin/zsh
 # for wezterm undercurl supp, but it seems to cause partial line issues?
-# without it underlines look ok??
+# without it underlines are ok
 # export TERM=wezterm
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -51,6 +51,7 @@ alias fd="fd --hidden"
 alias nc="ncmpcpp"
 alias nn="cd ~/Documents/notebook"
 alias pn="pnpm"
+alias tr="trash-put"
 # git aliases
 alias gs="git status"
 alias ga="git add"
@@ -127,7 +128,7 @@ function dots() {
 # }
 # show journalctl for rclone backup service
 function bk() {
-    journalctl --user -fu rclone_backup.service -n 30
+    journalctl --user -fu "$1" -n 30
 }
 
 function mntbk() {

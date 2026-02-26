@@ -20,6 +20,7 @@ return {
                 max_height = 16,
                 border = "none",
                 -- win_options = { winblend = 20 },
+                delete_to_trash = true,
                 preview_split = "right",
                 override = function(conf)
                     conf.relative = "editor"
