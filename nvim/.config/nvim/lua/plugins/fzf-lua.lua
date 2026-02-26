@@ -37,6 +37,7 @@ return {
                 actions = {
                     -- NOTE: inherits from actions.files
                     ["ctrl-g"] = actions.toggle_ignore,
+                    ["ctrl-q"] = actions.file_sel_to_qf,
                 },
             },
             grep = {
@@ -47,6 +48,9 @@ return {
                     file_part = "FzfLuaFzfPrompt",
                 },
                 rg_opts = "--column --line-number --color=always --smart-case --max-columns=4096 --hidden --no-ignore --follow --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/* -e",
+                actions = {
+                    ["ctrl-q"] = actions.file_sel_to_qf,
+                },
             },
         })
 
