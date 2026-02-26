@@ -3,7 +3,7 @@ return {
     {
         'neovim/nvim-lspconfig',
         event = {'BufReadPre', 'BufNewFile'},
-	    enabled = true,
+	    enabled = false,
         dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
@@ -43,13 +43,25 @@ return {
                     'sqlls',
                     'marksman',
                     'bashls'
-                },
-                automatic_installation = false
-            })
 
+                    pyright = {},
+                    ruff_lsp = {}, -- happens to be LSP interface for a linter
+                    r_language_server = {},
+                    html = {},
+                    emmet_ls = {},
+                    cssls = {},
+                    tsserver = {},
+                    eslint = {},
+                    astro = {},
+                    jsonls = {},
+                    sqlls = {},
+                    marksman = {},
+                    bashls = {}
+                }
+            })
             local handlers = {
                 function(server_name)
-                    require('lspconfig')[server_name].setup({})
+                    require('lspconfig')[server_name].setup()
                 end,
                 ['lua_ls'] = function()
                     require('lspconfig')['lua_ls'].setup({
@@ -75,24 +87,74 @@ return {
                             }
                         }
                     })
-                end,
-                ['ruff_lsp'] = function()
-                    require('lspconfig')['ruff_lsp'].setup({
-                        on_attach = function(client, bufnr)
-                            client.server_capabilities.hoverProvider = false
-                        end
-                    })
                 end
             }
-            -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
-            -- from nvim-ufo
-            lsp_capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true
-            }
             require('mason-lspconfig').setup_handlers(handlers)
+            -- local servers = {
+            --     -- LSPs
+            --     lua_ls = {
+            --         Lua = {
+            --             runtime = {
+            --                 version = 'LuaJIT'
+            --             },
+            --             diagnostics = {
+            --                 globals = {'vim'}
+            --             },
+            --             workspace = {
+            --                 library = vim.api.nvim_get_runtime_file('', true),
+            --                 checkThirdParty = false
+            --             },
+            --             telemetry = {
+            --                 enable = false
+            --             },
+            --             -- for neodev
+            --             completion = {
+            --                 callSnippet = 'Replace'
+            --             }
+            --         }
+            --     },
+            --     pyright = {},
+            --     ruff_lsp = {}, -- happens to be LSP interface for a linter
+            --     r_language_server = {},
+            --     html = {},
+            --     emmet_ls = {},
+            --     cssls = {},
+            --     tsserver = {},
+            --     eslint = {},
+            --     astro = {},
+            --     jsonls = {},
+            --     sqlls = {},
+            --     marksman = {},
+            --     bashls = {}
+            -- }
+            -- require('mason-lspconfig').setup({
+            --     ensure_installed = vim.tbl_keys(servers), -- install from table above
+            --     automatic_installation = false -- don't autoinstall when opening file
+            -- })
+            -- -- setup LSPs:
+            -- -- if using below setup functionality, shouldn't use direct setup from lspconfig
+            -- -- see docs here (search `setup_handlers`): https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/mason-lspconfig.txt
+            -- -- below uses kickstart.nvim's struc instead of what's in the above docs
+            -- -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
+            -- -- from kickstart.nvim
+            -- local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+            -- lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
+            -- -- from nvim-ufo
+            -- lsp_capabilities.textDocument.foldingRange = {
+            --     dynamicRegistration = false,
+            --     lineFoldingOnly = true
+            -- }
+            --
+            -- require('mason-lspconfig').setup_handlers({
+            --     function(server_name)
+            --         require('lspconfig')[server_name].setup({
+            --             capabilities = lsp_capabilities,
+            --             on_attach = on_attach,
+            --             settings = servers[server_name],
+            --             filetypes = (servers[server_name] or {}).filetypes
+            --         })
+            --     end
+            -- })
 
             -- lspconfig appearance and behavior
             require('lspconfig.ui.windows').default_options.border = 'rounded'
@@ -231,7 +293,7 @@ return {
                     ['<C-n>'] = cmp.mapping.select_next_item({behavior = cmp.SelectBehavior.Select}),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<CR>'] = cmp.mapping.confirm({behavior=cmp.ConfirmBehavior.Replace, select=false}),
+                    ['<CR>'] = cmp.mapping.confirm({behavior=cmp.ConfirmBehavior.Replace, select=false}), -- only confirm explicitly selected
                     ['<C-y>'] = cmp.config.disable,
                     ['<C-e>'] = cmp.mapping.abort()
 
