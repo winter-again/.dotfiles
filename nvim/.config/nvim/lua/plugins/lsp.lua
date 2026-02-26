@@ -632,7 +632,6 @@ return {
                 end
             end
 
-            -- from kickstart.nvim
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
             -- also see: https://github.com/hrsh7th/cmp-nvim-lsp/issues/38#issuecomment-1815265121
             -- NOTE: snippetSupport = false by default but true in require('cmp_nvim_lsp').default_capabilities() so it's forced to true
@@ -642,7 +641,9 @@ return {
             if ok_cmp then
                 lsp_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, cmp.default_capabilities())
             elseif ok_blink then
-                lsp_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, blink.get_lsp_capabilities({}, false))
+                -- NOTE: blink already includes the built-in default capabilities, so this should be redundant
+                -- lsp_capabilities = vim.tbl_deep_extend("force", lsp_capabilities, blink.get_lsp_capabilities({}, false))
+                lsp_capabilities = blink.get_lsp_capabilities()
             end
 
             -- lspconfig appearance and behavior
