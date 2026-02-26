@@ -349,13 +349,9 @@ user_pref(
 user_pref("ui.key.menuAccessKeyFocuses", false);
 // compact tab bar
 user_pref("browser.uidensity", 1);
-// highlight all search hits
-user_pref("findbar.highlightAll", true);
 // search highlighting
 user_pref("ui.textSelectAttentionBackground", "#8f8aac");
 user_pref("ui.textHighlightBackground", "#767676");
-// allow userChrome.css customization
-user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 // allow suggestions from bookmarks
 user_pref("browser.urlbar.suggest.bookmark", true);
 // whether to show bookmarks bar: always, never, or newtab

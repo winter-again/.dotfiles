@@ -1339,3 +1339,133 @@ user_pref(
     "_user.js.parrot",
     "SUCCESS: No no he's not dead, he's, he's restin'!"
 );
+
+/****************************************************************************
+ * Overrides and additions
+ ****************************************************************************/
+// Home page
+user_pref("browser.startup.page", 1);
+user_pref("browser.startup.homepage", "about:home");
+user_pref("browser.newtabpage.enabled", true);
+// remove news section
+user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
+
+// force DNS-over-HTTPS
+user_pref("network.trr.mode", 3);
+user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
+user_pref("network.trr.custom_uri", "https://dns.quad9.net/dns-query");
+
+/* 0815: disable tab-to-search [FF85+]
+ * Alternatively, you can exclude on a per-engine basis by unchecking them in Options>Search
+ * [SETTING] Search>Address Bar>When using the address bar, suggest>Search engines ***/
+user_pref("browser.urlbar.suggest.engines", false);
+
+// TODO: 2652: disable downloads panel opening on every download [FF96+]
+// user_pref("browser.download.alwaysOpenPanel", true);
+
+// 5003: disable saving passwords
+user_pref("signon.rememberSignons", false);
+
+/* 5017: disable Form Autofill
+ * If .supportedCountries includes your region (browser.search.region) and .supported
+ * is "detect" (default), then the UI will show. Stored data is not secure, uses JSON
+ * [SETTING] Privacy & Security>Forms and Autofill>Autofill addresses
+ * [1] https://wiki.mozilla.org/Firefox/Features/Form_Autofill ***/
+user_pref("extensions.formautofill.addresses.enabled", false); // [FF55+]
+user_pref("extensions.formautofill.creditCards.enabled", false); // [FF56+]
+
+user_pref("browser.shell.checkDefaultBrowser", false);
+user_pref("browser.preferences.moreFromMozilla", false);
+user_pref("browser.aboutwelcome.enabled", false);
+user_pref("browser.profiles.enabled", true);
+
+user_pref("browser.compactmode.show", true);
+
+// AI
+user_pref("browser.ml.enable", false);
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.menu", false);
+user_pref("browser.tabs.groups.smart.enabled", false);
+user_pref("browser.ml.linkPreview.enabled", false);
+
+// FULLSCREEN NOTICE
+user_pref("full-screen-api.transition-duration.enter", "0 0");
+user_pref("full-screen-api.transition-duration.leave", "0 0");
+user_pref("full-screen-api.warning.timeout", 0);
+
+// TAB BEHAVIOR
+user_pref("browser.bookmarks.openInTabClosesMenu", false);
+user_pref("browser.menu.showViewImageInfo", true);
+user_pref("layout.word_select.eat_space_to_next_word", false);
+
+// PREF: disable unified search button at left of urlbar
+user_pref("browser.urlbar.scotchBonnet.enableOverride", false);
+
+// PREF: disable Firefox Sync
+user_pref("identity.fxaccounts.enabled", false);
+// PREF: disable the Firefox View tour from popping up
+user_pref("browser.firefox-view.feature-tour", '{"screen":"","complete":true}');
+
+// hide weather on New Tab page
+user_pref("browser.newtabpage.activity-stream.showWeather", false);
+
+/* 5508: disable all DRM (Digital Rights Management) content (EME: Encryption Media Extension)
+ * Optionally hide the UI setting which also disables the DRM prompt
+ * [SETTING] General>DRM Content>Play DRM-controlled content
+ * [TEST] https://bitmovin.com/demos/drm
+ * [1] https://www.eff.org/deeplinks/2017/10/drms-dead-canary-how-we-just-lost-web-what-we-learned-it-and-what-we-need-do-next ***/
+user_pref("media.eme.enabled", false);
+
+// SIDEBAR
+// activate sidebar
+user_pref("sidebar.revamp", true);
+user_pref("sidebar.verticalTabs", true);
+// "always-show" is default vs. "expand-on-hover"
+// Former might be better for now because the hover is overly sensitive
+user_pref("sidebar.visibility", "always-show");
+// comma-sep list of extra buttons to show at bottom of sidebar
+user_pref("sidebar.main.tools", "bookmarks");
+user_pref("sidebar.animation.enabled", false);
+
+// disable media keys, picture-in-picture, and topbar menu keys
+user_pref("media.hardwaremediakeys.enabled", false);
+user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
+user_pref(
+    "media.videocontrols.picture-in-picture.urlbar-button.enabled",
+    false
+);
+user_pref("ui.key.menuAccessKeyFocuses", false);
+// compact tab bar
+user_pref("browser.uidensity", 1);
+// highlight all search hits
+user_pref("findbar.highlightAll", true);
+// search highlighting
+user_pref("ui.textSelectAttentionBackground", "#8f8aac");
+user_pref("ui.textHighlightBackground", "#767676");
+// allow userChrome.css customization
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+// allow suggestions from bookmarks
+// user_pref("browser.urlbar.suggest.bookmark", true);
+// whether to show bookmarks bar: always, never, or newtab
+user_pref("browser.toolbars.bookmarks.visibility", "never");
+// disable hover preview on tabs
+user_pref("browser.tabs.hoverPreview.enabled", false);
+user_pref("browser.tabs.hoverPreview.showThumbnails", false);
+
+// XDG desktop portal features
+// 0 = never, 1 = always, 2 = auto
+// file picker
+user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
+// mime handler
+user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
+// settings/look-and-feel information
+user_pref("widget.use-xdg-desktop-portal.settings", 1);
+// geolocation
+user_pref("widget.use-xdg-desktop-portal.location", 0);
+// opening to a file
+user_pref("widget.use-xdg-desktop-portal.open-uri", 1);
+
+// recommended for 60hz+ displays
+user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
+user_pref("general.smoothScroll", true); // DEFAULT
+user_pref("mousewheel.default.delta_multiplier_y", 275); // 250-400; adjust this number to your liking
