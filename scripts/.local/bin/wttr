@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+TEMP_SYMBOL="C"
+query="wttr.in/?format=j1" # returns weather based on IP
+resp=$(curl -s "$query")
+desc="$(echo "$resp" | jaq -r ".current_condition[0].weatherDesc[0].value")"
+feels_like="$(echo "$resp" | jaq -r ".current_condition[0].FeelsLikeC") $TEMP_SYMBOL"
+
+printf '{"text": "%s | %s", "class": "custom-weather"}' "$desc" "$feels_like"

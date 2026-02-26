@@ -79,7 +79,7 @@
         ],
         "return-type": "json",
         "interval": 1800, // every half hour
-        "exec": "~/.local/bin/weather"
+        "exec": "~/.local/bin/wttr"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
