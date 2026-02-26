@@ -18,13 +18,15 @@ else
         ~/Documents/code \
         ~/Documents/code/nvim-dev \
         --min-depth 1 --max-depth 1 --type d | \
-        fzf-tmux -p --prompt=" Session: " --no-preview --color=fg:#c0caf5,bg:-1,hl:#9d7cd8 \
+        fzf-tmux -p --prompt=" Session: " --no-preview \
         --no-separator \
-        --color=fg+:#c0caf5,bg+:#283457,hl+:#7dcfff \
+        --color=fg:#c0caf5,bg:-1,hl:underline:#9d7cd8 \
+        --color=fg+:#c0caf5,bg+:#283457,hl+:underline:#7dcfff \
         --color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5 \
         --color=marker:#9ece6a,spinner:#9ece6a \
         --color=gutter:-1,border:#7aa2f7,header:-1 \
-        --color=preview-fg:#c0caf5,preview-bg:-1)
+        --color=preview-fg:#c0caf5,preview-bg:-1
+    )
 fi
 
 if [[ -z $selected ]]; then
