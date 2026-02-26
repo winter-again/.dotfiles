@@ -21,7 +21,7 @@ Core:
 Other:
 - [xclip](https://github.com/astrand/xclip)
 - [zoxide](https://github.com/ajeetdsouza/zoxide)
-- [exa](https://github.com/ogham/exa)
+- [eza](https://github.com/eza-community/eza)
 - [bat](https://github.com/sharkdp/bat)
 - [delta](https://github.com/dandavison/delta)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
