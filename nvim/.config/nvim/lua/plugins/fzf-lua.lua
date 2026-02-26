@@ -2,20 +2,37 @@ return {
     "ibhagwan/fzf-lua",
     -- 'https://gitlab.com/ibhagwan/fzf-lua', -- Gitlab alt
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    enabled = true,
     keys = { "<leader>ff", "<leader>fs", "<leader>fl" },
     config = function()
         local fzf_lua = require("fzf-lua")
         fzf_lua.setup({
-            fzf_colors = true,
-            winopts = {
-                border = "none",
+            defaults = {
+                formatter = "path.dirname_first",
+                -- hls = {
+                --     dir_part = "FzfLuaNormal",
+                --     file_part = "FzfLuaFzfPrompt",
+                -- },
             },
+            -- NOTE: for fzf only; can override the env var defaults
+            -- fzf_colors = {
+            --     ["hl"] = "#8f8aac",
+            --     ["hl+"] = "#8a98ac",
+            -- },
             -- open multiple files by marking w/ tab
             files = {
                 actions = {
                     ["default"] = require("fzf-lua.actions").file_edit,
                 },
+            },
+            grep = {
+                prompt = "rg❯ ",
+                input_prompt = "Grep for❯ ",
+                hls = {
+                    dir_part = "FzfLuaNormal",
+                    file_part = "FzfLuaFzfPrompt",
+                },
+                rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/* -e",
+                -- rg_glob = true,
             },
         })
 
@@ -46,9 +63,9 @@ return {
         map("n", "<leader>fgc", fzf_lua.git_commits, opts, "Search proj git commit log")
 
         map("n", "<leader>fs", function()
-            require("fzf-lua").live_grep_glob({
+            require("fzf-lua").live_grep({
                 exec_empty_query = true,
-                cmd = "rg --column --line-number --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/*",
+                -- cmd = "rg --column --line-number --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/*",
             })
         end, opts, "Live grep")
         map("n", "<leader>/", fzf_lua.lgrep_curbuf, opts, "Find in current buffer")

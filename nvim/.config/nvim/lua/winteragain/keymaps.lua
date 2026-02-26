@@ -6,15 +6,15 @@ end
 local opts = { silent = true }
 
 -- map('n', '<leader>pv', '<cmd>Lex<CR>', opts, 'Open Netrw to the left')
-map("n", "<leader>w", function()
-    vim.cmd("silent! write")
-end, opts, "Write buf")
+-- map("n", "<leader>w", function()
+--     vim.cmd("silent! write")
+-- end, opts, "Write buf")
 map({ "n", "v" }, "<Space>", "<Nop>", opts, "Unbind space")
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", opts, "Turn off search highlights")
 -- split windows (reversed for my brain)
 map("n", "<leader>sh", ":split<CR><C-w>w", opts, "Horizontal split")
 map("n", "<leader>sv", ":vsplit<CR><C-w>w", opts, "Vertical split")
-map("n", "<leader><leader>c", "<cmd>close<CR>", opts, "Close window w/o accidentally quitting")
+map("n", "<leader><leader>c", "<cmd>close<CR>", opts, "Close window")
 map("n", "<C-h>", "<C-w>h", opts, "Move left")
 map("n", "<C-j>", "<C-w>j", opts, "Move down")
 map("n", "<C-k>", "<C-w>k", opts, "Move up")
@@ -57,7 +57,7 @@ map("n", "<C-a>", "gg<S-v>G", opts, "Select all")
 -- cycle through buffers if not using bufferline
 map("n", "<Tab>", "<cmd>bnext<CR>", opts, "Next buffer")
 map("n", "<S-Tab>", "<cmd>bprev<CR>", opts, "Previous buffer")
-map("n", "<leader>db", "<cmd>bn<CR><cmd>bd#<CR>", opts, "Delete buffer w/o closing window")
+map("n", "<leader>bd", "<cmd>bn<CR><cmd>bd#<CR>", opts, "Delete buffer w/o closing window")
 -- nav quickfix list
 map("n", "<leader>cn", "<cmd>cnext<CR>zz", opts, "Next quickfixlist")
 map("n", "<leader>cp", "<cmd>cprev<CR>zz", opts, "Prev quickfixlist")

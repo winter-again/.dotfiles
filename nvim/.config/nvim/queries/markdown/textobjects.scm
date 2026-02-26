@@ -1,6 +1,5 @@
-; define code blocks as textobj
-(code_fence_content) @block.inner
-
+; define code block components as textobjects
 (fenced_code_block
-    (info_string (language) @block.lang)
-) @block.outer
+    (info_string (language) @codeblock.lang)
+    (code_fence_content) @codeblock.inner
+) @codeblock.outer
