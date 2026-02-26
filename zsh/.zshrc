@@ -110,6 +110,10 @@ obs() {
     fi
     git status
 }
+# show journalctl for rclone backup service
+bk() {
+    journalctl -u rclone_backup.service -n 30
+}
 # https://github.com/junegunn/fzf/wiki/Examples#changing-directory
 cdf() {
     local dir
@@ -121,7 +125,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 # Java for pyspark
-# export JAVA_HOME="/usr/lib/jvm/java-1.11.0-openjdk-amd64"
+export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
 ################################
 # starship (keep at end of file)
