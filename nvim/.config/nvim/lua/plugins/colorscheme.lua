@@ -17,6 +17,7 @@ return {
                 end,
                 on_highlights = function(highlights, colors)
                     highlights['WinBar'] = { bg = 'none', italic = true }
+                    highlights['WinBarNC'] = { bg = 'none', italic = true }
                     -- highlights['Visual'] = { bg = colors.bg_visual, reverse = true }
                     highlights['LineNr'] = { fg = '#696d87' } -- line number color
                     highlights['CursorLineNr'] = { fg = colors.fg } -- cursor line number color
@@ -86,6 +87,7 @@ return {
                         LineNr = { fg = colors.surface2 },
                         -- Visual = { reverse = true },
                         WinBar = { bg = 'none', italic = true },
+                        WinBarNC = { bg = 'none', italic = true },
                         DiagnosticUnderlineError = { underdotted = true },
                         DiagnosticUnderlineWarn = { underdotted = true },
                         DiagnosticUnderlineInfo = { underdotted = true },
@@ -141,6 +143,7 @@ return {
                     TreesitterContext = { bg = 'foam', blend = 10 },
                     -- Visual = { reverse = true },
                     WinBar = { bg = 'none', italic = true },
+                    WinBarNC = { bg = 'none', italic = true },
                     WinSeparator = { fg = 'muted', bg = 'none' },
                     -- for transparency, otherwise bg remains in signcolumn
                     GitSignsAdd = { bg = 'none' },
