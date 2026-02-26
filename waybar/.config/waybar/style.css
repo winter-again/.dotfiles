@@ -1,6 +1,6 @@
 * {
     font-family:
-        JetBrains Mono,
+        ZedMono Nerd Font,
         Noto Sans CJK KR;
     border: none;
     font-size: 14px;
@@ -54,8 +54,7 @@ tooltip {
 }
 
 #workspaces button.urgent {
-    /* border: 2px solid #db4b4b; */
-    color: #db4b4b;
+    color: #f7768e;
 }
 
 #custom-spotify {
@@ -104,17 +103,15 @@ tooltip {
 }
 
 #temperature.critical {
-    /* border: 2px solid #db4b4b; */
-    color: #db4b4b;
+    color: #f7768e;
 }
 
 #network.disconnected {
-    /* border: 2px solid #db4b4b; */
-    color: #db4b4b;
+    color: #f7768e;
 }
 
 #battery.critical:not(.charging) {
-    color: #db4b4b;
+    color: #f7768e;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -124,7 +121,7 @@ tooltip {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    box-shadow: inset 0 -3px #db4b4b;
+    box-shadow: inset 0 -3px #f7768e;
 }
 
 label:focus {

@@ -85,7 +85,7 @@
         "format-bluetooth-muted": "󰝟 {icon} {format_source}",
         // "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
+            "headphone": " ",
             "default": [
                 " ",
                 " ",
@@ -96,12 +96,12 @@
     },
     "cpu": {
         // "format": "<span font='16' rise='-2000'></span> {usage}%",
-        "format": " {usage}%",
+        "format": "  {usage}%",
         "tooltip": false
     },
     "memory": {
         // "format": "<span font='16' rise='-2000'></span> {}%"
-        "format": " {}%"
+        "format": "  {}%"
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -118,7 +118,7 @@
         // "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {signalStrength}%",
         // "format-ethernet": "<span font='16' rise='-2000'>󰈀</span> {bandwidthTotalBytes}",
         "format-wifi": "󰖩 {signalStrength}%",
-        "format-ethernet": "󰈀 {bandwidthTotalBytes}",
+        "format-ethernet": "󰈀  {bandwidthTotalBytes}",
         "tooltip-format-wifi": "󰖩 {essid}",
         "tooltip-format-ethernet": "󰈀 {ifname}  {bandwidthUpBytes}  {bandwidthDownBytes}",
         "format-linked": "{ifname} (No IP)",
