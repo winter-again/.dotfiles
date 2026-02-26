@@ -16,11 +16,11 @@ return {
                 },
             },
         })
-        vim.keymap.set(
-            'n',
-            '<leader><leader>ft',
-            '<cmd>TodoTelescope<CR>',
-            { silent = true, desc = 'Search TODO comments' }
-        )
+        vim.keymap.set('n', ']t', function()
+            require('todo-comments').jump_next()
+        end, { silent = true, desc = 'Next TODO comment' })
+        vim.keymap.set('n', '[t', function()
+            require('todo-comments').jump_next()
+        end, { silent = true, desc = 'Previous TODO comment' })
     end,
 }
