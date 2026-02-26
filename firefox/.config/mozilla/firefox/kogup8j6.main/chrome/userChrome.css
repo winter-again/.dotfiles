@@ -32,9 +32,8 @@ window {
 }
 
 * {
-    /* Could use !important to try forcing */
+    /* Use !important to force font in more places */
     font-family: "Iosevka Nerd Font Propo";
-    /* font-family: "ZedMono Nerd Font Propo"; */
 }
 
 @-moz-document url-prefix(about:newtab), url-prefix(about:home) {

@@ -1,5 +1,4 @@
 font = /usr/share/fonts/TTF/IosevkaNerdFontMono-Regular.ttf
-# font = /usr/share/fonts/TTF/ZedMonoNerdFont-Regular.ttf
 font-size = 14
 hint-font = false
 ascii-input = true
@@ -14,14 +13,12 @@ width = 25%
 height = 25%
 border-width = 2
 outline-width = 0
-# corner-radius = 5
 padding-left = 10
 padding-top = 10
 prompt-padding = 2
 result-spacing = 2
 
 selection-background-padding = 4
-# selection-background-corner-radius = 5
 
 text-color = #f0f0f0
 background-color = #0f0f0f
