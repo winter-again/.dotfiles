@@ -122,4 +122,12 @@ return {
             require("nvim-ts-autotag").setup()
         end,
     },
+    {
+        "IndianBoy42/tree-sitter-just",
+        build = ":TSUpdate",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        config = function()
+            require("tree-sitter-just").setup({})
+        end,
+    },
 }
