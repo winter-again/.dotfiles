@@ -29,6 +29,11 @@ return {
                     local bufnr = event.buf
                     local opts = { silent = true, buffer = bufnr }
 
+                    -- NOTE: disable definition provider for Obsidian LS
+                    if client and client.name == "obsidian-ls" then
+                        client.server_capabilities.definitionProvider = false
+                    end
+
                     -- NOTE: some of these are now default keymaps
                     if client and client:supports_method(methods.textDocument_hover) then
                         map("n", "K", vim.lsp.buf.hover, opts, "Hover docs")

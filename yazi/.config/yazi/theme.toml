@@ -13,6 +13,9 @@ marker_cut = { fg = "#b36d7c", bg = "#b36d7c" }
 count_copied = { fg = "#0f0f0f", bg = "#778c73" }
 count_cut = { fg = "#0f0f0f", bg = "#b36d7c" }
 
+[indicator]
+padding = { open = "█", close = "█" }
+
 [mode]
 normal_main = { fg = "#767676", bg = "#393939", bold = true }
 # complementary color for status blocks

@@ -34,8 +34,8 @@ return {
                 -- NOTE: Many pickers inherit from this table; must explicitly define actions here
                 -- b/c it doesn't get merged with global defaults
                 files = {
-                    ["default"] = actions.file_edit_or_qf,
-                    -- ["default"] = actions.file_edit,
+                    ["default"] = actions.file_edit,
+                    -- ["default"] = actions.file_edit_or_qf,
                     ["ctrl-h"] = actions.file_split,
                     ["ctrl-v"] = actions.file_vsplit,
                     ["ctrl-q"] = actions.file_sel_to_qf,

@@ -22,8 +22,8 @@ set {
     $bg_alt #393939
     $fg #f0f0f0
     $primary #8f8aac
-    $indic #8aac8b
-    $urgent #ac8a8c
+    $indic #778c73
+    $urgent #b36d7c
 }
 
 # window that has focus 

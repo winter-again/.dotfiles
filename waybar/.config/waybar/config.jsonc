@@ -60,9 +60,9 @@
             "format": {
                 "months": "<span color='#8f8aac'><b>{}</b></span>",
                 "days": "<span color='#f0f0f0'><b>{}</b></span>",
-                "weeks": "<span color='#8a98ac'><b>W{}</b></span>",
+                "weeks": "<span color='#7e97ab'><b>W{}</b></span>",
                 "weekdays": "<span color='#ac8aac'><b>{}</b></span>",
-                "today": "<span color='#c6a679'><b><u>{}</u></b></span>"
+                "today": "<span color='#778c73'><b><u>{}</u></b></span>"
             }
         },
         "actions": {
