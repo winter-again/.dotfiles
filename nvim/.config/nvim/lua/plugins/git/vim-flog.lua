@@ -3,6 +3,4 @@ return {
     lazy = true,
     dependencies = "tpope/vim-fugitive",
     cmd = { "Flog", "Flogsplit", "Floggit" },
-    keys = { "<leader>gg" },
-    config = true,
 }

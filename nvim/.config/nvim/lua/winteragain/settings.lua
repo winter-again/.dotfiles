@@ -37,7 +37,7 @@ opt.cursorline = true -- highlight current line and its line number
 -- opt.colorcolumn = '80'
 -- tab settings
 opt.tabstop = 4 -- how wide tab characters are
-opt.softtabstop = 4 -- how Tab and Backspace should operate
+opt.softtabstop = 4 -- how Tab and Backspace should operate (look and feel while editing)
 opt.shiftwidth = 4 -- number of spaces to use for autoindent
 opt.expandtab = true -- use only space characters in your files; i.e., using Tab inserts spaces
 -- indentation

@@ -6,6 +6,12 @@ profile docked {
     exec notify-send "Laptop docked (2 monitors)"
 }
 
+profile undocked {
+    output eDP-1 enable mode 3840x2400@60Hz position 0,0 scale 2
+    exec swaymsg focus output eDP-1
+    exec notify-send "Laptop undocked"
+}
+
 profile single {
     output eDP-1 disable
     output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 1500,0 scale 2
@@ -13,8 +19,8 @@ profile single {
     exec notify-send "Laptop docked (1 monitor)"
 }
 
-profile undocked {
-    output eDP-1 enable mode 3840x2400@60Hz position 0,0 scale 2
-    exec swaymsg focus output eDP-1
-    exec notify-send "Laptop undocked"
+profile laptop {
+    output eDP-1 enable mode 3840x2400@60Hz position 1500,0 scale 2
+    output "BNQ BenQ LCD 93J02490SL0" mode 3840x2160@60Hz position 3420,0 scale 2
 }
+

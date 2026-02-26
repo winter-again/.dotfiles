@@ -46,6 +46,7 @@ return {
                     "sqlls",
                     "tailwindcss",
                     "taplo",
+                    "texlab",
                     "ts_ls",
                     "yamlls",
                 },
