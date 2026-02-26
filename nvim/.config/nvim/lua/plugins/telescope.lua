@@ -87,7 +87,7 @@ return {
             vim.keymap.set('n', '<leader>fs', builtin.live_grep, { silent = true })
             -- search within current buffer
             vim.keymap.set('n', '<leader>f/', builtin.current_buffer_fuzzy_find, { silent = true })
-            -- search previously open files
+            -- search registers
             vim.keymap.set('n', '<leader>fr', builtin.registers, { silent = true })
             -- search open buffers in current neovim instance
             vim.keymap.set('n', '<leader>fl', builtin.buffers, { silent = true })
