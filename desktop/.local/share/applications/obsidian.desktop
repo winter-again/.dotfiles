@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Obsidian
-Exec=/usr/bin/obsidian --disable-gpu --ozone-platform-hint=auto %U
+Exec=/usr/bin/obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland %U
 Terminal=false
 Type=Application
 Icon=obsidian

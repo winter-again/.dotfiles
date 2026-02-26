@@ -296,6 +296,10 @@ user_pref("browser.urlbar.suggest.bookmark", true);
 user_pref("browser.newtabpage.activity-stream.showWeather", false);
 // user_pref("browser.newtabpage.activity-stream.system.showWeather", false);
 
+// always prompt for location before downloading
+user_pref("browser.download.useDownloadDir", false);
+user_pref("browser.downloads.useDownloadDir", false);
+
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *
  ****************************************************************************/
