@@ -43,7 +43,7 @@ alias mv="mv -i"
 alias rm="rm -i"
 alias grep="grep --color=auto"
 alias tv="tidy-viewer"
-alias keys="bash ~/.local/bin/keyboard_settings.sh"
+alias keys="bash ~/.local/bin/keyboard-settings.sh"
 alias R="R --no-save" # never prompt to save workspace image
 
 # git aliases
@@ -97,16 +97,20 @@ ff() {
         ~/Documents/Bansal_lab \
         ~/Documents/projects \
         ~/Documents/projects/nvim-dev \
-        --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
+        --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --no-preview)
     cd "$dir"
 }
 tt() {
     ~/.local/bin/tmux-sessionizer.sh
 }
+# change wezterm bg on the fly
+ww() {
+    ~/.local/bin/wezterm-bg-config.sh
+}
 # use fd and fzf to jump to dirs in .dotfiles
 dot() {
     local dir
-    dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf --no-preview)
+    dir=$(fd . ~/.dotfiles/ --max-depth 3 --type d --hidden --exclude .git | fzf-tmux -p --no-preview)
     cd "$dir"
 }
 dots() {

@@ -68,37 +68,45 @@ return {
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
             lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
-            -- from nvim-ufo
-            lsp_capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-            }
+            -- for nvim-ufo
+            -- lsp_capabilities.textDocument.foldingRange = {
+            --     dynamicRegistration = false,
+            --     lineFoldingOnly = true,
+            -- }
+
             -- global keymaps
             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
             vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-            -- config if not using lsp saga
-            -- local on_attach = function(_, bufnr)
-            --     local nmap = function(keys, func, desc)
-            --         vim.keymap.set('n', keys, func, { desc = desc, silent = true })
-            --     end
-            --     nmap('K', vim.lsp.buf.hover, 'Hover docs')
-            --     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature docs')
-            --     nmap('<leader>rn', vim.lsp.buf.rename, 'Rename')
-            --     nmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
-            --     nmap('gd', require('telescope.builtin').lsp_definitions, 'Go defn.')
-            --     nmap('gr', require('telescope.builtin').lsp_references, 'Go refs.')
-            --     nmap('gI', require('telescope.builtin').lsp_implementations, 'Go imps.')
-            --     nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type defns.')
-            --     nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Doc symbols')
-            --     nmap('<leader>ds', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
-            -- end
+
+            -- keymaps defined on attach
+            -- some are replaced with lsp saga alternative
+            local function on_attach(_, bufnr)
+                local nmap = function(keys, func, desc)
+                    vim.keymap.set('n', keys, func, { buffer = bufnr, silent = true, desc = desc })
+                end
+                nmap('K', vim.lsp.buf.hover, 'Hover docs')
+                nmap('<C-k>', vim.lsp.buf.signature_help, 'Sig. help')
+                nmap('<leader><leader>rn', vim.lsp.buf.rename, 'LSP rename') -- default rename
+                -- nmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+
+                nmap('gl', vim.diagnostic.open_float, 'Get diagn.')
+                nmap('gd', require('telescope.builtin').lsp_definitions, 'Get defn.')
+                nmap('gr', require('telescope.builtin').lsp_references, 'Get refs.')
+                nmap('gi', require('telescope.builtin').lsp_implementations, 'Get imps.')
+
+                nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type defns.')
+                nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Doc symbols')
+                nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace symbols')
+            end
+
             -- global floating window borders:
-            -- local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
-            -- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-            --     opts = opts or {}
-            --     opts.border = 'rounded'
-            --     return orig_util_open_float_prev(contents, syntax, opts, ...)
-            -- end
+            local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
+            function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+                opts = opts or {}
+                opts.border = 'rounded'
+                return orig_util_open_float_prev(contents, syntax, opts, ...)
+            end
+
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             local handlers = {
@@ -106,7 +114,7 @@ return {
                 function(server_name)
                     require('lspconfig')[server_name].setup({
                         capabilties = lsp_capabilties,
-                        -- on_attach = on_attach,
+                        on_attach = on_attach,
                     })
                 end,
                 -- override default handler by server
@@ -114,7 +122,7 @@ return {
                     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
                     require('lspconfig')['cssls'].setup({
                         capabilities = lsp_capabilities,
-                        -- on_attach = on_attach,
+                        on_attach = on_attach,
                     })
                 end,
                 -- ['eslint'] = function()
@@ -129,20 +137,20 @@ return {
                     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
                     require('lspconfig')['html'].setup({
                         capabilities = lsp_capabilities,
-                        -- on_attach = on_attach,
+                        on_attach = on_attach,
                     })
                 end,
                 ['jsonls'] = function()
                     lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
                     require('lspconfig')['jsonls'].setup({
                         capabilities = lsp_capabilities,
-                        -- on_attach = on_attach,
+                        on_attach = on_attach,
                     })
                 end,
                 ['lua_ls'] = function()
                     require('lspconfig')['lua_ls'].setup({
                         capabilities = lsp_capabilties,
-                        -- on_attach = on_attach,
+                        on_attach = on_attach,
                         settings = {
                             Lua = {
                                 runtime = {
@@ -172,7 +180,7 @@ return {
             require('mason-lspconfig').setup_handlers(handlers)
 
             -- lspconfig appearance and behavior
-            require('lspconfig.ui.windows').default_options.border = 'rounded'
+            -- require('lspconfig.ui.windows').default_options.border = 'rounded'
             -- modify diagnostic sign icons
             -- I think lowercase name is for statusline and uppercase is for actual sign column?
             local sign_icons = {
@@ -189,12 +197,28 @@ return {
                 local hl = 'DiagnosticSign' .. type
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
             end
+
+            local function diagn_format(diagnostic)
+                return string.format(
+                    '%s [%s]  %s',
+                    diagnostic.message,
+                    diagnostic.source,
+                    diagnostic.code or diagnostic.user_data
+                )
+            end
             vim.diagnostic.config({
-                -- virtual_text = false, -- virtual text for LSP diagnostics
-                signs = true,
+                virtual_text = {
+                    spacing = 4,
+                    prefix = '●',
+                    format = diagn_format,
+                },
                 float = {
                     border = 'rounded',
+                    prefix = ' ',
+                    suffix = '', -- get rid of the code that is shown by default since format func handles it
+                    format = diagn_format,
                 },
+                signs = true,
                 underline = false,
                 update_in_insert = false,
                 severity_sort = true,

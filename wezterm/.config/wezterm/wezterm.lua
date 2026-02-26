@@ -106,7 +106,7 @@ local profile_data = require('profile_data')
 config.font_size = 12.0
 config.hide_tab_bar_if_only_one_tab = true
 
-config.background = profile_data.background.bg_3
+config.background = profile_data.background.bg_4
 
 wezterm.on('user-var-changed', function(window, pane, name, value)
     -- get copy of the currently set overrides if they exist
