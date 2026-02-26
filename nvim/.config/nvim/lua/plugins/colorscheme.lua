@@ -13,10 +13,14 @@ return {
                 -- from here: https://github.com/folke/tokyonight.nvim/issues/289
                 -- doing this allows my cursorline to not get overriden when cursor is in a code block
                 on_highlights = function(highlights, colors)
-                    highlights['@text.literal.markdown'] = {link = '@punctuation.delimiter.markdown'} -- using this keeps cursorline highlight from getting overriden in markdown code blocks
+                    -- using this keeps cursorline highlight from getting overriden in markdown code blocks
+                    highlights['@text.literal.markdown'] = {link = '@punctuation.delimiter.markdown'}
                 end
             })
             vim.cmd('colorscheme tokyonight') -- set default colorscheme after configuring
+            -- for Neovim's transparency
+            -- vim.api.nvim_set_hl(0, 'Normal', {bg='none'})
+            -- vim.api.nvim_set_hl(0, 'NormalFloat', {bg='none'})
         end
     },
     {
