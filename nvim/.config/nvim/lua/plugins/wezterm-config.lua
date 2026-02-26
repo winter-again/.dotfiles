@@ -3,8 +3,7 @@ return {
     -- dev = true,
     config = function()
         local wezterm_config = require('wezterm-config')
-        -- NOTE: changes to profile_data seem to get picked up like hot reloading
-        -- not sure how reliable
+        -- NOTE: changes to profile_data should be hot-reloaded somehow?
         wezterm_config.setup({
             append_wezterm_to_rtp = true,
         })
