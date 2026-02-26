@@ -3,12 +3,13 @@ return {
     -- dev = true,
     config = function()
         local wezterm_config = require('wezterm-config')
-        -- TODO: is there a way to make it so that changes in the profile_data are reflected
-        -- automatically?
+        -- NOTE: changes to profile_data seem to get picked up like hot reloading
+        -- not sure how reliable
         wezterm_config.setup({
             append_wezterm_to_rtp = true,
         })
         local profile_data = require('profile_data')
+        local reload = require('plenary.reload').reload_module
 
         local map = function(mode, lhs, rhs, opts, desc)
             opts = opts or {}
@@ -16,6 +17,10 @@ return {
             vim.keymap.set(mode, lhs, rhs, opts)
         end
         local opts = { silent = true }
+
+        map('n', '<leader><leader>r', function()
+            reload('profile_data', false)
+        end)
         map('n', '<leader><leader>d', function()
             wezterm_config.set_wezterm_user_var('background', profile_data.background.default.background)
         end, opts, '')

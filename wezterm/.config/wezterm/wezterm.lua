@@ -30,7 +30,7 @@ config.check_for_updates = false
 -- setting this here also causes partial line problems
 -- config.term = 'wezterm' -- https://wezfurlong.org/wezterm/config/lua/config/term.html
 
-config.background = utils.set_bg('12')
+config.background = utils.set_bg('16')
 config.font = utils.set_font('1')
 config.font_size = 12.0
 -- this needs explicit setting if not the default
