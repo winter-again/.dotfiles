@@ -203,12 +203,10 @@ paru_install  "${js_dev_pkgs[@]}"
 echo "Installing Astro LSP as global package via pnpm..."
 # NOTE: seems that this fails if given path isn't in PATH
 # so I set PATH like this and it works, even if path doesn't exist
-# Not sure if setting PNPM_HOME is needed as well. It should resolve to that path by default
-# export PNPM_HOME="$HOME/.local/share/pnpm"
-PATH="$PATH:$HOME/.local/share/pnpm"
+# Seems that setting PNPM_HOME is needed as well. Though it should resolve to that path by default
+export PNPM_HOME="$HOME/.local/share/pnpm"
+PATH="$PATH:$PNPM_HOME"
 pnpm install -g @astrojs/language-server
-
-exit 0
 
 echo "Installing Rust packages..."
 rust_dev_pkgs=(
@@ -315,17 +313,17 @@ tempfile=$(mktemp) \
     && tic -x -o ~/.terminfo "$tempfile" \
     && rm "$tempfile"
 
-echo "Configuring SSH and key for GitHub..."
-paru_install openssh
-# NOTE: will prompt for password
-ssh-keygen -t ed25519 -f "$HOME/.ssh/github" -C XPS
-cat > "$HOME/.ssh/config" <<"EOF"
-Host github.com
-    HostName github.com
-    IdentitiesOnly yes
-    IdentityFile ~/.ssh/github
-    PreferredAuthentications publickey
-EOF
+# echo "Configuring SSH and key for GitHub..."
+# paru_install openssh
+# # NOTE: will prompt for password
+# ssh-keygen -t ed25519 -f "$HOME/.ssh/github" -C XPS
+# cat > "$HOME/.ssh/config" <<"EOF"
+# Host github.com
+#     HostName github.com
+#     IdentitiesOnly yes
+#     IdentityFile ~/.ssh/github
+#     PreferredAuthentications publickey
+# EOF
 
 echo "Cloning dotfiles, setting SSH URL, and stowing dotfiles..."
 if [[ ! -d "$HOME/.dotfiles" ]]; then
@@ -356,6 +354,9 @@ sudo systemctl enable --now thermald.service
 echo "Enabling and starting fstrim.timer..."
 sudo systemctl enable --now fstrim.timer
 
+echo "Increasing allowed failed login attempts from 3 to 5..."
+sudo sed -i 's/.*deny = .*/deny = 5/' /etc/tlp.conf
+
 echo "Mapping caps lock to escape and control..."
 paru_install keyd
 sudo tee /etc/keyd/default.conf > /dev/null <<"EOF"
@@ -374,6 +375,13 @@ paru_install rclone restic rsync
 
 # echo "Installing GNOME keyring..."
 # paru_install gnome-keyring libsecret
+
+echo "Installing helpful networking packages..."
+network_pkgs=(
+    bind
+    tcpdump
+)
+paru_install "${network_pkgs[@]}"
 
 echo "Disabling NetworkManager connectivity check..."
 sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf > /dev/null <<"EOF"
@@ -395,13 +403,6 @@ sudo chown root:root /etc/NetworkManager/dispatcher.d/09-timezone
 sudo chmod +x /etc/NetworkManager/dispatcher.d/09-timezone
 sudo systemctl enable --now NetworkManager-dispatcher.service
 sudo systemctl restart NetworkManager.service
-
-echo "Installing helpful networking packages..."
-network_pkgs=(
-    bind
-    tcpdump
-)
-paru_install "${network_pkgs[@]}"
 
 echo "Installing CUPS and setting up printing..."
 cups_pkgs=(
@@ -427,6 +428,7 @@ paru_install powertop tlp tlp-rdw
 sudo systemctl enable --now tlp.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
+# NOTE: blacklisting bluetooth modules instead
 # sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP=.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
 sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_LAN_CONNECT=.*/DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"/' /etc/tlp.conf
 sudo sed -i 's/.*DEVICES_TO_ENABLE_ON_LAN_DISCONNECT=.*/DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"/' /etc/tlp.conf
