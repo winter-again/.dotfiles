@@ -11,7 +11,7 @@ config.audible_bell = 'Disabled'
 config.default_prog = {'/usr/bin/zsh'}
 config.default_cwd = wezterm.home_dir
 -- config.scrollback_lines = 0
-bg.set_background(config) -- set bg using separate module
+bg.set_background(config, 'bg_1') -- set bg using separate module
 config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
 config.colors = {
     tab_bar = {
