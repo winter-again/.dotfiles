@@ -34,10 +34,14 @@ export MANROFFOPT="-P -c" # simple colors
 export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
 # Go
-export GOPATH=$HOME/go # should already be default
-export GOBIN="$GOPATH/bin" # should also be default
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/go/bin # loc of installed binaries
+# if GOBIN set, binaries installed there
+# if GOPATH set binaries installed into bin dir of first dir in GOPATH
+# these are default locs:
+export GOPATH=$HOME/go
+export GOBIN="$GOPATH/bin"
+# export PATH=$PATH:/usr/local/go/bin
+# for convenience; adds ~/go/bin to path
+export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # for convenience
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"

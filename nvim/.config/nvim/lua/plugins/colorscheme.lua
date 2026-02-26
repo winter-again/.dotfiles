@@ -192,6 +192,7 @@ return {
     {
         -- 'nyngwang/nvimgelion',
         'winter-again/nvimgelion',
+        branch = 'add-indent-blankline-hl',
         -- dev = true,
         config = function() end,
     },

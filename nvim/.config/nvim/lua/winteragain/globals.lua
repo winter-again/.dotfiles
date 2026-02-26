@@ -56,7 +56,7 @@ vim.api.nvim_create_user_command('Transparent', function()
 end, { desc = 'Make nvim transparent' })
 
 function Toggle_light_dark()
-    local curr_set = vim.api.nvim_get_option_value('background')
+    local curr_set = vim.api.nvim_get_option_value('background', { scope = 'global' })
     if curr_set == 'dark' then
         vim.opt.background = 'light'
     else
