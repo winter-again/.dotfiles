@@ -15,6 +15,7 @@ seat seat0 xcursor_theme capitaine-cursors-light 32
 # new view indic
 # view border (entire window)
 client.focused          #7aa2f7 #7aa2f7 #1a1b26 #9d7cd8 #7aa2f7
+# client.focused          #7aa2f7 #3b4261 #c0caf5 #9d7cd8 #7aa2f7
 client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261 #3b4261
 client.unfocused        #3b4261 #1a1b26 #c0caf5 #1a1b26 #1a1b26
 client.urgent           #f7768e #f7768e #1a1b26 #f7768e #f7768e

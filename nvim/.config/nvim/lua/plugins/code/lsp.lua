@@ -65,6 +65,7 @@ return {
                     'sqlfluff',
                     'selene',
                     'stylua',
+                    'goimports',
                 },
             })
             -- keymaps

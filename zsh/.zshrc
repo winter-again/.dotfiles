@@ -12,7 +12,7 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # load p10k
 
 # zmodload zsh/zprof # profiler
 export HISTFILE=$HOME/.zsh_history
-export HISTSIZE=100000000
+export HISTSIZE=1000000
 export SAVEHIST=$HISTSIZE # num of commands stored
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
