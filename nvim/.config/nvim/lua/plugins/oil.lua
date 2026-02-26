@@ -51,7 +51,7 @@ return {
             },
         })
 
-        local map = require("winteragain.globals").map
+        local map = require("winter-again.globals").map
 
         map("n", "<leader>e", require("oil").toggle_float, { silent = true }, "Toggle Oil")
 

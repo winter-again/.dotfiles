@@ -203,7 +203,7 @@ return {
             -- require('telescope').load_extension('harpoon')
 
             local builtin = require("telescope.builtin")
-            local map = require("winteragain.globals").map
+            local map = require("winter-again.globals").map
             local opts = { silent = true }
 
             map("n", "<leader>ff", custom_ff, opts, "Search files")

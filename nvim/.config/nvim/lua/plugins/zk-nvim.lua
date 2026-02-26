@@ -24,7 +24,7 @@ return {
             },
         })
 
-        local map = require("winteragain.globals").map
+        local map = require("winter-again.globals").map
         local opts = { silent = true }
         local zk_cmd = require("zk.commands")
 

@@ -69,7 +69,7 @@ return {
         )
     ),
     s(
-        { trig = "match", snippetType = "autosnippet", desc = "match statement" },
+        { trig = "match", desc = "match statement" },
         fmta(
             [[
             match <var>:

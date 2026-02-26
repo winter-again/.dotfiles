@@ -7,7 +7,7 @@ return {
             current_line_blame_formatter = "<author> • <author_time:%Y-%m-%d> • <summary>",
             on_attach = function(bufnr)
                 local gs = require("gitsigns")
-                local map = require("winteragain.globals").map
+                local map = require("winter-again.globals").map
                 local opts = { silent = true, buffer = bufnr }
 
                 map("n", "]h", function()

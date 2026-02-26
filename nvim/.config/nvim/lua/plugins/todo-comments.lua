@@ -18,7 +18,7 @@ return {
             },
         })
 
-        local map = require("winteragain.globals").map
+        local map = require("winter-again.globals").map
         map("n", "]t", function()
             require("todo-comments").jump_next()
         end, { silent = true }, "Next TODO comment")

@@ -1,4 +1,4 @@
-local map = require("winteragain.globals").map
+local map = require("winter-again.globals").map
 local parsers = {
     -- these 7 parsers MUST be installed
     required = {
@@ -135,8 +135,8 @@ return {
             end
             map({ "n", "x", "o" }, "]f", goto_next("@function.outer"), opts, "Next function")
             map({ "n", "x", "o" }, "[f", goto_prev("@function.outer"), opts, "Previous function")
-            map({ "n", "x", "o" }, "]b", goto_next("@codeblock.outer"), opts, "Next codeblock")
-            map({ "n", "x", "o" }, "[b", goto_prev("@codeblock.outer"), opts, "Previous codeblock")
+            -- map({ "n", "x", "o" }, "]b", goto_next("@codeblock.outer"), opts, "Next codeblock")
+            -- map({ "n", "x", "o" }, "[b", goto_prev("@codeblock.outer"), opts, "Previous codeblock")
         end,
     },
     {

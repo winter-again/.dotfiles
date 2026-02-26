@@ -1,4 +1,4 @@
-local map = require("winteragain.globals").map
+local map = require("winter-again.globals").map
 
 -- TODO: why do these sometimes not have effect?
 vim.opt_local.wrap = true
