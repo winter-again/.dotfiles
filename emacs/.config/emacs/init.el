@@ -4,7 +4,7 @@
 ;; set where Emacs saves backups to, could also just disable
 (setq backup-directory-alist '(("." . "~/.local/share/emacs_backups")))
 
-;; disable splash
+;; disable startup screen
 ;; (setq inhibit-startup-message t)
 
 ;; remove tool bar, menu bar, scroll bar
@@ -41,42 +41,42 @@
   (load-theme 'gruvbox-dark-medium))
 
 ;; evil mode
-;; (use-package evil
-;;   :ensure t
-;;   :init
-;;   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-;;   (setq evil-want-keybinding nil) ;; expected by evil-collection
-;;   (setq evil-want-C-u-scroll t) ;; use C-u for scrolling up
-;;   :config
-;;   (evil-mode 1)
-;;   ;; window navigation
-;;   ;; TODO: don't work in org?
-;;   (define-key evil-motion-state-map (kbd "C-h") 'evil-window-left)
-;;   (define-key evil-motion-state-map (kbd "C-j") 'evil-window-down)
-;;   (define-key evil-motion-state-map (kbd "C-k") 'evil-window-up)
-;;   (define-key evil-motion-state-map (kbd "C-l") 'evil-window-right)
-;;
-;;   (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-;;   (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-;;   (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-;;   (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-;;
-;;   (define-key global-map (kbd "C-h") #'evil-window-left)
-;;   (define-key global-map (kbd "C-j") #'evil-window-down)
-;;   (define-key global-map (kbd "C-k") #'evil-window-up)
-;;   (define-key global-map (kbd "C-l") #'evil-window-right)
-;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)) ;; use C-g to escape to normal mode
-;;
-;; (use-package evil-collection
-;;   :ensure t
-;;   :after evil
-;;   :config
-;;   (evil-collection-init))
-;;
-;; ;; use esc to quit prompts
-;; ;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-;;
-;; ;; vertico: completion in minibuffer
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil) ;; expected by evil-collection
+  (setq evil-want-C-u-scroll t) ;; use C-u for scrolling up
+  :config
+  ;; window navigation
+  ;; TODO: don't work in org?
+  ;; (define-key evil-motion-state-map (kbd "C-h") 'evil-window-left)
+  ;; (define-key evil-motion-state-map (kbd "C-j") 'evil-window-down)
+  ;; (define-key evil-motion-state-map (kbd "C-k") 'evil-window-up)
+  ;; (define-key evil-motion-state-map (kbd "C-l") 'evil-window-right)
+  ;;
+  ;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+  ;; (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+  ;; (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+  ;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+  ;;
+  ;; (define-key global-map (kbd "C-h") #'evil-window-left)
+  ;; (define-key global-map (kbd "C-j") #'evil-window-down)
+  ;; (define-key global-map (kbd "C-k") #'evil-window-up)
+  ;; (define-key global-map (kbd "C-l") #'evil-window-right)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (evil-mode 1)) ;; use C-g to escape to normal mode
+
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (evil-collection-init))
+
+;; use esc to quit prompts
+;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; vertico: completion in minibuffer
 ;; (use-package vertico
 ;;   :ensure t
 ;;   :custom
@@ -184,6 +184,8 @@
 ;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 ;;
 ;; TODO: failure to load must because of presence of bind -> config *after* binding is hit
+;; maybe can force with :commands?
+;; or :mode?
 ;; (use-package org-roam
 ;;   :ensure t
 ;;   :after org
