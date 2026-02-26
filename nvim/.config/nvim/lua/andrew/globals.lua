@@ -1,4 +1,3 @@
--- global functions/settings
 -- helpful for displaying Lua table contents (from TJ)
 P = function(v)
     print(vim.print(v))

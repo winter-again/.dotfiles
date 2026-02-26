@@ -9,15 +9,12 @@ return {
             current_line_blame_formatter = '<author> • <author_time:%Y-%m-%d> • <summary>',
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
-                local opts = { silent = true }
                 -- nav between hunks
                 local function map(mode, l, r, opts)
                     opts = opts or {}
                     opts.buffer = bufnr
                     vim.keymap.set(mode, l, r, opts)
                 end
-
-                -- Navigation
                 map('n', ']c', function()
                     if vim.wo.diff then
                         return ']c'
@@ -38,6 +35,7 @@ return {
                     return '<Ignore>'
                 end, { expr = true })
 
+                local opts = { silent = true }
                 vim.keymap.set('n', '<leader>gb', gs.toggle_current_line_blame, opts)
                 -- diff: working tree vs. index
                 vim.keymap.set('n', '<leader>gd', gs.diffthis, opts)
