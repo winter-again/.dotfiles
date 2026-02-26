@@ -1,4 +1,4 @@
---- @diagnostic disable: missing-fields
+---@diagnostic disable: missing-fields
 return {
     {
         'neovim/nvim-lspconfig',
@@ -6,15 +6,20 @@ return {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
-            'folke/neodev.nvim',
+            -- 'folke/neodev.nvim',
         },
         config = function()
-            -- must set up these plugins this order:
+            -- NOTE: seems neodev no longer needed
+            -- see: https://github.com/neovim/neovim/pull/24592
+
+            -- require('neodev').setup() -- neodev needs to be setup BEFORE lspconfig
+
+            -- NOTE: must set up these plugins in specific order:
             -- 1) mason.nvim
             -- 2) mason-lspconfig.nvim
             -- 3) mason-tool-installer.nvim
-            -- 4) lspconfig server setup -> I opt to use something from mason-lspconfig instead
-            require('neodev').setup() -- neodev needs to be setup BEFORE lspconfig
+            -- 4) lspconfig server setup -> I opt to use something from mason-lspconfig instead of normal lspconfig
+
             require('mason').setup({
                 ui = {
                     -- border = 'solid',
@@ -31,6 +36,7 @@ return {
                     'astro',
                     'bashls',
                     'cssls',
+                    'css_variables',
                     'dockerls',
                     'eslint',
                     'gopls',
@@ -54,24 +60,20 @@ return {
                 debounce_hours = 24,
                 ensure_installed = {
                     'black',
-                    -- 'flake8',
                     'isort',
                     'prettierd',
                     'sqlfluff',
                     'selene',
                     'stylua',
-                    -- 'yamlfix',
                 },
             })
             -- keymaps
-            local map = function(mode, lhs, rhs, opts, desc)
+            local function map(mode, lhs, rhs, opts, desc)
                 opts = opts or {}
                 opts.desc = desc
                 vim.keymap.set(mode, lhs, rhs, opts)
             end
-            -- default in v0.10
-            map('n', '[d', vim.diagnostic.goto_prev, { silent = true }, 'Go to previous diagnostic message')
-            map('n', ']d', vim.diagnostic.goto_next, { silent = true }, 'Go to next diagnostic message')
+
             -- keymaps defined on attach
             local function on_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }
@@ -83,41 +85,51 @@ return {
                 map('n', 'gl', function()
                     vim.diagnostic.open_float({ scope = 'line' })
                 end, opts, 'Get line diagnostics')
-                map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Telescope LSP defns.')
+
+                map('n', 'gd', require('fzf-lua').lsp_definitions, opts, 'Go to definition')
+                map('n', 'gr', require('fzf-lua').lsp_references, opts, 'Go to references')
+                map('n', 'gI', require('fzf-lua').lsp_implementations, opts, 'Go to implementations')
+                map('n', '<leader>D', require('fzf-lua').lsp_typedefs, opts, 'Type defs.')
+                map('n', '<leader>ds', require('fzf-lua').lsp_document_symbols, opts, 'Document symbols')
+                map('n', '<leader>ws', require('fzf-lua').lsp_live_workspace_symbols, opts, 'Workspace symbols')
+
+                -- map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Go to definition')
                 map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
-                map('n', 'gr', require('telescope.builtin').lsp_references, opts, 'Telescope LSP refs.')
-                map('n', 'gI', require('telescope.builtin').lsp_implementations, opts, 'Telescope find impls.')
-                map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, opts, 'Telescope type defns.')
-                map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, opts, 'Telescope doc symbols')
-                map(
-                    'n',
-                    '<leader>ws',
-                    require('telescope.builtin').lsp_dynamic_workspace_symbols,
-                    opts,
-                    'Telescope workspace symbols'
-                )
+                -- map('n', 'gr', require('telescope.builtin').lsp_references, opts, 'Go to references')
+                -- map('n', 'gI', require('telescope.builtin').lsp_implementations, opts, 'Go to implementations')
+                -- map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, opts, 'Type defs.')
+                -- map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, opts, 'Document symbols')
+                -- map(
+                --     'n',
+                --     '<leader>ws',
+                --     require('telescope.builtin').lsp_dynamic_workspace_symbols,
+                --     opts,
+                --     'Workspace symbols'
+                -- )
                 map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up from LspSaga
-                map(
-                    'n',
-                    '<leader>ws',
-                    require('telescope.builtin').lsp_dynamic_workspace_symbols,
-                    opts,
-                    'Telescope workspace symbols'
-                )
-                map('n', '<leader>ih', function()
-                    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-                end, opts, 'Toggle inlay hints')
+
+                if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+                    map('n', '<leader>ih', function()
+                        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+                    end, opts, 'Toggle inlay hints')
+                end
             end
 
             -- (4) see docs: https://github.com/williamboman/mason-lspconfig.nvim/blob/09be3766669bfbabbe2863c624749d8da392c916/doc/mason-lspconfig.txt#L157
+
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
+            -- NOTE: snippetSupport = false by default
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
-            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
+            -- from kickstart.nvim
+            -- also see: https://github.com/hrsh7th/cmp-nvim-lsp/issues/38#issuecomment-1815265121
+            -- NOTE: snippetSupport = true in require('cmp_nvim_lsp').default_capabilities() so it's forced to true
+            lsp_capabilities =
+                vim.tbl_deep_extend('force', lsp_capabilities, require('cmp_nvim_lsp').default_capabilities())
 
             -- see here for configs:
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             -- handlers should be a table where keys are lspconfig server name and values are setup function
-            -- pass default handler by providing func w/ no key
+            -- pass default handler as first entry w/o key
             local handlers = {
                 -- default handler called for each installed server
                 function(server_name)
@@ -126,14 +138,41 @@ return {
                         on_attach = on_attach,
                     })
                 end,
-                -- override default handler per server
-                ['cssls'] = function()
-                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-                    require('lspconfig')['cssls'].setup({
+                ['lua_ls'] = function()
+                    require('lspconfig')['lua_ls'].setup({
                         capabilities = lsp_capabilities,
                         on_attach = on_attach,
+                        on_init = function(client)
+                            local path = client.workspace_folders[1].name
+                            if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+                                return
+                            end
+
+                            client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                                runtime = {
+                                    version = 'LuaJIT',
+                                },
+                                workspace = {
+                                    checkThirdParty = false,
+                                    library = {
+                                        vim.env.VIMRUNTIME,
+                                        '${3rd}/luv/library', -- seems like I need this to access vim.uv stuff?
+                                    },
+                                },
+                                telemetry = {
+                                    enable = false,
+                                },
+                                hint = {
+                                    enabled = true,
+                                },
+                            })
+                        end,
+                        settings = {
+                            Lua = {},
+                        },
                     })
                 end,
+                -- override default handler per server
                 -- ['eslint'] = function()
                 --     require('lspconfig')['eslint'].setup({
                 --         capabilities = lsp_capabilities,
@@ -142,55 +181,6 @@ return {
                 --         -- on_attach = on_attach,
                 --     })
                 -- end,
-                ['html'] = function()
-                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-                    require('lspconfig')['html'].setup({
-                        capabilities = lsp_capabilities,
-                        on_attach = on_attach,
-                    })
-                end,
-                ['jsonls'] = function()
-                    lsp_capabilities.textDocument.completion.completionItem.snippetSupport = true
-                    require('lspconfig')['jsonls'].setup({
-                        capabilities = lsp_capabilities,
-                        on_attach = on_attach,
-                        -- init_options = {
-                        --     provideFormatter = false, -- whether to provide documentRangeFormattingProvider capability on init
-                        -- },
-                    })
-                end,
-                ['lua_ls'] = function()
-                    require('lspconfig')['lua_ls'].setup({
-                        capabilities = lsp_capabilities,
-                        on_attach = on_attach,
-                        settings = {
-                            Lua = {
-                                hint = { enable = true },
-                                runtime = {
-                                    version = 'LuaJIT',
-                                },
-                                diagnostics = {
-                                    globals = { 'vim' },
-                                },
-                                workspace = {
-                                    -- library = vim.api.nvim_get_runtime_file('', true),
-                                    library = {
-                                        '${3rd}/luv/library',
-                                        unpack(vim.api.nvim_get_runtime_file('', true)),
-                                    },
-                                    checkThirdParty = false,
-                                },
-                                telemetry = {
-                                    enable = false,
-                                },
-                                -- for neodev
-                                completion = {
-                                    callSnippet = 'Replace',
-                                },
-                            },
-                        },
-                    })
-                end,
                 ['tailwindcss'] = function()
                     require('lspconfig')['tailwindcss'].setup({
                         capabilities = lsp_capabilities,

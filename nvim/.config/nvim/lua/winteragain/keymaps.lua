@@ -1,4 +1,4 @@
-local map = function(mode, lhs, rhs, opts, desc)
+local function map(mode, lhs, rhs, opts, desc)
     opts = opts or {}
     opts.desc = desc
     vim.keymap.set(mode, lhs, rhs, opts)

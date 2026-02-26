@@ -2,25 +2,22 @@ return {
     {
         'stevearc/conform.nvim',
         event = { 'BufWritePre' },
-        cmd = { 'ConformInfo' },
         config = function()
             require('conform').setup({
                 formatters_by_ft = {
-                    css = { 'prettierd' },
-                    -- NOTE: may need to install these still
+                    lua = { 'stylua' },
+                    -- trying ruff_lsp instead
+                    -- python = { 'isort', 'black' },
                     go = { 'goimports', 'gofmt' },
                     html = { 'prettierd' },
+                    css = { 'prettierd' },
                     javascript = { 'prettierd' },
                     javascriptreact = { 'prettierd' },
-                    -- astro = { 'prettierd' },
+                    typescript = { 'prettierd' },
+                    typescriptreact = { 'prettierd' },
                     -- disabling to let jsonls handle formatting
                     -- so we don't have to constantly set overrides in a .prettierrc.json
                     -- json = { 'prettierd' },
-                    lua = { 'stylua' },
-                    -- trying ruff_lsp instead
-                    -- python = { 'black' },
-                    typescript = { 'prettierd' },
-                    typescriptreact = { 'prettierd' },
                     -- sql = { 'sqlfluff' },
                     -- 'injected' allows formatting of code fence blocks
                     -- could even have it in python to format sql inside of queries
@@ -39,6 +36,7 @@ return {
             vim.keymap.set('n', '<leader><leader>fm', function()
                 require('conform').format({ async = true, lsp_fallback = true })
             end, { silent = true, desc = 'Manually format buffer with conform.nvim' })
+
             -- user commands for toggling autoformatting on save
             vim.api.nvim_create_user_command('FormatDisable', function(args)
                 if args.bang then
@@ -59,34 +57,4 @@ return {
             })
         end,
     },
-    -- {
-    --     'nvimtools/none-ls.nvim',
-    --     dependencies = { 'nvim-lua/plenary.nvim', 'nvimtools/none-ls-extras.nvim' },
-    --     config = function()
-    --         local null_ls = require('null-ls')
-    --         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-    --         null_ls.setup({
-    --             sources = {
-    --                 null_ls.builtins.formatting.stylua,
-    --                 -- null_ls.builtins.formatting.black,
-    --                 -- null_ls.builtins.formatting.isort,
-    --                 null_ls.builtins.formatting.prettierd,
-    --                 require('none-ls.diagnostics.ruff'),
-    --                 require('none-ls.formatting.ruff_format'),
-    --             },
-    --             on_attach = function(client, bufnr)
-    --                 if client.supports_method('textDocument/formatting') then
-    --                     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    --                     vim.api.nvim_create_autocmd('BufWritePre', {
-    --                         group = augroup,
-    --                         buffer = bufnr,
-    --                         callback = function()
-    --                             vim.lsp.buf.format({ async = false })
-    --                         end,
-    --                     })
-    --                 end
-    --             end,
-    --         })
-    --     end,
-    -- },
 }

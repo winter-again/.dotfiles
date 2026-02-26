@@ -8,8 +8,7 @@ return {
             javascriptreact = { 'eslint' },
             typescript = { 'eslint' },
             typescriptreact = { 'eslint' },
-            markdown = {}, -- disables default linting?
-            -- python = { 'flake8' },
+            -- markdown = {}, -- disables default linting?
         }
 
         -- autocommand that triggers linting
