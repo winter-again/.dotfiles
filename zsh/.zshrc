@@ -1,40 +1,30 @@
-# zmodload zsh/zprof # profiler
-export HISTFILE=$HOME/.zsh_history
-export HISTSIZE=100000000
-export SAVEHIST=$HISTSIZE # num of commands stored
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
-export SHELL=/usr/bin/zsh
-# for wezterm undercurl supp, but it seems to cause partial line issues?
-# without it underlines are ok
-# export TERM=wezterm
-export EDITOR="nvim"
-export VISUAL="nvim"
-# export MANPAGER="sh -c 'col -bx | bat -l man -p'" # bat for colorizing pager for man
+export SHELL="/usr/bin/zsh"
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE="100000000"
+export SAVEHIST="$HISTSIZE" # num of commands stored
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export PATH="$PATH:$HOME/.local/bin"
+export EDITOR="/usr/local/bin/nvim"
+export VISUAL="/usr/local/bin/nvim"
+export PAGER="/usr/bin/less"
 export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
-export MANROFFOPT="-P -c" # simple colors
+export BROWSER="firefox"
+
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
-export PATH="$PATH:$HOME/.local/bin"
 
 # Go
-# GOPATH default is already $HOME/go
-export GOPATH="$HOME/go"
-# if GOBIN set, binaries installed there (not set by default)
-# otherwise, install to $GOPATH/bin
-export GOBIN="$GOPATH/bin"
-# export PATH=$PATH:/usr/local/go/bin # from go install directions, but instead we're using ~/.go/bin
-
-# adds ~/go/bin to path for convenience
-export PATH="$PATH:$(go env GOBIN)"
+export GOPATH="$HOME/go" # $HOME/go is already the default
+export GOBIN="$GOPATH/bin" # binaries installed here, not set by default
+export PATH="$PATH:$(go env GOBIN)" # add ~/go/bin to path for convenience; go install suggests PATH=$PATH:/usr/local/go/bin
 # export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # only necessary if they differ
 
-# Rust - shouldn't need this if using rustup package from Arch repos
-# export PATH="$HOME/.cargo/bin:$PATH"
+# Rust
+# export PATH="$HOME/.cargo/bin:$PATH" # shouldn't need this if using rustup package from Arch repos
 
 # aliases
-# alias nvim-min="NVIM_APPNAME=nvim_min nvim" # alt nvim config
 alias ..="cd .."
 alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls
 alias ll="eza -lah --icons --color=always --group-directories-first"
@@ -52,6 +42,7 @@ alias nc="ncmpcpp"
 alias nn="cd ~/Documents/notebook"
 alias pn="pnpm"
 alias tr="trash-put"
+alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # colorize help with bat
 # git aliases
 alias gs="git status"
 alias ga="git add"
@@ -81,6 +72,7 @@ function y() {
     fi
     rm -f -- "$tmp"
 }
+
 function ff() {
     local dir
     if [[ -z "${TMUX}" ]]; then
@@ -98,17 +90,12 @@ function ff() {
     fi
     cd "$dir"
 }
+
 # mkdir -p and cd automatically
 function mkd() {
     [[ "$1" ]] && mkdir -p "$1" && cd "$1"
 }
-# change wezterm bg on the fly
-# w() {
-#     # uses just fzf
-#     # ~/.local/bin/wezterm-bg-config.sh
-#     # uses charm's gum
-#     ~/.local/bin/wezterm-bg
-# }
+
 # wezterm logs appear here
 # function wez-logs() {
 #     cd /run/user/1000/wezterm
@@ -118,14 +105,11 @@ function mkd() {
 #     cd ~/.local/share/wezterm/plugins
 #     ls
 # }
+
 function dots() {
     cd ~/.dotfiles
 }
-# for Obsidian vault
-# function obs() {
-#     cd ~/Documents/obsidian-vault
-#     git status
-# }
+
 # show journalctl for rclone backup service
 function bk() {
     journalctl --user -fu "$1" -n 30
@@ -143,50 +127,9 @@ function umntbk() {
     notify-send "Unmounted backup drive" "$out"
 }
 
-# from fzf community
-# alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
-# _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-# _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | delta'"
-# # fcoc_preview - checkout git commit with previews
-# function fcoc_preview() {
-#   local commit
-#   commit=$( glNoGraph |
-#     fzf --no-sort --reverse --tiebreak=index --no-multi \
-#         --ansi --preview="$_viewGitLogLine" ) &&
-#   git checkout $(echo "$commit" | sed "s/ .*//")
-# }
-# # gshow - git commit browser with previews
-# function gshow() {
-#     glNoGraph |
-#         fzf --no-sort --reverse --tiebreak=index --no-multi \
-#             --ansi --preview="$_viewGitLogLine" \
-#                 --header "enter to view, alt-y to copy hash" \
-#                 --bind "enter:execute:$_viewGitLogLine   | less -R" \
-#                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
-# }
-# checkout git branch
-# function gbs() {
-#     local branches branch
-#     branches=$(git --no-pager branch -vv) &&
-#     branch=$(echo "$branches" | fzf +m) &&
-#     git checkout $(echo "$branch" | awk '{print $!}' | sed "s/.* //")
-# }
-
 # fzf
 source /usr/share/fzf/key-bindings.zsh # fzf keybinds
 source /usr/share/fzf/completion.zsh # fzf fuzzy completion
-# export FZF_DEFAULT_OPTS="--height 40%
-#     --layout reverse
-#     --preview 'bat --theme=base16 --color always {}'
-#     --no-separator
-#     --preview-window '50%'
-#     --color=fg:#c0caf5,bg:-1,hl:underline:#9d7cd8 \
-#     --color=fg+:#c0caf5,bg+:#283457,hl+:underline:#7dcfff \
-#     --color=info:#ff9e64,prompt:#9d7cd8,pointer:#c0caf5
-#     --color=marker:#9ece6a,spinner:#9ece6a
-#     --color=gutter:-1,border:#7aa2f7,header:-1
-#     --color=preview-fg:#c0caf5,preview-bg:-1"
-
 export FZF_DEFAULT_OPTS="--height 40%
     --layout reverse
     --preview 'bat --theme=base16 --color always {}'
@@ -255,13 +198,12 @@ zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
 
 # make fd use same colors as eza (set $LS_COLORS)
-# eval "$(dircolors -b)"
+eval "$(dircolors -b)"
 
 # keep at end
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
-eval "$(zoxide init zsh)" # zoxide
-eval "$(uv generate-shell-completion zsh)" # uv
+eval "$(zoxide init zsh)"
+eval "$(uv generate-shell-completion zsh)"
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/omp_config.toml)"
-# zprof

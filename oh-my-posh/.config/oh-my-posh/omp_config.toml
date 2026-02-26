@@ -7,86 +7,86 @@ auto_upgrade = false
 type = "prompt"
 alignment = "left"
 
-  [[blocks.segments]]
-  type = "path"
-  style = "plain"
-  foreground = "p:purple"
-  template = "<b>{{ if not .Writable }}󰌾 {{ end }}{{ .Path }}</b>"
+[[blocks.segments]]
+type = "path"
+style = "plain"
+foreground = "p:purple"
+template = "<b>{{ if not .Writable }}󰌾 {{ end }}{{ .Path }}</b>"
 
-    [blocks.segments.properties]
-    style = "full"
+[blocks.segments.properties]
+style = "full"
 
-  [[blocks.segments]]
-  type = "git"
-  style = "plain"
-  foreground = "p:red"
-  # note: .Working.Added isn't possible? .Working.Untracked is the only one that makes sense
-  # .Working, .Staging
-  # .Untracked, .Added, .Modified, .Deleted, .Changed
-  # full spec: main ⇣ 1 ⇡ 1 +5 !10 ?4 stash 2 merge rebase
-  template = " {{ .HEAD }}{{ if gt .Behind 0 }} ⇣ {{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} ⇡ {{ .Ahead }}{{ end }}{{ if .Staging.Changed }} +{{ add .Staging.Added .Staging.Modified .Staging.Deleted }}{{ end }}{{ if .Working.Changed }} !{{ add .Working.Modified .Working.Deleted }}{{ end }}{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}{{ if gt .StashCount 0 }} stash {{ .StashCount }}{{ end }}{{ if .Merge }} merge{{ end }}{{ if .Rebase }} rebase{{ end }}"
+[[blocks.segments]]
+type = "git"
+style = "plain"
+foreground = "p:red"
+# note: .Working.Added isn't possible? .Working.Untracked is the only one that makes sense
+# .Working, .Staging
+# .Untracked, .Added, .Modified, .Deleted, .Changed
+# full spec: main ⇣ 1 ⇡ 1 +5 !10 ?4 stash 2 merge rebase
+template = " {{ .HEAD }}{{ if gt .Behind 0 }} ⇣ {{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} ⇡ {{ .Ahead }}{{ end }}{{ if .Staging.Changed }} +{{ add .Staging.Added .Staging.Modified .Staging.Deleted }}{{ end }}{{ if .Working.Changed }} !{{ add .Working.Modified .Working.Deleted }}{{ end }}{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}{{ if gt .StashCount 0 }} stash {{ .StashCount }}{{ end }}{{ if .Merge }} merge{{ end }}{{ if .Rebase }} rebase{{ end }}"
 
-    [blocks.segments.properties]
-    branch_icon = " "
-    commit_icon = "@"
-    tag_icon = " "
-    fetch_status = true
-    source = "cli"
+[blocks.segments.properties]
+branch_icon = " "
+commit_icon = "@"
+tag_icon = " "
+fetch_status = true
+source = "cli"
 
 [[blocks]]
 type = "prompt"
 alignment = "right"
 overflow = "hide"
 
-  [[blocks.segments]]
-  type = "go"
-  style = "plain"
-  foreground = "p:blue"
-  template = " {{ .Full }} "
+[[blocks.segments]]
+type = "go"
+style = "plain"
+foreground = "p:blue"
+template = " {{ .Full }} "
 
-  [[blocks.segments]]
-  type = "rust"
-  style = "plain"
-  template = "󱘗 {{ .Full }} "
-  foreground = "p:orange"
+[[blocks.segments]]
+type = "rust"
+style = "plain"
+template = "󱘗 {{ .Full }} "
+foreground = "p:orange"
 
-  [[blocks.segments]]
-  type = "python"
-  style = "plain"
-  template = " {{ .Venv }}({{ .Full }}) "
-  foreground = "p:yellow"
-  display_mode = "environment"
+[[blocks.segments]]
+type = "python"
+style = "plain"
+template = " {{ .Venv }}({{ .Full }}) "
+foreground = "p:yellow"
+display_mode = "environment"
 
-  [[blocks.segments]]
-  type = "executiontime"
-  style = "plain"
-  template = " {{ .FormattedMs }} "
-  foreground ="p:green"
-    
-    [blocks.segments.properties]
-      threshold = 5000
-      format = "austin"
+[[blocks.segments]]
+type = "executiontime"
+style = "plain"
+template = " {{ .FormattedMs }} "
+foreground = "p:green"
 
-  [[blocks.segments]]
-  type="time"
-  style = "plain"
-  template = " {{ .CurrentDate | date .Format }}"
-  foreground = "p:blue"
+[blocks.segments.properties]
+threshold = 5000
+format = "austin"
 
-    [blocks.segments.properties]
-    time_format = "03:04:05 PM"
+[[blocks.segments]]
+type = "time"
+style = "plain"
+template = " {{ .CurrentDate | date .Format }}"
+foreground = "p:blue"
+
+[blocks.segments.properties]
+time_format = "03:04:05 PM"
 
 [[blocks]]
 type = "prompt"
 alignment = "left"
 newline = true
 
-  [[blocks.segments]]
-  type = "text"
-  style = "plain"
-  foreground = "p:blue"
-  foreground_templates = ["{{ if gt .Code 0}}p:red{{end}}"]
-  template = "<b>></b>" # or ❯
+[[blocks.segments]]
+type = "text"
+style = "plain"
+foreground = "p:blue"
+foreground_templates = ["{{ if gt .Code 0}}p:red{{end}}"]
+template = "<b>></b>"                                     # or ❯
 
 # [transient_prompt]
 # foreground = "p:green"
