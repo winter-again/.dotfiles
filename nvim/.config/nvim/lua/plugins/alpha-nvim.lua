@@ -40,7 +40,7 @@ return {
             { type = 'padding', val = 3 },
             dashboard.section.header,
             { type = 'padding', val = 5 },
-            dashboard.section.buttons,
+            -- dashboard.section.buttons,
         }
         alpha.setup(dashboard.opts)
     end,

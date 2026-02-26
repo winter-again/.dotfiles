@@ -32,6 +32,8 @@ export PATH="$HOME/.local/bin:$PATH" # for zoxide and others
 #plug "zap-zsh/completions"
 
 # aliases
+alias nvim-min="NVIM_APPNAME=nvim_min nvim"
+
 # some taken from zap-zsh proj (https://github.com/zap-zsh)
 alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls
 alias ll="eza -lah --icons --color=always --group-directories-first"
