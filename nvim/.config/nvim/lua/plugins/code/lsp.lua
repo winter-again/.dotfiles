@@ -6,14 +6,8 @@ return {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
-            -- 'folke/neodev.nvim',
         },
         config = function()
-            -- NOTE: seems neodev no longer needed
-            -- see: https://github.com/neovim/neovim/pull/24592
-
-            -- require('neodev').setup() -- neodev needs to be set up BEFORE lspconfig
-
             -- NOTE: must set up these plugins in specific order:
             -- 1) mason.nvim
             -- 2) mason-lspconfig.nvim
@@ -45,14 +39,15 @@ return {
                     'jsonls',
                     'lua_ls',
                     'marksman',
-                    -- 'pyright',
+                    'pyright',
+                    -- 'basedpyright',
                     'r_language_server',
-                    -- 'ruff', -- newer LS than ruff-lsp
+                    'ruff', -- newer LS than ruff-lsp
                     -- 'ruff_lsp',
                     'sqlls',
                     'tailwindcss',
                     'taplo',
-                    'tsserver',
+                    'tsserver', -- TODO: this should eventually be 'ts_ls'
                     'yamlls',
                 },
                 automatic_installation = false,
@@ -70,13 +65,11 @@ return {
                     'goimports',
                 },
             })
-            -- keymaps
             local function map(mode, lhs, rhs, opts, desc)
                 opts = opts or {}
                 opts.desc = desc
                 vim.keymap.set(mode, lhs, rhs, opts)
             end
-
             -- keymaps defined on attach
             local function on_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }
@@ -110,19 +103,7 @@ return {
                     print('Neither telescope.nvim nor fzf-lua installed...')
                 end
 
-                -- map('n', 'gd', require('telescope.builtin').lsp_definitions, opts, 'Go to definition')
                 map('n', 'gD', vim.lsp.buf.declaration, opts, 'Go to declaration')
-                -- map('n', 'gr', require('telescope.builtin').lsp_references, opts, 'Go to references')
-                -- map('n', 'gI', require('telescope.builtin').lsp_implementations, opts, 'Go to implementations')
-                -- map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, opts, 'Type defs.')
-                -- map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, opts, 'Document symbols')
-                -- map(
-                --     'n',
-                --     '<leader>ws',
-                --     require('telescope.builtin').lsp_dynamic_workspace_symbols,
-                --     opts,
-                --     'Workspace symbols'
-                -- )
                 map('n', '<leader><leader>rn', vim.lsp.buf.rename, opts, 'LSP default rename') -- default rename w/o fancy pop-up from LspSaga
 
                 if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
@@ -150,6 +131,9 @@ return {
             local handlers = {
                 -- default handler called for each installed server
                 function(server_name)
+                    if server_name == 'tsserver' then
+                        server_name = 'ts_ls' -- TODO: change name; see https://github.com/neovim/nvim-lspconfig/pull/3232
+                    end
                     require('lspconfig')[server_name].setup({
                         capabilities = lsp_capabilities,
                         on_attach = on_attach,
@@ -240,10 +224,32 @@ return {
                         end,
                     })
                 end,
+                -- works fine; seems more cluttered than Pyright, but might only be
+                -- for some proj because of the packages I use
+                ['basedpyright'] = function()
+                    -- require('lspconfig')['basedpyright'].setup({
+                    --     on_attach = on_attach,
+                    --     root_dir = require('lspconfig').util.root_pattern('.venv'),
+                    --     settings = {
+                    --         basedpyright = {
+                    --             disableOrganizeImports = true, -- use Ruff instead
+                    --             analysis = {
+                    --                 autoSearchPaths = true,
+                    --                 diagnosticMode = 'openFilesOnly',
+                    --                 useLibraryCodeForTypes = true,
+                    --                 diagnosticSeverityOverrides = {
+                    --                     reportUndefinedVariable = 'none',
+                    --                 },
+                    --             },
+                    --         },
+                    --     },
+                    -- })
+                end,
                 ['pyright'] = function()
-                    -- remove capabilities that ruff can provide
                     require('lspconfig')['pyright'].setup({
+                        on_attach = on_attach,
                         root_dir = require('lspconfig').util.root_pattern('.venv'),
+                        -- remove capabilities that ruff can provide
                         -- https://github.com/astral-sh/ruff-lsp/issues/384
                         -- https://www.reddit.com/r/neovim/comments/11k5but/comment/jbjwwtf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
                         settings = {
@@ -252,7 +258,13 @@ return {
                             },
                             python = {
                                 analysis = {
-                                    ignore = { '*' }, -- use Ruff for linting
+                                    -- ignore = { '*' }, -- use Ruff for linting; disables all pyright
+                                    -- alt: have to go one by one if preserving pyright type-checking
+                                    -- see: https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
+                                    -- note that some of the Pyright stuff are "hints" and can't be easily removed
+                                    diagnosticSeverityOverrides = {
+                                        reportUndefinedVariable = 'none',
+                                    },
                                 },
                             },
                         },
@@ -261,7 +273,7 @@ return {
                 ['ruff'] = function()
                     local group = vim.api.nvim_create_augroup('RuffWithPyright', { clear = true })
                     require('lspconfig')['ruff'].setup({
-                        -- setup organize imports autocmd
+                        -- organize imports autocmd
                         on_attach = function(client, bufnr)
                             vim.api.nvim_create_autocmd('BufWritePre', {
                                 group = group,
