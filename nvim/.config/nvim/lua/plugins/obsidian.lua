@@ -59,7 +59,9 @@ return {
                 return require("obsidian.util").markdown_link(opts)
             end,
             preferred_link_style = "markdown", -- still able to autocomplete both types
-            disable_frontmatter = true,
+            frontmatter = {
+                enabled = false,
+            },
             templates = {
                 folder = "templates",
                 date_format = "%Y-%m-%d",
@@ -93,9 +95,7 @@ return {
             backlinks = {
                 parse_headers = false, -- disables header parsing for Obsidian backlinks
             },
-            sort_by = "modified",
-            sort_reversed = true,
-            search_max_lines = 1000,
+            search = { sort_by = "modified", sort_reversed = true, max_lines = 1000 },
             open_notes_in = "current",
             ui = {
                 enable = false, -- set to false to disable all additional syntax features
