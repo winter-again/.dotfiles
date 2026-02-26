@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+tokyonight_fg="#c0caf5"
+tokyonight_blue="#7aa2f7"
+tokyonight_purple="#9D7CD8"
+
+default=("default") # hard-coded value
+grep_res=$(cat ~/.dotfiles/wezterm/.config/wezterm/lua/profile_data.lua | grep -oE "bg_[0-9]+(_[0-9]+)?")
+bg_array=()
+while IFS= read -r line; do
+    bg_array+=("$line")
+done <<< "$grep_res"
+bgs=("${default[@]}" "${bg_array[@]}")
+bgs_len=${#bgs[@]}
+
+gum style \
+    --border rounded \
+    "Pick a background..."
+
+# can set --height to $bgs_len to show all options
+# either way, I think you need to set height to something so that gum style box isn't cleared
+sel=$(
+    printf "%s\n" "${bgs[@]}" | \
+        gum filter \
+            --height=15 \
+            --indicator=" ◉ " \
+            --placeholder="profile name..." \
+            --header.foreground="$tokyonight_fg" \
+            --text.foreground="$tokyonight_fg" \
+            --prompt.foreground="$tokyonight_fg" \
+            --match.foreground="$tokyonight_purple" \
+            --indicator.foreground="$tokyonight_blue" \
+            --cursor-text.foreground="$tokyonight_blue"
+)
+
+if [[ -z "${TMUX}" ]]; then
+    printf "\033]1337;SetUserVar=%s=%s\007" "background" `echo -n "$sel" | base64`
+else
+    # sometimes doesn't work first try...seems like tmux issue
+    printf "\033Ptmux;\033\033]1337;SetUserVar=%s=%s\007\033\\" "background" `echo -n "$sel" | base64`
+fi
