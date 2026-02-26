@@ -110,20 +110,18 @@ function dots() {
     cd ~/.dotfiles
 }
 
-# show journalctl for rclone backup service
+# show journalctl for backup services
 function bk() {
     journalctl --user -fu "$1" -n 30
 }
 
 function mntbk() {
-    exec 5>&1
-    out=$(udisksctl mount -b /dev/sda1 2>&1 | tee /dev/fd/5)
+    out=$(udisksctl mount -b /dev/sda1)
     notify-send "Mounted backup drive" "$out"
 }
 
 function umntbk() {
-    exec 5>&1
-    out=$(udisksctl unmount -b /dev/sda1 2>&1 | tee /dev/fd/5)
+    out=$(udisksctl unmount -b /dev/sda1)
     notify-send "Unmounted backup drive" "$out"
 }
 
