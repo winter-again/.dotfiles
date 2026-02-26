@@ -5,25 +5,29 @@ return {
         priority = 995,
         config = function()
             require('mellifluous').setup({
-                -- options are
-                -- mellifluous (ok)
-                -- alduin (ok)
-                -- mountain (ok)
-                -- tender (no)
-                -- kanagawa_dragon (ok)
+                -- mellifluous, alduin, mountain, and kanagawa_dragon are ok
                 color_set = 'mountain',
                 mellifluous = {
                     neutral = false,
                     bg_contrast = 'hard',
                 },
+                styles = {
+                    comments = { italic = true },
+                    keywords = { bold = true },
+                    functions = { bold = true },
+                },
                 highlight_overrides = {
                     dark = function(highlighter, colors)
-                        -- highlighter.set('Visual', { bg = '#45475a' })
                         highlighter.set('Visual', { reverse = true })
-                        -- highlighter.set('MatchParen', { reverse = true })
-                        highlighter.set('TreesitterContext', { bg = '#45475a' })
+                        highlighter.set('MatchParen', { bold = true })
+                        highlighter.set('TreesitterContext', { bg = '#191919' })
                         highlighter.set('CursorLineNr', { fg = colors.purple })
                         highlighter.set('TelescopeMatching', { fg = colors.purple })
+                        highlighter.set('TelescopeMatching', { fg = colors.purple })
+                        highlighter.set('@lsp.type.property', { fg = colors.cyan }) -- e.g., fg and cyan
+                        highlighter.set('@lsp.type.parameter', { fg = colors.yellow }) -- e.g., "highlighter" in highlighter.set
+                        highlighter.set('TroubleNormal', { bg = 'none' })
+                        highlighter.set('TroubleNormalNc', { bg = 'none' })
                     end,
                 },
                 transparent_background = {
