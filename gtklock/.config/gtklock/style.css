@@ -1,0 +1,23 @@
+window {
+    /* use full path */
+    background-image: url("/home/andrew/Pictures/wallpapers/tokyo-night-wallpaper.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #1a1b26;
+}
+
+#window-box {
+    background: #1a1b26;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#error-label {
+    color: #9d7cd8;
+}
+
+#unlock-button {
+    color: #1a1b26;
+    background: #7aa2f7;
+}
