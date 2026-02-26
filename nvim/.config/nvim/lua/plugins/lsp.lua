@@ -86,7 +86,9 @@ return {
                             map("n", "gp", function()
                                 fzf_lua.lsp_definitions({ jump1 = false })
                             end, opts, "LSP peek definition")
-                            map("n", "gr", fzf_lua.lsp_references, opts, "LSP references")
+                            map("n", "gr", function()
+                                fzf_lua.lsp_references({ ignore_current_line = true })
+                            end, opts, "LSP references")
 
                             map("n", "<leader>D", fzf_lua.lsp_typedefs, opts, "LSP type defns.")
                         end

@@ -41,15 +41,18 @@ return {
                 },
             },
             files = {
-                -- fd respects .gitignore so don't need to exclude .venv or node_modules
-                fd_opts = "--type file --follow --hidden --exclude .git --color never",
+                -- fd respects .gitignore, but still specify some files to ignore in case
+                -- no .gitignore present
+                fd_opts = "--type file --follow --hidden --exclude .git --exclude .venv --exclude node_modules --color never",
+                git_icons = false,
+                file_icons = true,
                 -- NOTE: inherits from actions.files
                 -- actions = {},
             },
             grep = {
                 prompt = "rg: ",
                 -- rightfully ignores .ripgreprc
-                rg_opts = "--hidden --follow --smart-case --line-number --column --color=always --colors=line:fg:green --colors=column:fg:yellow --max-columns=4096",
+                rg_opts = [[--hidden --follow --smart-case --line-number --column --color=always --colors=line:fg:green --colors=column:fg:yellow --max-columns=4096 --glob="!{.git,.venv,node_modules}/*"]],
                 -- NOTE: grep.files inherits from actions.files, but it seems to have its own defaults
                 -- so I have to set ctrl-g again
                 actions = {

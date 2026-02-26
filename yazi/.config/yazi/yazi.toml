@@ -19,10 +19,11 @@ title_format = "yazi: {cwd}"
 [preview]
 wrap = "no"
 tab_size = 4
-max_width = 600
-max_height = 900
+# tweak max_width and max_height to get image previews to fill more of space
+max_width = 1500
+max_height = 1500
 cache_dir = ""
-image_delay = 30
+image_delay = 50
 image_filter = "triangle"
 image_quality = 60
 ueberzug_scale = 1

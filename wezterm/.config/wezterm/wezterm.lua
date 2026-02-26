@@ -4,7 +4,7 @@ local utils = require("utils")
 local config = {}
 
 -- WARNING: seems like using wezterm.config_builder()
--- breaks things with wezterm-config.nvim but only inside of tmux
+-- breaks things with wezterm-config.nvim but only inside of tmux;
 -- logs show that the user vars that wezterm shell integration defines are invalid?
 -- https://wezfurlong.org/wezterm/shell-integration.html?h=shell#user-vars
 -- opened issue here: https://github.com/wez/wezterm/issues/5078#issue-2153349617
@@ -16,7 +16,7 @@ end
 
 config.color_scheme = "Mountain"
 config.background = require("bg").set_bg()
-config.font, config.font_size = utils.set_font_properties("Zed")
+config.font, config.font_size = utils.set_font("Zed")
 config.cursor_blink_rate = 0
 config.window_padding = {
     left = 0,
@@ -69,6 +69,11 @@ config.keys = {
             window:toast_notification("wezterm", "Updated plugins", nil, 2000)
         end),
     },
+    {
+        key = "l",
+        mods = "LEADER",
+        action = wezterm.action.EmitEvent("toggle-font"),
+    },
 }
 
 -- plugins
@@ -87,7 +92,7 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
     local overrides = window:get_config_overrides() or {}
     print("------------------------------------")
     print("OVERRIDES PRE:")
-    print(overrides)
+    print(overrides, type(overrides))
 
     print(string.format("USER VAR: %s: %s", name, value))
 
@@ -95,14 +100,39 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
     -- local ok, parsed_val = pcall(wezterm.json_parse, value)
     local parsed_val_type = type(parsed_val)
     print(string.format("PARSED DATA: %s = %s (type: %s)", name, parsed_val, parsed_val_type))
-    print(parsed_val)
 
     if name == "font" then
-        print("wezterm.font(...):")
-        print(wezterm.font(value))
+        print("wezterm.font() output:")
+        print(wezterm.font(parsed_val))
     end
 
-    overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
+    -- TODO: I think config.font can ONLY accept data in form of wezterm.font()'s output
+    -- which is a TextStyle
+    -- This works -> supports my hypothesis that this is about wezterm.font
+    -- Maybe easiest solution is for override_user_var to check if name == font, then
+    -- don't parse value?
+    -- Maybe doesn't seem to work if setting font_size at same time? Hard to repro
+    if name == "font" then
+        overrides.font = wezterm.font(parsed_val)
+    else
+        overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
+    end
+
+    -- overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
+
+    window:set_config_overrides(overrides)
+end)
+
+wezterm.on("toggle-font", function(window, pane)
+    local overrides = window:get_config_overrides() or {}
+    -- if overrides.font_size == 20.0 then
+    --     overrides.font_size = 13.0
+    -- else
+    --     overrides.font_size = 20.0
+    -- end
+    -- TODO: this works, but not the raw name
+    overrides.font = wezterm.font("Iosevka Nerd Font Mono")
+
     window:set_config_overrides(overrides)
 end)
 
