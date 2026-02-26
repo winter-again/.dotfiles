@@ -18,7 +18,7 @@ return {
             -- (1)
             require('mason').setup({
                 ui = {
-                    border = 'rounded',
+                    -- border = 'solid',
                     icons = {
                         package_installed = '✓',
                         package_pending = '➜',
@@ -224,7 +224,7 @@ return {
             local orig_util_open_float_prev = vim.lsp.util.open_floating_preview
             vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
                 opts = opts or {}
-                opts.border = 'rounded'
+                -- opts.border = 'rounded'
                 return orig_util_open_float_prev(contents, syntax, opts, ...)
             end
 
@@ -258,8 +258,8 @@ return {
                     format = diagn_format,
                 },
                 float = {
-                    border = 'rounded',
-                    prefix = '󰉹',
+                    -- border = 'rounded',
+                    prefix = '󰉹 ',
                     suffix = '', -- get rid of the code that is shown by default since format func handles it
                     format = diagn_format,
                 },
@@ -299,8 +299,8 @@ return {
                 },
                 preselect = cmp.PreselectMode.None, -- don't preselect
                 window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
+                    -- completion = cmp.config.window.bordered(),
+                    -- documentation = cmp.config.window.bordered(),
                 },
                 experimental = {
                     ghost_text = false,
@@ -370,7 +370,8 @@ return {
                     ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+                    -- ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+                    ['<CR>'] = cmp.mapping.confirm({ select = false }),
                     ['<C-y>'] = cmp.config.disable,
                     ['<C-e>'] = cmp.mapping.abort(),
                 }),

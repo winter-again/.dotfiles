@@ -8,7 +8,7 @@ return {
     config = function()
         require('lspsaga').setup({
             ui = {
-                border = 'rounded',
+                -- border = 'rounded',
             },
             symbol_in_winbar = {
                 enable = false,

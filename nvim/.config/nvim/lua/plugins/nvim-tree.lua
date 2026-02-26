@@ -20,8 +20,6 @@ return {
                         border = 'rounded',
                         width = 30,
                         height = 50,
-                        row = 0,
-                        col = 1,
                     },
                 },
             },

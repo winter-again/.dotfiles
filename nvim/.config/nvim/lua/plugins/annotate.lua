@@ -1,7 +1,6 @@
 return {
     'winter-again/annotate.nvim',
     dependencies = { 'kkharji/sqlite.lua' },
-    -- branch = 'customize-db-location',
     dev = true,
     -- enabled = true,
     config = function()
