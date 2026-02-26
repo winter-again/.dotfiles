@@ -106,7 +106,7 @@ return {
                     'encoding',
                     'filetype',
                     { display_lsp_venv, icon = { ' LSP:' } },
-                    { qflist, icon = { 'QF:' } },
+                    { qflist, icon = { ' QF:' } },
                 },
                 lualine_y = { 'progress' },
                 lualine_z = { 'location' },
