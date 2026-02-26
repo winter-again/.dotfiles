@@ -5,7 +5,7 @@ if [[ $# -eq 1 ]]; then
     selected=$1
 else
     selected=$(fd . \
-        ~/Documents/Bansal_lab \
+        ~/Documents/Bansal-lab \
         ~/Documents/projects \
         ~/Documents/projects/nvim-dev \
         --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Session: " --no-preview)

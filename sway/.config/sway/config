@@ -1,4 +1,4 @@
-font pango:Hack Nerd Font Mono 11
+font pango:Hack Nerd Font Mono 10
 # Use Mod1 for Alt.
 set $mod Mod1
 set $left h
