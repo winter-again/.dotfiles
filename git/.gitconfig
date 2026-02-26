@@ -12,6 +12,10 @@
     rebase = true
 [rebase]
     autoStash = true
+[push]
+    ; push to update branch w/ same name on receiving end
+    ; another option is upstream which targets the set upstream
+    default = current
 ; [delta]
 ;     navigate = true
 ;     light = false

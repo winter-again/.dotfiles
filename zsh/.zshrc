@@ -1,5 +1,3 @@
-#!/bin/sh
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -12,7 +10,7 @@
 
 # zmodload zsh/zprof # profiler
 export HISTFILE=$HOME/.zsh_history
-export HISTSIZE=1000000
+export HISTSIZE=100000000
 export SAVEHIST=$HISTSIZE # num of commands stored
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
@@ -51,7 +49,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # aliases
 # alias nvim-min="NVIM_APPNAME=nvim_min nvim" # alt nvim config
 alias ..="cd .."
-alias exti="exit"
 alias ls="eza -a --icons --color=always --group-directories-first" # nicer ls
 alias ll="eza -lah --icons --color=always --group-directories-first"
 alias tree="ls -lh --tree --level=2"
@@ -60,8 +57,6 @@ alias mv="mv -i"
 alias rm="rm -i"
 alias grep="grep --color=auto"
 alias tv="tidy-viewer"
-alias keys="bash ~/.local/bin/keyboard-settings.sh"
-alias ffetch="fastfetch"
 alias R="R --no-save" # never prompt to save workspace image
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
@@ -70,19 +65,21 @@ alias fd="fd --hidden --color never"
 # git aliases
 alias gs="git status"
 alias ga="git add"
-alias gb="git branch -v"
+alias gb="git branch --all -v"
 alias gc="git commit"
 alias gco="git checkout"
+alias gu="git restore --staged" # recommended undo for staged file
 alias gd="git diff"
 alias gds="git diff --staged" # staged changes
 alias gdh="git diff HEAD~" # diff latest commit with previous
-alias gdd="git -P diff" # temp disable delta
 alias gu="git rm --cached" # stop tracking given file
 alias gl="git log --stat"
+alias glg="git log --all --graph --oneline"
 alias glp="git log --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)'"
 alias glf="git log --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
-alias glg="glp --graph --all"
-alias gu="git restore --staged" # recommended undo for staged file
+alias gpull="git pull"
+alias gpush="git push"
+alias ggrep="git ls-files | grep -i"
 
 # functions
 ff() {
@@ -216,7 +213,7 @@ export FZF_CTRL_R_OPTS="
 # `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
 # `--version-file-strategy=recursive` might also make sense; default is local
 # using both = auto use/install the right Node version when going into proj subdirs and moving between proj
-eval "$(fnm env --use-on-cd)"
+# eval "$(fnm env --use-on-cd)"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -260,10 +257,11 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for complet
 # make fd use same colors as eza (set $LS_COLORS)
 eval "$(dircolors -b)"
 
+# keep at end
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
-eval "$(zoxide init zsh)" # zoxide; keep at end
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # keep at end
+eval "$(zoxide init zsh)" # zoxide
 source ~/.config/wezterm/wezterm.sh
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/omp_config.toml)"
 # zprof
