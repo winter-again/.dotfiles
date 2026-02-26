@@ -210,7 +210,13 @@ return {
                         })
                     end,
                     settings = {
-                        Lua = {},
+                        Lua = {
+                            -- disable LSP snippets
+                            completion = {
+                                callSnippet = "Disable",
+                                keywordSnippet = "Disable",
+                            },
+                        },
                     },
                 },
                 ["basedpyright"] = {

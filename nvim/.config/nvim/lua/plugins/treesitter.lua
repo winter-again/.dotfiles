@@ -141,8 +141,6 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
-        -- enabled = false,
-        -- event = { "BufReadPost", "BufNewFile" },
         dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
             require("treesitter-context").setup({
@@ -151,9 +149,7 @@ return {
                 max_lines = 2,
                 line_numbers = true,
                 on_attach = function(bufnr)
-                    print(bufnr)
                     -- disable b/c poor scrolling perf in markdown
-                    print(vim.bo[bufnr].filetype)
                     return vim.bo[bufnr].filetype ~= "markdown"
                 end,
             })
