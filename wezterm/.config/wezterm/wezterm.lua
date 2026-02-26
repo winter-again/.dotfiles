@@ -140,12 +140,12 @@ config.keys = {
 -- }
 
 -- plugins
--- I think because I have `$XDG_RUNTIME_DIR` set, my plugins are in `/run/user/1000/wezterm/plugins/`
--- otherwise fallback to `~/.local/share/wezterm`
+-- I think because I have `$XDG_RUNTIME_DIR` set, my plugins are in ~/.local/share/wezterm/plugins
+-- otherwise check `/run/user/1000/wezterm/plugins/`
 -- only http or local filesystem repos are allowed
--- local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
+local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
 -- local wezterm_config_nvim = require('wezterm_config_plug')
-local wezterm_config_nvim = wezterm.plugin.require('/home/andrew/Documents/code/nvim-dev/wezterm-config.nvim')
+-- local wezterm_config_nvim = wezterm.plugin.require('/home/andrew/Documents/code/nvim-dev/wezterm-config.nvim')
 wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin; otherwise it seems to check on nearly every action in wezterm
 
 -- callbacks
