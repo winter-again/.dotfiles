@@ -260,8 +260,7 @@ user_pref("dom.security.https_only_mode", true);
 user_pref("dom.security.https_only_mode_error_page_user_suggestions", true);
 
 // PREF: set DoH provider
-// NOTE: currently having issues
-// user_pref("network.trr.uri", "https://dns.dnswarden.com/00000000000000000000048"); // Hagezi Light + TIF DNS-over-HTTPS (DoH)
+// user_pref("network.trr.uri", "https://dns.dnswarden.com/00000000000000000000048"); // Hagezi Light + TIF
 user_pref("network.trr.uri", "https://dns.quad9.net/dns-query");
 // increased protection option will switch back to local provider if any issues arise
 // user_pref("network.trr.mode", 2);

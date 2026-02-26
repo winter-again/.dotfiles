@@ -94,7 +94,7 @@ alias ll="eza -lahM --icons --color=always --group-directories-first --time-styl
 alias cp="cp -vi"
 alias mv="mv -vi"
 alias rm="rm -i"
-alias tree="eza -la --no-permissions --tree --level=2 --ignore-glob='.git|.venv|node_modules'"
+alias tree="eza -la --no-permissions --tree --level=2 --ignore-glob='.git|.venv|node_modules|__pycache__|.pytest_cache'"
 alias open="xdg-open"
 alias grep="grep --color=auto"
 alias x="xan"

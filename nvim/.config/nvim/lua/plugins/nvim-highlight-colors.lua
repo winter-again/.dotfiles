@@ -10,6 +10,7 @@ return {
             enable_tailwind = true,
             exclude_filetypes = {
                 "markdown",
+                "lazy",
             },
         })
     end,
