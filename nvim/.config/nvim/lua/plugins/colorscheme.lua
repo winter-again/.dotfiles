@@ -122,6 +122,23 @@ return {
         end,
     },
     {
+        'olivercederborg/poimandres.nvim',
+        lazy = false,
+        config = function()
+            require('poimandres').setup({})
+        end,
+    },
+    {
+        'bluz71/vim-nightfly-colors',
+        name = 'nightfly',
+        lazy = false,
+    },
+    {
+        'bluz71/vim-moonfly-colors',
+        name = 'moonfly',
+        lazy = false,
+    },
+    {
         'EdenEast/nightfox.nvim',
         config = true,
     },

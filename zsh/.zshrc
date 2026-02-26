@@ -89,14 +89,14 @@ ff() {
     if [[ -z "${TMUX}" ]]; then
         dir=$(fd . \
             ~/Documents/Bansal-lab \
-            ~/Documents/projects \
-            ~/Documents/projects/nvim-dev \
+            ~/Documents/code \
+            ~/Documents/code/nvim-dev \
             --min-depth 1 --max-depth 1 --type d | fzf --prompt=" Directory: " --no-preview)
     else
         dir=$(fd . \
             ~/Documents/Bansal-lab \
-            ~/Documents/projects \
-            ~/Documents/projects/nvim-dev \
+            ~/Documents/code \
+            ~/Documents/code/nvim-dev \
             --min-depth 1 --max-depth 1 --type d | fzf-tmux -p --prompt=" Directory: " --no-preview)
     fi
     cd "$dir"
