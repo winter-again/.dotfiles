@@ -77,8 +77,10 @@ vim.opt.foldenable = true
 vim.opt.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
 -- what gets saved in sessions
 vim.opt.sessionoptions = 'buffers,curdir,folds,globals,winpos,winsize'
--- transparency for cmp menu (0 = fully opaque, 100 = fully transparent)
+-- (pseudo)transparency for cmp menu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice
+-- note: setting it means cmp menu has highlight but can see text behind
+-- not setting + having transparent bg lets just the transparent background show
 vim.opt.pumblend = 30
 --------------------------------------------------------------------------------------------------------
 -- key remaps:

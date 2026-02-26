@@ -1,4 +1,5 @@
 local wezterm = require('wezterm')
+local bg = require('background')
 local config = {}
 
 -- trying this since it's technically using the dGPU now; unsure of whether one is clearly better
@@ -10,7 +11,7 @@ config.front_end = 'OpenGL'
 config.default_prog = {'/usr/bin/zsh'}
 config.default_cwd = wezterm.home_dir
 -- config.scrollback_lines = 0
-
+bg.set_background(config) -- set bg using separate module
 config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
 config.colors = {
     tab_bar = {
@@ -46,16 +47,6 @@ config.window_frame = {
     font_size = 10.0,
     active_titlebar_bg = '#1d202f', -- color of the space behind tabs
     inactive_titlebar_bg = '#1d202f',
-}
--- background
-config.background = {
-    {
-        source = {
-            File = ''
-        },
-        -- vertical_offset = -300,
-        opacity = 0.2,
-    }
 }
 config.use_fancy_tab_bar = true -- default
 config.show_tab_index_in_tab_bar = true
