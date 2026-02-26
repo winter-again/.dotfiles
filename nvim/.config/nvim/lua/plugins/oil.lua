@@ -3,13 +3,15 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
         require("oil").setup({
+            default_file_explorer = true,
+            delete_to_trash = true,
             columns = { "icon" },
             use_default_keymaps = false,
             keymaps = {
                 ["<CR>"] = "actions.select",
-                ["-"] = "actions.parent",
-                ["_"] = "actions.open_cwd",
-                ["g."] = "actions.toggle_hidden",
+                ["-"] = { "actions.parent", mode = "n" },
+                ["_"] = { "actions.open_cwd", mode = "n" },
+                ["g."] = { "actions.toggle_hidden", mode = "n" },
             },
             view_options = {
                 show_hidden = true,
@@ -20,7 +22,6 @@ return {
                 max_height = 16,
                 border = "none",
                 -- win_options = { winblend = 20 },
-                delete_to_trash = true,
                 preview_split = "right",
                 override = function(conf)
                     conf.relative = "editor"
@@ -28,6 +29,21 @@ return {
                     conf.col = 0
 
                     return conf
+                end,
+            },
+            preview_win = {
+                disable_preview = function(filename)
+                    local no_prev = {
+                        ".png",
+                        ".jpg",
+                    }
+                    local ext = filename:match("^.+(%..+)$")
+                    for _, targ in ipairs(no_prev) do
+                        if ext == targ then
+                            return true
+                        end
+                    end
+                    return false
                 end,
             },
         })
