@@ -197,16 +197,16 @@ return {
             snippetType = "autosnippet",
             desc = "Polars special print",
             docstring = {
-                "with pl.Config(tbl_<opt>=-1):",
+                "with pl.Config(tbl_<opt>=-1, set_fmt_str_lengths=<len>, set_fmt_cell_table_list_len=<len>):",
                 "    print(<out>)",
             },
         },
         fmta(
             [[
-            with pl.Config(tbl_<opt>=-1):
-                print(<out>)
+            with pl.Config(tbl_<>=-1, set_fmt_str_lengths=<>, set_fmt_table_cell_list_len=<>):
+                print(<>)
             ]],
-            { opt = i(1), out = i(2) }
+            { i(1, "cols"), i(2, "200"), i(3, "200"), i(4, "df") }
         )
     ),
 }
