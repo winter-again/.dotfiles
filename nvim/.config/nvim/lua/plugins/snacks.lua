@@ -3,6 +3,37 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
+        bigfile = { enabled = false },
+        dashboard = { enabled = false },
+        explorer = { enabled = false },
+        indent = {
+            enabled = true,
+            priority = 1,
+            char = "│",
+            only_scope = false,
+            only_current = false,
+            hl = "SnacksIndent",
+            animate = {
+                enabled = false,
+            },
+            scope = {
+                enabled = true,
+                priority = 200,
+                char = "│",
+                hl = "SnacksIndentScope",
+            },
+            chunk = {
+                enabled = false,
+            },
+        },
+        input = { enabled = false },
+        picker = { enabled = false },
+        notifier = { enabled = false },
+        quickfile = { enabled = false },
+        scope = { enabled = false },
+        scroll = { enabled = false },
+        statuscolumn = { enabled = false },
+        words = { enabled = false },
         image = {
             doc = {
                 enabled = true,
