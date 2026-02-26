@@ -3,7 +3,6 @@ font-size = 14
 hint-font = false
 
 prompt-text = "❯ "
-hide-cursor = false
 text-cursor = false
 history = true
 fuzzy-match = false

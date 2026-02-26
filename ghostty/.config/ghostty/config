@@ -11,9 +11,6 @@ shell-integration-features = false
 
 keybind = ctrl+y>r=reload_config
 
-# theme = Mellifluous
-# palette
-
 foreground = #f0f0f0
 background = #0f0f0f
 cursor-color = #f0f0f0

@@ -33,7 +33,6 @@ return {
                 },
             },
             files = {
-                -- fd_opts = "--color=always --type f --type l --hidden --follow",
                 fd_opts = "--color=never --hidden --type f --type l --exclude .git",
                 actions = {
                     -- NOTE: inherits from actions.files
@@ -41,14 +40,13 @@ return {
                 },
             },
             grep = {
-                prompt = "rg❯ ",
-                input_prompt = "Grep for❯ ",
+                prompt = "rg: ",
+                input_prompt = "Grep for: ",
                 hls = {
                     dir_part = "FzfLuaNormal",
                     file_part = "FzfLuaFzfPrompt",
                 },
-                rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --hidden --no-ignore --follow --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/* -e",
-                -- rg_glob = true,
+                rg_opts = "--column --line-number --color=always --smart-case --max-columns=4096 --hidden --no-ignore --follow --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/* -e",
             },
         })
 
@@ -74,10 +72,7 @@ return {
         map("n", "<leader>fgc", fzf_lua.git_commits, opts, "Search proj git commit log")
 
         map("n", "<leader>fs", function()
-            require("fzf-lua").live_grep({
-                exec_empty_query = true,
-                -- cmd = "rg --column --line-number --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/*",
-            })
+            require("fzf-lua").live_grep({ exec_empty_query = true })
         end, opts, "Live grep")
         map("n", "<leader>/", fzf_lua.lgrep_curbuf, opts, "Find in current buffer")
 
