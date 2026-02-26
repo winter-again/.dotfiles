@@ -72,6 +72,7 @@ alias fd="fd --hidden --color never"
 alias gs="git status"
 alias ga="git add"
 alias gb="git branch -v"
+alias gc="git commit"
 alias gco="git checkout"
 alias gd="git diff"
 alias gds="git diff --staged" # staged changes
