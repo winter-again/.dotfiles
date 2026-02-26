@@ -12,19 +12,17 @@ default:
     stow pacman
     stow paru
     stow ripgrep
-    stow scripts
+    stow --no-folding scripts
     stow spotify
     stow swappy
     stow sway
     stow taskwarrior
     stow taplo
-    stow tidy-viewer
     stow tmux
     stow tofi
     stow uv
     stow waybar
-    stow wezterm
+    stow --no-folding wezterm
     stow yazi
     stow zathura
-    stow zk
     stow zsh
