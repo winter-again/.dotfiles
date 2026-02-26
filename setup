@@ -146,7 +146,7 @@ tools=(
     eza
     fd
     fzf
-    git-lfs
+    # git-lfs
     jaq
     just
     openssh
@@ -166,8 +166,8 @@ tools=(
 )
 paru_install "${tools[@]}"
 
-echo "Running Git LFS install command..."
-git lfs install
+# echo "Running Git LFS install command..."
+# git lfs install
 
 # TODO: put each of these package sets behind a confirm check?
 echo "Installing Lua packages..."
