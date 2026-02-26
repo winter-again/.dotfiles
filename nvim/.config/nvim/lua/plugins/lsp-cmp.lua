@@ -161,8 +161,8 @@ return {
     },
     {
         'stevearc/conform.nvim',
-        -- event = { 'BufWritePre' },
-        event = { 'BufReadPre', 'BufNewFile' },
+        -- event = { 'BufReadPre', 'BufNewFile' },
+        event = { 'BufWritePre' },
         cmd = { 'ConformInfo' },
         config = function()
             require('conform').setup({
@@ -170,9 +170,11 @@ return {
                     css = { 'prettierd' },
                     html = { 'prettierd' },
                     javascript = { 'prettierd' },
+                    javascriptreact = { 'prettierd' },
                     lua = { 'stylua' },
-                    -- run sequentially
-                    python = { 'isort', 'black' },
+                    python = { 'isort', 'black' }, -- run sequentially
+                    typescript = { 'prettierd' },
+                    typescriptreact = { 'pretterd' },
                 },
                 format_on_save = function(bufnr)
                     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
@@ -211,7 +213,9 @@ return {
         config = function()
             require('lint').linters_by_ft = {
                 javascript = { 'eslint' },
+                javascriptreact = { 'eslint' },
                 typescript = { 'eslint' },
+                typescriptreact = { 'eslint' },
             }
 
             local lint_group = vim.api.nvim_create_augroup('Lint', { clear = true })
