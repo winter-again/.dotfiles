@@ -38,7 +38,8 @@
 (use-package gruvbox-theme 
   :ensure t
   :config
-  (load-theme 'gruvbox-dark-medium))
+  ;; gruvbox-dark-medium is fine too
+  (load-theme 'gruvbox-dark-hard))
 
 ;; evil mode
 (use-package evil
@@ -47,25 +48,27 @@
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil) ;; expected by evil-collection
   (setq evil-want-C-u-scroll t) ;; use C-u for scrolling up
+  (setq evil-want-empty-ex-last-command nil) ;; don't populate ex prompt with last command
   :config
   ;; window navigation
-  ;; TODO: don't work in org?
-  ;; (define-key evil-motion-state-map (kbd "C-h") 'evil-window-left)
-  ;; (define-key evil-motion-state-map (kbd "C-j") 'evil-window-down)
-  ;; (define-key evil-motion-state-map (kbd "C-k") 'evil-window-up)
-  ;; (define-key evil-motion-state-map (kbd "C-l") 'evil-window-right)
-  ;;
-  ;; (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-  ;; (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-  ;; (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-  ;; (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-  ;;
-  ;; (define-key global-map (kbd "C-h") #'evil-window-left)
-  ;; (define-key global-map (kbd "C-j") #'evil-window-down)
-  ;; (define-key global-map (kbd "C-k") #'evil-window-up)
-  ;; (define-key global-map (kbd "C-l") #'evil-window-right)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (evil-mode 1)) ;; use C-g to escape to normal mode
+  ;; TODO: C-j and C-k don't work in org mode
+  (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+  (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+  (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+  (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+
+  (define-key evil-motion-state-map (kbd "C-h") 'evil-window-left)
+  (define-key evil-motion-state-map (kbd "C-j") 'evil-window-down)
+  (define-key evil-motion-state-map (kbd "C-k") 'evil-window-up)
+  (define-key evil-motion-state-map (kbd "C-l") 'evil-window-right)
+
+  (define-key global-map (kbd "C-h") #'evil-window-left)
+  (define-key global-map (kbd "C-j") #'evil-window-down)
+  (define-key global-map (kbd "C-k") #'evil-window-up)
+  (define-key global-map (kbd "C-l") #'evil-window-right)
+
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state) ;; use C-g to escape to normal mode
+  (evil-mode 1))
 
 (use-package evil-collection
   :ensure t
@@ -73,18 +76,86 @@
   :config
   (evil-collection-init))
 
-;; use esc to quit prompts
-;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+;; use single esc to quit prompts
+(keymap-global-set "<escape>" 'keyboard-escape-quit)
+
+;; org-mode; based on Prot config
+(use-package org
+  :ensure nil ;; don't try to install because built-in
+  :config
+  (setq org-M-RET-may-split-line '((default . nil))) ;; Meta-ret only creates a new item
+  (setq org-insert-heading-respect-content t) ;; don't send heading content to the new heading
+  (setq org-log-done 'time) ;; log done time
+  (setq org-log-into-drawer t) ;; log the state changes inside of LOGBOOK section instead of polluting content
+  (setq org-directory "~/Documents/org/")
+  (setq org-agenda-files (list org-directory))
+
+  (add-hook 'org-mode-hook 'org-bullets-mode) ;; visibility of hidden elements under cursor
+  (add-hook 'org-mode-hook 'org-appear-mode) ;; visibility of hidden elements under cursor
+  (add-hook 'org-mode-hook 'org-indent-mode) ;; virtual/soft indent
+  (add-hook 'org-mode-hook 'visual-line-mode)) ;; smart soft wrapping
+;; make these org functions globally available
+(keymap-global-set "C-c l" #'org-store-link)
+(keymap-global-set "C-c a" #'org-agenda)
+(keymap-global-set "C-c c" #'org-capture)
+;; hard indentation
+;; (setq org-adapt-indentation t
+      ;; org-hide-leading-starts t
+      ;; org-odd-levels-only t)
+
+(use-package org-appear
+  :ensure t
+  :after org
+  :init
+  (setq org-hide-emphasis-markers t)
+  (setq org-appear-autolinks t))
+
+;; nicer looking bullets
+(use-package org-bullets
+  :ensure t
+  :after org)
+
+;; smart parens
+;; ;; TODO: figure out proper config
+;; (use-package smartparens
+;;   :ensure t
+;;   :hook (org-mode)
+;;   :config
+;;   (require 'smartparens-config))
+
+;; TODO: failure to load must because of presence of bind -> config *after* binding is hit
+;; maybe can force with :commands?
+;; or :mode?
+(use-package org-roam
+  :ensure t
+  :after org
+  ;; :bind (("C-c n l" . org-roam-buffer-toggle)
+  ;;        ("C-c n f" . org-roam-node-find)
+  ;;        ("C-c n i" . org-roam-node-insert))
+  ;; TODO: figure out if this should be in :custom or :config
+  ;; :custom
+  ;; (setq org-roam-directory "~/Documents/org/roam") ;; must ensure this dir exists
+  :config
+  (setq org-roam-directory "~/Documents/org/roam") ;; must ensure this dir exists
+  ;; col for tags up to 10 char wide
+  ;; (setq org-roam-node-display-template
+  ;;   (concat "${title:*} "
+  ;;     (propertize "${tags:10}" 'face 'org-tag)))
+  ;; (setq org-roam-completion-everywhere t) ;; trigger completions even outside of brackets
+  ;; (setq org-roam-auto-replace-fuzzy-links nil)
+  ;; (setq org-return-follows-link t)
+  (org-roam-db-autosync-mode))
 
 ;; vertico: completion in minibuffer
-;; (use-package vertico
-;;   :ensure t
-;;   :custom
-;;   (vertico-resize nil) ;; don't grow/shrink mini buf
-;;   (vertico-cycle t) ;; enable cycling for next/prev
-;;   :init
-;;   (vertico-mode))
-;;
+;; works nicely with org-roam-node-insert
+(use-package vertico
+  :ensure t
+  :custom
+  (vertico-resize nil) ;; don't grow/shrink minibuffer
+  (vertico-cycle t) ;; enable cycling for next/prev
+  :init
+  (vertico-mode))
+
 ;; ;; marginalia: rich annotations in the minibuffer
 ;; (use-package marginalia
 ;;   :ensure t
@@ -150,54 +221,4 @@
 ;;   (completion-styles '(orderless basic))
 ;;   (completion-category-defaults nil)
 ;;   (completion-category-overrides '((file (styles partial-completion)))))
-;; ;; org-mode; based on Prot config
-;; (use-package org
-;;   :ensure nil ;; don't try to install because already built-in
-;;   :config
-;;   (setq org-M-RET-may-split-line '((default . nil))) ;; Meta-ret only creates a new item
-;;   (setq org-insert-heading-respect-content t) ;; don't send heading content to the new heading
-;;   (setq org-log-done 'time) ;; log done time
-;;   (setq org-log-into-drawer t) ;; log the state changes inside of LOGBOOK section instead of polluting content
-;;   (setq org-directory "~/Documents/org/")
-;;   (setq org-agenda-files (list org-directory))
-;;   (add-hook 'org-mode-hook 'org-indent-mode) ;; virtual/soft indent
-;;   (add-hook 'org-mode-hook 'visual-line-mode)) ;; smart soft wrapping
-;;
-;; ;; hard indentation
-;; ;; (setq org-adapt-indentation t
-;;       ;; org-hide-leading-starts t
-;;       ;; org-odd-levels-only t)
-;;
-;; ;; smart parens
-;; ;; TODO: figure out proper config
-;; (use-package smartparens
-;;   :ensure t
-;;   :hook (org-mode)
-;;   :config
-;;   (require 'smartparens-config))
-;;
-;; ;; nicer looking bullets
-;; (use-package org-bullets
-;;   :ensure t
-;;   :after org
-;;   :config
-;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-;;
-;; TODO: failure to load must because of presence of bind -> config *after* binding is hit
-;; maybe can force with :commands?
-;; or :mode?
-;; (use-package org-roam
-;;   :ensure t
-;;   :after org
-;;   :bind (("C-c n l" . org-roam-buffer-toggle)
-;;          ("C-c n f" . org-roam-node-find)
-;;          ("C-c n i" . org-roam-node-insert))
-;;   :custom
-;;   (org-roam-directory "~/Documents/org/roam")
-;;   :config
-;;   ;; TODO: for appearance but no effect?
-;;   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-;;   (setq org-roam-completion-everywhere t) ;; trigger completions even outside of brackets
-;;   (setq org-roam-auto-replace-fuzzy-links nil)
-;;   (setq org-return-follows-link t)
-;;   (org-roam-db-autosync-mode))
+
