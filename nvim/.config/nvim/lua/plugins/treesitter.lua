@@ -15,8 +15,7 @@ return {
                     "query",
                     "markdown",
                     "markdown_inline",
-                    -- 7 parsers above MUST be installed
-                    -- (c, lua, vim, vimdoc, query, markdown, markdown_inline)
+                    -- 7 parsers above MUST be installed (c, lua, vim, vimdoc, query, markdown, markdown_inline)
                     "astro",
                     "bash",
                     "css",
@@ -53,7 +52,6 @@ return {
                     "typst",
                     "yaml",
                     "zathurarc",
-                    -- "dockerfile",
                 },
                 sync_install = false, -- synchronous install of parsers (only applied to ensure_installed)
                 auto_install = false, -- recommended to set false if don't have tree-sitter CLI installed locally

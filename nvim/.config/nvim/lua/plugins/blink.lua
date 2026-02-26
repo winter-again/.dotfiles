@@ -14,10 +14,10 @@ return {
             config = function()
                 local ls = require("luasnip")
 
-                -- ls.config.setup({
-                --     region_check_events = "CursorHold,InsertLeave",
-                --     delete_check_events = "TextChanged,InsertEnter",
-                -- })
+                ls.setup({
+                    update_events = { "TextChanged", "TextChangedI" },
+                    enable_autosnippets = true,
+                })
 
                 require("luasnip.loaders.from_lua").lazy_load({
                     paths = { "~/.config/nvim/lua/winteragain/snippets" },

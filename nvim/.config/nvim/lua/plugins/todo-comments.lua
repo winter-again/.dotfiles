@@ -3,11 +3,6 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         require("todo-comments").setup({
-            keywords = {
-                FIX = { alt = { "fix" } },
-                TODO = { alt = { "todo" } },
-                NOTE = { alt = { "note" } },
-            },
             search = {
                 commands = "rg",
                 args = {

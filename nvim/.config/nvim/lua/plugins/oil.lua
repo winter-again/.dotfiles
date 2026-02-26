@@ -53,7 +53,7 @@ return {
 
         map("n", "<leader>pv", require("oil").toggle_float, nil, "Open Oil in floating window")
         -- auto open preview on cursor hover
-        local au_group = vim.api.nvim_create_augroup("WinterAgain", { clear = false })
+        local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
         vim.api.nvim_create_autocmd("User", {
             pattern = "OilEnter",
             group = au_group,

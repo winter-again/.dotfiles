@@ -1,4 +1,4 @@
-local au_group = vim.api.nvim_create_augroup("WinterAgain", { clear = true })
+local au_group = vim.api.nvim_create_augroup("winter.again", { clear = true })
 
 -- highlight the text you just yanked (visual cue)
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -81,7 +81,7 @@ local function del_qflist()
 end
 
 vim.api.nvim_create_autocmd("FileType", {
-    group = "WinterAgain",
+    group = au_group,
     pattern = "qf",
     callback = function()
         vim.api.nvim_set_option_value("buflisted", false, { buf = 0 })
