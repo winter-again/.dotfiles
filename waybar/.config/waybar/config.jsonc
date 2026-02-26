@@ -14,6 +14,7 @@
         "clock"
     ],
     "modules-right": [
+        "custom/weather",
         "pulseaudio",
         "cpu",
         "memory",
@@ -25,6 +26,15 @@
     ],
     "hyprland/workspaces": {
         "active-only": false
+    },
+    "custom/weather": {
+        "format": "{icon} {}",
+        "format-icons": [
+            "<span font='16' rise='-2000'>󰅟</span>"
+        ],
+        "return-type": "json",
+        "interval": 960,
+        "exec": "~/.config/waybar/weather.sh"
     },
     // still same issue as mpris where no title or artist info on start until next song
     "custom/media": {
@@ -56,7 +66,7 @@
         "escape": true
     },
     "tray": {
-        "icon-size": 14,
+        "icon-size": 20,
         "spacing": 10
     },
     "clock": {
@@ -121,10 +131,11 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "interval": 5,
         "format-wifi": "<span font='16' rise='-2000'>󰖩</span> {essid} ({signalStrength}%)",
         "format-ethernet": "<span font='16' rise='-2000'>󰈀</span> {bandwidthTotalBytes}",
         "tooltip-format-wifi": "󰖩 {essid}",
-        "tooltip-format-ethernet": "󰈀 {ifname}",
+        "tooltip-format-ethernet": "󰈀 {ifname} {bandwidthUpBytes} {bandwidthDownBytes}",
         "format-linked": "{ifname} (No IP)",
         "format-disconnected": "󰈂"
     },
