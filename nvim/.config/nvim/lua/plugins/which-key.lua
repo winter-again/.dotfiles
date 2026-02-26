@@ -32,7 +32,6 @@ return {
                 db = {'Delete buffer'},
                 f = {
                     name = 'Telescope',
-                    b = {'Find buffers'},
                     c = {'Find colorscheme'},
                     D = {'Find workspace diagnostics'},
                     d = {'Find file diagnostics'},
@@ -44,6 +43,7 @@ return {
                     h = {'Find highlights'},
                     j = {'Find jumplist'},
                     k = {'Find keymaps'},
+                    l = {'Find buffers'},
                     p = {'Find session'},
                     r = {'Find registers'},
                     s = {'Find string in cwd'},

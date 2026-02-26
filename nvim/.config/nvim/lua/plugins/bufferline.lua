@@ -3,7 +3,7 @@ return {
     version = '*',
     dependencies = 'nvim-tree/nvim-web-devicons',
     event = 'VeryLazy',
-    enabled = true,
+    enabled = false,
     config = function()
         require('bufferline').setup({
             options = {
