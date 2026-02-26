@@ -88,7 +88,6 @@ local opts = {silent = true} -- silent prevents printing to command line
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', opts) -- unbind space in case it interferes with leader setting
 vim.keymap.set('n', '<leader>pv', ':NvimTreeToggle<CR>', opts) -- toggle file tree
 -- create splits
--- should these use <leader> too?
 vim.keymap.set('n', '<leader>sh', ':split<CR><C-w>w', opts) -- horizontal split current buffer
 vim.keymap.set('n', '<leader>sv', ':vsplit<CR><C-w>w', opts) -- vertical split current buffer
 -- moving between windows

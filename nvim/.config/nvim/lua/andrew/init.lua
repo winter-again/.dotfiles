@@ -32,7 +32,7 @@ local lazy_opts = {
     },
     dev = {
         -- directory for local plugin dev
-        path = '~/Documents/Projects/nvim-dev/internal'
+        path = '~/Documents/projects/nvim-dev/internal'
     },
     install = {
         colorscheme = {'tokyonight'} -- try to load one of these colorschemes when starting an installation during startup
