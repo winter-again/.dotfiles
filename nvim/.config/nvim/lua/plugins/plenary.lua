@@ -1,4 +1,3 @@
 return {
-    'nvim-lua/plenary.nvim',
-    enabled = false
+    'nvim-lua/plenary.nvim'
 }
