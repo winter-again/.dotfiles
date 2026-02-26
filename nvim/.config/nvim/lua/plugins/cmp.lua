@@ -1,29 +1,34 @@
 local kind_icons = {
-    Text = "",
+    Text = "󰉿",
     Method = "󰆧",
     Function = "󰊕",
-    Constructor = "",
-    Field = "󰇽",
+    Constructor = "󰒓",
+
+    Field = "󰜢",
     Variable = "󰂡",
+    Property = "󰜢",
+
     Class = "󰠱",
     Interface = "",
-    Module = "",
-    Property = "󰜢",
-    Unit = "",
+    Struct = "",
+    Module = "󰅩",
+
+    Unit = "󰪚",
     Value = "󰎠",
     Enum = "",
+    EnumMember = "",
+
     Keyword = "󰌋",
+    Constant = "󰏿",
+
     Snippet = "",
     Color = "󰏘",
     File = "󰈙",
-    Reference = "",
+    Reference = "󰬲",
     Folder = "󰉋",
-    EnumMember = "",
-    Constant = "󰏿",
-    Struct = "",
-    Event = "",
+    Event = "󱐋",
     Operator = "󰆕",
-    TypeParameter = "󰅲",
+    TypeParameter = "󰬛",
 }
 
 return {

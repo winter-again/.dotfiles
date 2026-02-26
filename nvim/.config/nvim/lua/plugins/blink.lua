@@ -78,7 +78,7 @@ return {
                 max_items = 10,
                 selection = {
                     preselect = false,
-                    auto_insert = true,
+                    auto_insert = false,
                 },
             },
             menu = {
