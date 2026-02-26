@@ -47,6 +47,7 @@ set {
     $up k
     $right l
     $term wezterm
+    $browser firefox
     # $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
     $menu tofi-drun | xargs swaymsg exec --
     $laptop_disp "eDP-1"
@@ -102,6 +103,7 @@ bindsym {
     $mod+Return exec $term
     $mod+Shift+q kill
     $mod+m exec $menu
+    $mod+b exec $browser
     # reload config file
     $mod+Shift+r reload
     # $mod+Shift+w exec killall waybar && waybar
