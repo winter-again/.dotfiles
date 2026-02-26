@@ -148,7 +148,7 @@ tooltip {
 }
 
 #network.disconnected {
-    background-color: #db4b4b;
+    border: 2px solid #db4b4b;
 }
 #battery {
     color: #c0caf5;

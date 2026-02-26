@@ -160,7 +160,7 @@
                 " "
             ]
         },
-        "on-click": "pamixer" // fix this...
+        "on-click": "pavucontrol" // fix this...
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system

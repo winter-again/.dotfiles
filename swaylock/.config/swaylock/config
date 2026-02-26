@@ -13,11 +13,12 @@ line-color=292e42
 line-clear-color=292e42
 line-uses-inside
 ring-color=292e42
+ring-clear-color=1a1b26
 ring-ver-color=7aa2f7
 ring-wrong-color=db4b4b
 key-hl-color=9ece6a
 text-color=c0caf5
-text-clear-color=c0caf5
+text-clear-color=1a1b26
 text-ver-color=c0caf5
 text-wrong-color=c0caf5
 image=~/Pictures/wallpapers/tokyo-night-wallpaper.jpg

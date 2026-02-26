@@ -152,7 +152,7 @@ focus_follows_mouse no
 # keyboard settings
 bindsym $mod+Shift+x exec --no-startup-id ~/.local/bin/keyboard-settings.sh
 # mouse/touchpad accel
-exec_always --no-startup-id xinput set-prop "SteelSeries SteelSeries Rival 300 Gaming Mouse" "libinput Accel Speed" 0.35
+exec_always --no-startup-id xinput set-prop "SteelSeries SteelSeries Rival 300 Gaming Mouse" "libinput Accel Speed" 0.40
 exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Accel Speed" 0.2
 # touchpad
 exec_always --no-startup-id xinput set-prop "DLL0945:00 04F3:311C Touchpad" "libinput Tapping Enabled" 1

@@ -14,7 +14,7 @@ temp=$(echo $resp | jq .main.temp)
 # feels_like=$(echo $resp | jq .main.feels_like)
 wind=$(echo $resp | jq .wind.speed)
 
-if [[ $wind -ge $WIND_THRESH ]]; then
+if [[ $(echo $wind >= $WIND_THRESH | bc -l) -eq 1 ]]; then
     output="$desc ~ $temp 󰔅 ~  $wind mph"
 else
     output="$desc ~ $temp 󰔅"

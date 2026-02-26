@@ -5,21 +5,32 @@ cd ~
 export _JAVA_AWT_WM_NONREPARENTING=1
 export XCURSOR_SIZE=24
 export GTK_THEME=Tokyonight-Dark-BL
-# apparently for Zoom? seems to have no effect
-# export QT_QPA_PLATFORM=wayland
+# use Wayland for Qt apps
+export QT_QPA_PLATFORM=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION="1" # disables Qt client-side decorations
+# detect integrated GPU and set var for Sway
+val=$(udevadm info -a -n /dev/dri/card1 | grep boot_vga | rev | cut -c 2)
+export WLR_DRM_DEVICES="/dev/dri/card$val"
 # export GDK_SCALE=2
 
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_DESKTOP=sway
 
-# firefox
+# Firefox
 export MOZ_ENABLE_WAYLAND=1
 
 # NVIDIA? already put in conf...not sure if needed
 export LIBVA_DRIVER_NAME=nvidia
 export XDG_SESSION_TYPE=wayland
-export GBM_BACKEND=nvidia-drm
+
+# apparently this one can cause Firefox crashes
+# seems to have fixed things and Zoom screensharing within Firefox works
+# export GBM_BACKEND=nvidia-drm
+
+# and this can cause probs with Zoom screen sharing
+# still have crashes on screen share
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
+
 export WLR_NO_HARDWARE_CURSORS=1
 
 exec sway --unsupported-gpu
