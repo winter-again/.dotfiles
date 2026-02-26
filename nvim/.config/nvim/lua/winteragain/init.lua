@@ -31,7 +31,7 @@ local lazy_opts = {
         path = '~/Documents/code/nvim-dev',
     },
     install = {
-        colorscheme = { 'tokyonight' }, -- try to load one of these colorschemes when starting an installation during startup
+        colorscheme = { 'mellifluous', 'tokyonight' }, -- try to load one of these colorschemes when starting an installation during startup
     },
 }
 

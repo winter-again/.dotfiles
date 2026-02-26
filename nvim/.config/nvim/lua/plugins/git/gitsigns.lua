@@ -41,7 +41,7 @@ return {
                 -- map('n', '<leader>hd', gs.diffthis, opts, 'Diff this file')
                 map('n', '<leader>td', gs.toggle_deleted, opts, 'Toggle showing deletions inline')
 
-                map('n', '<leader>hp', gs.preview_hunk, opts, 'Show hunk diff')
+                map('n', '<leader>hd', gs.preview_hunk, opts, 'Show hunk diff')
                 map('n', '<leader>hs', gs.stage_hunk, opts, 'Stage hunk')
                 map('v', '<leader>hs', function()
                     gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
