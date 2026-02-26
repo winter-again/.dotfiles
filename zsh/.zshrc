@@ -131,8 +131,8 @@ alias gds="git diff --staged" # staged changes
 alias gdh="git diff HEAD~" # diff latest commit with previous
 alias gu="git rm --cached" # stop tracking given file
 alias gl="git log --stat"
-alias glg="git log --graph --abbrev-commit --decorate --date=format-local:'%Y-%m-%d (%a) %I:%M:%S %p' --format=format:'%C(bold blue)%h%C(reset) - %C(bold magenta)%ad%C(reset) %C(yellow)(%ar)%C(reset) %C(bold cyan)%an%C(reset)%C(auto)%d%C(reset)%C(white): %s%C(reset)'"
-alias gls="git log --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
+alias glg="git log --all --graph --abbrev-commit --decorate --date=format-local:'%Y-%m-%d (%a) %I:%M:%S %p' --format=format:'%C(bold blue)%h%C(reset) - %C(bold magenta)%ad%C(reset) %C(yellow)(%ar)%C(reset) %C(bold cyan)%an%C(reset)%C(auto)%d%C(reset)%C(white): %s%C(reset)'"
+alias gls="git log -all --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
 
 # change cwd on exit; use Q instead of q to prevent
 function y() {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-case $(printf "%s\n" "Power off" "Reboot" "Suspend" "Hibernate" "Lock" "Exit Sway" | tofi --width 260 --height 260) in
+case $(printf "%s\n" "Power off" "Reboot" "Suspend" "Hibernate" "Lock" "Exit Sway" | tofi --width 200 --height 200) in
 "Power off")
     exec systemctl poweroff
     ;;
