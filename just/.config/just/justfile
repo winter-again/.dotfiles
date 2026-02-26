@@ -1,0 +1,6 @@
+default:
+    @just -f {{ justfile() }} --list
+
+[doc("Sample n rows from csv file")]
+smpl file n *opts:
+    @xan sample {{ opts }} {{ n }} {{ file }} | xan view

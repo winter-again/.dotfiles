@@ -95,15 +95,17 @@ alias rm="rm -i"
 alias tree="eza -la --no-permissions --tree --level=2 --ignore-glob='.git|.venv|node_modules'"
 alias open="xdg-open"
 alias grep="grep --color=auto"
+alias xv="xan view --limit 20"
 alias tv="tidy-viewer"
 alias j="just"
+alias jg="just -g"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
 alias fd="fd --hidden"
 alias bot="btm"
 alias pn="pnpm"
 alias tr="trash-put"
-alias R="R --no-save" # never prompt to save workspace image
+alias R="R --no-save"
 alias -g -- --help="--help 2>&1 | bat --language=help --style=plain" # colorize help with bat
 alias dots="cd $HOME/.dotfiles"
 alias wez-logs="cd /run/user/1000/wezterm" # wezterm logs

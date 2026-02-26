@@ -16,7 +16,7 @@ end
 
 config.color_scheme = "Mountain"
 config.background = require("bg").set_bg()
-config.font, config.font_size = utils.set_font("Zed")
+config.font, config.font_size = utils.set_font("Iosevka")
 config.cursor_blink_rate = 0
 config.window_padding = {
     left = 0,
