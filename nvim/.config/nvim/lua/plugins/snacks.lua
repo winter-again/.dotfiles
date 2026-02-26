@@ -7,7 +7,7 @@ return {
         dashboard = { enabled = false },
         explorer = { enabled = false },
         indent = {
-            enabled = true,
+            enabled = false,
             priority = 1,
             char = "│",
             only_scope = false,

@@ -1,13 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # load prompt config
-# source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # load p10k
-#######################
-
 # zmodload zsh/zprof # profiler
 export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=100000000
@@ -15,7 +5,7 @@ export SAVEHIST=$HISTSIZE # num of commands stored
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
-export SHELL=/bin/zsh
+export SHELL=/usr/bin/zsh
 # for wezterm undercurl supp, but it seems to cause partial line issues?
 # without it underlines look ok??
 # export TERM=wezterm
@@ -26,10 +16,7 @@ export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export MANROFFOPT="-P -c" # simple colors
 # Java for pyspark
 # export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
-
 export PATH="$PATH:$HOME/.local/bin"
-# for custom nvim install location
-# export PATH="$HOME/neovim/bin:$PATH"
 
 # Go
 # GOPATH default is already $HOME/go
@@ -63,6 +50,7 @@ alias de="deactivate"
 alias fd="fd --hidden"
 alias nc="ncmpcpp"
 alias nn="cd ~/Documents/notebook"
+alias pn="pnpm"
 # git aliases
 alias gs="git status"
 alias ga="git add"
@@ -121,22 +109,22 @@ function mkd() {
 #     ~/.local/bin/wezterm-bg
 # }
 # wezterm logs appear here
-function wez-logs() {
-    cd /run/user/1000/wezterm
-    ls
-}
-function wez-plugs() {
-    cd ~/.local/share/wezterm/plugins
-    ls
-}
+# function wez-logs() {
+#     cd /run/user/1000/wezterm
+#     ls
+# }
+# function wez-plugs() {
+#     cd ~/.local/share/wezterm/plugins
+#     ls
+# }
 function dots() {
     cd ~/.dotfiles
 }
 # for Obsidian vault
-function obs() {
-    cd ~/Documents/obsidian-vault
-    git status
-}
+# function obs() {
+#     cd ~/Documents/obsidian-vault
+#     git status
+# }
 # show journalctl for rclone backup service
 function bk() {
     journalctl --user -fu rclone_backup.service -n 30
@@ -155,33 +143,33 @@ function umntbk() {
 }
 
 # from fzf community
-alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
-_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | delta'"
-# fcoc_preview - checkout git commit with previews
-function fcoc_preview() {
-  local commit
-  commit=$( glNoGraph |
-    fzf --no-sort --reverse --tiebreak=index --no-multi \
-        --ansi --preview="$_viewGitLogLine" ) &&
-  git checkout $(echo "$commit" | sed "s/ .*//")
-}
-# gshow - git commit browser with previews
-function gshow() {
-    glNoGraph |
-        fzf --no-sort --reverse --tiebreak=index --no-multi \
-            --ansi --preview="$_viewGitLogLine" \
-                --header "enter to view, alt-y to copy hash" \
-                --bind "enter:execute:$_viewGitLogLine   | less -R" \
-                --bind "alt-y:execute:$_gitLogLineToHash | xclip"
-}
+# alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
+# _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+# _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | delta'"
+# # fcoc_preview - checkout git commit with previews
+# function fcoc_preview() {
+#   local commit
+#   commit=$( glNoGraph |
+#     fzf --no-sort --reverse --tiebreak=index --no-multi \
+#         --ansi --preview="$_viewGitLogLine" ) &&
+#   git checkout $(echo "$commit" | sed "s/ .*//")
+# }
+# # gshow - git commit browser with previews
+# function gshow() {
+#     glNoGraph |
+#         fzf --no-sort --reverse --tiebreak=index --no-multi \
+#             --ansi --preview="$_viewGitLogLine" \
+#                 --header "enter to view, alt-y to copy hash" \
+#                 --bind "enter:execute:$_viewGitLogLine   | less -R" \
+#                 --bind "alt-y:execute:$_gitLogLineToHash | xclip"
+# }
 # checkout git branch
-function gbs() {
-    local branches branch
-    branches=$(git --no-pager branch -vv) &&
-    branch=$(echo "$branches" | fzf +m) &&
-    git checkout $(echo "$branch" | awk '{print $!}' | sed "s/.* //")
-}
+# function gbs() {
+#     local branches branch
+#     branches=$(git --no-pager branch -vv) &&
+#     branch=$(echo "$branches" | fzf +m) &&
+#     git checkout $(echo "$branch" | awk '{print $!}' | sed "s/.* //")
+# }
 
 # fzf
 source /usr/share/fzf/key-bindings.zsh # fzf keybinds
@@ -225,21 +213,11 @@ export FZF_CTRL_R_OPTS="
     --color header:italic
     --header 'CTRL-Y to copy command to clipboard'"
 
-# nvm - removed b/c too slow
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm
-# source /usr/share/nvm/init-nvm.sh # from Arch wiki
-
 # fnm
 # `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
 # `--version-file-strategy=recursive` might also make sense; default is local
 # using both = auto use/install the right Node version when going into proj subdirs and moving between proj
-eval "$(fnm env --use-on-cd --shell zsh)"
-
-# pyenv
-# export PYENV_ROOT="$HOME/.pyenv"
-# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH" # from pyenv section on zsh
-# eval "$(pyenv init -)"
+# eval "$(fnm env --use-on-cd --shell zsh)"
 
 unsetopt beep autocd
 setopt hist_ignore_all_dups # delete old even if new one is dup
@@ -276,13 +254,13 @@ zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
 
 # make fd use same colors as eza (set $LS_COLORS)
-eval "$(dircolors -b)"
+# eval "$(dircolors -b)"
 
 # keep at end
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 eval "$(zoxide init zsh)" # zoxide
-# source ~/.config/wezterm/wezterm.sh
+eval "$(uv generate-shell-completion zsh)" # uv
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/omp_config.toml)"
 # zprof
