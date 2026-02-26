@@ -1,11 +1,16 @@
 return {
     'luukvbaal/statuscol.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
+    -- enabled = false,
     config = function()
         local builtin = require('statuscol.builtin')
         require('statuscol').setup({
             relculright = true, -- align the current line number with rest of col
             segments = {
+                -- for getting annotate.nvim extmarks to show
+                {
+                    sign = { namespace = { 'annotate' }, colwidth = 1, maxwidth = 1, auto = false },
+                },
                 -- fold col
                 -- { text = { builtin.foldfunc }, click = 'v:lua.ScFa' }, -- fold column replacement
                 -- diagnostics

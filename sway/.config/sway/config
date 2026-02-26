@@ -98,7 +98,8 @@ bindsym {
     $mod+m exec $menu
     # reload config file
     $mod+Shift+r reload
-    $mod+Shift+w exec killall waybar && waybar
+    # $mod+Shift+w exec killall waybar && waybar
+    $mod+Shift+W exec killall -SIGUSR2 waybar
     # Exit sway (logs you out of your Wayland session)
     $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Y' 'swaymsg exit'
     # swaync toggle
