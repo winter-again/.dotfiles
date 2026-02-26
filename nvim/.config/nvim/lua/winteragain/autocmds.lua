@@ -4,7 +4,7 @@ local au_group = vim.api.nvim_create_augroup("WinterAgain", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = au_group,
     callback = function()
-        vim.highlight.on_yank()
+        vim.hl.on_yank()
     end,
 })
 

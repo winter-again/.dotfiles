@@ -5,6 +5,7 @@ local function get_venv()
         output = string.match(venv, "([^/]+)$")
         output = string.format("(%s)", output)
     end
+
     return output
 end
 
@@ -21,6 +22,7 @@ local function get_lsp()
                 table.insert(names, client.name)
             end
         end
+
         return table.concat(names, ",")
     end
 end
@@ -37,11 +39,21 @@ local function get_conform()
         output = table.concat(names, ", ")
         output = string.format("[%s]", output)
     end
+
     return output
 end
 
-local function display_lsp_venv()
-    return get_lsp() .. get_conform() .. get_venv()
+local function get_nvim_lint()
+    local linters = require("lint").get_running()
+    if #linters == 0 then
+        return ""
+    end
+
+    return "[" .. table.concat(linters, ", ") .. "]"
+end
+
+local function display_tools()
+    return get_lsp() .. get_conform() .. get_nvim_lint() .. get_venv()
 end
 
 -- use gitsigns as the diff source below
@@ -106,7 +118,7 @@ return {
                 lualine_x = {
                     "encoding",
                     "filetype",
-                    { display_lsp_venv, icon = { " LSP:" } },
+                    { display_tools, icon = { " LSP:" } },
                     { qflist, icon = { " QF:" } },
                 },
                 lualine_y = { "progress" },
