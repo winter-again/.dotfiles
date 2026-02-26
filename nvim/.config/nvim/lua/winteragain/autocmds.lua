@@ -40,6 +40,13 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'WinLeave' }, {
     command = 'set nofen',
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'markdown' },
+    callback = function()
+        require('treesitter-context').disable()
+    end,
+})
+
 -- modify automatic formatting to not continue comments when you hit Enter
 -- setting it with autocmd otherwise ftplugin overrides it
 -- BufWinEnter event is late enough to override formatoptions
