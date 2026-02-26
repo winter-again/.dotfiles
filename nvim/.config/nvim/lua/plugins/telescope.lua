@@ -139,7 +139,7 @@ return {
             require('telescope').load_extension('fzf')
             require('telescope').load_extension('ui-select')
             require('telescope').load_extension('undo')
-            require('telescope').load_extension('persisted')
+            -- require('telescope').load_extension('persisted')
             require('telescope').load_extension('file_browser')
             -- require('telescope').load_extension('harpoon')
 
@@ -149,8 +149,8 @@ return {
             -- vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
             -- use '<leader>fg' to find among git files; again respects .gitignore
             vim.keymap.set('n', '<leader>fmf', my_ff, opts)
-            vim.keymap.set('n', '<leader>fc', builtin.git_commits, opts)
-            vim.keymap.set('n', '<leader>fb', builtin.git_bcommits, opts)
+            vim.keymap.set('n', '<leader>fgc', builtin.git_commits, opts)
+            vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, opts)
             vim.keymap.set('n', '<leader>fgs', builtin.git_status, opts)
             -- treesitter symbols
             vim.keymap.set('n', '<leader>ft', builtin.treesitter, opts)

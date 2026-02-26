@@ -79,12 +79,13 @@ return {
         config = function()
             require('catppuccin').setup({
                 flavour = 'mocha',
+                -- transparent_background = true, -- built-in transparency; doesn't suit all my needs
                 custom_highlights = function(colors)
                     return {
                         TreesitterContext = { bg = colors.surface2 },
-                        TreesitterContextLineNumber = { bg = 'none' },
-                        WinSeparator = { fg = colors.surface2 },
-                        LineNr = { fg = colors.surface2 },
+                        TreesitterContextLineNumber = { fg = colors.surface2, bg = 'none' },
+                        WinSeparator = { fg = colors.overlay0 },
+                        LineNr = { fg = colors.overlay0 },
                         -- Visual = { reverse = true },
                         WinBar = { fg = 'none', bg = 'none', italic = true },
                         WinBarNC = { bg = 'none', italic = true },
@@ -94,6 +95,7 @@ return {
                         DiagnosticUnderlineHint = { underdotted = true },
                         ['@lsp.type.unresolvedReference'] = { underdotted = true },
                         RenameMatch = { link = 'Search' },
+                        Pmenu = { bg = colors.crust },
                     }
                 end,
                 integrations = {
@@ -193,20 +195,9 @@ return {
         -- dev = true,
         branch = 'fix-indent-blankline',
     },
-    -- {
-    --     'projekt0n/github-nvim-theme',
-    --     lazy = true,
-    -- },
     {
         'savq/melange-nvim',
         lazy = false,
-    },
-    {
-        'shaunsingh/nord.nvim',
-        lazy = true,
-        config = function()
-            vim.g.nord_contrast = true
-        end,
     },
     {
         'AlexvZyl/nordic.nvim',
@@ -224,16 +215,6 @@ return {
                 },
             })
             require('nordic').load()
-        end,
-    },
-    {
-        'craftzdog/solarized-osaka.nvim',
-        lazy = true,
-        config = function()
-            require('solarized-osaka').setup({
-                transparent = true,
-                lualine_bold = true,
-            })
         end,
     },
     -- colorschemes that use contrasts and font variations to
