@@ -15,10 +15,10 @@ WIND_SYMBOL="m/s"
 url="https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&id=${CITY_ID}&units=${UNITS}&lang=en"
 resp=$(curl -s $url)
 # parse JSON response
-desc=$(echo $resp | jq .weather[0].description | tr -d '"')
+desc=$(echo $resp | jaq .weather[0].description | tr -d '"')
 # temp=$(echo $resp | jq .main.temp)
-feels_like=$(echo $resp | jq .main.feels_like)
-wind=$(echo $resp | jq .wind.speed)
+feels_like=$(echo $resp | jaq .main.feels_like)
+wind=$(echo $resp | jaq .wind.speed)
 
 if [[ $(echo "$wind >= $WIND_THRESH" | bc -l) -eq 1 ]]; then
     wind_out=$(echo $wind | bc -l )

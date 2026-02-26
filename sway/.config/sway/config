@@ -254,12 +254,9 @@ exec {
     nm-applet
     solaar -w hide
     spotify-launcher # --skip-update
-    # amberol
-
     # might need for systemd/dbus activation envs
     # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
-    # make playerctl act on the currently active media player
-    playerctld daemon
+    playerctld daemon # make playerctl act on the currently active media player
     swayidle -w before-sleep "gtklock -d"
 }
 
