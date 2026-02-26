@@ -446,17 +446,16 @@ paru_install ufw
 sudo systemctl enable --now ufw.service
 sudo ufw enable
 
-# echo "Configuring SSH and key for GitHub..."
-# paru_install openssh
-# # NOTE: will prompt for password
-# ssh-keygen -f "$HOME/.ssh/github" -C "$(whoami)@$(uname -n)"
-# cat > "$HOME/.ssh/config" <<"EOF"
-# Host github.com
-#     HostName github.com
-#     IdentitiesOnly yes
-#     IdentityFile ~/.ssh/github
-#     PreferredAuthentications publickey
-# EOF
+echo "Configuring SSH key for GitHub..."
+# NOTE: will prompt for password
+ssh-keygen -f "$HOME/.ssh/github" -C "$(whoami)@$(uname -n)"
+cat > "$HOME/.ssh/config" <<"EOF"
+Host github.com
+    HostName github.com
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/github
+    PreferredAuthentications publickey
+EOF
 
 echo
 echo "Done. Reboot the system..."
