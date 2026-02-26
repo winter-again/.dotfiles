@@ -21,11 +21,11 @@ if root ~= nil then
     if root == notebook_dir then
         -- use local spellfile
         vim.opt_local.spellfile = vim.uv.cwd() .. "/spell/en.utf-8.add"
-    elseif vim.uv.fs_stat(root .. "/package.json") then
-        -- TODO: stopped working, maybe because of treesitter change?
-        -- activate otter.nvim for JS in specific case
-        local otter = require("otter")
-        otter.activate({ "javascript" })
+    -- elseif vim.uv.fs_stat(root .. "/package.json") then
+    --     -- TODO: stopped working, maybe because of treesitter change?
+    --     -- activate otter.nvim for JS in specific case
+    --     local otter = require("otter")
+    --     otter.activate({ "javascript" })
     end
 end
 

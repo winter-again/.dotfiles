@@ -9,8 +9,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- from lazyvim
--- auto create dir when saving a file, in case some intermediate directory does not exist
--- can use :e to create a buffer by name and then :w actually creates it before write
+-- auto create dir when saving a file, in case some parent directory doesn't exist
+-- can use :e to create a buffer by name and then :w will create it before writing
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = au_group,
     callback = function(event)

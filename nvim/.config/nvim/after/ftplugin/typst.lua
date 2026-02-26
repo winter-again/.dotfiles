@@ -1,6 +1,3 @@
--- TODO: not sure why this isn't working
-vim.opt_local.shiftwidth = 4 -- number of spaces to use for autoindent
-
 vim.opt_local.wrap = true
 -- wrap long lines at chars in breakat var
 vim.opt_local.linebreak = true

@@ -3,7 +3,6 @@
 vim.filetype.add({
     -- mapping from file ext to filetype
     extension = {
-        astro = "astro",
         mdx = "mdx",
         log = "log",
         conf = "conf",
@@ -12,7 +11,7 @@ vim.filetype.add({
     filename = {
         [".env"] = "dotenv",
         ["env"] = "dotenv",
-        ["tsconfig.json"] = "jsonc",
+        ["tsconfig*.json"] = "jsonc",
     },
     -- pattern = {},
 })

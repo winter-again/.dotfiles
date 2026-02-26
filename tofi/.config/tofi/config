@@ -1,6 +1,7 @@
 font = /usr/share/fonts/TTF/ZedMonoNerdFont-Regular.ttf
 font-size = 14
 hint-font = false
+ascii-input = true
 
 prompt-text = "❯ "
 text-cursor = false

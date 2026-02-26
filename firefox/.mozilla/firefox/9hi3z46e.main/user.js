@@ -376,9 +376,17 @@ user_pref("browser.tabs.hoverPreview.showThumbnails", false);
 // sidebery collapsing
 // user_pref("widget.gtk.ignore-bogus-leave-notify", 1);
 
-// XDG desktop portals
-// user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
-// user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
+// XDG desktop portal features
+// file picker
+user_pref("widget.use-xdg-desktop-portal.file-picker", 1);
+// mime handler
+user_pref("widget.use-xdg-desktop-portal.mime-handler", 1);
+// settings/look-and-feel information
+user_pref("widget.use-xdg-desktop-portal.settings", 1);
+// geolocation
+// user_pref("widget.use-xdg-desktop-portal.location", 1);
+// opening to a file
+user_pref("widget.use-xdg-desktop-portal.open-uri", 1);
 
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *

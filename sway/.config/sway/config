@@ -39,11 +39,12 @@ output * bg $bg solid_color
 
 input "type:keyboard" {
     xkb_layout us
-    xkb_options caps:escape
+    # NOTE: should be handled by keyd
+    # xkb_options caps:escape
     # xkb_options ctrl:swapcaps
     # xkb_options caps:swapescape
-    repeat_delay 200
-    repeat_rate 60
+    repeat_delay 175
+    repeat_rate 80
 }
 
 input "type:pointer" {
@@ -223,7 +224,7 @@ exec_always kanshi; exec kanshictl reload
 # exec_always pkill kanshi; exec kanshi
 
 exec {
-    waybar
+    # waybar
     mako
     nm-applet
     solaar -w hide
@@ -232,6 +233,10 @@ exec {
     # might need for systemd/dbus activation envs
     # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
     playerctld daemon # make playerctl act on the currently active media player
+}
+
+bar {
+    swaybar_command waybar
 }
 
 assign [app_id="Slack"] $ws1

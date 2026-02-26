@@ -1,7 +1,8 @@
 return {
     "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    even = "VimEnter",
+    -- dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-mini/mini.icons" },
+    lazy = false,
     config = function()
         local permission_hlgroups = {
             ["-"] = "Comment",
@@ -46,7 +47,7 @@ return {
             float = {
                 padding = 0,
                 max_height = 16,
-                border = "solid",
+                -- border = "solid",
                 -- win_options = { winblend = 20 },
                 preview_split = "right",
                 override = function(conf)

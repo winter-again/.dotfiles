@@ -80,6 +80,7 @@ end
 
 return {
     "nvim-lualine/lualine.nvim",
+    enabled = false,
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
@@ -117,8 +118,8 @@ return {
                         symbols = {
                             error = " ",
                             warn = " ",
-                            hint = " ", -- default = 󰌶
                             info = " ",
+                            hint = " ", -- default = 󰌶
                         },
                         colored = true,
                         update_in_insert = true,

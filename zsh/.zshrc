@@ -6,6 +6,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export EDITOR="/usr/local/bin/nvim"
 export VISUAL="/usr/local/bin/nvim"
+export DIFFPROG="nvim -d"
 export PAGER="/usr/bin/less"
 # color manpages with bat
 export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"

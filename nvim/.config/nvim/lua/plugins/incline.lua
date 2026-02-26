@@ -10,12 +10,14 @@ return {
                 overlap = { winbar = true, borders = true },
             },
             hide = {
-                cursorline = true, -- hide when cursor on same line
+                -- hide when cursor on same line and text obstructed
+                -- set to true to always turn off on cursorline
+                cursorline = "smart",
             },
             render = function(props)
                 local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":p:~:.")
                 if filename == "" then
-                    filename = "[No name]"
+                    filename = "[untitled]"
                 end
                 local modified = vim.bo[props.buf].modified
                 local read_only = vim.api.nvim_get_option_value("readonly", { buf = props.buf })

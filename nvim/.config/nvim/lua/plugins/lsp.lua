@@ -13,6 +13,7 @@ return {
             },
             {
                 "smjonas/inc-rename.nvim",
+                event = { "BufReadPost", "BufNewFile" },
                 opts = {},
             },
         },
@@ -110,12 +111,7 @@ return {
 
             -- NOTE: https://neovim.io/doc/user/diagnostic.html
             -- custom signs for diagnostics; trouble.nvim can use too
-            local diagnostic_icons = {
-                Error = "",
-                Warn = "",
-                Info = "",
-                Hint = "",
-            }
+            local diagnostic_icons = require("winter-again.icons").diagnostics
             for severity, icon in pairs(diagnostic_icons) do
                 local hl = "DiagnosticSign" .. severity
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -134,7 +130,6 @@ return {
                 virtual_text = {
                     spacing = 4,
                     prefix = "󰝤",
-                    -- prefix = "󱓻",
                     format = diag_format,
                 },
                 float = {
@@ -161,6 +156,14 @@ return {
                     },
                     numhl = {
                         [vim.diagnostic.severity.WARN] = "WarningMsg",
+                    },
+                },
+                status = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = diagnostic_icons.Error,
+                        [vim.diagnostic.severity.WARN] = diagnostic_icons.Warn,
+                        [vim.diagnostic.severity.INFO] = diagnostic_icons.Info,
+                        [vim.diagnostic.severity.HINT] = diagnostic_icons.Hint,
                     },
                 },
                 underline = true,
@@ -239,7 +242,6 @@ return {
                         },
                     },
                 },
-                -- ["biome"] = {},
                 ["ruff"] = {
                     on_attach = function(client, bufnr)
                         -- disable Ruff's hover to use Pyright instead
@@ -303,7 +305,7 @@ return {
                             css = true,
                             javascript = true,
                         },
-                        provideFormatter = false, -- use prettier instead
+                        provideFormatter = false,
                     },
                 },
                 ["cssls"] = {},

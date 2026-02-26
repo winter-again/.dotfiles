@@ -1,5 +1,28 @@
 return {
     {
+        "nvim-mini/mini.icons",
+        version = false,
+        config = function()
+            local mini_icons = require("mini.icons")
+            local lua_icon, lua_hl, _ = mini_icons.get("extension", "lua")
+
+            mini_icons.setup({
+                style = "glyph",
+                default = {
+                    directory = { hl = "Directory" },
+                },
+                file = {
+                    ["init.lua"] = { glyph = lua_icon, hl = lua_hl },
+                },
+                filetype = {
+                    bash = { glyph = "" },
+                    sh = { glyph = "" },
+                    zsh = { glyph = "" },
+                },
+            })
+        end,
+    },
+    {
         "nvim-mini/mini.surround",
         version = false,
         event = { "BufReadPost", "BufNewFile" },

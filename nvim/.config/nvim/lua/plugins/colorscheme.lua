@@ -3,7 +3,7 @@ return {
         "winter-again/winter-again.nvim",
         lazy = false,
         priority = 1000,
-        -- dev = true,
+        dev = true,
         config = function()
             require("winter-again").setup({
                 saturation = 0,
@@ -15,17 +15,21 @@ return {
                 plugins = {},
                 hl_overrides = function(colors)
                     return {
-                        -- ["MatchParen"] = { bold = false, italic = true }
-                        ["@markup.math"] = { italic = true },
-                        ["QuickFixLine"] = { bold = true },
-                        ["@keyword.luadoc"] = { bold = false },
-                        ["@markup.list.checked"] = { strikethrough = false },
+                        ["MatchParen"] = { bold = false, italic = true },
+
                         ["RenderMarkdownH1Bg"] = { link = "RenderMarkdownH1" },
                         ["RenderMarkdownH2Bg"] = { link = "RenderMarkdownH2" },
                         ["RenderMarkdownH3Bg"] = { link = "RenderMarkdownH3" },
                         ["RenderMarkdownH4Bg"] = { link = "RenderMarkdownH4" },
                         ["RenderMarkdownH5Bg"] = { link = "RenderMarkdownH5" },
                         ["RenderMarkdownH6Bg"] = { link = "RenderMarkdownH6" },
+
+                        ["@markup.math"] = { italic = true },
+                        ["QuickFixLine"] = { bold = true },
+                        ["@markup.list.checked"] = { strikethrough = false },
+
+                        -- ["@keyword.luadoc"] = { bold = false },
+
                         -- ["markdownH1"] = { reverse = false, underline = true },
                         -- ["markdownH2"] = { reverse = false, underline = true },
                         -- ["markdownH3"] = { reverse = false, underline = true },
@@ -146,7 +150,7 @@ return {
     },
     {
         "thesimonho/kanagawa-paper.nvim",
-        -- enabled = false,
+        enabled = false,
         lazy = false,
         config = function()
             require("kanagawa-paper").setup({
@@ -166,6 +170,7 @@ return {
     },
     {
         "vague2k/vague.nvim",
+        enabled = false,
         lazy = false,
         config = function()
             require("vague").setup({
@@ -180,6 +185,7 @@ return {
     },
     {
         "cdmill/neomodern.nvim",
+        enabled = false,
         lazy = false,
         config = function()
             require("neomodern").setup({
@@ -196,6 +202,7 @@ return {
     },
     {
         "ilof2/posterpole.nvim",
+        enabled = false,
         lazy = false,
         config = function()
             require("posterpole").setup({
@@ -211,6 +218,7 @@ return {
     },
     {
         "slugbyte/lackluster.nvim",
+        enabled = false,
         lazy = false,
         config = function() end,
     },
