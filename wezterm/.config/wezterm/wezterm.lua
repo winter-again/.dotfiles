@@ -39,7 +39,7 @@ config.colors = {
     },
 }
 
-config.background = utils.set_bg('7_1')
+config.background = utils.set_bg('5')
 
 -- this needs explicit setting if not the default
 -- config.xcursor_theme = 'Bibata-Modern-Ice'

@@ -48,13 +48,15 @@
         "on-right-click": ""
     },
     "custom/spotify": {
-        "format": "<span font='12' rise='1000'>{icon}</span> <span font='16' rise='-2000'>󰓇</span> {}",
+        // "format": "<span font='12' rise='1000'>{icon}</span> <span font='16' rise='-2000'>󰓇</span> {}",
+        "format": "<span font='16' rise='-2000'>󰓇</span> {}",
         "return-type": "json",
-        "max-length": 70,
-        "format-icons": {
-            "Playing": "⏸",
-            "Paused": "▶"
-        },
+        "max-length": 50,
+        "escape": true, // this seems crucial for displaying
+        // "format-icons": {
+        //     "Playing": "⏸",
+        //     "Paused": "▶"
+        // },
         "on-click": "playerctl --player=spotify play-pause",
         "on-click-right": "pkill spotify",
         "on-scroll-up": "",

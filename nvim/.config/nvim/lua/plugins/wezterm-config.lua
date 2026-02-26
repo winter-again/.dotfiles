@@ -2,32 +2,48 @@ return {
     'winter-again/wezterm-config.nvim',
     -- dev = true,
     config = function()
-        local wezterm_config = require('wezterm-config')
+        -- NOTE:
+        -- this adds to rtp and lets us pull in modules under ~/.config/wezterm/lua/
+        -- only issue is that if the module there calls require('wezterm'), then
+        -- we get an error on this end...restricts what we can specify there
+        -- so I guess it wouldn't work for stuff like font setting that calls
+        -- a wezterm-specific func to do stuff?
+        local wezterm_path = vim.fn.stdpath('config'):gsub('nvim', 'wezterm') -- not the most general way of doing this...
+        vim.opt.rtp:append(wezterm_path)
+        --
+        local wezterm_bg = require('profile_data')
 
+        local wezterm_config = require('wezterm-config')
         -- simplified version using a user command
         vim.api.nvim_create_user_command('Bg', function(opts)
-            local bg_profile = 'bg_' .. tostring(opts.fargs[1])
+            -- local bg_profile = 'bg_' .. tostring(opts.fargs[1])
+            local bg_profile = tostring(opts.fargs[1])
             wezterm_config.set_wezterm_user_var('profile_background', bg_profile)
         end, {
             nargs = 1,
             complete = function(ArgLead, CmdLine, CursorPos)
                 -- hard-coded for now...
-                return {
-                    'default',
-                    '1',
-                    '2',
-                    '3',
-                    '4',
-                    '5',
-                    '5_1',
-                    '6',
-                    '7',
-                    '7_1',
-                    '8',
-                    '9',
-                    '10',
-                    '11',
-                }
+                -- return {
+                --     'default',
+                --     '1',
+                --     '2',
+                --     '3',
+                --     '4',
+                --     '5',
+                --     '5_1',
+                --     '6',
+                --     '7',
+                --     '7_1',
+                --     '8',
+                --     '9',
+                --     '10',
+                --     '11',
+                -- }
+                local bg_names = {}
+                for name, _ in pairs(wezterm_bg.background) do
+                    table.insert(bg_names, name)
+                end
+                return bg_names
             end,
             desc = 'Set Wezterm background',
         })
