@@ -18,7 +18,8 @@ desc=$(echo "$resp" | jaq .weather[0].description | tr -d '"')
 feels_like=$(echo "$resp" | jaq .main.feels_like)
 wind=$(echo "$resp" | jaq .wind.speed)
 
-if [[ "$wind" -ge "$WIND_THRESH" ]]; then
+windy=$(echo "$wind $WIND_THRESH" | awk '{print $1 >= $2}')
+if [[ "$windy" == 1 ]]; then
     output="$desc | $feels_like$TEMP_SYMBOL |  $wind $WIND_SYMBOL"
 else
     output="$desc | $feels_like$TEMP_SYMBOL"

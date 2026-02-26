@@ -169,6 +169,7 @@ paru_install "${tools[@]}"
 echo "Running Git LFS install command..."
 git lfs install
 
+# TODO: put each of these package sets behind a confirm check?
 echo "Installing Lua packages..."
 lua_dev_pkgs=(
     lua-language-server

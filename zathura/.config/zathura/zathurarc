@@ -1,3 +1,4 @@
+set font "monospace normal 14"
 set selection-clipboard clipboard
 set adjust-open best-fit
 set window-title-home-tilde true
@@ -5,7 +6,6 @@ set statusbar-home-tilde true
 
 map K zoom in
 map J zoom out
-map <C-i> recolor
 
 set default-bg "#0f0f0f"
 set default-fg "#f8f8f2"
