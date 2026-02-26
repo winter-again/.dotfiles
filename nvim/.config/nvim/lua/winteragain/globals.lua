@@ -74,18 +74,6 @@ function Hl(group, hl)
     vim.api.nvim_set_hl(0, group, hl)
 end
 
----Convenience function for setting keymap with a description
----@param mode string | table
----@param lhs string
----@param rhs string | function
----@param opts table
----@param desc string
-function Map(mode, lhs, rhs, opts, desc)
-    opts = opts or {}
-    opts.desc = desc
-    vim.keymap.set(mode, lhs, rhs, opts)
-end
-
 ---Custom function for setting winbar info
 ---@return string
 function Winbar()

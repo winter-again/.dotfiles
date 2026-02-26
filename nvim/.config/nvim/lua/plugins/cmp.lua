@@ -33,12 +33,12 @@ return {
                     update_events = { 'TextChanged', 'TextChangedI' },
                 })
 
-                Map({ 'i', 's' }, '<C-n>', function()
+                vim.keymap.set({ 'i', 's' }, '<C-l>', function()
                     require('luasnip').jump(1)
-                end, { silent = true }, 'Jump to next snippet node')
-                Map({ 'i', 's' }, '<C-p>', function()
+                end, { silent = true, desc = 'Jump to next snippet node' })
+                vim.keymap.set({ 'i', 's' }, '<C-h>', function()
                     require('luasnip').jump(-1)
-                end, { silent = true }, 'Jump to previous snippet node')
+                end, { silent = true, desc = 'Jump to previous snippet node' })
             end,
         },
         'saadparwaiz1/cmp_luasnip', -- snippet cmp integration

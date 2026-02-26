@@ -11,20 +11,26 @@ return {
     config = function()
         -- local actions = require('fzf-lua.actions')
         require('fzf-lua').setup()
+
+        local map = function(mode, lhs, rhs, opts, desc)
+            opts = opts or {}
+            opts.desc = desc
+            vim.keymap.set(mode, lhs, rhs, opts)
+        end
         local opts = { silent = true }
-        Map('n', '<leader>ff', '<cmd>lua require("fzf-lua").files()<CR>', opts, 'fzf-lua')
-        Map('n', '<leader>fzl', '<cmd>lua require("fzf-lua").buffers()<CR>', opts, 'fzf-lua')
-        Map('n', '<leader>fzs', function()
+        map('n', '<leader>ff', '<cmd>lua require("fzf-lua").files()<CR>', opts, 'Find files')
+        map('n', '<leader>fzl', '<cmd>lua require("fzf-lua").buffers()<CR>', opts, 'Find buffers')
+        map('n', '<leader>fzs', function()
             require('fzf-lua').live_grep_glob({
                 exec_empty_query = true,
                 cmd = 'rg --hidden --glob !**/.git/* --glob !**/.venv/* --glob !**/node_modules/*',
             })
-        end, opts, 'fzf-lua')
-        Map('n', '<leader>fz/', '<cmd>lua require("fzf-lua").lgrep_curbuf()<CR>', opts, 'fzf-lua')
+        end, opts, 'Find live grep')
+        map('n', '<leader>fz/', '<cmd>lua require("fzf-lua").lgrep_curbuf()<CR>', opts, 'Find in current buffer')
         -- colorscheme actually shows preview on hover
-        Map('n', '<leader>fc', '<cmd>lua require("fzf-lua").colorschemes()<CR>', opts, 'fzf-lua')
+        map('n', '<leader>fc', '<cmd>lua require("fzf-lua").colorschemes()<CR>', opts, 'Find colorscheme')
         -- does this actually show where defined? seems more like the source file
-        Map('n', '<leader>fk', '<cmd>lua require("fzf-lua").keymaps()<CR>', opts, 'fzf-lua')
-        Map('n', '<leader>fzr', '<cmd>lua require("fzf-lua").registers()<CR>', opts, 'fzf-lua')
+        map('n', '<leader>fk', '<cmd>lua require("fzf-lua").keymaps()<CR>', opts, 'Find keymap')
+        map('n', '<leader>fzr', '<cmd>lua require("fzf-lua").registers()<CR>', opts, 'Find register')
     end,
 }

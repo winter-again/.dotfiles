@@ -68,6 +68,6 @@ return {
             },
             on_attach = on_attach,
         })
-        Map('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }, 'Toggle nvim-tree') -- set here since the plugin is loaded on this command
+        vim.keymap.set('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true, desc = 'Toggle nvim-tree' }) -- set here since the plugin is loaded on this command
     end,
 }

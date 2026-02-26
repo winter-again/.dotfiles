@@ -1,3 +1,3 @@
 -- from echasnovski
-Map('i', '<C-l>', '<- ', { silent = true, buffer = 0 }, 'Insert "<-" in R')
-Map('i', '<C-p>', '%>%', { silent = true, buffer = 0 }, 'Insert "%>%" in R')
+vim.keymap.set('i', '<C-l>', '<- ', { silent = true, buffer = 0, desc = 'Insert "<-" in R' })
+vim.keymap.set('i', '<C-p>', '%>%', { silent = true, buffer = 0, desc = 'Insert "%>%" in R' })

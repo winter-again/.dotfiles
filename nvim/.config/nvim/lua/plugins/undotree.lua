@@ -13,7 +13,7 @@ return {
                     winblend = 1,
                 },
             })
-            Map('n', '<leader>ut', require('undotree').toggle, { silent = true }, 'Toggle undotree')
+            vim.keymap.set('n', '<leader>ut', require('undotree').toggle, { silent = true, desc = 'Toggle undotree' })
         end,
     },
 }

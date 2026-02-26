@@ -16,6 +16,11 @@ return {
                 },
             },
         })
-        Map('n', '<leader><leader>ft', '<cmd>TodoTelescope<CR>', { silent = true }, 'Search TODO comments')
+        vim.keymap.set(
+            'n',
+            '<leader><leader>ft',
+            '<cmd>TodoTelescope<CR>',
+            { silent = true, desc = 'Search TODO comments' }
+        )
     end,
 }

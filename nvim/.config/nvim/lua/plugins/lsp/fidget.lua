@@ -15,6 +15,5 @@ return {
                 },
             },
         })
-        Map('n', '<leader><leader>sf', '<cmd>Fidget suppress<CR>', { silent = true }, 'Toggle fidget.nvim')
     end,
 }

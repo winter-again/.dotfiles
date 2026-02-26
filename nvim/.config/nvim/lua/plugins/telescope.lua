@@ -159,22 +159,27 @@ return {
             -- require('telescope').load_extension('harpoon')
 
             local builtin = require('telescope.builtin')
+            local map = function(mode, lhs, rhs, opts, desc)
+                opts = opts or {}
+                opts.desc = desc
+                vim.keymap.set(mode, lhs, rhs, opts)
+            end
             local opts = { silent = true }
-            -- Map('n', '<leader>ff', builtin.find_files, opts, 'Search files')
-            Map('n', '<leader>fn', function()
+            -- map('n', '<leader>ff', builtin.find_files, opts, 'Search files')
+            map('n', '<leader>fn', function()
                 builtin.find_files({ cwd = vim.fn.stdpath('config') })
             end, opts, 'Search nvim config')
-            Map('n', '<leader>fmf', my_ff, opts, 'Custom file search with multi-select support')
+            map('n', '<leader>fmf', my_ff, opts, 'Custom file search with multi-select support')
             -- git
-            Map('n', '<leader>fgs', builtin.git_status, opts, 'Search files with diff in preview')
-            Map(
+            map('n', '<leader>fgs', builtin.git_status, opts, 'Search files with diff in preview')
+            map(
                 'n',
                 '<leader>fgc',
                 builtin.git_bcommits,
                 opts,
                 'Search git commits for current buf with diff in preview'
             )
-            Map('n', '<leader>fgb', builtin.git_branches, opts, 'Search git branches')
+            map('n', '<leader>fgb', builtin.git_branches, opts, 'Search git branches')
             -- view diffs between commits and open them with diffview.nvim
             -- vim.keymap.set('n', '<leader>fgc', '<cmd>Telescope git_diffs diff_commits<CR>', opts)
             -- treesitter symbols

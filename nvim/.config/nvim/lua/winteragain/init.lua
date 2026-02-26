@@ -33,6 +33,10 @@ local lazy_opts = {
         colorscheme = { 'tokyonight' }, -- try to load one of these colorschemes when starting an installation during startup
     },
 }
+-- NOTE: consider moving these "default" things to plugin/ dir
+-- (automatically sourced after lazy config loaded)
+-- advantage of current way is that I have finer control
+-- over what gets required and the order
 require('winteragain.settings')
 require('winteragain.autocmds')
 require('winteragain.globals')
@@ -59,7 +63,7 @@ vim.filetype.add({
 })
 
 -- vim.cmd('colorscheme winter-again')
-vim.cmd('colorscheme tokyonight')
--- vim.cmd('colorscheme catppuccin')
+-- vim.cmd('colorscheme tokyonight')
+vim.cmd('colorscheme catppuccin')
 -- vim.cmd('colorscheme rose-pine')
 vim.cmd('Transp')

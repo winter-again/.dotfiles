@@ -81,8 +81,18 @@ return {
                 },
                 additional_vim_regex_highlighting = false,
             })
-            Map('n', '<leader>tsp', '<cmd>InspectTree<CR>', { silent = true }, 'Show parsed syntax tree')
-            Map('n', '<leader>tsh', '<cmd>Inspect<CR>', { silent = true }, 'Show highlight groups under cursor')
+            vim.keymap.set(
+                'n',
+                '<leader>tsp',
+                '<cmd>InspectTree<CR>',
+                { silent = true, desc = 'Show parsed syntax tree' }
+            )
+            vim.keymap.set(
+                'n',
+                '<leader>tsh',
+                '<cmd>Inspect<CR>',
+                { silent = true, desc = 'Show highlight groups under cursor' }
+            )
         end,
     },
     {
