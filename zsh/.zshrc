@@ -93,7 +93,7 @@ ff() {
     dir=$(fd . \
         ~/Documents/Bansal_lab \
         ~/Documents/projects \
-        ~/Documents/projects/nvim-dev
+        ~/Documents/projects/nvim-dev \
         --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
     cd "$dir"
 }
