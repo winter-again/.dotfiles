@@ -33,6 +33,7 @@ return {
                     'pyright',
                     -- 'ruff_lsp',
                     'r_language_server',
+                    'gopls',
                     'html',
                     'emmet_ls',
                     'cssls',

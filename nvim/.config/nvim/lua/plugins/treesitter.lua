@@ -25,6 +25,8 @@ return {
                 'astro',
                 'python',
                 'r',
+                'go',
+                'gomod',
                 'markdown',
                 'markdown_inline',
                 'sql',
