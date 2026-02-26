@@ -14,7 +14,7 @@ return {
                 enable = false
             },
             lightbulb = {
-                enable = false -- disable code actions lightbulb icon
+                enable = false
             },
             scroll_preview = {
                 scroll_down = '<C-f>',
@@ -31,7 +31,7 @@ return {
         -- show line diagnostics
         nmap('gl', '<cmd>Lspsaga show_line_diagnostics<CR>', 'Line diagnostics')
         -- finder that shows defn, ref, and implementation
-        nmap('gf', '<cmd>Lspsaga lsp_finder<CR>', 'LSP finder')
+        nmap('gf', '<cmd>Lspsaga finder<CR>', 'LSP finder')
         -- peeks defn and focuses the window; can use q to get back to main buffer
         nmap('gd', '<cmd>Lspsaga peek_definition<CR>', 'Peek defn.')
         -- not always supported by the LSP
