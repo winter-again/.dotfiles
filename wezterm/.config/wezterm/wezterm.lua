@@ -120,7 +120,7 @@ end)
 local override_keymap = {
     key = 'X',
     mods = 'CTRL|SHIFT',
-    action = wezterm.action.EmitEvent('clear-overrides')
+    action = wezterm.action.EmitEvent('clear-overrides'),
 }
 table.insert(config.keys, override_keymap)
 
