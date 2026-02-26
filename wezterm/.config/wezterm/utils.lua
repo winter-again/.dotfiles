@@ -1,12 +1,17 @@
-local wezterm = require('wezterm')
-local profile_data = require('lua.profile_data')
+local wezterm = require("wezterm")
+local profile_data = require("lua.profile_data")
 
 local M = {}
 
 ---@param bg_name string
 ---@return table
 function M.set_bg(bg_name)
-    local bg_key = 'bg_' .. bg_name
+    local bg_key
+    if bg_name ~= "solid_black" then
+        bg_key = "bg_" .. bg_name
+    else
+        bg_key = bg_name
+    end
     return profile_data.background[bg_key].background
 end
 
@@ -35,13 +40,13 @@ function M.wayland_config(config)
     local xcursor_theme = nil
 
     local success, stdout, stderr =
-        wezterm.run_child_process({ 'gsettings', 'get', 'org.gnome.desktop.interface', 'cursor-theme' })
+        wezterm.run_child_process({ "gsettings", "get", "org.gnome.desktop.interface", "cursor-theme" })
     if success then
-        config.xcursor_theme = stdout:gsub("'(.+)'\n", '%1')
+        config.xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
     end
 
     local success, stdout, stderr =
-        wezterm.run_child_process({ 'gsettings', 'get', 'org.gnome.desktop.interface', 'cursor-size' })
+        wezterm.run_child_process({ "gsettings", "get", "org.gnome.desktop.interface", "cursor-size" })
     if success then
         config.xcursor_size = tonumber(stdout)
     end
@@ -52,9 +57,9 @@ end
 ---@param overrides table
 function M.log_overrides(value, overrides)
     local parsed_val = wezterm.json_parse(value)
-    print('PARSED VALUE:')
+    print("PARSED VALUE:")
     print(parsed_val)
-    print('OVERRIDES:')
+    print("OVERRIDES:")
     print(overrides)
 end
 
@@ -63,7 +68,7 @@ function M.notif_overrides(pane, name)
     local user_vars = pane:get_user_vars()
     local vars_json_enc = wezterm.json_encode(user_vars)
     local user_var = user_vars[name]
-    local msg = ('%s=%s'):format(name, user_var)
+    local msg = ("%s=%s"):format(name, user_var)
     return pane_id, msg
 end
 
