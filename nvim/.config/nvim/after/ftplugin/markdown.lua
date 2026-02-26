@@ -32,6 +32,7 @@ end
 
 map("n", "=", toggle_checkbox, { silent = true, buffer = true }, "Toggle markdown checkbox")
 
+-- activate otter.nvim for JS in specific case
 local cwd = vim.uv.cwd()
 if cwd ~= vim.fs.normalize("~/Documents/notebook") and vim.uv.fs_stat("package.json") then
     local otter = require("otter")

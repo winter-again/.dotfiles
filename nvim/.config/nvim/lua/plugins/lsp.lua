@@ -8,7 +8,6 @@ return {
                 opts = {
                     library = {
                         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                        -- { path = "globals", mods = { "globals" } },
                     },
                 },
             },
@@ -336,6 +335,9 @@ return {
                             telemetry = {
                                 enable = false,
                             },
+                            -- diagnostics = {
+                            --     disable = { "missing-fields" },
+                            -- },
                             hint = {
                                 enable = true,
                                 arrayIndex = "Disable",

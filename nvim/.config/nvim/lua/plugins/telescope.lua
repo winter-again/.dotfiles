@@ -21,6 +21,7 @@ return {
             "nvim-lua/plenary.nvim",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
+                enabled = false,
                 build = "make",
                 cond = function()
                     return vim.fn.executable("make") == 1

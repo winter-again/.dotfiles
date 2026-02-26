@@ -1,116 +1,133 @@
---- @diagnostic disable: missing-fields
+local map = require("winteragain.globals").map
+local parsers = {
+    -- these 7 parsers MUST be installed
+    required = {
+        "c",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "query",
+        "vim",
+        "vimdoc",
+    },
+    "astro",
+    "bash",
+    "css",
+    "csv",
+    "desktop",
+    "devicetree",
+    "git_config",
+    "git_rebase",
+    "gitattributes",
+    "gitcommit",
+    "gitignore",
+    "go",
+    "gomod",
+    "gosum",
+    "html",
+    "ini",
+    "javascript",
+    "jsdoc",
+    "json", -- testing
+    "just",
+    "latex",
+    "luadoc", -- testing
+    "printf", -- testing
+    "python",
+    "r",
+    "rasi",
+    "regex", -- testing
+    "rust",
+    "sql",
+    "tmux",
+    "toml",
+    "tsx",
+    "typescript",
+    "typst",
+    "yaml",
+    "zathurarc",
+}
+
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        branch = "master",
+        lazy = false,
+        branch = "main",
         build = ":TSUpdate",
-        event = { "BufReadPost", "BufNewFile" },
         config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = {
-                    "c",
-                    "lua",
-                    "vim",
-                    "vimdoc",
-                    "query",
-                    "markdown",
-                    "markdown_inline",
-                    -- 7 parsers above MUST be installed (c, lua, vim, vimdoc, query, markdown, markdown_inline)
-                    "astro",
-                    "bash",
-                    "css",
-                    "csv",
-                    "desktop",
-                    "devicetree",
-                    "git_config",
-                    "git_rebase",
-                    "gitattributes",
-                    "gitcommit",
-                    "gitignore",
-                    "go",
-                    "gomod",
-                    "gosum",
-                    "html",
-                    "ini",
-                    "javascript",
-                    "jsdoc",
-                    "json", -- testing
-                    "just",
-                    "latex",
-                    "luadoc", -- testing
-                    "printf", -- testing
-                    "python",
-                    "r",
-                    "rasi",
-                    "regex", -- testing
-                    "rust",
-                    "sql",
-                    "tmux",
-                    "toml",
-                    "tsx",
-                    "typescript",
-                    "typst",
-                    "yaml",
-                    "zathurarc",
-                },
-                sync_install = false, -- synchronous install of parsers (only applied to ensure_installed)
-                auto_install = false, -- recommended to set false if don't have tree-sitter CLI installed locally
-                highlight = {
-                    enable = true, -- false will disable the whole extension
-                    additional_vim_regex_highlighting = false,
-                },
-                indent = {
-                    enable = true, -- still experimental; Python supp under dev
-                    disable = { "r" },
-                },
-                textobjects = {
-                    select = {
-                        enable = true,
-                        lookahead = true,
-                        keymaps = {
-                            ["af"] = { query = "@function.outer", desc = "Around function" },
-                            ["if"] = { query = "@function.inner", desc = "Inside function" },
-                            ["ac"] = { query = "@class.outer", desc = "Around class" },
-                            ["ic"] = { query = "@class.inner", desc = "Inside class" },
-                            -- trying to capture markdown fenced code blocks/content
-                            -- seems to behave incorrectly when there's a Python function defn in the block
-                            -- 'vib' fails to include the function defn. line
-                            -- or at least it behaves strangely dep on cursor loc in the block...
-                            ["ab"] = { query = "@codeblock.outer", desc = "Around code block" },
-                            ["ib"] = { query = "@codeblock.inner", desc = "Inside code block" },
-                            ["al"] = { query = "@pipeline_assign", desc = "dplyr pipeline assign" },
-                            ["il"] = { query = "@pipe", desc = "dplyr pipe operator" },
-                        },
-                    },
-                    move = {
-                        enable = true,
-                        goto_next_start = {
-                            ["]b"] = "@codeblock.outer",
-                        },
-                        goto_previous_start = {
-                            ["[b"] = "@codeblock.outer",
-                        },
-                    },
-                },
+            local ts = require("nvim-treesitter")
+            ts.setup({
+                install_dir = vim.fn.stdpath("data") .. "/site", -- default loc
             })
-            vim.keymap.set(
-                "n",
-                "<leader>tsp",
-                "<cmd>InspectTree<CR>",
-                { silent = true, desc = "Show parsed syntax tree" }
-            )
-            vim.keymap.set(
-                "n",
-                "<leader>tsi",
-                "<cmd>Inspect<CR>",
-                { silent = true, desc = "Show highlight groups under cursor" }
-            )
+            parsers = vim.iter(vim.tbl_values(parsers)):flatten():totable()
+            ts.install(parsers)
+
+            local au_group = vim.api.nvim_create_augroup("winter.again", { clear = false })
+            for _, parser in ipairs(parsers) do
+                -- autocmd for treesitter highlights and indentation support
+                vim.api.nvim_create_autocmd({ "FileType" }, {
+                    group = au_group,
+                    pattern = parser,
+                    desc = "Enable treesitter highlights and indentation support",
+                    callback = function(event)
+                        vim.treesitter.start(event.buf, parser)
+
+                        -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                        vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end,
+                })
+            end
         end,
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        branch = "master",
+        branch = "main",
         dependencies = "nvim-treesitter/nvim-treesitter",
+        config = function()
+            require("nvim-treesitter-textobjects").setup({
+                textobjects = {
+                    select = {
+                        enable = true,
+                        lookahead = true,
+                    },
+                    move = {
+                        set_jumps = true,
+                    },
+                },
+            })
+
+            local function select(textobj)
+                return function()
+                    require("nvim-treesitter-textobjects.select").select_textobject(textobj, "textobjects")
+                end
+            end
+            local opts = { silent = true }
+            map({ "x", "o" }, "af", select("@function.outer"), opts, "Select around function")
+            map({ "x", "o" }, "if", select("@function.inner"), opts, "Select inside function")
+            map({ "x", "o" }, "ac", select("@class.outer"), opts, "Select around class")
+            map({ "x", "o" }, "ic", select("@class.inner"), opts, "Select inside class")
+            -- trying to capture markdown fenced code blocks/content
+            -- seems to behave incorrectly when there's a Python function defn in the block
+            -- 'vib' fails to include the function defn. line
+            -- or at least it behaves strangely dep on cursor loc in the block...
+            map({ "x", "o" }, "ab", select("@codeblock.outer"), opts, "Around code block")
+            map({ "x", "o" }, "ib", select("@codeblock.inner"), opts, "Inside code block")
+
+            local function goto_next(textobj)
+                return function()
+                    require("nvim-treesitter-textobjects.move").goto_next_start(textobj, "textobjects")
+                end
+            end
+            local function goto_prev(textobj)
+                return function()
+                    require("nvim-treesitter-textobjects.move").goto_previous_start(textobj, "textobjects")
+                end
+            end
+            map({ "n", "x", "o" }, "]f", goto_next("@function.outer"), opts, "Next function")
+            map({ "n", "x", "o" }, "[f", goto_prev("@function.outer"), opts, "Previous function")
+            map({ "n", "x", "o" }, "]b", goto_next("@codeblock.outer"), opts, "Next codeblock")
+            map({ "n", "x", "o" }, "[b", goto_prev("@codeblock.outer"), opts, "Previous codeblock")
+        end,
     },
     {
         "nvim-treesitter/nvim-treesitter-context",
@@ -119,24 +136,24 @@ return {
         config = function()
             require("treesitter-context").setup({
                 enable = true,
+                multiwindow = true,
                 max_lines = 2,
+                line_numbers = true,
             })
         end,
     },
     {
-        "JoosepAlviste/nvim-ts-context-commentstring",
+        "windwp/nvim-ts-autotag",
         event = { "BufReadPost", "BufNewFile" },
         dependencies = "nvim-treesitter/nvim-treesitter",
         config = function()
-            vim.g.skip_ts_context_commentstring_module = true -- skip backwards compat checks for faster loading
-            require("ts_context_commentstring").setup({})
-        end,
-    },
-    {
-        "windwp/nvim-ts-autotag",
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        config = function()
-            require("nvim-ts-autotag").setup()
+            require("nvim-ts-autotag").setup({
+                opts = {
+                    enable_close = true,
+                    enable_rename = true,
+                    enable_close_on_slash = false,
+                },
+            })
         end,
     },
 }

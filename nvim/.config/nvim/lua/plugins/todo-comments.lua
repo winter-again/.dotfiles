@@ -1,5 +1,6 @@
 return {
     "folke/todo-comments.nvim",
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
         require("todo-comments").setup({
@@ -16,13 +17,15 @@ return {
                 },
             },
         })
-        vim.keymap.set("n", "]t", function()
+
+        local map = require("winteragain.globals").map
+        map("n", "]t", function()
             require("todo-comments").jump_next()
-        end, { silent = true, desc = "Next TODO comment" })
-        vim.keymap.set("n", "[t", function()
+        end, { silent = true }, "Next TODO comment")
+        map("n", "[t", function()
             require("todo-comments").jump_next()
-        end, { silent = true, desc = "Previous TODO comment" })
-        vim.keymap.set("n", "<leader>ft", function()
+        end, { silent = true }, "Previous TODO comment")
+        map("n", "<leader>ft", function()
             local ok_telescope, _ = pcall(require, "telescope")
             local ok_fzf_lua, _ = pcall(require, "fzf-lua")
             if ok_telescope then
@@ -30,6 +33,6 @@ return {
             elseif ok_fzf_lua then
                 vim.cmd("TodoFzfLua")
             end
-        end, { silent = true, desc = "Search TODO-style comments" })
+        end, { silent = true }, "Search TODO-style comments")
     end,
 }
