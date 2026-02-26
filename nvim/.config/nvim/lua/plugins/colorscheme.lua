@@ -34,7 +34,7 @@ return {
     },
     {
         "ilof2/posterpole.nvim",
-        enabled = false,
+        -- enabled = false,
         lazy = false,
         priority = 999,
         config = function()
@@ -51,7 +51,7 @@ return {
     },
     {
         "vague2k/vague.nvim",
-        enabled = false,
+        -- enabled = false,
         lazy = false,
         config = function()
             require("vague").setup({
