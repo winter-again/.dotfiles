@@ -36,8 +36,8 @@
         "on-click": "playerctl --player=spotify play-pause",
         // "on-click": "ags -t mpris",
         "on-click-right": "pkill spotify",
-        "on-scroll-up": "",
-        "on-scroll-down": "",
+        // "on-scroll-up": "",
+        // "on-scroll-down": "",
         "exec": "~/.config/waybar/scripts/spotify.sh",
         "exec-if": "pgrep spotify"
     },
