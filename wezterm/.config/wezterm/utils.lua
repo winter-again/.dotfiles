@@ -7,7 +7,7 @@ local M = {}
 ---@return table
 function M.set_bg(bg_name)
     local bg_key = 'bg_' .. bg_name
-    return profile_data.background[bg_key]
+    return profile_data.background[bg_key].background
 end
 
 -- TODO: can make this accept the attributes table and pass on to wezterm.font()?

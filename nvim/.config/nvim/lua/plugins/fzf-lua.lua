@@ -1,5 +1,5 @@
 return {
-    'ibhagwan/fzf-lua',
+    'https://gitlab.com/ibhagwan/fzf-lua',
     keys = {
         '<leader>ff',
         '<leader>fzf',

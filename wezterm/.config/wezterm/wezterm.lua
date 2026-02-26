@@ -1,5 +1,5 @@
 local wezterm = require('wezterm')
-local profile_data = require('lua.profile_data')
+-- local profile_data = require('lua.profile_data')
 local utils = require('utils')
 
 -- allows working w/ current release and nightly
@@ -30,7 +30,7 @@ config.check_for_updates = false
 -- setting this here also causes partial line problems
 -- config.term = 'wezterm' -- https://wezfurlong.org/wezterm/config/lua/config/term.html
 
-config.background = utils.set_bg('10')
+config.background = utils.set_bg('12')
 config.font = utils.set_font('1')
 config.font_size = 12.0
 -- this needs explicit setting if not the default
@@ -154,10 +154,6 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     -- otherwise empty table
     local overrides = window:get_config_overrides() or {}
     -- START of where user would use wezterm plugin API
-    -- NOTE: this is a workaround for when value is still a profile_data background table key
-    -- if string.find(value, 'bg_') then
-    --     value = wezterm.json_encode(profile_data.background[value])
-    -- end
     overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
     -- utils.log_overrides(value, overrides)
     -- END
