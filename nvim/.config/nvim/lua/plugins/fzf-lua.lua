@@ -50,6 +50,8 @@ return {
             },
         })
 
+        fzf_lua.register_ui_select()
+
         local map = require("winteragain.globals").map
         local opts = { silent = true }
         -- main keymaps

@@ -28,13 +28,6 @@ return {
         local opts = { silent = true }
         local zk_cmd = require("zk.commands")
 
-        map("n", "<leader>nn", function()
-            zk_cmd.get("ZkNew")()
-        end, opts, "New note with default template")
-        map("n", "<leader>nm", function()
-            zk_cmd.get("ZkNew")({ dir = "meetings", group = "meetings" })
-        end, opts, "New meeting note")
-
         map("n", "<leader>nt", function()
             zk_cmd.get("ZkTags")({ sort = { "note-count" } })
         end, opts, "Search tags")
@@ -45,7 +38,6 @@ return {
             zk_cmd.get("ZkBacklinks")()
         end, opts, "Search backlinks")
 
-        -- create custom user command since Zk capability doesn't pass the args through
         vim.api.nvim_create_user_command("ZkTempl", function(args)
             local cmd = args.fargs[1]
             if cmd == "default" or cmd == "def" then
@@ -59,16 +51,60 @@ return {
             nargs = 1,
             complete = function()
                 local templates = vim.fs.normalize("~/Documents/notebook/.zk/templates")
+                local suffix = "-templ.md"
                 local choices = {}
                 for name, _ in vim.fs.dir(templates) do
-                    local suffix = "-templ.md"
                     local templ = name:sub(1, #name - #suffix)
                     table.insert(choices, templ)
                 end
 
                 return choices
             end,
-            desc = "Create note based on template",
+            desc = "Insert template into current note",
         })
+
+        local function create_note_with_templ()
+            vim.ui.input({ prompt = "Note file name: " }, function(file_name)
+                -- replace "-" with spaces, remove ".md" if exists, and ensure first letter capitalized
+                file_name = file_name:gsub(".md", "")
+                local title = file_name:gsub("-", " "):gsub("^%l", string.upper)
+
+                local templates = vim.fs.normalize("~/Documents/notebook/.zk/templates")
+                local suffix = "-templ.md"
+                local choices = {}
+                for name, _ in vim.fs.dir(templates) do
+                    local templ = name:sub(1, #name - #suffix)
+                    table.insert(choices, templ)
+                end
+
+                vim.ui.select(choices, {
+                    prompt = "Template: ",
+                }, function(choice)
+                    if choice == "default" or choice == "def" then
+                        zk_cmd.get("ZkNew")({
+                            title = title,
+                            filenameStem = file_name,
+                            dir = "notes",
+                        })
+                    elseif choice == "meeting" or choice == "meetings" or choice == "meet" then
+                        zk_cmd.get("ZkNew")({
+                            title = title,
+                            filenameStem = file_name,
+                            dir = "notes/meetings",
+                            group = "meetings",
+                        })
+                    elseif choice == "leetcode" or choice == "leet" or choice == "lc" then
+                        print(file_name)
+                        zk_cmd.get("ZkNew")({
+                            title = title,
+                            filenameStem = file_name,
+                            dir = "notes/leetcode",
+                            group = "leetcode",
+                        })
+                    end
+                end)
+            end)
+        end
+        map("n", "<leader>nn", create_note_with_templ, opts, "Create note from chosen template")
     end,
 }
