@@ -90,7 +90,11 @@ source /usr/share/nvm/init-nvm.sh # since using AUR pkg
 # functions
 ff() {
     local dir
-    dir=$(fd . ~/Documents/Bansal_lab ~/Documents/projects --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
+    dir=$(fd . \
+        ~/Documents/Bansal_lab \
+        ~/Documents/projects \
+        ~/Documents/projects/nvim-dev
+        --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
     cd "$dir"
 }
 tt() {

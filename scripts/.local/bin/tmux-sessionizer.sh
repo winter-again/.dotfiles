@@ -4,8 +4,11 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    # selected=$(find ~/work/builds ~/projects ~/ ~/work ~/personal ~/personal/yt -mindepth 1 -maxdepth 1 -type d | fzf)
-    selected=$(fd . ~/Documents/Bansal_lab ~/Documents/projects --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
+    selected=$(fd . \
+        ~/Documents/Bansal_lab \
+        ~/Documents/projects \
+        ~/Documents/projects/nvim-dev \
+        --min-depth 1 --max-depth 1 --type d | fzf --no-preview)
 fi
 
 if [[ -z $selected ]]; then
