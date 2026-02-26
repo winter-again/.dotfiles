@@ -2,6 +2,7 @@ return {
     'echasnovski/mini.move',
     event = {'BufReadPost', 'BufNewFile'},
     version = false,
+    enabled = true,
     config = function()
         require('mini.move').setup({
             mappings = {
