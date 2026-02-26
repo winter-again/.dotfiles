@@ -70,7 +70,9 @@ return {
                 severity_sort = true
             })
             -- override capabilities sent to server so nvim-cmp can provide its own additionally supported candidates
-            local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- from kickstart.nvim
+            local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+            lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
             -- from nvim-ufo
             lsp_capabilities.textDocument.foldingRange = {
                 dynamicRegistration = false,

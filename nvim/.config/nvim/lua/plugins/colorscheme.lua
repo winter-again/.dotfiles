@@ -14,6 +14,7 @@ return {
                 on_highlights = function(highlights, colors)
                     -- using this keeps cursorline highlight from getting overriden in markdown code blocks
                     highlights['@text.literal.markdown'] = {link = '@punctuation.delimiter.markdown'}
+                    highlights['FidgetTask'] = {fg=colors.fg} -- override for fidget plugin
                 end
             })
             vim.cmd('colorscheme tokyonight') -- set default colorscheme after configuring
