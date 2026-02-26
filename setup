@@ -290,6 +290,17 @@ git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
 just
 cd "$HOME" || exit 1
 
+echo "Configuring SSH for GitHub..."
+paru_install openssh
+ssh-keygen -t ed25519 -f "$HOME/.ssh/github" -C XPS
+cat > "$HOME/.ssh/config" <<"EOF"
+Host github.com
+    HostName github.com
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/github
+    PreferredAuthentications publickey
+EOF
+
 echo "Installing flow..."
 go install github.com/winter-again/flow@latest
 
@@ -382,6 +393,35 @@ ExecStart=/bin/sh -c "/bin/echo LID0 > /proc/acpi/wakeup"
 [Install]
 WantedBy=multi-user.target
 EOF
+
+echo "Installing helpful networking packages..."
+network_pkgs=(
+    bind
+    tcpdump
+)
+paru_install "${network_pkgs[@]}"
+
+echo "Installing GNOME keyring..."
+paru_install gnome-keyring libsecret
+
+echo "Disabling NetworkManager connectivity check..."
+sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf > /dev/null <<"EOF"
+[connectivity]
+enabled=false
+EOF
+
+echo "Creating NetworkManager dispatcher to set timezone..."
+sudo tee /etc/NetworkManager/dispatcher.d/09-timezone > /dev/null <<"EOF"
+#!/bin/sh
+
+case "$2" in
+    up)
+        timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
+    ;;
+esac
+EOF
+sudo chmod +x /etc/NetworkManager/dispatcher.d/09-timezone
+sudo systemctl restart NetworkManager.service
 
 echo
 echo "Done. Reboot the system..."
