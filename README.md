@@ -8,4 +8,4 @@ Core:
 - [tmux](https://github.com/tmux/tmux)
 - [zsh](https://www.zsh.org/)
 - [powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [Neovim](https://github.com/neovim/neovim/wiki/Building-Neovim) (build from source)
+- [Neovim](https://github.com/neovim/neovim) (build from source)

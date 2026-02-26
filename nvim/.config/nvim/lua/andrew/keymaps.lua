@@ -1,5 +1,6 @@
 local opts = { silent = true }
--- Map('n', '<leader>pv', '<cmd>Lex<CR>', { silent = true }, 'Open Netrw to the left')
+-- Map('n', '<leader>pv', '<cmd>Lex<CR>', opts, 'Open Netrw to the left')
+Map('n', '<leader>w', '<cmd>w<CR>', opts, 'Write buf')
 Map({ 'n', 'v' }, '<Space>', '<Nop>', opts, 'Unbind space')
 Map('n', '<Esc>', '<cmd>nohlsearch<CR>', opts, 'Turn off search highlights')
 -- split windows (reversed for my brain)
@@ -15,10 +16,10 @@ Map('n', '<Down>', ':resize -2<CR>', opts, 'Window shorter')
 Map('n', '<Left>', ':vertical resize -2<CR>', opts, 'Window thinner')
 Map('n', '<Right>', ':vertical resize +2<CR>', opts, 'Window wider')
 -- move selection around and autoindent as needed
-Map('v', 'H', '<gv', opts)
-Map('v', 'L', '>gv', opts)
-Map('v', 'J', ":m '>+1<CR>gv=gv", opts)
-Map('v', 'K', ":m '<-2<CR>gv=gv", opts)
+Map('v', 'H', '<gv', opts, 'Move selection left')
+Map('v', 'L', '>gv', opts, 'Move selection right')
+Map('v', 'J', ":m '>+1<CR>gv=gv", opts, 'Move selection down')
+Map('v', 'K', ":m '<-2<CR>gv=gv", opts, 'Move selection up')
 -- J in normal mode appends line below to your current line + a space
 -- this remap keeps cursor in place instead of sending it to end of line
 Map('n', 'J', 'mzJ`z', opts, 'Append line below to current line w/ space')
@@ -53,7 +54,11 @@ Map('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>', opts, 'Delete buffer w/o closi
 Map('n', '<leader>qn', '<cmd>cnext<CR>zz', opts, 'Next quickfixlist')
 Map('n', '<leader>qp', '<cmd>cprev<CR>zz', opts, 'Prev quickfixlist')
 -- with Netrw disabled, use this to follow hyperlinks
--- vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
+-- Map('n', 'gx', '<cmd>silent !xdg-open <cfile><CR>', opts, 'Open link')
+-- <cfile> is replaced with path name under cursor
+Map('n', 'gx', function()
+    vim.ui.open(vim.fn.expand('<cfile>'))
+end, opts, 'Open link')
 Map('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>', opts, 'Save and exec Lua file')
 Map('n', '<leader><leader>t', '<cmd>Transp<CR>', opts, 'Turn on transparency')
 Map('n', '<leader><leader>m', '<cmd>ToggleLightDark<CR>', opts, 'Toggle light/dark mode')
