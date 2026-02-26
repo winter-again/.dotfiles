@@ -63,6 +63,23 @@ return {
             desc = "Insert template into current note",
         })
 
+        local function insert_templ()
+            local templates = vim.fs.normalize("~/Documents/notebook/.zk/templates")
+            local suffix = "-templ.md"
+            local choices = {}
+            for name, _ in vim.fs.dir(templates) do
+                local templ = name:sub(1, #name - #suffix)
+                table.insert(choices, templ)
+            end
+
+            vim.ui.select(choices, {
+                prompt = "Template: ",
+            }, function(choice)
+                vim.cmd("ZkTempl " .. choice)
+            end)
+        end
+        map("n", "<leader>ni", insert_templ, opts, "Insert note template")
+
         local function create_note_with_templ()
             vim.ui.input({ prompt = "Note file name: " }, function(file_name)
                 if file_name == nil then

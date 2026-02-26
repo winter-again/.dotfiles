@@ -260,9 +260,7 @@ exec {
     swayidle -w before-sleep "gtklock -d"
 }
 
-# use app_id instead of class if Wayland
 assign [app_id="Slack"] $ws1
-# force Slack to use stacking layout
 for_window [app_id="Slack"] layout stacking
 
 # spotify is stubborn if on X
