@@ -21,6 +21,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Return exec wezterm
 # kill focused window
 bindsym $mod+Shift+q kill
+# bindsym $mod+Shift+x kill
 # use rofi instead of dmenu; use "drun" to launch apps with desktop files
 bindsym $mod+m exec --no-startup-id rofi -show drun -dpi 1
 # change focus

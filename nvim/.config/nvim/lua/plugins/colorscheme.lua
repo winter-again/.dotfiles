@@ -118,5 +118,9 @@ return {
                 }
             })
         end
+    },
+    {
+        'EdenEast/nightfox.nvim',
+        config = true
     }
 }
