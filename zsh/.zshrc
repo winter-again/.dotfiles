@@ -63,6 +63,7 @@ alias ffetch="fastfetch"
 alias R="R --no-save" # never prompt to save workspace image
 alias ve="source .venv/bin/activate"
 alias de="deactivate"
+alias jn="jupyter notebook"
 # for starting rstudio with flags for Wayland; shouldn't need this now that the .desktop file works
 # alias rstd="/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland &"
 alias yz="yazi"
