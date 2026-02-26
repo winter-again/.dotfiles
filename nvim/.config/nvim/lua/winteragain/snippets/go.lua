@@ -26,4 +26,18 @@ return {
             { func = i(1, "func"), res = i(2) }
         )
     ),
+    s(
+        { trig = "switch", snippetType = "autosnippet", desc = "switch statement" },
+        fmta(
+            [[
+            switch <> {
+            case <>:
+                <>
+            default:
+                <>
+            }
+            ]],
+            { i(1), i(2), i(3), i(4) }
+        )
+    ),
 }

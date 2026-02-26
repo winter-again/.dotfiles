@@ -7,6 +7,8 @@ vim.o.confirm = true -- ask whether to save unsaved changes
 
 local opt = vim.opt
 
+opt.spelllang = "en_us"
+opt.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
 -- opt.guicursor = "" -- disable cursor change on mode change
 opt.background = "dark"
 opt.inccommand = "split" -- preview substitutions live

@@ -1,6 +1,6 @@
 stow:
-    stow bat
     stow --no-folding desktop
+    stow bat
     stow ghostty
     stow git
     stow gtklock
@@ -11,6 +11,7 @@ stow:
     stow oh-my-posh
     stow pacman
     stow paru
+    stow ripgrep
     stow scripts
     stow spotify
     stow swappy

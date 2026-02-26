@@ -1,5 +1,6 @@
 local map = require("winteragain.globals").map
 
+-- TODO: why do these sometimes not have effect?
 vim.opt_local.wrap = true
 -- wrap long lines at chars in breakat var
 vim.opt_local.linebreak = true
@@ -7,12 +8,26 @@ vim.opt_local.linebreak = true
 vim.opt_local.breakindent = true
 
 vim.opt_local.spell = true
-vim.opt_local.spelllang = "en_us"
 
 -- 1 makes concealed links look too long because it has to be a 1:1 conceal, meaning the "["
 -- is concealed with just a blank
 -- vim.opt_local.conceallevel = 2
 -- vim.opt_local.concealcursor = "nc" -- modes in which text in cursor line can remain concealed
+
+local root = vim.fs.root(0, ".git")
+local notebook_dir = vim.fs.normalize("~/Documents/notebook")
+
+if root == notebook_dir then
+    -- use local spellfile
+    vim.opt_local.spellfile = vim.uv.cwd() .. "/spell/en.utf-8.add"
+else
+    -- TODO: stopped working, maybe because of treesitter change?
+    -- activate otter.nvim for JS in specific case
+    if vim.uv.fs_stat(root .. "/package.json") then
+        local otter = require("otter")
+        otter.activate({ "javascript" })
+    end
+end
 
 -- toggle checkbox and keep cursor in place
 local function toggle_checkbox()
@@ -35,10 +50,3 @@ local function toggle_checkbox()
 end
 
 map("n", "=", toggle_checkbox, { silent = true, buffer = true }, "Toggle markdown checkbox")
-
--- activate otter.nvim for JS in specific case
-local cwd = vim.uv.cwd()
-if cwd ~= vim.fs.normalize("~/Documents/notebook") and vim.uv.fs_stat("package.json") then
-    local otter = require("otter")
-    otter.activate({ "javascript" })
-end

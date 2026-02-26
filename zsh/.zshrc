@@ -9,6 +9,7 @@ export VISUAL="/usr/local/bin/nvim"
 export PAGER="/usr/bin/less"
 export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 # export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/.ripgreprc"
 export BROWSER="firefox"
 
 # override defaults
@@ -174,32 +175,26 @@ function umntbk() {
 }
 
 # wezterm logs appear here
-# function wez-logs() {
-#     cd /run/user/1000/wezterm
-#     ls
-# }
-# function wez-plugs() {
-#     cd ~/.local/share/wezterm/plugins
-#     ls
-# }
+function wez-logs() {
+    cd /run/user/1000/wezterm
+}
+function wez-plugs() {
+    cd ~/.local/share/wezterm/plugins
+}
 
 # fzf
-source /usr/share/fzf/key-bindings.zsh # fzf keybinds
-source /usr/share/fzf/completion.zsh # fzf fuzzy completion
-export FZF_DEFAULT_OPTS="--height 40%
-    --layout reverse
+# + = current line
+# info = match counters
+export FZF_DEFAULT_OPTS="--no-separator
+    --layout reverse --height 40% --preview-window '50%'
     --preview 'bat --theme=base16 --color always {}'
-    --no-separator
-    --preview-window '50%'
-    --color=fg:#cacaca,bg:-1,hl:underline:#8f8aac \
-    --color=fg+:#f0f0f0,bg+:#262626,hl+:underline:#8a98ac \
-    --color=info:#c6a679,prompt:#8f8aac,pointer:#f0f0f0
-    --color=marker:#8aac8b,spinner:#8aac8b
-    --color=gutter:-1,border:#8a98ac,header:-1
-    --color=preview-fg:#f0f0f0,preview-bg:-1"
-
+    --color=fg:#cacaca,bg:-1,hl:#8a98ac
+    --color=fg+:#f0f0f0,bg+:#262626,hl+:underline:#8f8aac
+    --color=prompt:#8f8aac,info:#ab9a78,pointer:#cacaca,marker:#778c73
+    --color=spinner:#778c73,gutter:-1,header:-1,border:#cacaca
+    --color=preview-fg:#cacaca,preview-bg:-1"
 # use fd, follow symlinks, include hidden files, respect .gitignore (https://github.com/junegunn/fzf#respecting-gitignore)
-export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
+export FZF_DEFAULT_COMMAND="fd --type file --follow --strip-cwd-prefix --hidden --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND" # search cwd and output to stdout
 # preview file content with fzf + bat; ctrl-/ changes the preview window style
 export FZF_CTRL_T_OPTS="
@@ -212,6 +207,8 @@ export FZF_CTRL_R_OPTS="
     --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip -se c)+abort'
     --color header:italic
     --header 'CTRL-Y to copy command to clipboard'"
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 # fix uv run autocomplete for py files: https://github.com/astral-sh/uv/issues/8432
 if type "uv" > /dev/null; then

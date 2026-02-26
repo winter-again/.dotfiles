@@ -9,50 +9,8 @@ return {
         wezterm_config.setup({
             append_wezterm_to_rtp = true,
         })
+
         local profile_data = require("profile_data")
-
-        -- local map = require("winteragain.globals").map
-        -- local opts = { silent = true }
-
-        -- NOTE: doesn't seem to work
-        -- local reload = require('plenary.reload').reload_module
-        -- map('n', '<leader><leader>r', function()
-        --     reload('profile_data', false)
-        -- end, opts, '')
-
-        -- map("n", "<leader><leader>d", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.default.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>1", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_1.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>2", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_2.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>3", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_3.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>4", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_4.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>5", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_5.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>6", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_6.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>7", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_7.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>8", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_8.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>9", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_9.background)
-        -- end, opts, "")
-        -- map("n", "<leader><leader>0", function()
-        --     wezterm_config.set_wezterm_user_var("background", profile_data.background.bg_10.background)
-        -- end, opts, "")
 
         vim.api.nvim_create_user_command("Bliss", function(args)
             local sub_cmd = args.fargs[1]
@@ -70,14 +28,17 @@ return {
                     wezterm_config.set_wezterm_user_var("background", choice)
                 end
             elseif sub_cmd == "font" then
+                -- TODO: figure out why this broke; I think it's because config.font expects
+                -- output of wezterm.font() func?
                 for key, val in pairs(profile_data.font) do
                     if key == arg then
                         choice = val
+                        break
                     end
                 end
                 if choice ~= nil then
                     wezterm_config.set_wezterm_user_var("font", choice.font)
-                    wezterm_config.set_wezterm_user_var("font_size", choice.font_size)
+                    -- wezterm_config.set_wezterm_user_var("font_size", choice.font_size)
                 end
             end
         end, {

@@ -19,6 +19,29 @@
 ; (atx_heading (atx_h5_marker) @markup.heading.5.marker (inline) @markup.heading.5)
 ; (atx_heading (atx_h6_marker) @markup.heading.6.marker (inline) @markup.heading.6)
 
+; (list_item
+;   ((task_list_marker_checked) @markup.list.checked
+;     (paragraph
+;       (inline) @markup.list.checked.main
+;     )
+;   ) 
+;   (list
+;     (list_item
+;       (task_list_marker_checked)
+;       (paragraph
+;         (inline) @markup.list.checked.content
+;       ) 
+;     )
+;   )
+; )
+
+; (list_item
+;   (list_marker_minus)
+;   (list
+;     (inline)
+;   )
+; )
+
 ; checkbox: conceal both minus sign and the actual checkbox
 ; ((task_list_marker_unchecked)
 ;  @text.todo.unchecked
