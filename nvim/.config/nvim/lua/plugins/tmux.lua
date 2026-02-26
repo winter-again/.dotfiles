@@ -1,8 +1,8 @@
 return {
     {
-        'winter-again/tmux-send.nvim',
+        "winter-again/tmux-send.nvim",
         dependencies = {
-            'nvim-lua/plenary.nvim',
+            "nvim-lua/plenary.nvim",
         },
         dev = true,
         config = true,

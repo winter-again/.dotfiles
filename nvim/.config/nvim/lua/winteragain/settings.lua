@@ -11,24 +11,24 @@ local opt = vim.opt
 -- opt.guicursor = '' -- disable cursor change on mode change
 -- opt.splitright = true -- new window to the right of current
 -- opt.splitbelow = true -- new window below the current
-opt.background = 'dark'
-opt.inccommand = 'split' -- preview substitutions live
-opt.winbar = '%{%v:lua.Winbar()%}'
+opt.background = "dark"
+opt.inccommand = "split" -- preview substitutions live
+opt.winbar = "%{%v:lua.Winbar()%}"
 -- (pseudo)transparency for cmp menu and I guess wildmenu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice
 -- note: setting it means cmp menu has highlight but can see text behind
 -- not setting + having transparent bg makes just the transparent background show
 -- opt.pumblend = 35
-opt.wildignore = '__pycache__'
+opt.wildignore = "__pycache__"
 ---@diagnostic disable-next-line: undefined-field
-opt.wildignore:append({ '*.pyc', '*pycache*' })
-opt.mouse = 'a' -- enable mouse mode always
+opt.wildignore:append({ "*.pyc", "*pycache*" })
+opt.mouse = "a" -- enable mouse mode always
 opt.equalalways = false -- don't reset window sizes after closing one
 opt.showmode = false -- don't show mode in status line
 opt.swapfile = false -- turn off swapfiles
 opt.backup = false -- turn off backups
 -- change from the default location of ~/.local/state/nvim/undo/
-opt.undodir = os.getenv('HOME') .. '/.nvim/undodir'
+opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
 opt.undofile = true -- save undo history to an undo file and restore from too
 -- line numbers; setting both of these together gives hybrid line numbering
 opt.number = true
@@ -56,7 +56,7 @@ opt.laststatus = 3 -- global statusline
 -- menu = use popup menu to show possible completions
 -- menuone = use menu also when there is only one match
 -- noselect = don't preselect
-opt.completeopt = { 'menu', 'menuone', 'noselect' }
+opt.completeopt = { "menu", "menuone", "noselect" }
 -- opt.signcolumn = 'yes:2' -- fix signcolumn at 2 and always show; does statuscol conflict with this?
 -- settings for folding, which is handled by nvim-ufo plugin
 opt.foldenable = false
@@ -65,6 +65,6 @@ opt.foldenable = false
 -- opt.foldlevel = 99
 -- opt.foldlevelstart = 99
 -- opt.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldclose:'
-opt.fillchars:append({ eob = ' ' })
+opt.fillchars:append({ eob = " " })
 -- what gets saved in sessions
-opt.sessionoptions = 'buffers,curdir,winpos,winsize'
+opt.sessionoptions = "buffers,curdir,winpos,winsize"
