@@ -190,9 +190,8 @@ return {
         dev = true,
     },
     {
-        -- 'nyngwang/nvimgelion',
-        'winter-again/nvimgelion',
-        branch = 'add-indent-blankline-hl',
+        'nyngwang/nvimgelion',
+        -- 'winter-again/nvimgelion',
         -- dev = true,
         config = function() end,
     },

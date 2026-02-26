@@ -155,18 +155,13 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
     local overrides = window:get_config_overrides() or {}
     -- START of where user would use wezterm plugin API
     -- NOTE: this is a workaround for when value is still a profile_data background table key
-    if string.find(value, 'bg_') then
-        value = wezterm.json_encode(profile_data.background[value])
-    end
+    -- if string.find(value, 'bg_') then
+    --     value = wezterm.json_encode(profile_data.background[value])
+    -- end
     overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
     -- utils.log_overrides(value, overrides)
     -- END
     window:set_config_overrides(overrides)
-
-    -- local pane_id, msg = utils.notif_overrides(pane, name)
-    -- 3rd param is optional URL to visit when clicked
-    -- 4th is a timeout but isn't very reliable
-    -- window:toast_notification('wezterm', ('user var overriden (pane = %s): \n%s'):format(pane_id, msg), nil, 2000)
 end)
 
 wezterm.on('send-txt-to-pane', function(window, pane, name, value)
