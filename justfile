@@ -1,6 +1,7 @@
 default:
     stow --no-folding desktop
     stow bat
+    stow fontconfig
     stow ghostty
     stow git
     stow gtklock

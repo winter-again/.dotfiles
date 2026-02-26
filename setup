@@ -12,9 +12,6 @@ paru_install() {
     paru -S --needed --noconfirm "$@"
 }
 
-BUILD_REPOS="$HOME/build-repos"
-PARU_REPO="$BUILD_REPOS/paru"
-
 read -r -p "Confirm ready to setup system for user $USER with home $HOME (y/n): " confirm && [[ $confirm = [yY] ]] || exit 1
 echo
 
@@ -49,6 +46,9 @@ sudo systemctl enable --now paccache.timer
 echo "Setting up xdg-user-dirs and installing xdg-utils..."
 pacman_install xdg-user-dirs xdg-utils
 xdg-user-dirs-update
+
+BUILD_REPOS="$HOME/build-repos"
+PARU_REPO="$BUILD_REPOS/paru"
 
 echo "Installing paru..."
 if ! type paru >/dev/null; then
@@ -115,15 +115,16 @@ sway_pkgs=(
 )
 paru_install "${sway_pkgs[@]}"
 
+# NOTE: Noto fonts for full Unicode coverage
 echo "Installing fonts..."
 font_pkgs=(
     ttf-iosevka-nerd
     ttf-sarasa-gothic
     # ttf-zed-mono-nerd
     # ttf-nerd-fonts-symbols-mono
-    # noto-fonts
-    # noto-fonts-cjk
-    # noto-fonts-emoji
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
 )
 paru_install "${font_pkgs[@]}"
 
@@ -136,6 +137,7 @@ zsh_pkgs=(
 )
 paru_install "${zsh_pkgs[@]}"
 
+# TODO: review tools
 echo "Installing core tools..."
 tools=(
     bat
