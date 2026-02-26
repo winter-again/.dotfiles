@@ -59,8 +59,8 @@ return {
                     return {
                         WinSeparator = { fg = theme.ui.nontext },
                         -- Visual = { reverse = true },
-                        Winbar = { bg = 'none', italic = true },
-                        WinbarNC = { bg = 'none', italic = true },
+                        WinBar = { bg = 'none', italic = true },
+                        WinBarNC = { bg = 'none', italic = true },
                         DiagnosticUnderlineError = { underdotted = true },
                         DiagnosticUnderlineWarn = { underdotted = true },
                         DiagnosticUnderlineInfo = { underdotted = true },
@@ -86,7 +86,7 @@ return {
                         WinSeparator = { fg = colors.surface2 },
                         LineNr = { fg = colors.surface2 },
                         -- Visual = { reverse = true },
-                        WinBar = { bg = 'none', italic = true },
+                        WinBar = { fg = 'none', bg = 'none', italic = true },
                         WinBarNC = { bg = 'none', italic = true },
                         DiagnosticUnderlineError = { underdotted = true },
                         DiagnosticUnderlineWarn = { underdotted = true },
@@ -138,12 +138,13 @@ return {
                 styles = {
                     bold = true,
                     italic = true,
+                    -- transparency = true,
                 },
                 highlight_groups = {
                     TreesitterContext = { bg = 'foam', blend = 10 },
                     -- Visual = { reverse = true },
-                    WinBar = { bg = 'none', italic = true },
-                    WinBarNC = { bg = 'none', italic = true },
+                    WinBar = { bg = 'none', italic = true, inherit = false },
+                    WinBarNC = { bg = 'none', italic = true, inherit = false },
                     WinSeparator = { fg = 'muted', bg = 'none' },
                     -- for transparency, otherwise bg remains in signcolumn
                     GitSignsAdd = { bg = 'none' },
@@ -156,6 +157,7 @@ return {
                     ['@lsp.type.unresolvedReference'] = { underdotted = true },
                 },
             })
+            -- vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none', force = true })
         end,
     },
     {
