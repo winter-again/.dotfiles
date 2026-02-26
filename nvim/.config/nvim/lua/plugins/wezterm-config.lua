@@ -4,41 +4,20 @@ return {
     config = function()
         -- NOTE:
         -- this adds to rtp and lets us pull in modules under ~/.config/wezterm/lua/
-        -- only issue is that if the module there calls require('wezterm'), then
-        -- we get an error on this end...restricts what we can specify there
-        -- so I guess it wouldn't work for stuff like font setting that calls
-        -- a wezterm-specific func to do stuff?
+        -- any bad consequences of this?
         local wezterm_path = vim.fn.stdpath('config'):gsub('nvim', 'wezterm') -- not the most general way of doing this...
         vim.opt.rtp:append(wezterm_path)
-        --
+
         local wezterm_bg = require('profile_data')
 
         local wezterm_config = require('wezterm-config')
         -- simplified version using a user command
         vim.api.nvim_create_user_command('Bg', function(opts)
-            -- local bg_profile = 'bg_' .. tostring(opts.fargs[1])
             local bg_profile = tostring(opts.fargs[1])
             wezterm_config.set_wezterm_user_var('profile_background', bg_profile)
         end, {
             nargs = 1,
             complete = function(ArgLead, CmdLine, CursorPos)
-                -- hard-coded for now...
-                -- return {
-                --     'default',
-                --     '1',
-                --     '2',
-                --     '3',
-                --     '4',
-                --     '5',
-                --     '5_1',
-                --     '6',
-                --     '7',
-                --     '7_1',
-                --     '8',
-                --     '9',
-                --     '10',
-                --     '11',
-                -- }
                 local bg_names = {}
                 for name, _ in pairs(wezterm_bg.background) do
                     table.insert(bg_names, name)
@@ -51,7 +30,7 @@ return {
         local function set_bg_colorscheme(bg)
             local mapper = {
                 ['tokyonight'] = { 'bg_1', 'bg_4' },
-                ['rose-pine'] = { 'bg_5', 'bg_6', 'bg_7', 'bg_9', 'bg_10' },
+                ['rose-pine'] = { 'bg_5', 'bg_5_1', 'bg_6', 'bg_7', 'bg_7_1', 'bg_9', 'bg_10' },
                 ['catppuccin'] = { 'bg_3' },
                 ['kanagawa'] = { 'bg_8' },
                 ['gruvbox'] = { 'bg_2' },
@@ -104,8 +83,8 @@ return {
         vim.keymap.set('n', '<leader><leader>f2', function()
             wezterm_config.set_wezterm_user_var('profile_font', 'font_2')
         end, { silent = true, desc = 'Set Wezterm font font_2' })
-        vim.keymap.set('n', '<leader><leader>f3', function()
-            wezterm_config.set_wezterm_user_var('profile_font', 'font_3')
-        end, { silent = true, desc = 'Set Wezterm font font_3' })
+        -- vim.keymap.set('n', '<leader><leader>f3', function()
+        --     wezterm_config.set_wezterm_user_var('profile_font', 'font_3')
+        -- end, { silent = true, desc = 'Set Wezterm font font_3' })
     end,
 }
