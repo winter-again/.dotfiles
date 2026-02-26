@@ -57,6 +57,8 @@ workspace 10 output $secondary_mon $laptop_disp
 ### Key bindings
 # Start a terminal
 bindsym $mod+Return exec $term
+# open Nemo
+bindsym $mod+n exec nemo
 # Kill focused window
 bindsym $mod+Shift+q kill
 # Start your launcher
