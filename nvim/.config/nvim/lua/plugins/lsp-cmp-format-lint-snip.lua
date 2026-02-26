@@ -46,6 +46,7 @@ return {
                     'r_language_server',
                     -- 'ruff_lsp',
                     'sqlls',
+                    'tailwindcss',
                     'taplo',
                     'tsserver',
                     'yamlls',
@@ -61,8 +62,9 @@ return {
                     'black',
                     'isort',
                     'prettierd',
+                    'sqlfluff',
                     'stylua',
-                    'yamlfix',
+                    -- 'yamlfix',
                 },
             })
 
@@ -71,10 +73,10 @@ return {
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
             lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
             -- for nvim-ufo
-            -- lsp_capabilities.textDocument.foldingRange = {
-            --     dynamicRegistration = false,
-            --     lineFoldingOnly = true,
-            -- }
+            lsp_capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+            }
 
             -- global keymaps
             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -88,7 +90,7 @@ return {
                 end
                 nmap('K', vim.lsp.buf.hover, 'Hover docs')
                 -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Sig. help')
-                nmap('<leader><leader>rn', vim.lsp.buf.rename, 'LSP rename') -- default rename
+                nmap('<leader><leader>rn', vim.lsp.buf.rename, 'LSP def. rename') -- default rename
                 -- nmap('<leader>ca', vim.lsp.buf.code_action, 'Code action')
 
                 nmap('gl', vim.diagnostic.open_float, 'Get diagn.')
@@ -141,6 +143,9 @@ return {
                     require('lspconfig')['jsonls'].setup({
                         capabilities = lsp_capabilities,
                         on_attach = on_attach,
+                        -- init_options = {
+                        --     provideFormatter = false, -- whether to provide documentRangeFormattingProvider capability on init
+                        -- },
                     })
                 end,
                 ['lua_ls'] = function()
@@ -170,6 +175,29 @@ return {
                         },
                     })
                 end,
+                -- ['ruff_lsp'] = function()
+                --     require('lspconfig')['ruff_lsp'].setup({
+                --         capabilities = lsp_capabilities,
+                --         on_attach = function(client, bufnr)
+                --             on_attach(client, bufnr)
+                --
+                --             -- defer to pyright for textDocument/hover capabilities
+                --             client.server_capabilities.hoverProvider = false
+                --             -- autocommand for sorting imports with ruff via its code action
+                --             local group = vim.api.nvim_create_augroup('RuffSortImportsOnSave', { clear = true })
+                --             vim.api.nvim_create_autocmd('BufWritePre', {
+                --                 buffer = bufnr,
+                --                 callback = function()
+                --                     vim.lsp.buf.code_action({
+                --                         context = { only = { 'source.organizeImports' } },
+                --                         apply = true,
+                --                     })
+                --                     vim.wait(100)
+                --                 end,
+                --             })
+                --         end,
+                --     })
+                -- end,
             }
             require('mason-lspconfig').setup_handlers(handlers)
 
@@ -219,7 +247,7 @@ return {
                 },
                 signs = true,
                 underline = false,
-                update_in_insert = false,
+                update_in_insert = false, -- update diagnostics while in Insert mode
                 severity_sort = true,
             })
         end,
@@ -358,9 +386,11 @@ return {
                     html = { 'prettierd' },
                     javascript = { 'prettierd' },
                     javascriptreact = { 'prettierd' },
-                    json = { 'prettierd' },
+                    -- disabling to let jsonls handle formatting
+                    -- so we don't have to constantly set overrides in a .prettierrc.json
+                    -- json = { 'prettierd' },
                     lua = { 'stylua' },
-                    -- if using ruff_lsp I think can just leave this out and it should fallback
+                    -- if using ruff_lsp I think can just leave python key out and it should fallback
                     -- to ruff_lsp
                     python = { 'isort', 'black' }, -- run sequentially
                     typescript = { 'prettierd' },
@@ -374,6 +404,7 @@ return {
                 end,
             })
 
+            -- manually trigger formatting
             vim.keymap.set('n', '<leader><leader>fm', function()
                 require('conform').format({ async = true, lsp_fallback = true })
             end, { silent = true })
@@ -401,16 +432,11 @@ return {
         'mfussenegger/nvim-lint',
         event = { 'BufReadPre', 'BufNewFile' },
         config = function()
-            -- leaving this out for eslint seems to fix issue of errors when no eslint
-            -- config file but still allows linting when file is present
-            -- I guess defaults do the handling
-            -- require('lint').linters_by_ft = {
-            --     javascript = { 'eslint' },
-            --     javascriptreact = { 'eslint' },
-            --     typescript = { 'eslint' },
-            --     typescriptreact = { 'eslint' },
-            -- }
             require('lint').linters_by_ft = {
+                javascript = { 'eslint' },
+                javascriptreact = { 'eslint' },
+                typescript = { 'eslint' },
+                typescriptreact = { 'eslint' },
                 markdown = {}, -- disables default linting
             }
 
@@ -419,7 +445,10 @@ return {
             vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
                 group = lint_group,
                 callback = function()
-                    require('lint').try_lint()
+                    -- ignore command-not-found errors, e.g., for eslint when no config file
+                    -- see: https://github.com/mfussenegger/nvim-lint/issues/272
+                    -- and: https://github.com/mfussenegger/nvim-lint/issues/454
+                    require('lint').try_lint(nil, { ignore_errors = true })
                 end,
             })
 
