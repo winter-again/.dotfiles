@@ -10,7 +10,7 @@ set $right l
 set $term wezterm
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened on the original workspace that the command was run on.
-set $menu wofi --show drun --allow-images -a | xargs swaymsg exec --
+set $menu wofi --show drun -a --allow-images - | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -113,6 +113,14 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r exec killall waybar && waybar --config ~/.config/waybar/config_sway.jsonc --style ~/.config/waybar/style_sway.css
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+# power menu
+bindsym $mod+Shift+p exec ~/.config/wofi/power-menu.sh
+# suspend/lock
+exec swayidle -w before-sleep 'swaylock --config ~/.config/swaylock/config'
+bindsym $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
+bindsym $mod+Shift+period exec systemctl suspend
+# screenshot to clipboard
+bindsym $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
 
 # media keys
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
