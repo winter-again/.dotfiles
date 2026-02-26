@@ -20,8 +20,12 @@ window {
     --urlbarView-separator-color: var(--mountain-purple) !important;
 
     --in-content-primary-button-background: var(--mountain-purple) !important;
-    --in-content-primary-button-background-hover: var(--mountain-purple) !important;
-    --in-content-primary-button-background-active: var(--mountain-purple) !important;
+    --in-content-primary-button-background-hover: var(
+        --mountain-purple
+    ) !important;
+    --in-content-primary-button-background-active: var(
+        --mountain-purple
+    ) !important;
     --input-border-color: var(--mountain-purple) !important;
     --uc-checkbox-checked-bgcolor: var(--mountain-purple) !important;
     --in-content-link-color: var(--mountain-purple) !important;
@@ -35,7 +39,7 @@ window {
     }
 }
 
-/* hide star button in url bar */
+/* hide star button for bookmarking in url bar */
 #star-button {
     display: none !important;
 }
