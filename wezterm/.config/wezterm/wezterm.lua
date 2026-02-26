@@ -46,7 +46,7 @@ config.window_frame = {
 }
 config.use_fancy_tab_bar = true -- default
 config.show_tab_index_in_tab_bar = true
-config.cursor_blink_rate = 0 -- disable blinking
+config.cursor_blink_rate = 0
 config.window_padding = {
     left = 2,
     right = 2,
@@ -64,6 +64,8 @@ config.hide_tab_bar_if_only_one_tab = true
 local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
 wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin
 
+-- mouse and keys
+config.bypass_mouse_reporting_modifiers = 'CTRL' -- use CTRL to bypass app mouse repoorting (for hyperlinks)
 config.keys = {
     -- {
     --     key = 'N',
@@ -101,6 +103,7 @@ config.keys = {
     -- { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
 }
 
+-- callbacks
 wezterm.on('user-var-changed', function(window, pane, name, value)
     -- get copy of the currently set overrides if they exist
     -- otherwise empty table

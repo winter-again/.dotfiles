@@ -23,6 +23,14 @@ return {
                     highlights['LineNr'] = { fg = '#696d87' } -- line number color
                     highlights['CursorLineNr'] = { fg = colors.fg } -- cursor line number color
                     highlights['TelescopeSelection'] = { bg = colors.bg_visual }
+                    -- swap undercurl for underdot
+                    highlights['DiagnosticUnderlineError'] = { underdotted = true }
+                    highlights['DiagnosticUnderlineWarn'] = { underdotted = true }
+                    highlights['DiagnosticUnderlineInfo'] = { underdotted = true }
+                    highlights['DiagnosticUnderlineHint'] = { underdotted = true }
+                    highlights['@lsp.type.unresolvedReference'] = { underdotted = true }
+                    highlights['SpellBad'] = { underdotted = true }
+                    highlights['SpellCap'] = { underdotted = true }
                 end,
             })
         end,
@@ -163,9 +171,10 @@ return {
             require('nordic').load()
         end,
     },
-    -- have issues with indent markers
     {
-        'nyngwang/nvimgelion',
+        -- 'nyngwang/nvimgelion',
+        'winter-again/nvimgelion',
+        -- dev = true,
         config = function() end,
     },
     {
@@ -187,5 +196,10 @@ return {
     {
         'winter-again/winter-again.nvim',
         dev = true,
+    },
+    {
+        'winter-again/seoul256.nvim',
+        -- dev = true,
+        branch = 'fix-indent-blankline',
     },
 }
