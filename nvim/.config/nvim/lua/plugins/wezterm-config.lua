@@ -10,6 +10,9 @@ return {
 
         local opts = { silent = true }
         -- TESTING: new plugin design; looks good so far
+        Map('n', '<leader><leader>d', function()
+            wezterm_config.set_wezterm_user_var('background', profile_data.background.default)
+        end, opts, '')
         Map('n', '<leader><leader>1', function()
             wezterm_config.set_wezterm_user_var('background', profile_data.background.bg_1)
         end, opts, '')
