@@ -1,8 +1,8 @@
-local au_grp = vim.api.nvim_create_augroup('WinterAgain', { clear = true })
+local au_group = vim.api.nvim_create_augroup('WinterAgain', { clear = true })
 
 -- highlight the text you just yanked (visual cue)
 vim.api.nvim_create_autocmd('TextYankPost', {
-    group = au_grp,
+    group = au_group,
     pattern = '*',
     callback = function()
         vim.highlight.on_yank()
@@ -12,13 +12,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- from lazyvim
 -- auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-    group = au_grp,
+    group = au_group,
     callback = function(event)
         if event.match:match('^%w%w+://') then
             return
         end
         local file = vim.loop.fs_realpath(event.match) or event.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
+    end,
+})
+
+-- get rid of status column inside of nvim tree buffer
+-- the builtin setting didn't seem to work
+vim.api.nvim_create_autocmd('BufEnter', {
+    group = au_group,
+    callback = function()
+        if vim.bo.filetype == 'NvimTree' then
+            vim.wo.statuscolumn = ''
+        end
     end,
 })
 

@@ -13,6 +13,7 @@ return {
             view = {
                 -- side = 'right',
                 -- preserve_window_proportions = true,
+                -- signcolumn = 'no', -- doesn't seem to have effect
                 float = {
                     enable = true,
                     quit_on_focus_loss = false,
