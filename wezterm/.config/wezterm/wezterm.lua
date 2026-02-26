@@ -27,11 +27,13 @@ config.check_for_updates = false
 
 local color_schemes = {
     'Tokyo Night',
+    -- https://github.com/mountain-theme/Mountain/tree/48b5732a2368a0ff75081108a88c126ded5ab73d/Wezterm
+    'Mountain', -- seems close enough to mellifluous mountain
     'Catppuccin Mocha',
     'Kanagawa (Gogh)',
     'rose-pine',
 }
-config.color_scheme = color_schemes[2] -- builtin colorscheme (Folke ver)
+config.color_scheme = color_schemes[2]
 config.background = utils.set_bg('18_3')
 config.font, config.font_size = utils.set_font_properties('Zed')
 -- this needs explicit setting if not the default
