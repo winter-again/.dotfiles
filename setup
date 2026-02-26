@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# NOTE: run as newly created user
 set -uxo pipefail
 
 pacman_install() {
@@ -9,8 +10,6 @@ pacman_install() {
 paru_install() {
     paru -S --needed --noconfirm "$@"
 }
-
-# NOTE: run as newly created user
 
 BUILD_REPOS="$HOME/build-repos"
 PARU_REPO="$BUILD_REPOS/paru"
@@ -22,23 +21,12 @@ cd "$HOME" || exit 1
 echo "Checking internet connection..."
 ping -c 3 archlinux.org || { echo "Not connected to internet" && exit 1; }
 
-# echo "Installing zsh packages and setting zsh as login shell..."
-# zsh_pkgs=(
-#     zsh
-#     zsh-autosuggestions
-#     zsh-completions
-#     zsh-syntax-highlighting
-# )
-# pacman_install "${zsh_pkgs[@]}"
-# chsh -s /usr/bin/zsh "$USER"
-
 echo "Configuring /etc/pacman.conf..."
 sudo sed -i "/Color/s/^#//g" /etc/pacman.conf
 sudo sed -i "/VerbosePkgLists/s/^#//g" /etc/pacman.conf
 
 echo "Updating before proceeding..."
 sudo pacman -Syu --noconfirm
-echo
 
 echo "Installing and configuring reflector. Activating reflector.timer..."
 pacman_install reflector
@@ -50,23 +38,20 @@ sudo tee /etc/xdg/reflector/reflector.conf > /dev/null <<"EOF"
 --save /etc/pacman.d/mirrorlist
 EOF
 sudo systemctl enable --now reflector.timer
-echo
 
 echo "Installing pacman-contrib and activating paccache.timer..."
 pacman_install pacman-contrib
 sudo systemctl enable --now paccache.timer
-echo
 
 echo "Setting up xdg-user-dirs and installing xdg-utils..."
 pacman_install xdg-user-dirs xdg-utils
 xdg-user-dirs-update
-echo
 
 echo "Installing paru..."
 if ! type paru > /dev/null; then
     pacman_install rustup
     rustup default stable
-    mkdir "$HOME/Documents/build-repos"
+    mkdir "$BUILD_REPOS"
     git clone https://aur.archlinux.org/paru.git "$PARU_REPO"
     cd "$PARU_REPO" || exit 1
     makepkg -sirc --noconfirm
@@ -74,7 +59,6 @@ if ! type paru > /dev/null; then
 else
     echo "paru already installed..."
 fi
-echo
 
 echo "Installing Intel graphics packages..."
 intel_graphics_pkgs=(
@@ -84,65 +68,6 @@ intel_graphics_pkgs=(
     libva-utils
 )
 paru_install "${intel_graphics_pkgs[@]}"
-echo
-
-echo "Installing Pipewire and other sound packages..."
-sound_pkgs=(
-    pipewire
-    pipewire-audio
-    pipewire-alsa
-    pipewire-pulse
-    pipewire-jack
-    wireplumber
-    pavucontrol
-)
-# NOTE: will be prompted to replace jack2 with pipewire-jack, so respond with "y" since
-# default is "N"
-# NOTE: can't use --no-confirm for this
-printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
-echo
-
-echo "Using rfkill to disable bluetooth..."
-rfkill block bluetooth
-echo
-
-echo "Installing system maintenance packages..."
-sys_maint_pkgs=(
-    libsmbios
-    nvme-cli
-    smartmontools
-    thermald
-    trash-cli
-    util-linux
-)
-paru_install "${sys_maint_pkgs[@]}"
-echo "Enabling and starting thermald.service..."
-sudo systemctl enable --now thermald.service
-echo
-
-echo "Enabling and starting fstrim.timer..."
-sudo systemctl enable --now fstrim.timer
-echo
-
-# echo "Installing networking packages..."
-# network_pkgs=(
-#     networkmanager
-#     network-manager-applet
-# )
-# paru_install "${network_pkgs[@]}"
-
-echo "Mapping caps lock to escape and control..."
-paru_install keyd
-sudo tee /etc/keyd/default.conf > /dev/null <<"EOF"
-[ids]
-
-*
-
-[main]
-
-capslock = overload(control, esc)
-EOF
-sudo systemctl enable --now keyd.service
 
 echo "Installing Sway and other core packages..."
 sway_pkgs=(
@@ -171,6 +96,14 @@ font_pkgs=(
     noto-fonts-emoji
 )
 paru_install "${font_pkgs[@]}"
+
+echo "Installing zsh packages..."
+zsh_pkgs=(
+    zsh-autosuggestions
+    zsh-completions
+    zsh-syntax-highlighting
+)
+paru_install "${zsh_pkgs[@]}"
 
 echo "Installing Ghostty..."
 paru_install ghostty
@@ -208,7 +141,6 @@ lua_dev_pkgs=(
     stylua
 )
 paru_install "${lua_dev_pkgs[@]}"
-echo
 
 echo "Installing Python packages..."
 python_dev_pkgs=(
@@ -216,9 +148,12 @@ python_dev_pkgs=(
     uv
 )
 paru_install "${python_dev_pkgs[@]}"
-# NOTE: use of system python? Do tool install AFTER uv config stowed?
-# uv tool install basedpyright
-echo
+echo "Installing uv tools..."
+uv python install --managed-python
+uv_tools=(
+    basedpyright
+)
+uv tool install "${uv_tools[@]}"
 
 echo "Installing Go packages..."
 go_dev_pkgs=(
@@ -227,7 +162,6 @@ go_dev_pkgs=(
     gopls
 )
 paru_install "${go_dev_pkgs[@]}"
-echo
 
 echo "Installing Typst packages..."
 typst_dev_pkgs=(
@@ -235,7 +169,6 @@ typst_dev_pkgs=(
     tinymist
 )
 paru_install "${typst_dev_pkgs[@]}"
-echo
 
 echo "Installing JS/TS packages..."
 js_dev_pkgs=(
@@ -246,18 +179,15 @@ js_dev_pkgs=(
     vscode-json-languageserver
 )
 paru_install  "${js_dev_pkgs[@]}"
-# echo "Installing Astro LSP as global package via pnpm..."
-# NOTE: pnpm setup creates .zshrc if needed and writes some code for setting folder; would rather set myself
-# pnpm setup
-# pnpm install -g @astrojs/language-server
-echo
+echo "Installing Astro LSP as global package via pnpm..."
+export PNPM_HOME="$HOME/.local/share/pnpm"
+pnpm install -g @astrojs/language-server
 
 echo "Installing Rust packages..."
 rust_dev_pkgs=(
     rust-analyzer
 )
 paru_install "${rust_dev_pkgs[@]}"
-echo
 
 echo "Installing other dev packages..."
 dev_pkgs=(
@@ -269,7 +199,6 @@ dev_pkgs=(
     yaml-language-server
 )
 paru_install "${dev_pkgs[@]}"
-echo
 
 echo "Building and installing Neovim from source..."
 nvim_pkgs=(
@@ -299,7 +228,6 @@ theming_pkgs=(
     nwg-look
 )
 paru_install "${theming_pkgs[@]}"
-echo
 
 echo "Installing XDG desktop portals..."
 xdg_portal_pkgs=(
@@ -308,7 +236,6 @@ xdg_portal_pkgs=(
     xdg-desktop-portal-gtk
 )
 paru_install "${xdg_portal_pkgs[@]}"
-echo
 
 echo "Installing Nemo and setting as default file manager..."
 paru_install nemo
@@ -334,22 +261,26 @@ zathura_pkgs=(
     zathura
     zathura-pdf-mupdf
 )
+# NOTE: select 30 for tesseract pkg
 paru -S --needed "${zathura_pkgs[@]}"
-# printf "%s\n" 30 Y | paru -S --needed "${zathura_pkgs[@]}"
+printf "%s\n" 30 Y | paru -S --needed "${zathura_pkgs[@]}"
 
 echo "Installing AUR packages..."
 aur_pkgs=(
+    librewolf-bin
     oh-my-posh-bin
     slack-desktop
     tofi
     wezterm-git
 )
-# NOTE: will require manual responses
+# NOTE: will require manual responses and PKGBUILD review
 paru -S --needed "${aur_pkgs[@]}"
 
-
-# echo "Installing flow..."
-# go install github.com/winter-again/flow@latest
+echo "Installing Wezterm terminfo..."
+tempfile=$(mktemp) \
+    && curl -o "$tempfile" https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo \
+    && tic -x -o ~/.terminfo "$tempfile" \
+    && rm "$tempfile"
 
 echo "Cloning dotfiles, setting SSH URL, and stowing dotfiles..."
 git clone https://github.com/winter-again/.dotfiles.git
@@ -359,22 +290,98 @@ git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
 just
 cd "$HOME" || exit 1
 
-# echo "Installing ufw and activating firewall..."
-# paru_install ufw
-# sudo systemctl enable --now ufw.service
-# sudo ufw enable
+echo "Installing flow..."
+go install github.com/winter-again/flow@latest
 
-# TODO: consider removing the below
+echo "Installing Pipewire and other sound packages..."
+sound_pkgs=(
+    pipewire
+    pipewire-audio
+    pipewire-alsa
+    pipewire-pulse
+    pipewire-jack
+    wireplumber
+    pavucontrol
+)
+# NOTE: will be prompted to replace jack2 with pipewire-jack, so respond with "y" since
+# default is "N"
+# NOTE: can't use --no-confirm for this
+# paru -S --needed "${sound_pkgs[@]}"
+printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
 
-# echo "Installing rclone, restic, and rsync for backups..."
-# paru_install rclone restic rsync
-# git clone https://github.com/winter-again/backups.git "$HOME/Documents/code/backups"
-# cd "$HOME/Documents/code/backups" || exit 1
-# git remote set-url origin git@github.com:winter-again/backups.git
-# git remote set-url --push origin git@github.com:winter-again/backups.git
-# just lab
-# just personal
-# cd "$HOME" || exit 1
+echo "Using rfkill to disable bluetooth..."
+rfkill block bluetooth
+
+echo "Installing system maintenance packages..."
+sys_maint_pkgs=(
+    libsmbios
+    nvme-cli
+    smartmontools
+    thermald
+    trash-cli
+    util-linux
+)
+paru_install "${sys_maint_pkgs[@]}"
+echo "Enabling and starting thermald.service..."
+sudo systemctl enable --now thermald.service
+
+echo "Enabling and starting fstrim.timer..."
+sudo systemctl enable --now fstrim.timer
+
+echo "Mapping caps lock to escape and control..."
+paru_install keyd
+sudo tee /etc/keyd/default.conf > /dev/null <<"EOF"
+[ids]
+
+*
+
+[main]
+
+capslock = overload(control, esc)
+EOF
+sudo systemctl enable --now keyd.service
+
+echo "Installing rclone, restic, and rsync for backups..."
+paru_install rclone restic rsync
+
+echo "Installing CUPS and setting up printing..."
+cups_pkgs=(
+    cups
+    cups-pdf
+)
+paru_install "${cups_pkgs[@]}"
+sudo systemctl enable --now cups.socket
+printf "%s\n" 1 | paru -S --needed epson-inkjet-printer-escpr2
+
+echo "Installing ufw and activating firewall..."
+paru_install ufw
+sudo systemctl enable --now ufw.service
+sudo ufw enable
+
+echo "Installing powertop and tlp..."
+paru_install powertop tlp tlp-rdw
+sudo systemctl enable --now tlp.service
+sudo systemctl enable --now NetworkManager-dispatcher.service
+sudo systemctl mask systemd-rfkill.service
+sudo systemctl mask systemd-rfkill.socket
+sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
+sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_LAN_CONNECT.*/DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"/' /etc/tlp.conf
+sudo sed -i 's/.*DEVICES_TO_ENABLE_ON_LAN_DISCONNECT.*/DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"/' /etc/tlp.conf
+
+echo "Disabling lid switch..."
+sudo sed -i "s/.*HandleLidSwitch.*/HandleLidSwitch=ignore" /etc/systemd/logind.conf
+sudo sed -i "s/.*HandleLidSwitchExternalPower.*/HandleLidSwitchExternalPower=ignore" /etc/systemd/logind.conf
+sudo sed -i "s/.*HandleLidSwitchDocked.*/HandleLidSwitchDocked=ignore" /etc/systemd/logind.conf
+sudo tee /etc/systemd/system/ignore-lid-wakeup.service > /dev/null <<"EOF"
+[Unit]
+Description="Disable LID0 wake from suspend trigger"
+
+[Service]
+ExecStart=/bin/sh -c "/bin/echo LID0 > /proc/acpi/wakeup"
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 echo
 echo "Done. Reboot the system..."
