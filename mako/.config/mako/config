@@ -1,12 +1,9 @@
 sort=-time
 output=BNQ BenQ LCD 93J02490SL0
 layer=overlay
-text-color=#c0caf5
-background-color=#1a1b26
 width=400
 height=300
 border-size=2
-border-color=#9d7cd8
 border-radius=5
 icons=1
 font=ZedMono Nerd Font Mono 12
@@ -15,12 +12,23 @@ max-icon-size=64
 default-timeout=5000
 ignore-timeout=1
 
+# text-color=#c0caf5
+# background-color=#1a1b26
+# border-color=#9d7cd8
+
+text-color=#f0f0f0
+background-color=#0f0f0f
+border-color=#8a98ac
+
 [urgency=low]
-border-color=#9d7cd8
+# border-color=#9d7cd8
+border-color=#8a98ac
 
 [urgency=normal]
-border-color=#9d7cd8
+# border-color=#9d7cd8
+border-color=#8a98ac
 
 [urgency=high]
-border-color=#db4b4b
 default-timeout=0
+# border-color=#db4b4b
+border-color=#ac8a8c

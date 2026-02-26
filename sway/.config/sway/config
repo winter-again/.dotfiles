@@ -21,41 +21,41 @@ seat seat0 xcursor_theme capitaine-cursors-light 32
 
 # tokyo night
 # set {
+#     $bg #16161e
+#     $fg #c0caf5
+#     $bg_alt #3b4261
 #     $primary #7aa2f7
-#     $txt_dark #16161e
-#     $txt_light #c0caf5
 #     $indic #9d7cd8
-#     $dim #3b4261
 #     $urgent #f7768e
 # }
 
 # mountain fuji theme
 set {
+    # yoru
+    $bg #0f0f0f
+    # iwa
+    $bg_alt #262626
+    # yuki
+    $fg #f0f0f0
     # ume
     $primary #8f8aac
-    # yoru
-    $txt_dark #0f0f0f
-    # fuyu
-    $txt_light #cacaca
     # take
     $indic #8aac8b
-    # iwa
-    $dim #393939
     # kaen
     $urgent #ac8a8c
 }
 
 # window that has focus 
-client.focused          $primary $primary $txt_dark $indic $primary
+client.focused          $primary $primary $bg $indic $primary
 # the most recently focused view within a container that isn't focused
-client.focused_inactive $dim $dim $txt_light $dim $dim
+client.focused_inactive $bg_alt $bg_alt $fg $bg_alt $bg_alt
 # any view that doesn't have focus
-client.unfocused        $dim $txt_dark $txt_light $txt_dark $txt_dark
+client.unfocused        $bg_alt $bg $fg $bg $bg
 # a view with urgency hint
-client.urgent           $urgent $urgent $txt_dark $urgent $urgent
+client.urgent           $urgent $urgent $bg $urgent $urgent
 
 # this needs swaybg to work
-output * bg $txt_dark solid_color
+output * bg $bg solid_color
 
 input "type:keyboard" {
     xkb_layout us
