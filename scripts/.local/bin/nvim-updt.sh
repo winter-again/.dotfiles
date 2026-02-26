@@ -8,7 +8,9 @@ tokyonight_purple="#9d7cd8"
 
 # based on https://github.com/rebelot/dotfiles/blob/4d4f8dbb3d999cc03ccf2881ca091f0c7a040c5f/neovim-update
 # limit it to building either stable or nightly releases
-cd "$HOME/git-repos/neovim" || exit
+cd "$HOME/Documents/code/neovim" || exit
+
+# note: not foolproof because have to manually intervene if build fails since repo is up-to-date
 
 # commit hash of latest commit on origin/master
 # before and after fetch

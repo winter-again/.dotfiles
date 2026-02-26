@@ -16,8 +16,8 @@ return {
                     "--with-filename",
                     "--line-number",
                     "--column",
-                    "--hidden", -- had to add for stuff to show in lua at least
-                    -- '--no-ignore-vcs',
+                    "--hidden", -- had to add for stuff to show in dotfiles
+                    "--glob=!.git",
                 },
             },
         })

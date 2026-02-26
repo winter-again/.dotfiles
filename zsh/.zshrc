@@ -80,6 +80,7 @@ alias gdd="git -P diff" # temp disable delta
 alias gu="git rm --cached" # stop tracking given file
 alias gl="git log --stat"
 alias glp="git log --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)'"
+alias glf="git log --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
 alias glg="glp --graph --all"
 alias gu="git restore --staged" # recommended undo for staged file
 

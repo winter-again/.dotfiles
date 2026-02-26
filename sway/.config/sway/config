@@ -10,9 +10,10 @@ titlebar_border_thickness 1
 # from Arch wiki:
 # covers just in sway
 # seat0 is the default seat; seat * would apply to all
+seat seat0 xcursor_theme Adwaita 24
 # seat seat0 xcursor_theme phinger-cursors-light 32
 # seat seat0 xcursor_theme capitaine-cursors-light 32
-seat seat0 xcursor_theme capitaine-cursors 32
+# seat seat0 xcursor_theme capitaine-cursors 32
 
 # (1) bar: title bar border
 # (2) background: title bar background
