@@ -107,6 +107,9 @@ return {
                     opts,
                     'Telescope workspace symbols'
                 )
+                Map('n', '<leader>ih', function()
+                    vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+                end, opts, 'Toggle inlay hints for current buf')
             end
             local bar = 'bar'
             print(bar)
@@ -162,6 +165,7 @@ return {
                         on_attach = on_attach,
                         settings = {
                             Lua = {
+                                hint = { enable = true },
                                 runtime = {
                                     version = 'LuaJIT',
                                 },
@@ -294,7 +298,7 @@ return {
     },
     {
         'glepnir/lspsaga.nvim',
-        enabled = false,
+        -- enabled = false,
         event = 'LspAttach',
         dependencies = {
             'nvim-tree/nvim-web-devicons',
