@@ -15,7 +15,7 @@ return {
                     -- not sure if it's working properly?
                     -- enabled = true,
                     -- set an absolute font
-                    -- font = 12
+                    -- font = 20
                 },
             },
         })
