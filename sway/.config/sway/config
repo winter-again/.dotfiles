@@ -13,23 +13,49 @@ titlebar_border_thickness 1
 # seat seat0 xcursor_theme phinger-cursors-light 32
 seat seat0 xcursor_theme capitaine-cursors-light 32
 
-# this needs swaybg to work
-output * bg #16161e solid_color
-
 # (1) bar: title bar border
 # (2) background: title bar background
 # (3) text: title bar text
 # (4) indicator: color for indicator of where new view will open
 # (5) child_border: border around the view itself (the entire window/container; the actual border)
 
+# tokyo night
+# set {
+#     $primary #7aa2f7
+#     $txt_dark #16161e
+#     $txt_light #c0caf5
+#     $indic #9d7cd8
+#     $dim #3b4261
+#     $urgent #f7768e
+# }
+
+# mountain fuji theme
+set {
+    # ume
+    $primary #8f8aac
+    # yoru
+    $txt_dark #0f0f0f
+    # fuyu
+    $txt_light #cacaca
+    # take
+    $indic #8aac8b
+    # iwa
+    $dim #393939
+    # kaen
+    $urgent #ac8a8c
+}
+
 # window that has focus 
-client.focused          #7aa2f7 #7aa2f7 #16161e #9d7cd8 #7aa2f7
+client.focused          $primary $primary $txt_dark $indic $primary
 # the most recently focused view within a container that isn't focused
-client.focused_inactive #3b4261 #3b4261 #c0caf5 #3b4261 #3b4261
+client.focused_inactive $dim $dim $txt_light $dim $dim
 # any view that doesn't have focus
-client.unfocused        #3b4261 #16161e #c0caf5 #16161e #16161e
+client.unfocused        $dim $txt_dark $txt_light $txt_dark $txt_dark
 # a view with urgency hint
-client.urgent           #f7768e #f7768e #16161e #f7768e #f7768e
+client.urgent           $urgent $urgent $txt_dark $urgent $urgent
+
+# this needs swaybg to work
+output * bg $txt_dark solid_color
 
 input "type:keyboard" {
     xkb_layout us
