@@ -41,7 +41,7 @@ return {
                     "marksman",
                     "pyright",
                     -- 'basedpyright',
-                    "r_language_server",
+                    -- "r_language_server",
                     "ruff", -- newer LS than ruff_lsp
                     "sqlls",
                     "tailwindcss",
