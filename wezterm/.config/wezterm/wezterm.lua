@@ -4,9 +4,15 @@ local utils = require('utils')
 
 -- allows working w/ current release and nightly
 local config = {}
-if wezterm.config_builder then
-    config = wezterm.config_builder() -- allows better logging of warnings and errors
-end
+
+-- WARNING: seems like using wezterm.config_builder()
+-- breaks things with wezterm-config.nvim but only inside of tmux
+-- logs show that the user vars that wezterm shell integration defines are invalid?
+-- https://wezfurlong.org/wezterm/shell-integration.html?h=shell#user-vars
+--
+-- if wezterm.config_builder then
+--     config = wezterm.config_builder() -- allows better logging of warnings and errors
+-- end
 
 -- trying this since it's technically using the dGPU now; unsure of whether one is clearly better
 -- local gpus = wezterm.gui.enumerate_gpus()
@@ -19,8 +25,9 @@ config.audible_bell = 'Disabled'
 config.default_prog = { '/usr/bin/zsh' }
 config.default_cwd = wezterm.home_dir
 config.color_scheme = 'tokyonight_night' -- builtin colorscheme (Folke ver)
+config.check_for_updates = false
 
-config.background = utils.set_bg('11')
+config.background = utils.set_bg('10')
 config.font = utils.set_font('1')
 config.font_size = 12.0
 -- this needs explicit setting if not the default
@@ -70,8 +77,20 @@ config.use_fancy_tab_bar = true -- default
 config.show_tab_index_in_tab_bar = true
 -- mouse and keys
 config.bypass_mouse_reporting_modifiers = 'CTRL' -- use CTRL to bypass app mouse repoorting (for hyperlinks)
+config.leader = { key = 'm', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
-    { key = 'O', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay },
+    { key = 'o', mods = 'LEADER', action = wezterm.action.ShowDebugOverlay },
+    { key = 'p', mods = 'LEADER', action = wezterm.action.PaneSelect({ alphabet = '123456789' }) },
+    {
+        key = 'c',
+        mods = 'LEADER',
+        action = wezterm.action.EmitEvent('clear-overrides'),
+    },
+    {
+        key = 's',
+        mods = 'LEADER',
+        action = wezterm.action.EmitEvent('send-txt-to-pane'),
+    },
 }
 -- config.keys = {
 --     {
@@ -116,30 +135,42 @@ config.keys = {
 --     -- paired with comment keymap that is defined using "_" instead of "/"
 --     -- { key = '/', mods = 'CTRL', action = wezterm.action({ SendString = '\x1f' }) },
 -- }
+
 -- plugins
-local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
-config.check_for_updates = true
--- wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin
+-- I think because I have `$XDG_RUNTIME_DIR` set, my plugins are in `/run/user/1000/wezterm/plugins/`
+-- otherwise fallback to `~/.local/share/wezterm`
+-- only http or local filesystem repos are allowed
+-- local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
+-- local wezterm_config_nvim = require('wezterm_config_plug')
+local wezterm_config_nvim = wezterm.plugin.require('/home/andrew/Documents/code/nvim-dev/wezterm-config.nvim')
+wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin; otherwise it seems to check on nearly every action in wezterm
 
 -- callbacks
 wezterm.on('user-var-changed', function(window, pane, name, value)
     -- get copy of the currently set overrides if they exist
     -- otherwise empty table
     local overrides = window:get_config_overrides() or {}
-    -- start of where user would use wezterm plugin API
-    overrides = wezterm_config_nvim.override_user_var(overrides, name, value, profile_data)
-    -- the end
+    -- START of where user would use wezterm plugin API
+    overrides = wezterm_config_nvim.override_user_var(overrides, name, value)
+    -- utils.log_overrides(value, overrides)
+    -- END
     window:set_config_overrides(overrides)
+
+    -- local pane_id, msg = utils.notif_overrides(pane, name)
+    -- 3rd param is optional URL to visit when clicked
+    -- 4th is a timeout but isn't very reliable
+    -- window:toast_notification('wezterm', ('user var overriden (pane = %s): \n%s'):format(pane_id, msg), nil, 2000)
+end)
+
+wezterm.on('send-txt-to-pane', function(window, pane, name, value)
+    -- this works
+    local msg = 'Hi, mom. This is a custom message.'
+    utils.send_text(pane, msg)
 end)
 
 wezterm.on('clear-overrides', function(window, pane)
     window:set_config_overrides({})
+    window:toast_notification('wezterm', 'config overrides cleared', nil, 2000)
 end)
-local override_keymap = {
-    key = 'X',
-    mods = 'CTRL|SHIFT',
-    action = wezterm.action.EmitEvent('clear-overrides'),
-}
-table.insert(config.keys, override_keymap)
 
 return config

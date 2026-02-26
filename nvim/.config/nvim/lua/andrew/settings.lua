@@ -7,8 +7,7 @@
 local opt = vim.opt
 
 opt.background = 'dark'
-opt.equalalways = false
-opt.splitright = true -- new window to the right of current
+-- opt.splitright = true -- new window to the right of current
 -- opt.splitbelow = true -- new window below the current
 opt.inccommand = 'split' -- preview substitutions live
 -- opt.guicursor = '' -- disable cursor change on mode change

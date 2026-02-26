@@ -40,4 +40,29 @@ function M.wayland_config(config)
     end
 end
 
+---Log info about user var value and config overrides to .txt file in /run/user/1000/wezterm
+---@param value string
+---@param overrides table
+function M.log_overrides(value, overrides)
+    local parsed_val = wezterm.json_parse(value)
+    print('PARSED VALUE:')
+    print(parsed_val)
+    print('OVERRIDES:')
+    print(overrides)
+end
+
+function M.notif_overrides(pane, name)
+    local pane_id = pane:pane_id()
+    local user_vars = pane:get_user_vars()
+    local vars_json_enc = wezterm.json_encode(user_vars)
+    local user_var = user_vars[name]
+    local msg = ('%s=%s'):format(name, user_var)
+    return pane_id, msg
+end
+
+---Send arbitrary text to given pane
+function M.send_text(pane, msg)
+    pane:send_text(msg)
+end
+
 return M

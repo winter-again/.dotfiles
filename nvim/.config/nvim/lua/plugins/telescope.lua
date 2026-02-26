@@ -130,7 +130,9 @@ return {
             -- search keymaps
             -- vim.keymap.set('n', '<leader>fk', builtin.keymaps, opts)
             -- search highlights
-            vim.keymap.set('n', '<leader>fh', builtin.highlights, opts)
+            vim.keymap.set('n', '<leader>hl', builtin.highlights, opts)
+            -- search help tags
+            vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
             -- search colorscheme
             -- vim.keymap.set('n', '<leader>fc', builtin.colorscheme, opts)
             -- autocommnds
