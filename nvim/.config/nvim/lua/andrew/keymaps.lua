@@ -49,7 +49,7 @@ Map('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>', opts, 'Delete buffer w/o closi
 -- with Netrw disabled, use this to follow hyperlinks
 -- vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
 -- special
-Map('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', opts, 'Toggle nvim-tree')
+Map('n', '<leader>pv', '<cmd>NvimTreeToggle<CR>', { silent = true }, 'Toggle nvim-tree') -- set here since the plugin is loaded on this command
 Map('n', '<leader><leader>c', '<cmd>close<CR>', opts, 'Close window w/o accidentally quitting')
 Map('n', '<leader><leader>x', '<cmd>lua Save_exec()<CR>', opts, 'Save and exec Lua file')
 Map('n', '<leader><leader>t', '<cmd>Transp<CR>', opts, 'Turn on transparency')

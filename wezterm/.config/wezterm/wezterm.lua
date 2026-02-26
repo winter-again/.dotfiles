@@ -42,6 +42,7 @@ config.background = utils.set_bg()
 
 config.font = profile_data.font.font_2
 config.font_size = 12.0
+-- config.use_cap_height_to_scale_fallback_fonts = true -- try to auto-scale fallback font heights
 -- config.font = profile_data.font.font_2.font
 -- config.font_size = profile_data.font.font_2.font_size
 -- config.font, config.font_size = utils.set_font('font_1')

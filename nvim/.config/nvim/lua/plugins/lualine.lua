@@ -84,12 +84,14 @@ return {
     config = function()
         require('lualine').setup({
             options = {
-                disabled_filetypes = {
-                    winbar = { 'NvimTree', 'alpha' },
-                },
+                -- disabled_filetypes = {
+                --     winbar = { 'NvimTree', 'alpha' },
+                -- },
                 globalstatus = true,
                 component_separators = { left = '', right = '' },
                 section_separators = { left = '', right = '' },
+                -- component_separators = { left = '', right = '' },
+                -- section_separators = { left = '', right = '' },
             },
             -- most of this is default
             sections = {
@@ -112,12 +114,12 @@ return {
                 lualine_y = { 'progress' },
                 lualine_z = { 'location' },
             },
-            winbar = {
-                lualine_c = { { 'filename', path = 3 } },
-            },
-            inactive_winbar = {
-                lualine_c = { { 'filename', path = 3 } },
-            },
+            -- winbar = {
+            --     lualine_c = { { 'filename', path = 3 } },
+            -- },
+            -- inactive_winbar = {
+            --     lualine_c = { { 'filename', path = 3 } },
+            -- },
             extensions = { 'nvim-tree', 'fugitive' },
         })
     end,

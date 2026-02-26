@@ -79,3 +79,36 @@ function Map(mode, lhs, rhs, opts, desc)
     opts.desc = desc
     vim.keymap.set(mode, lhs, rhs, opts)
 end
+
+function Winbar()
+    -- https://github.com/chrisgrieser/.config/blob/8af1841ba24f7c81c513e12f853b52f530ef5b37/nvim/lua/plugins/lualine.lua
+    -- local function Sel_count()
+    --     local is_visual = vim.fn.mode():find('[Vv]')
+    --     if not is_visual then
+    --         return ''
+    --     end
+    --     local starts = vim.fn.line('v')
+    --     local ends = vim.fn.line('.')
+    --     local lines = starts <= ends and ends - starts + 1 or starts - ends + 1
+    --     return ' ' .. tostring(lines) .. 'L ' .. tostring(vim.fn.wordcount().visual_chars) .. 'C'
+    -- end
+
+    local function word_count()
+        return vim.fn.wordcount().words .. ' W'
+    end
+
+    local file_path = vim.api.nvim_eval_statusline('%F', {}).str
+    local mod = vim.api.nvim_eval_statusline('%m', {}).str
+    local buftype = vim.bo.filetype
+    local exclude = {
+        'NvimTree',
+        'alpha',
+    }
+    if vim.tbl_contains(exclude, buftype) then
+        return ''
+    end
+    if buftype == 'markdown' then
+        return string.format('%s %s - [%s]', file_path, mod, word_count())
+    end
+    return string.format('%s %s', file_path, mod)
+end

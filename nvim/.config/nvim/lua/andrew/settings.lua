@@ -4,6 +4,7 @@
 
 local opt = vim.opt
 
+opt.winbar = '%{%v:lua.Winbar()%}'
 -- (pseudo)transparency for cmp menu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice
 -- note: setting it means cmp menu has highlight but can see text behind
