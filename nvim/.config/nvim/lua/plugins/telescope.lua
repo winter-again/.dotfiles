@@ -101,11 +101,11 @@ return {
             -- search diagnostics for entire workspace
             vim.keymap.set('n', '<leader>fD', builtin.diagnostics, opts)
             -- search keymaps
-            vim.keymap.set('n', '<leader>fk', builtin.keymaps, opts)
+            -- vim.keymap.set('n', '<leader>fk', builtin.keymaps, opts)
             -- search highlights
             vim.keymap.set('n', '<leader>fh', builtin.highlights, opts)
             -- search colorscheme
-            vim.keymap.set('n', '<leader>fc', builtin.colorscheme, opts)
+            -- vim.keymap.set('n', '<leader>fc', builtin.colorscheme, opts)
             -- autocommnds
             vim.keymap.set('n', '<leader>fa', builtin.autocommands, opts)
             -- search jumplist

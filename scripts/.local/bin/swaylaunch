@@ -16,6 +16,7 @@ export WLR_NO_HARDWARE_CURSORS=1 # in case the cursor is invisible; might be Nvi
 # use Wayland for Qt apps
 export QT_QPA_PLATFORM=wayland # make Qt apps use Wayland backend
 export QT_QPA_PLATFORMTHEME=qt5ct # pick theme from qt5ct
+# export QT_STYLE_OVERRIDE=kvantum # not sure if this conflicts with qt5ct
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1 # disables Qt client-side decorations
 # detect integrated GPU and set var for Sway
 # not entirely sure this is needed

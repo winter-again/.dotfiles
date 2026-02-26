@@ -7,20 +7,21 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh # load prompt config
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # laod p10k itself
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme # load p10k
 #######################
 
+# zmodload zsh/zprof # profiler
 export HISTFILE=~/.zsh_history
 export HISTSIZE=1000000
 export SAVEHIST=1000000 # num of commands stored
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
+export PATH="$HOME/.local/bin:$PATH"
 export TERM=wezterm # for undercurl supp
 export SHELL=/bin/zsh
 export EDITOR="nvim"
 export VISUAL="nvim"
-export PATH="$HOME/.local/bin:$PATH"
 # export MANPAGER="sh -c 'col -bx | bat -l man -p'" # bat for colorizing pager for man
 export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export MANROFFOPT="-P -c" # simple colors
@@ -54,6 +55,7 @@ alias R="R --no-save" # never prompt to save workspace image
 # for starting rstudio with flags for Wayland; shouldn't need this now that the .desktop file works
 # alias rstd="/usr/lib/rstudio/rstudio --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland &"
 alias yz="yazi"
+alias fd="fd --hidden --color never"
 # git aliases
 alias gs="git status"
 alias ga="git add"
@@ -196,4 +198,4 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
 eval "$(zoxide init zsh)" # zoxide; keep at end
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # keep at end
-# eval "$(starship init zsh)"
+# zprof

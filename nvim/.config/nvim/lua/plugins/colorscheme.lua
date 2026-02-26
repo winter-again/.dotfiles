@@ -230,10 +230,19 @@ return {
             })
         end,
     },
-    -- collection of colorschemes that uses contrasts and font variations to
-    -- distinguish code
+    -- colorschemes that use contrasts and font variations to
+    -- distinguish code over just colors
     {
         'mcchrish/zenbones.nvim',
         dependencies = { 'rktjmp/lush.nvim' },
+    },
+    {
+        'rockerBOO/boo-colorscheme-nvim',
+        config = function()
+            require('boo-colorscheme').use({
+                italic = true,
+                theme = 'boo',
+            })
+        end,
     },
 }

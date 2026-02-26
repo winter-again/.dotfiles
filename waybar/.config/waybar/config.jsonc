@@ -32,21 +32,27 @@
             "<span font='16' rise='-2000'>󰅟</span>"
         ],
         "return-type": "json",
-        "interval": 960,
+        "interval": 1800, // 30 min
         "exec": "~/.config/waybar/scripts/weather.sh"
     },
     // seems like the problem is that playerctl metadata has no valid info on fresh start of Spotify
     "mpris": {
         "player": "spotify",
+        "ignored-players": [
+            "firefox"
+        ],
         "interval": 1,
-        // can specify icon color in span too
-        "format": "<span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
-        "title-len": 30,
-        "max-length": 70,
-        "tooltip-format": "Album: \"{album}\" ~ [{position} / {length}]",
+        "format": "<span font='12'>{status_icon}</span> <span font='16' rise='-2000'>󰓇</span> {artist} | {title}",
+        "tooltip-format": "Album: \"{album}\" [{position} / {length}]",
+        "status-icons": {
+            "playing": "⏸",
+            "paused": "▶"
+        },
+        // max len for title before truncating
+        "title-len": 50,
+        // "max-length": 70,
         "on-middle-click": "",
-        "on-right-click": "",
-        "escape": true
+        "on-right-click": ""
     },
     "tray": {
         "icon-size": 14,

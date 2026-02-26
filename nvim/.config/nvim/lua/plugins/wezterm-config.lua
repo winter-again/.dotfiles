@@ -5,11 +5,11 @@ return {
         local wezterm_config = require('wezterm-config')
         local function set_bg_colorscheme(bg)
             local mapper = {
-                -- ['catppuccin'] = { 'bg_3' },
+                ['tokyonight'] = { 'bg_1', 'bg_4', 'bg_6' },
+                ['rose-pine'] = { 'bg_5', 'bg_6', 'bg_8', 'bg_9', 'bg_10' },
+                ['catppuccin'] = { 'bg_3' },
+                ['kanagawa'] = { 'bg_7' },
                 ['gruvbox'] = { 'bg_2' },
-                ['kanagawa'] = { 'bg_5', 'bg_9' },
-                ['rose-pine'] = { 'bg_4', 'bg_6', 'bg_7', 'bg_8' },
-                ['tokyonight'] = { 'bg_1', 'bg_3', 'bg_6' },
             }
             for colorscheme, bgs in pairs(mapper) do
                 for _, b in ipairs(bgs) do
@@ -41,7 +41,7 @@ return {
             end
         end
 
-        bg_map('default', '0', true)
+        bg_map('default', 'd', true)
         bg_map('bg_1', '1', false)
         bg_map('bg_2', '2', false)
         bg_map('bg_3', '3', false)
@@ -51,6 +51,7 @@ return {
         bg_map('bg_7', '7', false)
         bg_map('bg_8', '8', false)
         bg_map('bg_9', '9', false)
+        bg_map('bg_10', '0', false)
 
         vim.keymap.set('n', '<leader><leader>f1', function()
             wezterm_config.set_wezterm_user_var('profile_font', 'font_1')
