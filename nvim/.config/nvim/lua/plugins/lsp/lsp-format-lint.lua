@@ -40,7 +40,7 @@ return {
                     'marksman',
                     'pyright',
                     'r_language_server',
-                    -- 'ruff_lsp',
+                    'ruff_lsp',
                     'sqlls',
                     'tailwindcss',
                     'taplo',
@@ -54,7 +54,7 @@ return {
                 debounce_hours = 24,
                 ensure_installed = {
                     'black',
-                    'flake8',
+                    -- 'flake8',
                     'isort',
                     'prettierd',
                     'sqlfluff',
@@ -68,16 +68,16 @@ return {
             local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
             lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(lsp_capabilities)
             -- for nvim-ufo
-            lsp_capabilities.textDocument.foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-            }
+            -- lsp_capabilities.textDocument.foldingRange = {
+            --     dynamicRegistration = false,
+            --     lineFoldingOnly = true,
+            -- }
 
             -- global keymaps
             Map('n', '[d', vim.diagnostic.goto_prev, { silent = true }, 'Go to previous diagnostic message')
             Map('n', ']d', vim.diagnostic.goto_next, { silent = true }, 'Go to next diagnostic message')
             -- keymaps defined on attach
-            local function on_attach(_, bufnr)
+            local function on_attach(client, bufnr)
                 local opts = { silent = true, buffer = bufnr }
                 Map('n', 'K', vim.lsp.buf.hover, opts, 'Hover docs')
                 Map('n', 'gs', function()
@@ -120,7 +120,7 @@ return {
                 -- default handler called for each installed server
                 function(server_name)
                     require('lspconfig')[server_name].setup({
-                        capabilties = lsp_capabilities,
+                        capabilities = lsp_capabilities,
                         on_attach = on_attach,
                     })
                 end,
@@ -204,29 +204,79 @@ return {
                         end,
                     })
                 end,
-                -- ['ruff_lsp'] = function()
-                --     require('lspconfig')['ruff_lsp'].setup({
-                --         capabilities = lsp_capabilities,
-                --         on_attach = function(client, bufnr)
-                --             on_attach(client, bufnr)
-                --
-                --             -- defer to pyright for textDocument/hover capabilities
-                --             client.server_capabilities.hoverProvider = false
-                --             -- autocommand for sorting imports with ruff via its code action
-                --             local group = vim.api.nvim_create_augroup('RuffSortImportsOnSave', { clear = true })
-                --             vim.api.nvim_create_autocmd('BufWritePre', {
-                --                 buffer = bufnr,
-                --                 callback = function()
-                --                     vim.lsp.buf.code_action({
-                --                         context = { only = { 'source.organizeImports' } },
-                --                         apply = true,
-                --                     })
-                --                     vim.wait(100)
-                --                 end,
-                --             })
-                --         end,
-                --     })
-                -- end,
+                ['pyright'] = function()
+                    -- remove capabilities that ruff can provide
+                    require('lspconfig')['pyright'].setup({
+                        -- https://github.com/astral-sh/ruff-lsp/issues/384
+                        -- not sure about this...
+                        capabilities = (function()
+                            local capabilities = vim.lsp.protocol.make_client_capabilities()
+                            capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+                            return capabilities
+                        end)(),
+                        settings = {
+                            pyright = {
+                                disableOrganizeImports = true,
+                            },
+                            -- python = {
+                            --     analysis = {
+                            --         ignore = { '*' },
+                            --     },
+                            -- },
+                        },
+                    })
+                end,
+                ['ruff_lsp'] = function()
+                    require('lspconfig')['ruff_lsp'].setup({
+                        capabilities = lsp_capabilities,
+                        on_attach = function(client, bufnr)
+                            if client.name == 'ruff_lsp' then
+                                -- let pyright handle hovering
+                                client.server_capabilities.hoverProvider = false
+                            end
+                            on_attach(client, bufnr)
+                            -- autocommand for sorting imports with ruff via its code action
+                            -- using ruff-lsp code actions instead of the ruff commands as you would
+                            -- with none-ls solution
+                            -- https://github.com/astral-sh/ruff-lsp/issues/95 (for snippet below)
+                            -- https://github.com/astral-sh/ruff-lsp/issues/119
+                            local group = vim.api.nvim_create_augroup('RuffSortImportsOnSave', { clear = true })
+                            -- vim.api.nvim_create_autocmd('BufWritePre', {
+                            --     group = group,
+                            --     buffer = bufnr,
+                            --     callback = function()
+                            --         vim.lsp.buf.code_action({
+                            --             context = { only = { 'source.organizeImports' } },
+                            --             apply = true,
+                            --         })
+                            --         vim.wait(100)
+                            --     end,
+                            -- })
+                            -- adapted from: https://github.com/astral-sh/ruff-lsp/issues/295
+                            local ruff_lsp_client =
+                                require('lspconfig.util').get_active_client_by_name(bufnr, 'ruff_lsp')
+                            local request = function(method, params)
+                                ruff_lsp_client.request(method, params, nil, bufnr)
+                            end
+                            local sort_imports = function()
+                                request('workspace/executeCommand', {
+                                    command = 'ruff.applyOrganizeImports',
+                                    arguments = {
+                                        { uri = vim.uri_from_bufnr(bufnr) },
+                                    },
+                                })
+                            end
+                            vim.api.nvim_create_autocmd('BufWritePre', {
+                                group = group,
+                                buffer = bufnr,
+                                callback = function()
+                                    sort_imports()
+                                    vim.wait(100)
+                                end,
+                            })
+                        end,
+                    })
+                end,
             }
             require('mason-lspconfig').setup_handlers(handlers)
 
@@ -349,6 +399,36 @@ return {
             Map('n', '<leader>gd', '<cmd>Lspsaga peek_definition<CR>', { silent = true }, 'LspSaga peek defn')
         end,
     },
+    -- {
+    --     'nvimtools/none-ls.nvim',
+    --     dependencies = { 'nvim-lua/plenary.nvim', 'nvimtools/none-ls-extras.nvim' },
+    --     config = function()
+    --         local null_ls = require('null-ls')
+    --         local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+    --         null_ls.setup({
+    --             sources = {
+    --                 null_ls.builtins.formatting.stylua,
+    --                 -- null_ls.builtins.formatting.black,
+    --                 -- null_ls.builtins.formatting.isort,
+    --                 null_ls.builtins.formatting.prettierd,
+    --                 require('none-ls.diagnostics.ruff'),
+    --                 require('none-ls.formatting.ruff_format'),
+    --             },
+    --             on_attach = function(client, bufnr)
+    --                 if client.supports_method('textDocument/formatting') then
+    --                     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    --                     vim.api.nvim_create_autocmd('BufWritePre', {
+    --                         group = augroup,
+    --                         buffer = bufnr,
+    --                         callback = function()
+    --                             vim.lsp.buf.format({ async = false })
+    --                         end,
+    --                     })
+    --                 end
+    --             end,
+    --         })
+    --     end,
+    -- },
     {
         'stevearc/conform.nvim',
         event = { 'BufWritePre' },
@@ -365,12 +445,11 @@ return {
                     -- so we don't have to constantly set overrides in a .prettierrc.json
                     -- json = { 'prettierd' },
                     lua = { 'stylua' },
-                    -- if using ruff_lsp I think can just leave python key out and it should fallback
-                    -- to ruff_lsp
-                    python = { 'isort', 'black' }, -- run sequentially
+                    -- trying ruff_lsp instead
+                    -- python = { 'black' },
                     typescript = { 'prettierd' },
-                    typescriptreact = { 'pretterd' },
-                    sql = { 'sqlfluff' },
+                    typescriptreact = { 'prettierd' },
+                    -- sql = { 'sqlfluff' },
                     -- 'injected' allows formatting of code fence blocks
                     -- could even have it in python to format sql inside of queries
                     -- see: https://github.com/stevearc/conform.nvim/blob/c36fc6492be27108395443a67bcbd2b3280f29c5/doc/advanced_topics.md
