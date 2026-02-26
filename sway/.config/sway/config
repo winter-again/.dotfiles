@@ -83,6 +83,8 @@ bindsym $mod+Shift+comma exec swaylock --config ~/.config/swaylock/config
 bindsym $mod+Shift+period exec systemctl suspend
 # screenshot to clipboard
 bindsym $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
+# open Obsidian
+bindsym $mod+o exec obsidian
 
 # media keys
 bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
