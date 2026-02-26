@@ -1,11 +1,6 @@
--- function that gets virtual environment name and can be sent to lualine
--- caveat is that it only works if we manually activate virtual env first
--- if we only specified it in pyrightconfig.json, then pyright picks it up properly
--- but lualine component won't know and thus it won't be shown
--- inspired from here: https://github.com/nvim-lualine/lualine.nvim/issues/277
 local function get_venv()
+    local venv = os.getenv('VIRTUAL_ENV')
     local output = ''
-    local venv = vim.env.VIRTUAL_ENV
     if venv then
         output = string.match(venv, '([^/]+)$')
         output = string.format('(%s)', output)
@@ -13,11 +8,11 @@ local function get_venv()
     return output
 end
 
--- display attached LSP client if there is one
 local function get_lsp()
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-    local clients = vim.lsp.get_active_clients()
-    if next(clients) == nil then
+    local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
+    local clients = vim.lsp.get_clients()
+    -- TODO: can rpelace with vim.tbl_isemtpy()?
+    if vim.tbl_isempty(clients) then
         return 'None active'
     else
         local names = {}
@@ -27,47 +22,28 @@ local function get_lsp()
                 table.insert(names, client.name)
             end
         end
-        local output = table.concat(names, ',')
-        return output
+        return table.concat(names, ',')
     end
 end
 
--- display formatter information from conform if avail
 local function get_conform()
-    local output = ''
+    -- local lsp_format = require('conform.lsp_format')
     local formatters = require('conform').list_formatters(0)
-    if next(formatters) == nil then
-        return output
-    else
+    local output = ''
+    if not vim.tbl_isempty(formatters) then
         local names = {}
         for _, formatter in ipairs(formatters) do
             table.insert(names, formatter.name)
         end
         output = table.concat(names, ', ')
         output = string.format('[%s]', output)
-        return output
     end
+    return output
 end
 
 local function display_lsp_venv()
-    local venv_name = get_venv()
-    local lsp_status = get_lsp()
-    local formatter = get_conform()
-    return lsp_status .. formatter .. venv_name
+    return get_lsp() .. get_conform() .. get_venv()
 end
-
--- basic way to display loading prog of LSP
--- local function display_lsp_prog()
---     local lsp = vim.lsp.util.get_progress_messages()[1]
---     if lsp then
---         local name = lsp.name or ''
---         local msg = lsp.message or ''
---         local pctg = lsp.percentage or 0
---         return string.format('%%<%s: %s (%s%%%%)', name, msg, pctg)
---     else
---         return ''
---     end
--- end
 
 -- use gitsigns as the diff source below
 local function diff_source()
@@ -84,23 +60,18 @@ return {
     config = function()
         require('lualine').setup({
             options = {
-                -- disabled_filetypes = {
-                --     winbar = { 'NvimTree', 'alpha' },
-                -- },
                 globalstatus = true,
                 component_separators = { left = '', right = '' },
                 section_separators = { left = '', right = '' },
                 -- component_separators = { left = '', right = '' },
                 -- section_separators = { left = '', right = '' },
             },
-            -- most of this is default
             sections = {
                 lualine_a = { 'mode' },
                 lualine_b = {
-                    -- reuse info from gitsigns
                     {
                         'b:gitsigns_head',
-                        icon = '',
+                        icon = '',
                     },
                     {
                         'diff',
@@ -114,12 +85,6 @@ return {
                 lualine_y = { 'progress' },
                 lualine_z = { 'location' },
             },
-            -- winbar = {
-            --     lualine_c = { { 'filename', path = 3 } },
-            -- },
-            -- inactive_winbar = {
-            --     lualine_c = { { 'filename', path = 3 } },
-            -- },
             extensions = { 'nvim-tree', 'fugitive' },
         })
     end,

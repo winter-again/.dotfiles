@@ -9,6 +9,7 @@ local config = {}
 -- breaks things with wezterm-config.nvim but only inside of tmux
 -- logs show that the user vars that wezterm shell integration defines are invalid?
 -- https://wezfurlong.org/wezterm/shell-integration.html?h=shell#user-vars
+-- opened issue here: https://github.com/wez/wezterm/issues/5078#issue-2153349617
 --
 -- if wezterm.config_builder then
 --     config = wezterm.config_builder() -- allows better logging of warnings and errors
