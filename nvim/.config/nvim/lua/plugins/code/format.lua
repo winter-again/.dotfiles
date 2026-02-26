@@ -15,7 +15,6 @@ return {
                     rust = { "rustfmt", lsp_format = "fallback" },
                     typescript = { "prettierd" },
                     typescriptreact = { "prettierd" },
-                    -- markdown = { "mdformat" },
                     -- disabling to let jsonls handle formatting
                     -- so we don't have to constantly set overrides in a .prettierrc.json
                     -- json = { 'prettierd' },

@@ -1,20 +1,23 @@
 :root {
     --mountain-purple: #8f8aac;
 
+    /* search bars */
     --focus-outline-color: var(--mountain-purple) !important;
+    /* elements like downloads */
     --lwt-toolbarbutton-icon-fill-attention: var(--mountain-purple) !important;
+
     --button-primary-bgcolor: var(--mountain-purple) !important;
-    --button-primary-hover-bgcolor: color-mix(
-        in srgb,
-        currentColor 12%,
-        var(--mountain-purple)
-    ) !important;
-    --button-primary-active-bgcolor: color-mix(
-        in srgb,
-        currentColor 17%,
-        var(--mountain-purple)
-    ) !important;
-    --button-primary-color: var(--mountain-purple) !important;
+    --button-primary-hover-bgcolor: var(--mountain-purple) !important;
+    --button-primary-active-bgcolor: var(--mountain-purple) !important;
+    --checkbox-checked-bgcolor: var(--mountain-purple) !important;
+}
+
+@-moz-document url-prefix(about:newtab), url-prefix(about:home) {
+    .search-wrapper .search-inner-wrapper:active input,
+    .search-wrapper input:focus {
+        border-color: var(--mountain-purple) !important;
+        box-shadow: none !important;
+    }
 }
 
 /* hide sidebery if native tabs are showing and vice versa

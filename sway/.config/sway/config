@@ -285,9 +285,10 @@ exec {
     nm-applet
     solaar -w hide
     mako
-    spotify-launcher
+    spotify-launcher # --skip-update
     playerctld daemon
 
+    # networkmanager
     dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
     gnome-keyring-daemon --start --components=secrets
 
