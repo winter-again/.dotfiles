@@ -150,7 +150,7 @@ end
 -- end
 
 local function get_lsp()
-    local buf_ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+    local buf_filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
     local clients = vim.lsp.get_clients({ bufnr = 0 })
     if vim.tbl_isempty(clients) then
         return "inactive"
@@ -158,8 +158,10 @@ local function get_lsp()
 
     local names = {}
     for _, client in ipairs(clients) do
+        --- @diagnostic disable-next-line: undefined-field
         local filetypes = client.config.filetypes
-        if filetypes and (vim.fn.index(filetypes, buf_ft) ~= -1 or client.config.name == "zk") then
+        local name = client.config.name
+        if filetypes and (vim.tbl_contains(filetypes, buf_filetype) or name == "zk") then
             table.insert(names, client.name)
         end
     end
