@@ -34,7 +34,7 @@
         ],
         "return-type": "json",
         "interval": 960,
-        "exec": "~/.config/waybar/weather.sh"
+        "exec": "~/.config/waybar/scripts/weather.sh"
     },
     // still same issue as mpris where no title or artist info on start until next song
     "custom/media": {

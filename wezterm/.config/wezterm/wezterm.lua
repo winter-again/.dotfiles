@@ -64,14 +64,6 @@ config.hide_tab_bar_if_only_one_tab = true
 local wezterm_config_nvim = wezterm.plugin.require('https://github.com/winter-again/wezterm-config.nvim')
 wezterm.plugin.update_all() -- keymap to reload/refresh config with this line here will update the plugin
 
--- config.mouse_bindings = {
---     {
---         event = { Up = { streak = 1, button = 'Left' } },
---         mods = 'CTRL',
---         action = wezterm.action.OpenLinkAtMouseCursor,
---     },
--- }
--- always spawn new tab in home dir w/ shortcut; however, doesn't get honored when clicking new tab button?
 config.keys = {
     -- {
     --     key = 'N',
