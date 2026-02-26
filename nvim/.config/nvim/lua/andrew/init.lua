@@ -5,12 +5,12 @@ if not vim.loop.fs_stat(lazypath) then
         'clone',
         '--filter=blob:none',
         'https://github.com/folke/lazy.nvim.git',
-        '--branch=stable', -- latest stable release
+        '--branch=stable',
         lazypath
     })
 end
 vim.opt.rtp:prepend(lazypath)
--- recommended to set mapleader before lazy so that mappings are correct (if using keymap events to trigger plugin loading)
+-- recommended to set mapleader before lazy so that mappings are correct
 vim.g.mapleader = ' '
 -- config lazy.nvim itself
 local lazy_opts = {
@@ -29,12 +29,11 @@ local lazy_opts = {
         colorscheme = {'tokyonight'} -- try to load one of these colorschemes when starting an installation during startup
    }
 }
--- get plugin specs from their individual files in the "plugins" directory
+-- get plugin specs from their individual files in the plugins directory
 -- any file in lua/plugins/*.lua will be merged into the main plugin spec
 require('lazy').setup('plugins', lazy_opts)
 require('andrew.sets_and_remaps')
-
--- some global funcs and tweaks
+-- global functions/settings
 -- helpful for displaying Lua table contents
 P = function(v)
     -- print(vim.inspect(v))

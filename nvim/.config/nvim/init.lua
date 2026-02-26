@@ -6,7 +6,5 @@ if vim.g.vscode then
     require('andrew.sets_and_remaps')
 else
     -- ordinary Neovim config
-    -- can just require a folder containing another init.lua file directly
-    -- this loads andrew/init.lua
     require('andrew')
 end
