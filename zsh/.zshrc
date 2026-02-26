@@ -1,11 +1,47 @@
+unsetopt beep hist_beep list_beep
+
+HISTFILE="$XDG_CACHE_HOME/.zsh_history"
+SAVEHIST="100000000" # num of lines saved (last $SAVEHIST lines)
+HISTSIZE="100000000" # num of lines to keep in one session; read in at start
+setopt share_history # inc_append_history + share hist between sessions
+setopt hist_ignore_all_dups # keep latest only if dup
+setopt hist_save_no_dups # ignore older dups when saving; might be redundant if using hist_ignore_all_dups
+setopt hist_ignore_space # ignore commands that start with space
+
+bindkey -v # vi mode
+export KEYTIMEOUT=1
+bindkey -v "^?" backward-delete-char # make backspace work in vi mode
+bindkey "^H" backward-kill-word # ctrl-backspace to del word
+
+zmodload zsh/complist # need for menuselect; load before compinit
+bindkey -M menuselect "h" vi-backward-char
+bindkey -M menuselect "k" vi-up-line-or-history
+bindkey -M menuselect "l" vi-forward-char
+bindkey -M menuselect "j" vi-down-line-or-history
+bindkey "^F" expand-or-complete # inititate completion menu
+
+autoload -Uz compinit && compinit # autocompletion system
+_comp_options+=(globdots) # include hidden files in completion
+
+setopt auto_list # on ambiguous, automatically list
+setopt menu_complete # on ambiguous completion insert first match and cycle thru rest
+setopt complete_in_word # completion starts from cursor pos
+
+zstyle ':completion:*' menu select # menu-based completion
+zstyle ':completion:*' completer _extensions _complete _approximate # completers to use
+zstyle ':completion:*' complete-options true # autocomplete for options after dashes
+zstyle ':completion:*' file-sort modification # order names by mode time
+zstyle ':completion:*' rehash true # automatic rehash; maybe small perf hit
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*' # try partial words too
+zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
+
+eval "$(zoxide init zsh)" # must be after compinit called
+
 export SHELL="/usr/bin/zsh"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
-export PATH="$PATH:$HOME/.local/bin"
-export HISTFILE="$XDG_CACHE_HOME/.zsh_history"
-export HISTSIZE="100000000"
-export SAVEHIST="$HISTSIZE" # num of commands stored
 export EDITOR="/usr/local/bin/nvim"
 export VISUAL="/usr/local/bin/nvim"
 export PAGER="/usr/bin/less"
@@ -13,30 +49,39 @@ export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p
 # export MANPAGER="less -R --use-color -Dd+r -Du+b" # simple colors
 export BROWSER="firefox"
 
-# Java for pyspark
-# export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
+typeset -U path PATH # prevent path duplicates (keeps only leftmost occurrence)
+# export PATH="$PATH:$HOME/.local/bin"
+path+=("$HOME/.local/bin")
 
 # Go
 export GOPATH="$HOME/go" # $HOME/go is already the default
 export GOBIN="$GOPATH/bin" # binaries installed here, not set by default
-export PATH="$PATH:$(go env GOBIN)" # add ~/go/bin to path for convenience; go install suggests PATH=$PATH:/usr/local/go/bin
+# export PATH="$PATH:$(go env GOBIN)" # add ~/go/bin to path for convenience; go install suggests PATH=$PATH:/usr/local/go/bin
+path+=("$(go env GOBIN)")
 # export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin" # only necessary if they differ
 
 # Rust
 # export PATH="$HOME/.cargo/bin:$PATH" # shouldn't need this if using rustup package from Arch repos
 
+# TODO: is this better than the case statement pnpm inserted?
 # pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+path+=("$PNPM_HOME")
+# case ":$PATH:" in
+#   *":$PNPM_HOME:"*) ;;
+#   *) export PATH="$PNPM_HOME:$PATH" ;;
+# esac
+
+export PATH
 
 # fnm
 # `--use-on-cd` flag will automatically run `fnm use` when a dir contains a `.node-version` or `.nvmrc` file
 # `--version-file-strategy=recursive` might also make sense; default is local
 # using both = auto use/install the right Node version when going into proj subdirs and moving between proj
 # eval "$(fnm env --use-on-cd --shell zsh)"
+
+# Java for pyspark
+# export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
 
 # make fd use same colors as eza (set $LS_COLORS)
 eval "$(dircolors -b)"
@@ -138,7 +183,6 @@ function umntbk() {
 #     ls
 # }
 
-
 # fzf
 source /usr/share/fzf/key-bindings.zsh # fzf keybinds
 source /usr/share/fzf/completion.zsh # fzf fuzzy completion
@@ -172,44 +216,6 @@ export FZF_CTRL_R_OPTS="
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey "^I" autosuggest-accept # tab to accept suggestion (zsh-autosuggestions)
-
-unsetopt beep autocd
-setopt hist_ignore_all_dups # delete old even if new one is dup
-setopt hist_ignore_dups
-setopt hist_save_no_dups
-setopt hist_expire_dups_first
-setopt hist_ignore_space # ignore commands that start with space
-setopt share_history # share hist between sessions
-
-bindkey -v
-export KEYTIMEOUT=1
-bindkey -v "^?" backward-delete-char # make vi backspace like vim backspace
-bindkey "^H" backward-kill-word # ctrl-backspace to del word
-
-zmodload zsh/complist # need for menuselect; load before compinit
-bindkey -M menuselect "h" vi-backward-char
-bindkey -M menuselect "k" vi-up-line-or-history
-bindkey -M menuselect "l" vi-forward-char
-bindkey -M menuselect "j" vi-down-line-or-history
-bindkey "^F" expand-or-complete # inititate completion menu
-
-autoload -Uz compinit && compinit # autocompletion system
-_comp_options+=(globdots) # include hidden files in completion
-
-setopt MENU_COMPLETE # on ambiguous completion insert first match and cycle thru rest
-setopt AUTO_LIST # on ambiguous, automatically list
-setopt COMPLETE_IN_WORD # tries to complete from either end of the word
-
-zstyle ':completion:*' completer _extensions _complete _approximate # which completers to use
-zstyle ':completion:*' menu select # menu-based completion
-zstyle ':completion:*' complete-options true # autocomplete for cd
-zstyle ':completion:*' file-sort modification # ordering of names (mod time)
-zstyle ':completion:*' rehash true # automatic rehash; maybe perf hit
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' keep-prefix true # try to keep tilde or param expansions
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # use colors for completing
-
-eval "$(zoxide init zsh)" # must be after compinit called
 
 # fix uv run autocomplete for py files: https://github.com/astral-sh/uv/issues/8432
 if type "uv" > /dev/null; then

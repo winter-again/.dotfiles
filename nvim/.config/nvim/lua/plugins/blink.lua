@@ -117,6 +117,7 @@ return {
                 buffer = {
                     name = "buf",
                     max_items = 5,
+                    score_offset = -5,
                 },
                 cmdline = {
                     name = "cmd",
