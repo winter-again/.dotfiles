@@ -111,6 +111,8 @@ bindsym {
     $mod+Shift+period exec systemctl suspend
     # screenshot to clipboard
     $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
+    # using satty
+    # $mod+c exec grim -g "$(slurp -d)" - | satty --filename - --fullscreen --early-exit
     # open Obsidian
     $mod+o exec obsidian --ozone-platform-hint=auto
     # pick color and copy to clipboard; send simple noti too
