@@ -2,3 +2,4 @@ wezterm/.config/wezterm/profile_data.lua
 wezterm/.config/wezterm/lua/profile_data.lua
 # wezterm/.config/wezterm/utils.lua
 scratch.lua
+flow/
