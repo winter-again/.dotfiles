@@ -13,7 +13,7 @@
     light = false
     line-numbers = true
     side-by-side = true
-    ; syntax-theme = tokyonight_night
+    syntax-theme = tokyonight_night
 [merge]
     conflictstyle = diff3
 [diff]
