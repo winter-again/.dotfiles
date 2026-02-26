@@ -40,5 +40,5 @@
   "trouble.nvim": { "branch": "main", "commit": "bd67efe408d4816e25e8491cc5ad4088e708a69a" },
   "vague.nvim": { "branch": "main", "commit": "fcc283576764474ccfbbcca240797d5d7f4d8a78" },
   "vim-fugitive": { "branch": "master", "commit": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" },
-  "winter-again.nvim": { "branch": "main", "commit": "dc261584157ad4d98c159813de7ca097612f6dcb" }
+  "winter-again.nvim": { "branch": "main", "commit": "5d010987c366b7ef6a4d0845ce23dfc5a0c16287" }
 }
