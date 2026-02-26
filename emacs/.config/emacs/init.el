@@ -5,7 +5,7 @@
 (setq backup-directory-alist '(("." . "~/.local/share/emacs_backups")))
 
 ;; disable startup screen
-;; (setq inhibit-startup-message t)
+;; (setq inhibit-startup-screen t)
 
 ;; remove tool bar, menu bar, scroll bar
 (tool-bar-mode -1)
@@ -21,7 +21,8 @@
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 ;; scrolling
-(setq scroll-conservatively 10
+;; value > 100 means redisplay will never recenter point (line-by-line scrolling)
+(setq scroll-conservatively 101
   scroll-margin 4)
 
 ;; add MELPA; GNU ELPA and NonGNU ELPA are already defaults
@@ -78,6 +79,8 @@
 
 ;; use single esc to quit prompts
 (keymap-global-set "<escape>" 'keyboard-escape-quit)
+;; remap Meta-X
+(keymap-global-set "C-x C-m" 'execute-extended-command)
 
 ;; org-mode; based on Prot config
 (use-package org
@@ -89,15 +92,19 @@
   (setq org-log-into-drawer t) ;; log the state changes inside of LOGBOOK section instead of polluting content
   (setq org-directory "~/Documents/org/")
   (setq org-agenda-files (list org-directory))
+  (setq org-return-follows-link t) ;; don't think this works
 
-  (add-hook 'org-mode-hook 'org-bullets-mode) ;; visibility of hidden elements under cursor
+  (add-hook 'org-mode-hook 'org-bullets-mode) ;; pretty bullets
+  (add-hook 'org-mode-hook 'org-autolist-mode) ;; continue lists
+  (add-hook 'org-mode-hook 'smartparens-mode) ;; smart parens
   (add-hook 'org-mode-hook 'org-appear-mode) ;; visibility of hidden elements under cursor
   (add-hook 'org-mode-hook 'org-indent-mode) ;; virtual/soft indent
   (add-hook 'org-mode-hook 'visual-line-mode)) ;; smart soft wrapping
-;; make these org functions globally available
+;; make these org-related keybinds globally available
 (keymap-global-set "C-c l" #'org-store-link)
 (keymap-global-set "C-c a" #'org-agenda)
 (keymap-global-set "C-c c" #'org-capture)
+(keymap-global-set "C-c g d" #'org-open-at-point)
 ;; hard indentation
 ;; (setq org-adapt-indentation t
       ;; org-hide-leading-starts t
@@ -115,36 +122,37 @@
   :ensure t
   :after org)
 
-;; smart parens
-;; ;; TODO: figure out proper config
-;; (use-package smartparens
-;;   :ensure t
-;;   :hook (org-mode)
-;;   :config
-;;   (require 'smartparens-config))
+;; automatically continue lists and checkboxes on <ret>
+;; no current support for evil o/O motions
+(use-package org-autolist
+  :ensure t
+  :after org)
 
-;; TODO: failure to load must because of presence of bind -> config *after* binding is hit
-;; maybe can force with :commands?
-;; or :mode?
+;; smart parens
+;; TODO: figure out proper config
+(use-package smartparens
+  :ensure t
+  :config
+  (require 'smartparens-config))
+
 (use-package org-roam
   :ensure t
   :after org
-  ;; :bind (("C-c n l" . org-roam-buffer-toggle)
-  ;;        ("C-c n f" . org-roam-node-find)
-  ;;        ("C-c n i" . org-roam-node-insert))
-  ;; TODO: figure out if this should be in :custom or :config
-  ;; :custom
-  ;; (setq org-roam-directory "~/Documents/org/roam") ;; must ensure this dir exists
   :config
   (setq org-roam-directory "~/Documents/org/roam") ;; must ensure this dir exists
-  ;; col for tags up to 10 char wide
-  ;; (setq org-roam-node-display-template
-  ;;   (concat "${title:*} "
-  ;;     (propertize "${tags:10}" 'face 'org-tag)))
-  ;; (setq org-roam-completion-everywhere t) ;; trigger completions even outside of brackets
+  ;; allow completions (CAP) even outside of brackets
+  (setq org-roam-completion-everywhere t)
+  ;; add column for some tags in node search menu, etc.
+  (setq org-roam-node-display-template
+    (concat "${title:*} "
+      (propertize "${tags:10}" 'face 'org-tag)))
+  ;; TODO: this doesn't seem to have effect, maybe not avail in v2?
   ;; (setq org-roam-auto-replace-fuzzy-links nil)
-  ;; (setq org-return-follows-link t)
   (org-roam-db-autosync-mode))
+;; global keymaps for common functions
+(keymap-global-set "C-c n l" 'org-roam-buffer-toggle)
+(keymap-global-set "C-c n f" 'org-roam-node-find)
+(keymap-global-set "C-c n i" 'org-roam-node-insert)
 
 ;; vertico: completion in minibuffer
 ;; works nicely with org-roam-node-insert
@@ -156,62 +164,59 @@
   :init
   (vertico-mode))
 
-;; ;; marginalia: rich annotations in the minibuffer
-;; (use-package marginalia
-;;   :ensure t
-;;   :init
-;;   (marginalia-mode))
-;; ;; icons with marginalia
-;; (use-package nerd-icons-completion
-;;   :ensure t
-;;   :after marginalia
-;;   :config
-;;   (nerd-icons-completion-mode)
-;;   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
-
+;; marginalia: rich annotations in the minibuffer
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+;; icons with marginalia
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 ;; icons in dired
-;; (use-package nerd-icons-dired
-;;   :ensure t
-;;   :hook
-;;   (dired-mode . nerd-icons-dired-mode))
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
 
-;; ;; corfu for completion
-;; (use-package corfu
-;;   :ensure t
-;;   :custom
-;;   (corfu-auto t)
-;;   (corfu-auto-prefix 2)
-;;   (corfu-cycle t)
-;;   (corfu-quit-no-match 'separator)
-;;   (corfu-preview-current nil)
-;;   (corfu-preselect-first nil)
-;;   :init
-;;   (global-corfu-mode))
-;;
-;; (use-package cape
-;;   :ensure t
-;;   :init
-;;   (add-hook 'completion-at-point-functions #'cape-dabbrev) ;; words from current buffer
-;;   (add-hook 'completion-at-point-functions #'cape-file)) ;; file names
-;;
-;; ;; from corfu page
-;; (use-package emacs
-;;   :ensure nil
-;;   :custom
-;;   (text-mode-ispell-word-completion nil))
-;;
-;; ;; (use-package company
-;; ;;   :ensure t
-;; ;;   ;; :hook
-;; ;;   ;; (org-mode . company-mode)
-;; ;;   :config
-;; ;;   (add-hook 'after-init-hook 'global-company-mode)
-;; ;;   (setq company-minimum-prefix-length 2)
-;; ;;   (setq company-idle-delay 0.25)
-;; ;;   (setq completion-ignore-case t)
-;; ;;   (add-to-list 'company-backends 'company-capf))
-;;
-;; ;; orderless completion style (out-of-order pattern matching)
+;; corfu for in-buffer completion
+(setq completion-ignore-case t) ;; case-insensitive matching
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t) ;; auto-completion
+  (corfu-auto-prefix 2)
+  (corfu-cycle t)
+  (corfu-quit-no-match 'separator) ;; quit completion eagerly
+  (corfu-preview-current nil) ;; disable current candidate preview, likely not needed if not preselecting
+  (corfu-preselect 'prompt) ;; no preselect
+  :init
+  (global-corfu-mode))
+;; from corfu page
+(use-package emacs
+  :ensure nil
+  :custom
+  ;; emacs 30+: disable ispell completion func
+  (text-mode-ispell-word-completion nil))
+;; fuzzy matching with corfu integration
+(use-package fussy
+  :ensure t
+  :config
+  (advice-add 'corfu--capf-wrapper :before 'fussy-wipe-cache)
+  (add-hook 'corfu-mode-hook
+          (lambda ()
+            (setq-local fussy-max-candidate-limit 5000
+                        fussy-default-regex-fn 'fussy-pattern-first-letter
+                        fussy-prefer-prefix nil)))
+  (fussy-setup))
+
+;; TODO: not sure this is getting set up correctly
+;; NOTE: this might be slow with autocomplete; consider basic completion style:
+;; https://github.com/minad/corfu?tab=readme-ov-file#auto-completion
+;; orderless completion style (out-of-order pattern matching)
 ;; (use-package orderless
 ;;   :ensure t
 ;;   :custom
@@ -222,3 +227,12 @@
 ;;   (completion-category-defaults nil)
 ;;   (completion-category-overrides '((file (styles partial-completion)))))
 
+;; TODO: need some keybind?
+;; additional Capf backends and `completion-in-region` commands
+;; supplies `cape-file` and `cape-dabbrev`
+(use-package cape
+  :ensure t
+  :init
+  ;; order matters; first func that returns result wins
+  (add-hook 'completion-at-point-functions #'cape-dabbrev) ;; words from current buffer
+  (add-hook 'completion-at-point-functions #'cape-file)) ;; file names
