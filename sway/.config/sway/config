@@ -16,32 +16,25 @@ seat seat0 xcursor_theme Adwaita 24
 # (4) indicator: color for indicator of where new view will open
 # (5) child_border: border around the view itself (the entire window/container; the actual border)
 
-# mountain fuji theme
 set {
-    # yoru
     $bg #0f0f0f
-    # iwa
     $bg_alt #393939
-    # yuki
     $fg #f0f0f0
-    # ume
     $primary #8f8aac
-    # take
     $indic #8aac8b
-    # kaen
     $urgent #ac8a8c
 }
 
 # window that has focus 
 client.focused          $primary $primary $bg $indic $primary
-# the most recently focused view within a container that isn't focused
+# the last focused view within a container that isn't focused
 client.focused_inactive $bg_alt $bg_alt $fg $bg_alt $bg_alt
 # any view that doesn't have focus
 client.unfocused        $bg_alt $bg $fg $bg $bg
 # a view with urgency hint
 client.urgent           $urgent $urgent $bg $urgent $urgent
 
-# this needs swaybg to work
+# this requires swaybg
 output * bg $bg solid_color
 
 input "type:keyboard" {
@@ -88,26 +81,7 @@ set {
     $ws10 "10"
 }
 
-# TODO: test if this is needed for touchscreen
-# set $display-touch "1267:11556:ELAN2D24:00_04F3:2D24"
-# input $display-touch map_to_output $laptop_disp
-
-floating_modifier $mod normal
-focus_follows_mouse no
-
-# seems like we have to set this so that layout is correct on Sway start
-# not great since this assumes docked config; I guess could just manually trigger reload
-# output $laptop_disp disable
-# following the same conventions from hyprland.conf
-# output $primary_mon res 3840x2160@60Hz pos 1500 0 scale 2
-# output $secondary_mon res 3840x2160@60Hz pos 3420 0 scale 2
-# focus monitor on launch
-# focus output $primary_mon
-# output $laptop_disp enable mode 3840x2400@60Hz scale 2
-# focus output $laptop_disp
-
-# first available output will be used
-# so give laptop as fallback
+# first available output will be used, so give laptop as fallback
 workspace 1 output $primary_mon $laptop_disp
 workspace 2 output $primary_mon $laptop_disp
 workspace 3 output $primary_mon $laptop_disp
@@ -123,7 +97,9 @@ workspace 10 output $secondary_mon $laptop_disp
 workspace 7 gaps inner 20
 workspace 7 gaps outer 20
 
-# keybinds
+floating_modifier $mod normal
+focus_follows_mouse no
+
 bindsym {
     $mod+Return exec $term
     $mod+Shift+q kill
@@ -133,8 +109,8 @@ bindsym {
     # reload config file
     $mod+Shift+r reload
     $mod+Shift+w exec killall -SIGUSR2 waybar
-    # Exit sway (logs you out of your Wayland session)
-    $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes' 'swaymsg exit'
+    # exit sway (logs you out of your Wayland session)
+    $mod+Shift+e exec swaynag -t warning -m "Exit Sway?" -B "Yes" "swaymsg exit"
     # power menu
     $mod+Shift+p exec ~/.config/tofi/power-menu.sh
     $mod+Shift+comma exec gtklock
@@ -182,7 +158,7 @@ bindsym {
     $mod+s layout stacking
     $mod+t layout tabbed
     # Cycle through customizable set of layouts
-    # layout toggle split can act like a reset out of tabs/stack -> then just cycles through split layouts
+    # 'layout toggle split' can act like a reset out of tabs/stack -> then just cycles through split layouts
     $mod+n layout toggle split
     # using split instead of splitv and splith here means only the current split layout is considered
     # rather than cycling through both possibilities
@@ -200,7 +176,6 @@ bindsym {
     # Move focus to the parent container
     $mod+a focus parent
     $mod+r mode "resize"
-
     # Move the currently focused window to the scratchpad
     $mod+Ctrl+s move scratchpad
     # Show the next scratchpad window or hide the focused scratchpad window.
@@ -208,7 +183,6 @@ bindsym {
     $mod+Ctrl+semicolon scratchpad show
 }
 # media keys
-# using wpctl instead of pactl
 bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 2%+
 bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
 bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
@@ -220,7 +194,7 @@ bindsym --locked XF86AudioPrev exec playerctl previous
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 10%+
 bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
 
-# Resizing containers:
+# resizing containers
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
@@ -255,18 +229,15 @@ exec {
     nm-applet
     solaar -w hide
     spotify-launcher # --skip-update
+    swayidle -w before-sleep "gtklock -d"
     # might need for systemd/dbus activation envs
     # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
     playerctld daemon # make playerctl act on the currently active media player
-    swayidle -w before-sleep "gtklock -d"
 }
 
 assign [app_id="Slack"] $ws1
 for_window [app_id="Slack"] layout stacking
-
-# spotify is stubborn if on X
-# for_window [class="Spotify"] move window to workspace $ws7
-# assign spotify on Wayland; seems to work
+# assign spotify on Wayland
 assign [title="^Spotify"] $ws7
 assign [title="^Amberol"] $ws7
 

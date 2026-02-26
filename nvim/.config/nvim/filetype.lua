@@ -1,7 +1,7 @@
 -- incl. workaround for some kind of highlighting in .mdx files
 -- based on: https://phelipetls.github.io/posts/mdx-syntax-highlight-treesitter-nvim/
 vim.filetype.add({
-    -- key = ext to look for, value = filetype to assign
+    -- mapping from file ext to filetype
     extension = {
         astro = "astro",
         mdx = "mdx",

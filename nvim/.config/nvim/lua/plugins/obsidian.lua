@@ -46,20 +46,20 @@ return {
                 -- end
                 -- return tostring(os.time()) .. "-" .. suffix
 
-                -- if title ~= nil then
-                --     return title:gsub(" ", "-")
-                -- else
-                --     print("Must provide a title")
-                -- end
-                return title:gsub(" ", "-")
+                if title ~= nil then
+                    title = title:gsub(" ", "-")
+                    return title
+                else
+                    print("Must provide title. Using 'untitled' for now...")
+                    return "untitled"
+                end
             end,
-            -- NOTE: default func
             markdown_link_func = function(opts)
+                -- NOTE: default func
                 return require("obsidian.util").markdown_link(opts)
             end,
             preferred_link_style = "markdown", -- still able to autocomplete both types
             disable_frontmatter = true,
-            -- TODO: note_frontmatter_func()?
             templates = {
                 folder = "templates",
                 date_format = "%Y-%m-%d",
@@ -68,7 +68,8 @@ return {
                     -- NOTE: convert title like "notes-on-something" to "Notes on something"
                     note_title = function(ctx)
                         local id = ctx.partial_note.id
-                        return id:gsub("-", " "):gsub("^%l", string.upper)
+                        id = id:gsub("-", " "):gsub("^%l", string.upper)
+                        return id
                     end,
                     meeting_note_title = function(ctx)
                         local id = ctx.partial_note.id
@@ -86,18 +87,11 @@ return {
                     },
                 },
             },
-            -- TODO: already default?
-            -- there's also follow_img_func
-            -- follow_url_func = function(url)
-            --     vim.ui.open(url)
-            -- end,
             picker = {
                 name = "fzf-lua",
             },
-            -- TODO: figure out behavior of this
-            -- I think this pertains to :ObsidianBacklinks func
             backlinks = {
-                parse_headers = false, -- get from whole note?
+                parse_headers = false, -- disables header parsing for Obsidian backlinks
             },
             sort_by = "modified",
             sort_reversed = true,
@@ -105,43 +99,11 @@ return {
             open_notes_in = "current",
             ui = {
                 enable = false, -- set to false to disable all additional syntax features
-                -- ignore_conceal_warn = true, -- set to true to disable conceallevel specific warning
-                -- update_debounce = 200, -- update delay after a text change (in milliseconds)
-                -- max_file_length = 5000, -- disable UI features for files with more than this many lines
-                -- Define how various check-boxes are displayed
-                -- checkboxes = {
-                --     -- NOTE: the 'char' value has to be a single character, and the highlight groups are defined below.
-                --     [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-                --     ["x"] = { char = "", hl_group = "ObsidianDone" },
-                -- },
-                -- Use bullet marks for non-checkbox lists.
-                -- bullets = { char = "•", hl_group = "ObsidianBullet" },
-                -- external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
-                -- Replace the above with this if you don't have a patched font:
-                -- external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
-                -- reference_text = { hl_group = "ObsidianRefText" },
-                -- highlight_text = { hl_group = "ObsidianHighlightText" },
-                -- tags = { hl_group = "ObsidianTag" },
-                -- block_ids = { hl_group = "ObsidianBlockID" },
-                -- hl_groups = {
-                --     -- The options are passed directly to `vim.api.nvim_set_hl()`. See `:help nvim_set_hl`.
-                --     ObsidianTodo = { bold = true, fg = "#f78c6c" },
-                --     ObsidianDone = { bold = true, fg = "#89ddff" },
-                --     ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
-                --     ObsidianTilde = { bold = true, fg = "#ff5370" },
-                --     ObsidianImportant = { bold = true, fg = "#d73128" },
-                --     ObsidianBullet = { bold = true, fg = "#89ddff" },
-                --     ObsidianRefText = { underline = true, fg = "#c792ea" },
-                --     ObsidianExtLinkIcon = { fg = "#c792ea" },
-                --     ObsidianTag = { italic = true, fg = "#89ddff" },
-                --     ObsidianBlockID = { italic = true, fg = "#89ddff" },
-                --     ObsidianHighlightText = { bg = "#75662e" },
-                -- },
             },
-            -- TODO: figure this out
-            -- attachments = {
-            --     img_folder = "assets",
-            -- },
+            -- NOTE: I don't rely on this functionality
+            attachments = {
+                img_folder = "assets",
+            },
             footer = {
                 enabled = false,
             },

@@ -33,6 +33,7 @@ local parsers = {
     "jsdoc",
     "json",
     "jsonc",
+    "jsx",
     "just",
     "latex",
     "luadoc",
@@ -71,6 +72,7 @@ return {
 
             -- use markdown parser for mdx files
             vim.treesitter.language.register("markdown", { "mdx" })
+            parsers = vim.tbl_deep_extend("force", parsers, { "mdx" })
 
             local au_group = vim.api.nvim_create_augroup("winter.again.treesitter", { clear = true })
             vim.api.nvim_create_autocmd({ "FileType" }, {
