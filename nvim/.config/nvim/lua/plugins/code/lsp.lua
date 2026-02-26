@@ -43,6 +43,7 @@ return {
                     -- 'basedpyright',
                     -- "r_language_server",
                     "ruff", -- newer LS than ruff_lsp
+                    "rust_analyzer",
                     "sqlls",
                     "tailwindcss",
                     "taplo",
@@ -141,6 +142,19 @@ return {
                         on_attach = lsp_attach,
                     })
                 end,
+                ["rust_analyzer"] = function()
+                    require("lspconfig")["rust_analyzer"].setup({
+                        capabilities = lsp_capabilities,
+                        on_attach = lsp_attach,
+                        settings = {
+                            ["rust-analyzer"] = {
+                                cargo = {
+                                    allFeatures = true,
+                                },
+                            },
+                        },
+                    })
+                end,
                 ["gopls"] = function()
                     require("lspconfig")["gopls"].setup({
                         capabilities = lsp_capabilities,
@@ -230,6 +244,7 @@ return {
                             if client.name == "taplo" then
                                 client.server_capabilities.documentFormattingProvider = false
                             end
+                            lsp_attach(client, bufnr)
                         end,
                     })
                 end,
@@ -241,6 +256,7 @@ return {
                             if client.name == "clangd" then
                                 client.server_capabilities.documentFormattingProvider = false
                             end
+                            lsp_attach(client, bufnr)
                         end,
                     })
                 end,
@@ -306,6 +322,7 @@ return {
                                     vim.wait(100)
                                 end,
                             })
+                            lsp_attach(client, bufnr)
                         end,
                     })
                     -- disable Ruff's hover to use Pyright instead; can't put this in on_attach
