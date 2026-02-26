@@ -11,17 +11,17 @@ return {
                     html = { "prettierd", "prettier", stop_after_reset = true },
                     javascript = { "prettierd", "prettier", stop_after_first = true },
                     javascriptreact = { "prettierd", "prettier", stop_after_reset = true },
+                    json = { lsp_format = "prefer" },
                     just = { "just" },
                     lua = { "stylua" },
-                    python = {
-                        "ruff_organize_imports",
-                        "ruff_format",
-                        -- lsp_format = "fallback"
-                    },
-                    rust = {
-                        "rustfmt",
-                        -- lsp_format = "fallback"
-                    },
+                    python = { "ruff_organize_imports", "ruff_format" },
+                    rust = { "rustfmt" },
+                    -- I think bash LS formats via shfmt if instlled
+                    sh = { lsp_format = "first" },
+                    -- sqruff installed via uv tool interface but conform can find
+                    -- b/c it's in ~/.local/bin
+                    -- sql = { "sqruff" },
+                    toml = { "taplo" },
                     typescript = { "prettierd", "prettier", stop_after_reset = true },
                     typescriptreact = { "prettierd", "prettier", stop_after_reset = true },
                     -- 'injected' allows formatting of code fence blocks
@@ -30,12 +30,33 @@ return {
                     -- markdown = { "injected" },
                 },
                 format_on_save = function(bufnr)
+                    -- pair with user command below
                     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
                         return
                     end
 
                     return { timeout_ms = 500, lsp_fallback = false }
                 end,
+                formatters = {
+                    taplo = {
+                        condition = function(self, ctx)
+                            -- NOTE: disable for these files
+                            local excludes = {
+                                "pyproject.toml",
+                            }
+                            local filename = vim.fs.basename(ctx.filename)
+
+                            return not vim.tbl_contains(excludes, filename)
+                        end,
+                        -- force global config file
+                        args = {
+                            "format",
+                            "--config",
+                            vim.env.XDG_CONFIG_HOME .. "/taplo/taplo.toml",
+                            "-",
+                        },
+                    },
+                },
             })
 
             vim.keymap.set("n", "<leader><leader>f", function()

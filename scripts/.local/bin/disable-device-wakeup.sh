@@ -8,6 +8,6 @@ triggers=("LID0")
 for trigger in "${triggers[@]}"; do
     # flip setting only if trigger is currently enabled
     if grep -qw "^$trigger.*enabled" "$WAKEUP"; then
-        echo "$trigger" > "$WAKEUP"
+        echo "$trigger" >"$WAKEUP"
     fi
 done

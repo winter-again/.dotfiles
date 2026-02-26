@@ -21,7 +21,7 @@ feels_like=$(echo $resp | jaq .main.feels_like)
 wind=$(echo $resp | jaq .wind.speed)
 
 if [[ $(echo "$wind >= $WIND_THRESH" | bc -l) -eq 1 ]]; then
-    wind_out=$(echo $wind | bc -l )
+    wind_out=$(echo $wind | bc -l)
     # output="$desc | $temp$TEMP_SYMBOL |  $wind $WIND_SYMBOL"
     output="$desc | $feels_like$TEMP_SYMBOL |  $wind_out $WIND_SYMBOL"
 else

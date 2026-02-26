@@ -50,12 +50,13 @@ return {
                         map({ "n", "v" }, "gca", vim.lsp.buf.code_action, opts, "Code actions")
                     end
 
-                    map("n", "gs", function()
-                        vim.diagnostic.open_float({ scope = "cursor" })
-                    end, opts, "Get cursor diagnostics")
-                    map("n", "gl", function()
-                        vim.diagnostic.open_float({ scope = "line" })
-                    end, opts, "Get line diagnostics")
+                    -- NOTE: set this in global keymaps so that they work even without LSP attached (e.g., linters)
+                    -- map("n", "gs", function()
+                    --     vim.diagnostic.open_float({ scope = "cursor" })
+                    -- end, opts, "Get cursor diagnostics")
+                    -- map("n", "gl", function()
+                    --     vim.diagnostic.open_float({ scope = "line" })
+                    -- end, opts, "Get line diagnostics")
 
                     if client and client:supports_method(methods.textDocument_documentHighlight) then
                         map("n", "gc", function()
@@ -301,28 +302,18 @@ return {
                             css = true,
                             javascript = true,
                         },
-                        provideFormatter = false, -- using prettier instead
+                        provideFormatter = false, -- use prettier instead
                     },
                 },
                 ["cssls"] = {},
                 ["ts_ls"] = {},
                 ["bashls"] = {},
                 ["jsonls"] = {
-                    -- on_attach = function(client, bufnr)
-                    --     -- NOTE: jsonls includes formatting capabilities by default
-                    --     client.server_capabilities.documentFormattingProvider = false
-                    -- end,
+                    -- init_options = {
+                    --     provideFormatter = false,
+                    -- },
                 },
-                ["taplo"] = {
-                    on_attach = function(client, bufnr)
-                        -- NOTE: taplo includes formatting capabilities by default
-                        -- turn off for pyproject.toml files
-                        local file = vim.api.nvim_buf_get_name(bufnr)
-                        if file:match("pyproject.toml$") then
-                            client.server_capabilities.documentFormattingProvider = false
-                        end
-                    end,
-                },
+                ["taplo"] = {},
                 ["tinymist"] = {
                     settings = {
                         formatterMode = "typstyle",
