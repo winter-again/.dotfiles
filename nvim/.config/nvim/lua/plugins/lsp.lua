@@ -200,6 +200,7 @@ return {
                 severity_sort = true,
             })
 
+            -- NOTE: settings specified here extend the default settings provided by nvim-lspconfig
             local servers = {
                 ["lua_ls"] = {
                     capabilities = lsp_capabilities,
@@ -253,10 +254,14 @@ return {
                     on_attach = lsp_attach,
                     settings = {
                         basedpyright = {
+                            disableOrganizeImports = true, -- use Ruff instead
                             analysis = {
                                 autoSearchPaths = true,
                                 diagnosticMode = "openFilesOnly",
                                 useLibraryCodeForTypes = true,
+                                diagnosticSeverityOverrides = {
+                                    reportUndefinedVariable = "none",
+                                },
                             },
                         },
                     },
