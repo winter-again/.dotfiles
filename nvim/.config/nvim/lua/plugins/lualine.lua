@@ -47,7 +47,6 @@ local function get_null_ls()
     end
 end
 
-
 -- combine these two functions into a single section's output
 -- a bit hacky but checks if there's an active virtual environment and
 -- adds it to the LSP indicator
@@ -86,7 +85,7 @@ return {
         require('lualine').setup({
             options = {
                 disabled_filetypes = {
-                    winbar = {'NvimTree','alpha'}
+                    winbar = {'NvimTree', 'alpha'}
                 },
                 globalstatus = true,
                 component_separators = { left = '', right = ''},

@@ -1,5 +1,4 @@
 return {
-    -- main colorscheme
     {
         'folke/tokyonight.nvim',
         lazy = false, -- ensure main colorscheme loaded on start up
@@ -40,7 +39,6 @@ return {
                         WinSeparator = {fg = theme.ui.nontext}
                     }
                 end,
-                -- theme = 'wave'
             })
         end
     },

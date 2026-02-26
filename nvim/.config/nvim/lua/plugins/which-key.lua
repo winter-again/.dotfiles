@@ -116,7 +116,7 @@ return {
             },
             window = {
                 border = 'single',
-                -- winblend = 80 -- control opacity
+                -- winblend = 100 -- control opacity
             }
         })
     end

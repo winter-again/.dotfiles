@@ -53,7 +53,7 @@ Transp = function()
         'Normal',
         -- 'NormalNC', -- seems to work w/o this
         -- 'NormalFloat', -- affects docs pop-up
-        -- 'Float', -- affects telescope
+        -- 'Float',
         'SignColumn',
         'FoldColumn'
     }

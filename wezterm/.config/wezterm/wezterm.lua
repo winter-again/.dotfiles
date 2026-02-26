@@ -7,7 +7,7 @@ local config = {}
 -- config.webgpu_preferred_adapter = gpus[2]
 -- config.front_end = 'WebGpu'
 config.front_end = 'OpenGL'
-
+config.audible_bell = 'Disabled'
 config.default_prog = {'/usr/bin/zsh'}
 config.default_cwd = wezterm.home_dir
 -- config.scrollback_lines = 0

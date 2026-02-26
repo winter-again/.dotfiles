@@ -1,5 +1,3 @@
--- change cursor to blink; otherwise should be defaults
--- vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250"
 vim.opt.mouse = 'a' -- enable mouse mode always
 vim.opt.showmode = false -- turn off the "extra" mode indicator below status line
 -- disable Netrw as advised for nvim-tree
@@ -13,7 +11,6 @@ vim.opt.undofile = true -- save undo history to an undo file and restore from to
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true -- highlight current line and its line number
--- colorcol
 -- vim.opt.colorcolumn = '80' -- for some reason, it's slower than expected
 -- tab settings
 vim.opt.tabstop = 4 -- how wide tab characters are
@@ -62,9 +59,6 @@ vim.opt.timeout = true
 vim.opt.timeoutlen = 300
 -- set a global statusline
 vim.opt.laststatus = 3
--- set what winbar displays at the top
--- vim.opt.winbar = "%f %m" -- normal way of doing it
--- vim.opt.winbar = "%{%v:lua.require('andrew.winbar').eval()%}" -- modified way that swaps the slashes to use Unix convention
 -- better completion experience
 -- menuone = use menu also when there is only one match
 -- noselect = don't preselect
@@ -83,9 +77,6 @@ vim.opt.sessionoptions = 'buffers,curdir,folds,globals,winpos,winsize'
 -- not setting + having transparent bg lets just the transparent background show
 vim.opt.pumblend = 30
 --------------------------------------------------------------------------------------------------------
--- key remaps:
--- docs: https://neovim.io/doc/user/vimindex.html
--- how to use vim.keymap.set(): https://neovim.io/doc/user/lua.html#vim.keymap.set()
 -- defaults to NOT use recursive mapping
 local opts = {silent = true} -- prevents printing to command line
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', opts) -- unbind space in case it interferes with leader setting
@@ -145,8 +136,8 @@ vim.keymap.set('n', 'Q', '<nop>', opts)
 -- the search string appears at bottom
 vim.keymap.set('n', '<leader>rs', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>', opts)
 -- increment and decrement remap
-vim.keymap.set('n', '+', '<C-a>', opts)
-vim.keymap.set('n', '-', '<C-x>', opts)
+vim.keymap.set('n', '+', '<C-x>', opts)
+vim.keymap.set('n', '-', '<C-a>', opts)
 -- select all in doc
 vim.keymap.set('n', '<C-a>', 'gg<S-v>G', opts)
 -- cycle through buffers if not using bufferline
@@ -155,6 +146,6 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G', opts)
 -- with Netrw disabled, use this to follow hyperlinks
 vim.keymap.set('n', 'gx', [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]], opts)
 -- set transparency
-vim.keymap.set('n', '<leader>o', ':lua Transp()<CR>')
+vim.keymap.set('n', '<leader>o', '<cmd>lua Transp()<CR>')
 -- delete buffer without losing window layout
-vim.keymap.set('n', '<leader>db', ':bn<CR>:bd#<CR>')
+vim.keymap.set('n', '<leader>db', '<cmd>bn<CR><cmd>bd#<CR>')
