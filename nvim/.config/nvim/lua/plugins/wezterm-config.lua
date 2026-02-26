@@ -5,13 +5,11 @@ return {
         -- NOTE:
         -- this adds to rtp and lets us pull in modules under ~/.config/wezterm/lua/
         -- any bad consequences of this?
+        local wezterm_config = require('wezterm-config')
         local wezterm_path = vim.fn.stdpath('config'):gsub('nvim', 'wezterm') -- not the most general way of doing this...
         vim.opt.rtp:append(wezterm_path)
+        local profile_data = require('profile_data')
 
-        local wezterm_bg = require('profile_data')
-
-        local wezterm_config = require('wezterm-config')
-        -- simplified version using a user command
         vim.api.nvim_create_user_command('Bg', function(opts)
             local bg_profile = tostring(opts.fargs[1])
             wezterm_config.set_wezterm_user_var('profile_background', bg_profile)
@@ -19,7 +17,7 @@ return {
             nargs = 1,
             complete = function(ArgLead, CmdLine, CursorPos)
                 local bg_names = {}
-                for name, _ in pairs(wezterm_bg.background) do
+                for name, _ in pairs(profile_data.background) do
                     table.insert(bg_names, name)
                 end
                 return bg_names
@@ -27,6 +25,7 @@ return {
             desc = 'Set Wezterm background',
         })
 
+        -- set bg and colorscheme according to some mapping
         local function set_bg_colorscheme(bg)
             local mapper = {
                 ['tokyonight'] = { 'bg_1', 'bg_4' },
@@ -77,12 +76,13 @@ return {
         bg_map('bg_9', '9', false)
         bg_map('bg_10', '0', false)
 
-        vim.keymap.set('n', '<leader><leader>f1', function()
-            wezterm_config.set_wezterm_user_var('profile_font', 'font_1')
-        end, { silent = true, desc = 'Set Wezterm font font_1' })
-        vim.keymap.set('n', '<leader><leader>f2', function()
-            wezterm_config.set_wezterm_user_var('profile_font', 'font_2')
-        end, { silent = true, desc = 'Set Wezterm font font_2' })
+        -- shouldn't work because the font setting func. is no longer in profile_data
+        -- vim.keymap.set('n', '<leader><leader>f1', function()
+        --     wezterm_config.set_wezterm_user_var('profile_font', 'font_1')
+        -- end, { silent = true, desc = 'Set Wezterm font font_1' })
+        -- vim.keymap.set('n', '<leader><leader>f2', function()
+        --     wezterm_config.set_wezterm_user_var('profile_font', 'font_2')
+        -- end, { silent = true, desc = 'Set Wezterm font font_2' })
         -- vim.keymap.set('n', '<leader><leader>f3', function()
         --     wezterm_config.set_wezterm_user_var('profile_font', 'font_3')
         -- end, { silent = true, desc = 'Set Wezterm font font_3' })

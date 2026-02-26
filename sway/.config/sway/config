@@ -112,7 +112,6 @@ bindsym {
     $mod+c exec grim -g "$(slurp -d)" - | swappy -f -
     # open Obsidian
     $mod+o exec obsidian --ozone-platform-hint=auto
-    $mod+f exec wezterm start --always-new-process -- /usr/bin/yazi
     # pick color and copy to clipboard; send simple noti too
     $mod+i exec hyprpicker -azn | xargs -I {} notify-send "hyprpicker" "<b>{}</b>"
 
@@ -162,9 +161,9 @@ bindsym {
     $mod+t layout tabbed
     $mod+e layout toggle split
     # Make the current focus fullscreen
-    $mod+Shift+z fullscreen
+    $mod+f fullscreen
     # Toggle the current focus between tiling and floating mode
-    $mod+Shift+f floating toggle
+    $mod+z floating toggle
     # Swap focus between the tiling area and the floating area
     $mod+space focus mode_toggle
     # Move focus to the parent container
@@ -232,7 +231,9 @@ exec {
 assign [title="^Spotify"] $ws7
 # use app_id instead of class if Wayland
 assign [app_id="Slack"] $ws8
+assign [class="Slack"] $ws8
 assign [app_id="obsidian"] $ws4 
+assign [app_id="discord"] $ws10
 assign [class="discord"] $ws10
 # for_window [app_id="zoom" title="^(Zoom|About)$"] border pixel, floating enable
 # for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700

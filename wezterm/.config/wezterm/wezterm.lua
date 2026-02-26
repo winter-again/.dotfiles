@@ -9,6 +9,7 @@ local config = {}
 -- config.webgpu_preferred_adapter = gpus[2]
 -- config.front_end = 'WebGpu'
 -- config.warn_about_missing_glyphs = false
+-- config.enable_wayland = true
 config.front_end = 'OpenGL'
 config.audible_bell = 'Disabled'
 config.default_prog = { '/usr/bin/zsh' }
