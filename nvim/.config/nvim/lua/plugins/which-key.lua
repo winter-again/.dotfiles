@@ -3,8 +3,6 @@ return {
     event = 'VeryLazy',
     config = function()
         local wk = require('which-key')
-        -- note: I'm relying on which-key mainly for documenting keymaps, but it's
-        -- smart enough to figure out default and buffer-specific keymaps too
         local mappings = {
             ['<C-_>'] = {'Toggle comment'},
             ['<C-a>'] = {'Select all'},
@@ -31,10 +29,7 @@ return {
                     p = {'Pin buffer to bufferline'},
                     r = {'Move buffer right in bufferline'}
                 },
-                d = {
-                    name = 'BufDelete',
-                    b = {'Delete buffer'}
-                },
+                db = {'Delete buffer'},
                 f = {
                     name = 'Telescope',
                     b = {'Find buffers'},
@@ -48,7 +43,6 @@ return {
                     h = {'Find highlights'},
                     j = {'Find jumplist'},
                     k = {'Find keymaps'},
-                    -- l = {'Find Lazy plugins'},
                     p = {'Find session'},
                     r = {'Find registers'},
                     s = {'Find string in cwd'},
@@ -66,7 +60,8 @@ return {
                     hp = {'Preview hunk'},
                     s = {'Git status'}
                 },
-                l = {'Remove hlsearch highlights'},
+                l = {'Remove search highlights'},
+                o = {'Transparent bg'},
                 p = {
                     name = 'File mgmt',
                     l = {'Last session'},
@@ -97,7 +92,6 @@ return {
                     w = {'Toggle workspace trouble'},
                     d = {'Toggle document trouble'}
                 },
-                -- u = {name = 'Telescope undo', 'Toggle telescope-undo'}
             },
             ['J'] = {'Append line below to current line'},
             ['n'] = {'Go to next search match'},
