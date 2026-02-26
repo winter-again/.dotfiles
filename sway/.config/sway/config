@@ -281,7 +281,7 @@ mode "resize" {
 exec kanshi
 exec_always kill -1 $(pidof kanshi)
 exec {
-    # kanshi
+    spotify-launcher
     waybar
     nm-applet
     solaar -w hide
