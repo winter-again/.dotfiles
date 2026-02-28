@@ -55,12 +55,16 @@ return {
     s(
         {
             trig = "cf",
-            desc = "competitive programming template",
+            desc = "Competitive programming template",
             docstring = {
                 "import sys",
                 " ",
                 " ",
                 "def main() -> int:",
+                "t = int(sys.stdin.readline().strip())",
+                "    for _ in range(t):",
+                "        n = int(sys.stdin.readline().strip())",
+                '        a = list(map(int, sys.stdin.readline().strip().split(" ")))',
                 " ",
                 "    return 0",
                 " ",
@@ -75,7 +79,12 @@ return {
 
 
             def main() -> int:
-                {}
+                t = int(sys.stdin.readline().strip())
+                for _ in range(t):
+                    n = int(sys.stdin.readline().strip())
+                    a = list(map(int, sys.stdin.readline().strip().split(" ")))
+                    {}
+
                 return 0
 
 

@@ -8,6 +8,7 @@ return {
                 padding = { left = 0, right = 0 },
                 margin = { vertical = 0, horizontal = 0 },
                 overlap = { winbar = true, borders = true },
+                zindex = 45,
             },
             hide = {
                 -- hide when cursor on same line and text obstructed
