@@ -136,11 +136,10 @@
             "warning": 30,
             "critical": 15
         },
-        // TODO: verify that these events work
         "events": {
             "on-discharging-warning": "notify-send -u critical 'Low battery'",
             "on-discharging-critical": "notify-send -u critical 'Very low battery'",
-            "oh-charging-100": "notify-send -u normal 'Battery full'"
+            "on-charging-100": "notify-send -u normal 'Battery full'"
         },
         "format": "{icon} {capacity}%",
         "format-time": "{H}:{m}",

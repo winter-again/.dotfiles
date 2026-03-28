@@ -231,13 +231,13 @@ install_js_pkgs() {
         vscode-json-languageserver
     )
     paru_install "${js_dev_pkgs[@]}"
-    echo "Installing Astro language server as global package via pnpm..."
-    # NOTE: seems that this fails if given path isn't in PATH
-    # so I set PATH like this and it works, even if path doesn't exist
-    # Seems that setting PNPM_HOME is needed as well. Though it should resolve to that path by default
-    export PNPM_HOME="$HOME/.local/share/pnpm"
-    PATH="$PATH:$PNPM_HOME"
-    pnpm add -g @astrojs/language-server
+    # echo "Installing Astro language server as global package via pnpm..."
+    # # NOTE: seems that this fails if given path isn't in PATH
+    # # so I set PATH like this and it works, even if path doesn't exist
+    # # Seems that setting PNPM_HOME is needed as well. Though it should resolve to that path by default
+    # export PNPM_HOME="$HOME/.local/share/pnpm"
+    # PATH="$PATH:$PNPM_HOME"
+    # pnpm add -g @astrojs/language-server
 }
 read -r -p "Install JS/TS dev packages? (y/n): " confirm_js && [[ $confirm_js = [yY] ]] && install_js_pkgs
 

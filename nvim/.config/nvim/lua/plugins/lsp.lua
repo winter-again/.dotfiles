@@ -144,8 +144,8 @@ return {
                 return string.format(
                     "%s [%s]  %s",
                     diagnostic.message or "",
-                    diagnostic.source or "",
-                    diagnostic.code or diagnostic.user_data or ""
+                    diagnostic.code or diagnostic.user_data or "",
+                    diagnostic.source or ""
                 )
             end
 
@@ -265,6 +265,22 @@ return {
                         },
                     },
                 },
+                -- ["ty"] = {
+                --     settings = {
+                --         ty = {
+                --             completions = {
+                --                 autoImport = false,
+                --             },
+                --             -- diagnosticMode = "workspace",
+                --             -- NOTE: I think I toggle these anyway so only need to set false if absolutely
+                --             -- don't want capability
+                --             -- inlayHints = {
+                --             --     variableTypes = false,
+                --             --     callArgumentNames = false,
+                --             -- },
+                --         },
+                --     },
+                -- },
                 ["ruff"] = {
                     on_attach = function(client, bufnr)
                         -- disable Ruff's hover to use Pyright instead
