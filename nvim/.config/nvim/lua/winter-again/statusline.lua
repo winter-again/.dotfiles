@@ -78,14 +78,9 @@ function M.git_status()
     end
 
     local head = hl_segment(string.format(" %s %s ", icons.git.head, status.head), "StatuslineGitHead")
-    local added = status.added and hl_segment(string.format(" %s %d", icons.git.added, status.added), "GitSignsAdd")
-        or ""
-    local changed = status.changed
-            and hl_segment(string.format(" %s %d", icons.git.changed, status.changed), "GitSignsChange")
-        or ""
-    local deleted = status.removed
-            and hl_segment(string.format(" %s %d", icons.git.deleted, status.removed), "GitSignsDelete")
-        or ""
+    local added = status.added and hl_segment(string.format(" %s%d", "+", status.added), "GitSignsAdd") or ""
+    local changed = status.changed and hl_segment(string.format(" %s%d", "~", status.changed), "GitSignsChange") or ""
+    local deleted = status.removed and hl_segment(string.format(" %s%d", "-", status.removed), "GitSignsDelete") or ""
 
     return table.concat({
         head,
@@ -124,15 +119,21 @@ function M.diagnostics()
     local warnings = diag_count[2] or 0
     local infos = diag_count[3] or 0
     local hints = diag_count[4] or 0
+    local diagnostic_icons = {
+        Error = "E",
+        Warn = "W",
+        Info = "I",
+        Hint = "H",
+    }
 
-    local err = errors > 0 and hl_segment(string.format("%s %s ", icons.diagnostics.Error, errors), "DiagnosticError")
+    local err = errors > 0 and hl_segment(string.format("%s: %s ", diagnostic_icons.Error, errors), "DiagnosticError")
         or ""
     local warn = warnings > 0
-            and hl_segment(string.format("%s %s ", icons.diagnostics.Warn, warnings), "DiagnosticWarn")
+            and hl_segment(string.format("%s: %s ", diagnostic_icons.Warn, warnings), "DiagnosticWarn")
         or ""
-    local info = infos > 0 and hl_segment(string.format("%s %s ", icons.diagnostics.Info, infos), "DiagnosticInfo")
+    local info = infos > 0 and hl_segment(string.format("%s: %s ", diagnostic_icons.Info, infos), "DiagnosticInfo")
         or ""
-    local hint = hints > 0 and hl_segment(string.format("%s %s ", icons.diagnostics.Hint, hints), "DiagnosticHint")
+    local hint = hints > 0 and hl_segment(string.format("%s: %s ", diagnostic_icons.Hint, hints), "DiagnosticHint")
         or ""
 
     return table.concat({ err, warn, info, hint })

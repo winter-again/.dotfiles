@@ -134,12 +134,13 @@ return {
 
             -- NOTE: https://neovim.io/doc/user/diagnostic.html
             -- custom signs for diagnostics; trouble.nvim can use too
-            local diagnostic_icons = require("winter-again.icons").diagnostics
-            for severity, icon in pairs(diagnostic_icons) do
-                local hl = "DiagnosticSign" .. severity
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-            end
-
+            -- local diagnostic_icons = require("winter-again.icons").diagnostics
+            local diagnostic_icons = {
+                Error = "E",
+                Warn = "W",
+                Info = "I",
+                Hint = "H",
+            }
             local function diag_format(diagnostic)
                 return string.format(
                     "%s [%s]  %s",
@@ -174,12 +175,14 @@ return {
                         [vim.diagnostic.severity.INFO] = diagnostic_icons.Info,
                         [vim.diagnostic.severity.HINT] = diagnostic_icons.Hint,
                     },
-                    linehl = {
-                        [vim.diagnostic.severity.ERROR] = "ErrorMsg",
-                    },
-                    numhl = {
-                        [vim.diagnostic.severity.WARN] = "WarningMsg",
-                    },
+                    -- linehl = {
+                    --     [vim.diagnostic.severity.ERROR] = "ErrorMsg",
+                    --     [vim.diagnostic.severity.WARN] = "WarningMsg",
+                    -- },
+                    -- numhl = {
+                    --     [vim.diagnostic.severity.ERROR] = "ErrorMsg",
+                    --     [vim.diagnostic.severity.WARN] = "WarningMsg",
+                    -- },
                 },
                 status = {
                     text = {
