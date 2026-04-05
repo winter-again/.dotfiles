@@ -48,46 +48,49 @@ return {
                     return "untitled"
                 end
             end,
-            markdown_link_func = function(opts)
-                local util = require("obsidian.util")
-                local anchor = ""
-                local header = ""
-                if opts.anchor then
-                    anchor = opts.anchor.anchor
-                    header = util.format_anchor_label(opts.anchor)
-                elseif opts.block then
-                    anchor = "#" .. opts.block.id
-                    header = "#" .. opts.block.id
-                end
+            link = {
+                -- style = "markdown", -- can still autocomplete both types
+                ---@param opts obsidian.link.LinkCreationOpts
+                style = function(opts)
+                    local util = require("obsidian.util")
+                    local anchor = ""
+                    local header = ""
+                    if opts.anchor then
+                        anchor = opts.anchor.anchor
+                        header = util.format_anchor_label(opts.anchor)
+                    elseif opts.block then
+                        anchor = "#" .. opts.block.id
+                        header = "#" .. opts.block.id
+                    end
 
-                -- NOTE: identical to default except that I use spaces instead of dashes to separate
-                local label = opts.label:gsub("-", " ")
-                local path = util.urlencode(opts.path, { keep_path_sep = true })
-                return string.format("[%s%s](%s%s)", label, header, path, anchor)
+                    -- NOTE: identical to default except that I use spaces instead of dashes to separate
+                    local label = opts.label:gsub("-", " ")
+                    local path = util.urlencode(opts.path, { keep_path_sep = true })
+                    return string.format("[%s%s](%s%s)", label, header, path, anchor)
 
-                -- NOTE: default func
-                -- return require("obsidian.util").markdown_link(opts)
-            end,
-            ---@param opts obsidian.link.LinkCreationOpts
-            ---@return string
-            wiki_link_func = function(opts)
-                local anchor = ""
-                local header = ""
-                if opts.anchor then
-                    anchor = opts.anchor.anchor
-                    header = string.format(" ❯ %s", opts.anchor.header)
-                elseif opts.block then
-                    anchor = "#" .. opts.block.id
-                    header = "#" .. opts.block.id
-                end
-
-                if opts.label ~= opts.path then
-                    return string.format("[[%s%s|%s%s]]", opts.path, anchor, opts.label, header)
-                else
-                    return string.format("[[%s%s]]", opts.path, anchor)
-                end
-            end,
-            preferred_link_style = "markdown", -- still able to autocomplete both types
+                    -- NOTE: default func
+                    -- return require("obsidian.util").markdown_link(opts)
+                end,
+                -- ---@param opts obsidian.link.LinkCreationOpts
+                -- ---@return string
+                -- wiki_link_func = function(opts)
+                --     local anchor = ""
+                --     local header = ""
+                --     if opts.anchor then
+                --         anchor = opts.anchor.anchor
+                --         header = string.format(" ❯ %s", opts.anchor.header)
+                --     elseif opts.block then
+                --         anchor = "#" .. opts.block.id
+                --         header = "#" .. opts.block.id
+                --     end
+                --
+                --     if opts.label ~= opts.path then
+                --         return string.format("[[%s%s|%s%s]]", opts.path, anchor, opts.label, header)
+                --     else
+                --         return string.format("[[%s%s]]", opts.path, anchor)
+                --     end
+                -- end,
+            },
             frontmatter = {
                 enabled = false,
             },
