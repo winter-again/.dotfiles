@@ -128,13 +128,10 @@ function M.diagnostics()
 
     local err = errors > 0 and hl_segment(string.format("%s: %s ", diagnostic_icons.Error, errors), "DiagnosticError")
         or ""
-    local warn = warnings > 0
-            and hl_segment(string.format("%s: %s ", diagnostic_icons.Warn, warnings), "DiagnosticWarn")
+    local warn = warnings > 0 and hl_segment(string.format("%s:%s ", diagnostic_icons.Warn, warnings), "DiagnosticWarn")
         or ""
-    local info = infos > 0 and hl_segment(string.format("%s: %s ", diagnostic_icons.Info, infos), "DiagnosticInfo")
-        or ""
-    local hint = hints > 0 and hl_segment(string.format("%s: %s ", diagnostic_icons.Hint, hints), "DiagnosticHint")
-        or ""
+    local info = infos > 0 and hl_segment(string.format("%s:%s ", diagnostic_icons.Info, infos), "DiagnosticInfo") or ""
+    local hint = hints > 0 and hl_segment(string.format("%s:%s ", diagnostic_icons.Hint, hints), "DiagnosticHint") or ""
 
     return table.concat({ err, warn, info, hint })
 end
@@ -203,7 +200,8 @@ end
 ---@return string
 function M.tools()
     return table.concat({
-        " LSP: ",
+        "LSP: ",
+        -- " LSP: ",
         get_lsp(),
         get_formatters(),
         get_linters(),
