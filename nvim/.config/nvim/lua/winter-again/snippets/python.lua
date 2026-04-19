@@ -52,48 +52,48 @@ return {
             { i(1) }
         )
     ),
-    s(
-        {
-            trig = "cf",
-            desc = "Competitive programming template",
-            docstring = {
-                "import sys",
-                " ",
-                " ",
-                "def main() -> int:",
-                "t = int(sys.stdin.readline().strip())",
-                "    for _ in range(t):",
-                "        n = int(sys.stdin.readline().strip())",
-                '        a = list(map(int, sys.stdin.readline().strip().split(" ")))',
-                " ",
-                "    return 0",
-                " ",
-                " ",
-                'if __name__ == "__main__":',
-                "    raise SystemExit(main())",
-            },
-        },
-        fmt(
-            [[
-            import sys
-
-
-            def main() -> int:
-                t = int(sys.stdin.readline().strip())
-                for _ in range(t):
-                    n = int(sys.stdin.readline().strip())
-                    a = list(map(int, sys.stdin.readline().strip().split(" ")))
-                    {}
-
-                return 0
-
-
-            if __name__ == "__main__":
-                raise SystemExit(main())
-            ]],
-            { i(1) }
-        )
-    ),
+    -- s(
+    --     {
+    --         trig = "cf",
+    --         desc = "Competitive programming template",
+    --         docstring = {
+    --             "import sys",
+    --             " ",
+    --             " ",
+    --             "def main() -> int:",
+    --             "t = int(sys.stdin.readline().strip())",
+    --             "    for _ in range(t):",
+    --             "        n = int(sys.stdin.readline().strip())",
+    --             '        a = list(map(int, sys.stdin.readline().strip().split(" ")))',
+    --             " ",
+    --             "    return 0",
+    --             " ",
+    --             " ",
+    --             'if __name__ == "__main__":',
+    --             "    raise SystemExit(main())",
+    --         },
+    --     },
+    --     fmt(
+    --         [[
+    --         import sys
+    --
+    --
+    --         def main() -> int:
+    --             t = int(sys.stdin.readline().strip())
+    --             for _ in range(t):
+    --                 n = int(sys.stdin.readline().strip())
+    --                 a = list(map(int, sys.stdin.readline().strip().split(" ")))
+    --                 {}
+    --
+    --             return 0
+    --
+    --
+    --         if __name__ == "__main__":
+    --             raise SystemExit(main())
+    --         ]],
+    --         { i(1) }
+    --     )
+    -- ),
     s(
         {
             trig = "def",

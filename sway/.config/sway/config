@@ -241,8 +241,8 @@ bar {
     swaybar_command waybar
 }
 
-assign [app_id="Slack"] $ws1
-for_window [app_id="Slack"] layout stacking
+assign [app_id="slack"] $ws1
+for_window [app_id="slack"] layout stacking
 # assign spotify on Wayland
 assign [title="^Spotify"] $ws7
 assign [title="^Amberol"] $ws7

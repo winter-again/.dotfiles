@@ -30,9 +30,9 @@ return {
                 block = "mb",
             },
             extra = {
-                above = "gcO",
-                below = "gco",
-                eol = "gcA",
+                above = "mcO",
+                below = "mco",
+                eol = "mcA",
             },
             mappings = {
                 basic = true,

@@ -14,6 +14,7 @@ local parsers = {
     "bash",
     "bibtex",
     "commonlisp",
+    "cpp",
     "css",
     "csv",
     "desktop",

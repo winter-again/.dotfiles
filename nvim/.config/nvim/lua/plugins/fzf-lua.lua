@@ -79,7 +79,7 @@ return {
         local opts = { silent = true }
 
         map("n", "<leader>ff", fzf_lua.files, opts, "Search files")
-        map("n", "<leader>fl", fzf_lua.buffers, opts, "Search buffers")
+        map("n", "<leader>fo", fzf_lua.buffers, opts, "Search open buffers")
         map("n", "<leader>fs", function()
             require("fzf-lua").live_grep({ exec_empty_query = true })
         end, opts, "Live grep")

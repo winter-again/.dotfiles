@@ -126,7 +126,7 @@ function M.diagnostics()
         Hint = "H",
     }
 
-    local err = errors > 0 and hl_segment(string.format("%s: %s ", diagnostic_icons.Error, errors), "DiagnosticError")
+    local err = errors > 0 and hl_segment(string.format("%s:%s ", diagnostic_icons.Error, errors), "DiagnosticError")
         or ""
     local warn = warnings > 0 and hl_segment(string.format("%s:%s ", diagnostic_icons.Warn, warnings), "DiagnosticWarn")
         or ""
