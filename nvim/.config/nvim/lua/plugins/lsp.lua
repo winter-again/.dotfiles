@@ -197,198 +197,220 @@ return {
                 severity_sort = true,
             })
 
+            -- vim.lsp.config("*", {})
+            vim.lsp.enable({
+                "lua_ls",
+                "basedpyright",
+                -- "ty",
+                "ruff",
+                "gopls",
+                "marksman",
+                "rust_analyzer",
+                "astro",
+                "clangd",
+                "html",
+                "cssls",
+                "ts_ls",
+                "bashls",
+                "jsonls",
+                "just",
+                "taplo",
+                "tinymist",
+                "yamlls",
+            })
+
             -- NOTE: settings specified here extend the default settings provided by nvim-lspconfig
-            local servers = {
-                ["lua_ls"] = {
-                    on_init = function(client)
-                        if client.workspace_folders then
-                            local path = client.workspace_folders[1].name
-                            if
-                                path ~= vim.fn.stdpath("config")
-                                and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-                            then
-                                return
-                            end
-                        end
+            -- local servers = {
+            --     ["lua_ls"] = {
+            --         on_init = function(client)
+            --             if client.workspace_folders then
+            --                 local path = client.workspace_folders[1].name
+            --                 if
+            --                     path ~= vim.fn.stdpath("config")
+            --                     and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+            --                 then
+            --                     return
+            --                 end
+            --             end
+            --
+            --             client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+            --                 runtime = {
+            --                     -- Tell the language server which version of Lua you're using
+            --                     -- (most likely LuaJIT in the case of Neovim)
+            --                     version = "LuaJIT",
+            --                 },
+            --                 -- Make the server aware of Neovim runtime files
+            --                 workspace = {
+            --                     checkThirdParty = false,
+            --                     -- NOTE: library should now be handled by lazydev
+            --                     -- library = {
+            --                     --     vim.env.VIMRUNTIME,
+            --                     --     -- Depending on the usage, you might want to add additional paths here.
+            --                     --     -- "${3rd}/luv/library"
+            --                     --     -- "${3rd}/busted/library",
+            --                     -- },
+            --                 },
+            --                 telemetry = {
+            --                     enable = false,
+            --                 },
+            --                 -- diagnostics = {
+            --                 --     disable = { "missing-fields" },
+            --                 -- },
+            --                 hint = {
+            --                     enable = true,
+            --                     arrayIndex = "Disable",
+            --                     setType = true,
+            --                 },
+            --             })
+            --         end,
+            --         settings = {
+            --             Lua = {
+            --                 -- disable LSP snippets
+            --                 completion = {
+            --                     callSnippet = "Disable",
+            --                     keywordSnippet = "Disable",
+            --                 },
+            --             },
+            --         },
+            --     },
+            --     ["basedpyright"] = {
+            --         settings = {
+            --             basedpyright = {
+            --                 -- see settings: https://github.com/microsoft/pyright/blob/54f7da25f9c2b6253803602048b04fe0ccb13430/docs/settings.md
+            --                 disableOrganizeImports = true, -- use Ruff instead
+            --                 analysis = {
+            --                     autoSearchPaths = true,
+            --                     diagnosticMode = "openFilesOnly",
+            --                     useLibraryCodeForTypes = true,
+            --                     autoImportCompletions = false,
+            --                     diagnosticSeverityOverrides = {
+            --                         reportUndefinedVariable = "none",
+            --                     },
+            --                 },
+            --             },
+            --         },
+            --     },
+            --     -- ["ty"] = {
+            --     --     settings = {
+            --     --         ty = {
+            --     --             completions = {
+            --     --                 autoImport = false,
+            --     --             },
+            --     --             -- diagnosticMode = "workspace",
+            --     --             -- NOTE: I think I toggle these anyway so only need to set false if absolutely
+            --     --             -- don't want capability
+            --     --             -- inlayHints = {
+            --     --             --     variableTypes = false,
+            --     --             --     callArgumentNames = false,
+            --     --             -- },
+            --     --         },
+            --     --     },
+            --     -- },
+            --     ["ruff"] = {
+            --         on_attach = function(client, bufnr)
+            --             -- disable Ruff's hover to use Pyright instead
+            --             client.server_capabilities.hoverProvider = false
+            --         end,
+            --         -- NOTE: server settings here
+            --         -- init_options = {
+            --         --     settings = {},
+            --         -- },
+            --     },
+            --     ["gopls"] = {
+            --         settings = {
+            --             gopls = {
+            --                 semanticTokens = true,
+            --                 analyses = {
+            --                     -- see https://github.com/golang/tools/blob/3e7f74d009150bf5e66483f3759d8c59f50e873d/gopls/doc/analyzers.md
+            --                     -- these might all be on by default?
+            --                     nilness = true, -- reports nil pointer issues
+            --                     shadow = true, -- shadowed vars
+            --                     unusedparams = true, -- checks for unused params of funcs
+            --                     unusedwrite = true, -- instances of writes to struct fields or arrays that are never read
+            --                     useany = true,
+            --                 },
+            --                 hints = {
+            --                     -- for inlay hints
+            --                     -- see https://go.googlesource.com/tools/+/4d205d81b5a0f7cb051584b8964b7a0fd6d502c2/gopls/doc/inlayHints.md
+            --                     assignVariableTypes = true,
+            --                     compositeLiteralFields = true,
+            --                     constantValues = true,
+            --                     functionTypeParameters = true,
+            --                     parameterNames = true,
+            --                     rangeVariableTypes = true,
+            --                 },
+            --             },
+            --         },
+            --     },
+            --     ["marksman"] = {
+            --         on_init = function(client)
+            --             if vim.uv.cwd() == vim.fs.normalize("~/Documents/notebook") then
+            --                 -- if vim.fs.root(0, ".zk") ~= nil then
+            --                 -- disable some capabilities in notes dir to use obsidian/zk instead
+            --                 client.server_capabilities.completionProvider = false
+            --                 client.server_capabilities.hoverProvider = false
+            --             end
+            --         end,
+            --     },
+            --     ["rust_analyzer"] = {
+            --         settings = {
+            --             ["rust-analyzer"] = {
+            --                 cargo = {
+            --                     allFeatures = true,
+            --                 },
+            --             },
+            --         },
+            --     },
+            --     ["astro"] = {},
+            --     ["clangd"] = {},
+            --     ["html"] = {
+            --         init_options = {
+            --             configurationSection = { "html", "css", "javascript" },
+            --             embeddedLanguages = {
+            --                 css = true,
+            --                 javascript = true,
+            --             },
+            --             provideFormatter = false,
+            --         },
+            --     },
+            --     ["cssls"] = {},
+            --     ["ts_ls"] = {},
+            --     ["bashls"] = {},
+            --     ["jsonls"] = {
+            --         -- init_options = {
+            --         --     provideFormatter = false,
+            --         -- },
+            --     },
+            --     ["just"] = {},
+            --     ["taplo"] = {},
+            --     ["tinymist"] = {
+            --         settings = {
+            --             formatterMode = "typstyle",
+            --             formatterIndentSize = 4,
+            --             lint = {
+            --                 enabled = true,
+            --                 when = "onSave",
+            --             },
+            --             -- preview = {
+            --             --     background = {
+            --             --         enabled = true,
+            --             --     },
+            --             -- },
+            --         },
+            --     },
+            --     ["yamlls"] = {
+            --         on_attach = function(client, bufnr)
+            --             -- NOTE: yamlls includes formatting capabilities; disable it, though
+            --             -- it doesn't seem to work anyway?
+            --             -- client.server_capabilities.documentFormattingProvider = false
+            --         end,
+            --     },
+            -- }
 
-                        client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-                            runtime = {
-                                -- Tell the language server which version of Lua you're using
-                                -- (most likely LuaJIT in the case of Neovim)
-                                version = "LuaJIT",
-                            },
-                            -- Make the server aware of Neovim runtime files
-                            workspace = {
-                                checkThirdParty = false,
-                                -- NOTE: library should now be handled by lazydev
-                                -- library = {
-                                --     vim.env.VIMRUNTIME,
-                                --     -- Depending on the usage, you might want to add additional paths here.
-                                --     -- "${3rd}/luv/library"
-                                --     -- "${3rd}/busted/library",
-                                -- },
-                            },
-                            telemetry = {
-                                enable = false,
-                            },
-                            -- diagnostics = {
-                            --     disable = { "missing-fields" },
-                            -- },
-                            hint = {
-                                enable = true,
-                                arrayIndex = "Disable",
-                                setType = true,
-                            },
-                        })
-                    end,
-                    settings = {
-                        Lua = {
-                            -- disable LSP snippets
-                            completion = {
-                                callSnippet = "Disable",
-                                keywordSnippet = "Disable",
-                            },
-                        },
-                    },
-                },
-                ["basedpyright"] = {
-                    settings = {
-                        basedpyright = {
-                            -- see settings: https://github.com/microsoft/pyright/blob/54f7da25f9c2b6253803602048b04fe0ccb13430/docs/settings.md
-                            disableOrganizeImports = true, -- use Ruff instead
-                            analysis = {
-                                autoSearchPaths = true,
-                                diagnosticMode = "openFilesOnly",
-                                useLibraryCodeForTypes = true,
-                                autoImportCompletions = false,
-                                diagnosticSeverityOverrides = {
-                                    reportUndefinedVariable = "none",
-                                },
-                            },
-                        },
-                    },
-                },
-                -- ["ty"] = {
-                --     settings = {
-                --         ty = {
-                --             completions = {
-                --                 autoImport = false,
-                --             },
-                --             -- diagnosticMode = "workspace",
-                --             -- NOTE: I think I toggle these anyway so only need to set false if absolutely
-                --             -- don't want capability
-                --             -- inlayHints = {
-                --             --     variableTypes = false,
-                --             --     callArgumentNames = false,
-                --             -- },
-                --         },
-                --     },
-                -- },
-                ["ruff"] = {
-                    on_attach = function(client, bufnr)
-                        -- disable Ruff's hover to use Pyright instead
-                        client.server_capabilities.hoverProvider = false
-                    end,
-                    -- NOTE: server settings here
-                    -- init_options = {
-                    --     settings = {},
-                    -- },
-                },
-                ["gopls"] = {
-                    settings = {
-                        gopls = {
-                            semanticTokens = true,
-                            analyses = {
-                                -- see https://github.com/golang/tools/blob/3e7f74d009150bf5e66483f3759d8c59f50e873d/gopls/doc/analyzers.md
-                                -- these might all be on by default?
-                                nilness = true, -- reports nil pointer issues
-                                shadow = true, -- shadowed vars
-                                unusedparams = true, -- checks for unused params of funcs
-                                unusedwrite = true, -- instances of writes to struct fields or arrays that are never read
-                                useany = true,
-                            },
-                            hints = {
-                                -- for inlay hints
-                                -- see https://go.googlesource.com/tools/+/4d205d81b5a0f7cb051584b8964b7a0fd6d502c2/gopls/doc/inlayHints.md
-                                assignVariableTypes = true,
-                                compositeLiteralFields = true,
-                                constantValues = true,
-                                functionTypeParameters = true,
-                                parameterNames = true,
-                                rangeVariableTypes = true,
-                            },
-                        },
-                    },
-                },
-                ["marksman"] = {
-                    on_init = function(client)
-                        if vim.uv.cwd() == vim.fs.normalize("~/Documents/notebook") then
-                            -- if vim.fs.root(0, ".zk") ~= nil then
-                            -- disable some capabilities in notes dir to use obsidian/zk instead
-                            client.server_capabilities.completionProvider = false
-                            client.server_capabilities.hoverProvider = false
-                        end
-                    end,
-                },
-                ["rust_analyzer"] = {
-                    settings = {
-                        ["rust-analyzer"] = {
-                            cargo = {
-                                allFeatures = true,
-                            },
-                        },
-                    },
-                },
-                ["astro"] = {},
-                ["clangd"] = {},
-                ["html"] = {
-                    init_options = {
-                        configurationSection = { "html", "css", "javascript" },
-                        embeddedLanguages = {
-                            css = true,
-                            javascript = true,
-                        },
-                        provideFormatter = false,
-                    },
-                },
-                ["cssls"] = {},
-                ["ts_ls"] = {},
-                ["bashls"] = {},
-                ["jsonls"] = {
-                    -- init_options = {
-                    --     provideFormatter = false,
-                    -- },
-                },
-                ["just"] = {},
-                ["taplo"] = {},
-                ["tinymist"] = {
-                    settings = {
-                        formatterMode = "typstyle",
-                        formatterIndentSize = 4,
-                        lint = {
-                            enabled = true,
-                            when = "onSave",
-                        },
-                        -- preview = {
-                        --     background = {
-                        --         enabled = true,
-                        --     },
-                        -- },
-                    },
-                },
-                ["yamlls"] = {
-                    on_attach = function(client, bufnr)
-                        -- NOTE: yamlls includes formatting capabilities; disable it, though
-                        -- it doesn't seem to work anyway?
-                        -- client.server_capabilities.documentFormattingProvider = false
-                    end,
-                },
-            }
-
-            for server, config in pairs(servers) do
-                vim.lsp.config(server, config)
-                vim.lsp.enable(server)
-            end
+            -- for server, config in pairs(servers) do
+            --     vim.lsp.config(server, config)
+            --     vim.lsp.enable(server)
+            -- end
         end,
     },
     {

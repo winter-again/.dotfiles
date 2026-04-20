@@ -74,4 +74,4 @@ require("lazy").setup({
 vim.cmd("colorscheme winter-again")
 
 require("winter-again.statusline")
--- require("vim._core.ui2").enable() -- experimental UI
+require("vim._core.ui2").enable({ enabled = true }) -- experimental UI
