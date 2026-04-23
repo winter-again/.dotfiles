@@ -24,10 +24,11 @@ return {
                 local read_only = vim.api.nvim_get_option_value("readonly", { buf = props.buf })
 
                 return {
+                    " ",
+                    modified and "[+] " or "",
+                    read_only and "󰌾 " or "",
                     filename,
                     " ",
-                    modified and "[+]" or "",
-                    read_only and "󰌾" or "",
                 }
             end,
         })

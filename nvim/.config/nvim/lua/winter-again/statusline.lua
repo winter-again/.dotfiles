@@ -250,7 +250,7 @@ function M.cursor_pos()
 
     -- return string.format("%%#StatuslineSectionOuter# [%d, %d] %d ", cur_line, cur_col, num_lines)
     -- %P = percentage through file of displayed window
-    return hl_segment(string.format(" [%d, %d] %%P ", cur_line, cur_col, num_lines), "StatuslineSectionOuter")
+    return hl_segment(string.format(" [%d:%d] %%P ", cur_line, cur_col, num_lines), "StatuslineSectionOuter")
 end
 
 ---@return string
@@ -269,6 +269,6 @@ function M.render()
     })
 end
 
-vim.o.statusline = "%!v:lua.require('winter-again.statusline').render()"
+vim.go.statusline = "%{%v:lua.require('winter-again.statusline').render()%}"
 
 return M

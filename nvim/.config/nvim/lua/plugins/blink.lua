@@ -187,7 +187,7 @@ return {
                 lazydev = {
                     name = "nvim",
                     module = "lazydev.integrations.blink",
-                    score_offset = 100, -- make top prio.
+                    score_offset = 100,
                 },
             },
         },

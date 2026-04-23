@@ -84,3 +84,18 @@ vim.api.nvim_create_autocmd("BufRead", {
         vim.opt_local.spell = true
     end,
 })
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--     group = au_group,
+--     pattern = { "python", "cpp" },
+--     callback = function()
+--         vim.api.nvim_create_user_command("CF", function(args)
+--             local filetype = vim.bo.filetype
+--             if filetype == "python" then
+--                 vim.cmd("read ./templ/templ.py")
+--             elseif filetype == "cpp" then
+--                 vim.cmd("read ./temp/templ.cpp")
+--             end
+--         end, {})
+--     end,
+-- })

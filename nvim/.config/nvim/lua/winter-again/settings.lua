@@ -17,7 +17,7 @@ opt.inccommand = "split" -- preview substitutions live
 opt.spelllang = "en_us"
 -- default spellfile loc; spell dir must exist
 opt.spellfile = vim.fn.stdpath("data") .. "/spell/en.utf-8.add"
--- opt.winbar = "%{%v:lua.Winbar()%}" -- disable if using incline.nvim
+-- opt.winbar = "%=%m %f" -- disable if using incline.nvim
 -- (pseudo)transparency for cmp menu and I guess wildmenu (0 = fully opaque, 100 = fully transparent)
 -- doesn't apply to documentation, which is nice
 -- note: setting it means cmp menu has highlight but can see text behind
@@ -25,7 +25,7 @@ opt.spellfile = vim.fn.stdpath("data") .. "/spell/en.utf-8.add"
 -- opt.pumblend = 35
 opt.mouse = "a" -- enable mouse mode always
 opt.equalalways = false -- don't reset window sizes after closing one
-opt.showmode = false -- don't show mode in status line
+opt.showmode = false -- don't show mode in cmdline
 opt.swapfile = false -- turn off swapfiles
 opt.backup = false -- turn off backups
 opt.undofile = true -- save/restore undo history from file

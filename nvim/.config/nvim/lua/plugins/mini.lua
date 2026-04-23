@@ -23,10 +23,31 @@ return {
         end,
     },
     {
-        "nvim-mini/mini.surround",
+        "nvim-mini/mini.hipatterns",
+        enabled = false,
         version = false,
         event = { "BufReadPost", "BufNewFile" },
+        config = function()
+            local hipatterns = require("mini.hipatterns")
+            hipatterns.setup({
+                highlighters = {
+                    -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+                    fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "TodoBgFix" },
+                    hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "TodoBgWarn" },
+                    todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "TodoBgTodo" },
+                    note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "TodoBgNote" },
+
+                    -- Highlight hex color strings (`#rrggbb`) using that color
+                    hex_color = hipatterns.gen_highlighter.hex_color(),
+                },
+            })
+        end,
+    },
+    {
+        "nvim-mini/mini.surround",
         enabled = false,
+        version = false,
+        event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("mini.surround").setup({
                 -- Module mappings. Use `""` (empty string) to disable one.

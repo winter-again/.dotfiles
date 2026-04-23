@@ -29,6 +29,7 @@ return {
                         { underdotted = true, undercurl = false }
                     )
 
+                    highlights["@lsp.mod.global.lua"] = { fg = colors.moon } -- globals like vim
                     -- HACK: highlight tags in markdown
                     highlights["@lsp.type.enumMember.markdown"] = { fg = colors.yellow, bold = true }
                     -- req custom queries queries/markdown_inline/highlights.scm

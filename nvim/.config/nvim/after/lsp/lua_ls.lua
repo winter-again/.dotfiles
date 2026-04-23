@@ -15,6 +15,12 @@ return {
                 -- Tell the language server which version of Lua you're using
                 -- (most likely LuaJIT in the case of Neovim)
                 version = "LuaJIT",
+                -- Tell the language server how to find Lua modules same way as Neovim
+                -- (see `:h lua-module-load`)
+                path = {
+                    "lua/?.lua",
+                    "lua/?/init.lua",
+                },
             },
             -- Make the server aware of Neovim runtime files
             workspace = {
@@ -23,8 +29,9 @@ return {
                 -- library = {
                 --     vim.env.VIMRUNTIME,
                 --     -- Depending on the usage, you might want to add additional paths here.
-                --     -- "${3rd}/luv/library"
-                --     -- "${3rd}/busted/library",
+                --     "${3rd}/luv/library",
+                --     -- "~/.local/share/nvim/lazy/nvim-treesitter/lua",
+                --     -- "~/.local/share/nvim/lazy/fzf-lua/lua",
                 -- },
             },
             telemetry = {

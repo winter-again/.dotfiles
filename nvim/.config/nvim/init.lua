@@ -25,6 +25,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+require("vim._core.ui2").enable({ enabled = true })
 require("winter-again.settings")
 require("winter-again.autocmds")
 require("winter-again.globals")
@@ -41,7 +42,7 @@ local lazy_opts = {
     install = {
         missing = true,
         -- try to load one of these when installing during startup
-        colorscheme = { "winter-again", "mellifluous" },
+        colorscheme = { "winter-again" },
     },
     checker = {
         enabled = false,
@@ -71,7 +72,8 @@ require("lazy").setup({
     { import = "plugins" },
 }, lazy_opts)
 
+vim.cmd("packadd nvim.undotree") -- seems these builtin plugins need to be loaded after lazy setup
+vim.cmd("packadd nvim.difftool")
 vim.cmd("colorscheme winter-again")
-
 require("winter-again.statusline")
-require("vim._core.ui2").enable({ enabled = true }) -- experimental UI
+-- require("winter-again.statuscolumn")
