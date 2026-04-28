@@ -3,8 +3,16 @@ return {
         "stevearc/conform.nvim",
         event = { "BufWritePre" },
         config = function()
+            -- NOTE: use .venv binary if exists, otherwise assume it's globally installed
+            local function get_venv_bin(bin)
+                local venv_bin = string.format("./.venv/bin/%s", bin)
+                if vim.uv.fs_stat(venv_bin) then
+                    return venv_bin
+                end
+                return bin
+            end
             require("conform").setup({
-                -- NOTE: conform can find local formatters like prettier installed as dev dep
+                -- TODO: can conform find local formatters like prettier installed as dev dep?
                 formatters_by_ft = {
                     css = { "biome", "prettierd", "prettier", stop_after_first = true },
                     go = { "goimports", "gofmt" }, -- sequential
@@ -39,6 +47,12 @@ return {
                     return { timeout_ms = 500, lsp_fallback = false }
                 end,
                 formatters = {
+                    ruff_organize_imports = {
+                        command = get_venv_bin("ruff"),
+                    },
+                    ruff_format = {
+                        command = get_venv_bin("ruff"),
+                    },
                     taplo = {
                         condition = function(self, ctx)
                             -- NOTE: disable for these files

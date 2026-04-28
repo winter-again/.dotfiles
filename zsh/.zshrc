@@ -82,8 +82,8 @@ path+=("$(go env GOBIN)")
 # export PATH="$HOME/.cargo/bin:$PATH" # shouldn't need this if using rustup package from Arch repos
 
 # pnpm global packages
-export PNPM_HOME="$HOME/.local/share/pnpm"
-path+=("$PNPM_HOME")
+# export PNPM_HOME="$HOME/.local/share/pnpm"
+# path+=("$PNPM_HOME")
 
 export PATH
 

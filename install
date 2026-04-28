@@ -12,7 +12,7 @@ paru_install() {
 }
 
 verify_boot_mode() {
-    if [[ "$(< /sys/firmware/efi/fw_platform_size)" -ne 64 ]]; then
+    if [[ "$(</sys/firmware/efi/fw_platform_size)" -ne 64 ]]; then
         return 1
     fi
     return 0
@@ -129,7 +129,7 @@ echo "Installing base packages with pacstrap..."
 pacstrap_base_install
 
 echo "Generating fstab..."
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >>/mnt/etc/fstab
 
 echo "chroot into new system..."
 arch-chroot /mnt
@@ -152,7 +152,7 @@ EOF
 echo "Setting up locales..."
 sed -i "/en_US.UTF-8/s/^#//g" /etc/locale.gen
 locale-gen
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
+echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
 echo "Configuring hostname..."
 read -r -p "Enter hostname: " HOSTNAME
@@ -193,7 +193,7 @@ pacman -Syu --noconfirm
 # TODO: store pacman.conf in dotfiles repo instead?
 echo "Installing and configuring reflector. Activating reflector.timer..."
 pacman_install reflector
-cat << EOF > /etc/xdg/reflector/reflector.conf
+cat <<EOF >/etc/xdg/reflector/reflector.conf
 --protocol https
 --country US,CA
 --latest 10
@@ -336,7 +336,7 @@ paru_install "${lua_dev_pkgs[@]}"
 
 echo "Installing Python packages..."
 python_dev_pkgs=(
-    ruff
+    # ruff
     uv
 )
 paru_install "${python_dev_pkgs[@]}"
@@ -360,12 +360,12 @@ paru_install "${typst_dev_pkgs[@]}"
 echo "Installing JS/TS packages..."
 js_dev_pkgs=(
     pnpm
-    typescript-language-server
+    # typescript-language-server
     vscode-html-languageserver
     vscode-css-languageserver
     vscode-json-languageserver
 )
-paru_install  "${js_dev_pkgs[@]}"
+paru_install "${js_dev_pkgs[@]}"
 
 echo "Installing Rust packages..."
 rust_dev_pkgs=(
@@ -376,6 +376,7 @@ paru_install "${rust_dev_pkgs[@]}"
 echo "Installing other dev packages..."
 dev_pkgs=(
     bash-language-server
+    just-lsp
     markdownlint-cli2
     marksman
     shellcheck
