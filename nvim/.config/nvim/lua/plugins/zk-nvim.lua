@@ -52,8 +52,6 @@ return {
         end, opts, "Search notes with ripgrep")
 
         -- TODO: figure out how to add ctrl-q keymap for adding all to qflist
-        -- NOTE: chaining commands breaks when values in options table aren't valid for both commands
-        -- For example, sort = "note-count" only works for tags picker
         -- NOTE: search for notes with any one of many tags
         zk_cmds.add("ZkTagsOr", function(options)
             options = options or {}
@@ -74,6 +72,7 @@ return {
                 end
             end
 
+            -- NOTE: select multiple tags with <Tab> and search
             local tags_options = vim.tbl_extend("force", options, { sort = tag_sort_options })
             zk.pick_tags(tags_options, { title = "Zk tags (using OR)", multi_select = true }, function(tags)
                 tags = vim.tbl_map(function(v)
@@ -151,6 +150,7 @@ return {
         end
         map("n", "<leader>ni", insert_templ, opts, "Insert note template")
 
+        -- TODO: need to fix date handling in meeting note titles -> simplify so it's easier to remember what format I need
         local function create_note_with_templ()
             vim.ui.input({ prompt = "New note file name: " }, function(file_name)
                 if file_name == nil then

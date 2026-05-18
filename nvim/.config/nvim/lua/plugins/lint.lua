@@ -2,18 +2,18 @@ return {
     "mfussenegger/nvim-lint",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
+        -- NOTE: nvim-lint can find commands in node_modules
         require("lint").linters_by_ft = {
             astro = { "biomejs" },
-            javascript = { "biomejs" },
-            javascriptreact = { "biomejs" },
+            -- javascript = { "eslint" },
             lua = { "selene" },
             markdown = { "markdownlint-cli2" },
             sh = { "shellcheck" },
+            -- svelte = { "eslint" },
             -- installed via uv tool interface but nvim-lint can find b/c it's in ~/.local/bin
             -- can also activate via LSP interface
             -- sql = { "sqruff" },
-            typescript = { "biomejs" },
-            typescriptreact = { "biomejs" },
+            -- typescript = { "eslint" },
         }
 
         local lint_group = vim.api.nvim_create_augroup("lint", { clear = true })

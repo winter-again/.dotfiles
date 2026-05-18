@@ -188,6 +188,7 @@ local function get_formatters()
     return output
 end
 
+-- TODO: replace this section with a user command
 local function get_linters()
     local linters = require("lint").get_running()
     if #linters == 0 then

@@ -111,4 +111,23 @@ function M.map(mode, lhs, rhs, opts, desc)
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+---Simple way to get path for a tool installed in .venv or node_modules.
+---Falls back to returning tool name.
+---@param tool string
+---@return string
+function M.get_tool_path(tool)
+    local dirs = { ".venv/bin", "node_modules/.bin" }
+    for _, dir in pairs(dirs) do
+        -- respect activated virtual environment
+        if dir == ".venv/bin" and vim.env.VIRTUAL_ENV ~= nil then
+            return tool
+        end
+        local path = string.format("./%s/%s", dir, tool)
+        if vim.fn.executable(path) == 1 then
+            return path
+        end
+    end
+    return tool
+end
+
 return M

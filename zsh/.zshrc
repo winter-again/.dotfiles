@@ -31,6 +31,9 @@ export LS_COLORS="di=1;36:ln=3;92:or=4;91"
 # uu = your user
 export EZA_COLORS=$LS_COLORS:"da=35:uu=1;34:sn=33"
 
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
+
 HISTFILE="$XDG_CACHE_HOME/.zsh_history"
 SAVEHIST="100000000" # num of lines saved (last $SAVEHIST lines)
 HISTSIZE="100000000" # num of lines to keep in one session; read in at start
@@ -103,6 +106,7 @@ alias x="xan"
 alias xv="xan view -l 15"
 alias xc="xan count"
 alias xh="xan headers"
+# alias tw="tw --theme Terminal"
 alias j="just"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"

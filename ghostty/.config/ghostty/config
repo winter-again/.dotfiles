@@ -6,8 +6,11 @@ cursor-style = block
 cursor-style-blink = false
 resize-overlay = never
 
-# background-image = ~/some/path
-# background-opacity = 0.05
+mouse-scroll-multiplier = 1
+
+# background-image = path
+# background-image-fit = contain
+# background-image-opacity = 0.15
 
 confirm-close-surface = false
 shell-integration-features = false

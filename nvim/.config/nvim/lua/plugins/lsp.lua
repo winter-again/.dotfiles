@@ -197,26 +197,27 @@ return {
                 severity_sort = true,
             })
 
-            -- vim.lsp.config("*", {})
             vim.lsp.enable({
-                "lua_ls",
-                "basedpyright",
-                -- "ty",
-                "ruff",
-                "gopls",
-                "marksman",
-                "rust_analyzer",
                 "astro",
-                "clangd",
-                "html",
-                "cssls",
-                "ts_ls",
+                "basedpyright",
                 "bashls",
+                "clangd",
+                "cssls",
+                "eslint",
+                "gopls",
+                "html",
                 "jsonls",
                 "just",
+                "lua_ls",
+                "marksman",
+                "ruff",
+                "rust_analyzer",
+                "svelte", -- nvim-lspconfig does not look in node_modules
                 "taplo",
                 "tinymist",
+                "ts_ls", -- nvim-lspconfig looks in node_modules
                 "yamlls",
+                -- "ty",
             })
 
             -- NOTE: settings specified here extend the default settings provided by nvim-lspconfig

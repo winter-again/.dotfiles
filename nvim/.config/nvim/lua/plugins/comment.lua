@@ -16,6 +16,7 @@ return {
         },
     },
     config = function()
+        local ft = require("Comment.ft")
         require("Comment").setup({
             -- LHS of toggle mappings in normal mode
             -- toggles commenting for current line
@@ -40,5 +41,6 @@ return {
             },
             pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
         })
+        ft.set("swayconfig", { "#%s", "#%s" })
     end,
 }
