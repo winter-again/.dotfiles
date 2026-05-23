@@ -1532,6 +1532,18 @@ user_pref("browser.search.update", false);
 // [1] https://blog.mozilla.org/addons/how-to-opt-out-of-add-on-metadata-updates/
 user_pref("extensions.getAddons.cache.enabled", false);
 
+// NOTE: Nova and new tab page weather widget
+user_pref("browser.nova.enabled", false);
+user_pref("browser.smartwindow.nova.enabled", false);
+user_pref("browser.urlbar.quicksuggest.ampTopPickUseNovaIconSize", false);
+user_pref("browser.newtabpage.activity-stream.nova.enabled", false);
+
+user_pref("browser.newtabpage.activity-stream.widgets.weather.enabled", false);
+user_pref(
+    "browser.newtabpage.activity-stream.widgets.system.weather.enabled",
+    false,
+);
+
 // NOTE: Smoothfox
 // instant scrolling
 // recommended for 60hz+ displays

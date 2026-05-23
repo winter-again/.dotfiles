@@ -203,6 +203,7 @@ return {
                 "bashls",
                 "clangd",
                 "cssls",
+                "dockerls",
                 "eslint",
                 "gopls",
                 "html",

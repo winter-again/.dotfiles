@@ -63,7 +63,7 @@ return {
             -- use <C-h> to toggle finding on .gitignore'd files
             local function custom_ff(opts, no_ignore)
                 opts = opts or {}
-                no_ignore = vim.F.if_nil(no_ignore, false)
+                no_ignore = vim.nonnil(no_ignore, false)
                 opts.attach_mappings = function(_, map)
                     map({ "n", "i" }, "<C-h>", function(prompt_bufnr)
                         local prompt = require("telescope.actions.state").get_current_line()
