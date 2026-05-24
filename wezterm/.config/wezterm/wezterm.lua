@@ -1,5 +1,39 @@
 local wezterm = require("wezterm")
-local utils = require("utils")
+
+local fonts = {
+    ["Iosevka"] = {
+        font = {
+            {
+                family = "Iosevka Nerd Font Mono",
+                harfbuzz_features = {
+                    "calt=0",
+                    -- "clig=0",
+                    -- "liga=0"
+                },
+            },
+            { family = "Sarasa Mono CL" }, -- for CJK
+        },
+        font_size = 14.0,
+    },
+    ["Zed"] = {
+        font = {
+            {
+                family = "ZedMono Nerd Font Mono",
+                harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
+            },
+            { family = "Sarasa Mono CL" },
+        },
+        font_size = 14.0,
+    },
+    ["JetBrains"] = {
+        font = {
+            family = "JetBrainsMono Nerd Font Mono",
+            -- family = 'JetBrains Mono', -- bundled version
+            harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
+        },
+        font_size = 11.0,
+    },
+}
 
 local config = {}
 
@@ -16,7 +50,8 @@ end
 
 config.color_scheme = "winter-again"
 config.background = require("bg").set_bg()
-config.font, config.font_size = utils.set_font("Iosevka")
+config.font = wezterm.font_with_fallback(fonts["Iosevka"].font)
+config.font_size = fonts["Iosevka"].font_size
 config.cursor_blink_rate = 0
 config.window_padding = {
     left = 0,

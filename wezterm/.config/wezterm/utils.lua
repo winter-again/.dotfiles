@@ -12,33 +12,7 @@ function M.set_bg(bg_name)
     else
         bg_key = bg_name
     end
-
     return profile_data.background[bg_key].background
-end
-
----@param font_alias string
----@return table, number
-function M.set_font(font_alias)
-    local font_choice = profile_data.font[font_alias]
-    return wezterm.font_with_fallback(font_choice.font), font_choice.font_size
-end
-
----@param config table
-function M.wayland_config(config)
-    local xcursor_size = nil
-    local xcursor_theme = nil
-
-    local success, stdout, stderr =
-        wezterm.run_child_process({ "gsettings", "get", "org.gnome.desktop.interface", "cursor-theme" })
-    if success then
-        config.xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
-    end
-
-    local success, stdout, stderr =
-        wezterm.run_child_process({ "gsettings", "get", "org.gnome.desktop.interface", "cursor-size" })
-    if success then
-        config.xcursor_size = tonumber(stdout)
-    end
 end
 
 ---Log info about user var value and config overrides to .txt file in /run/user/1000/wezterm
