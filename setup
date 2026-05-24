@@ -187,14 +187,14 @@ install_python_pkgs() {
         uv
     )
     paru_install "${python_dev_pkgs[@]}"
-    echo "Installing uv tools..."
-    # NOTE: not sure if --managed-python is needed, but doesn't hurt
-    uv python --managed-python install # installs latest Python
-    local uv_tools=(
-        basedpyright
-        # sqruff
-    )
-    uv tool install "${uv_tools[@]}"
+    # echo "Installing uv tools..."
+    # # NOTE: not sure if --managed-python is needed, but doesn't hurt
+    # uv python --managed-python install # installs latest Python
+    # local uv_tools=(
+    #     basedpyright
+    #     # sqruff
+    # )
+    # uv tool install "${uv_tools[@]}"
 }
 read -r -p "Install Python dev packages? (y/n): " confirm_python && [[ $confirm_python = [yY] ]] && install_python_pkgs
 
@@ -254,13 +254,14 @@ echo "Installing other dev packages..."
 dev_pkgs=(
     clang
     bash-language-server
+    dockerfile-language-server
     just-lsp
     markdownlint-cli2
     marksman
     shellcheck
-    # shfmt
-    # taplo-cli
-    # yaml-language-server
+    shfmt
+    taplo-cli
+    yaml-language-server
 )
 paru_install "${dev_pkgs[@]}"
 
