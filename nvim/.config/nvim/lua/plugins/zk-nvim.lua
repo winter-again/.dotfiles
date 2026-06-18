@@ -30,6 +30,9 @@ return {
                 enabled = true,
                 filetypes = { "markdown" },
             },
+            tags = {
+                multi_select_strategy = "OR",
+            },
         })
 
         local map = require("winter-again.globals").map

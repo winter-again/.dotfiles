@@ -16,9 +16,9 @@ return {
         })
 
         local snippet_paths = { vim.fn.stdpath("config") .. "/lua/winter-again/snippets" }
-        if vim.uv.cwd() == vim.fs.normalize("~/Documents/code/comp-prog") then
-            table.insert(snippet_paths, "~/Documents/code/comp-prog/snippets")
-        end
+        -- if vim.uv.cwd() == vim.fs.normalize("~/Documents/code/comp-prog") then
+        --     table.insert(snippet_paths, "~/Documents/code/comp-prog/snippets")
+        -- end
         require("luasnip.loaders.from_lua").lazy_load({ paths = snippet_paths })
 
         local map = require("winter-again.globals").map

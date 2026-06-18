@@ -150,16 +150,17 @@ tools=(
     jaq
     just
     openssh
-    poppler
+    # poppler
     ripgrep
     stow
+    tar
     task
     tmux
     unzip
     usbutils
     wget
     xan
-    yazi
+    # yazi
     yt-dlp
     zip
     zoxide
@@ -183,8 +184,8 @@ read -r -p "Install Lua packages? (y/n): " confirm_lua && [[ $confirm_lua = [yY]
 install_python_pkgs() {
     echo "Installing Python dev packages..."
     local python_dev_pkgs=(
-        ruff
         uv
+        # ruff
     )
     paru_install "${python_dev_pkgs[@]}"
     # echo "Installing uv tools..."
@@ -301,15 +302,18 @@ capslock = overloadt(control, esc, 170)
 EOF
 sudo systemctl enable --now keyd.service
 
-echo "Cloning dotfiles and stowing dotfiles..."
-if [[ ! -d "$HOME/.dotfiles" ]]; then
-    git clone https://github.com/winter-again/.dotfiles.git "$HOME/.dotfiles"
-    cd "$HOME/.dotfiles" || exit 1
-    git remote set-url origin git@github.com:winter-again/.dotfiles.git
-    git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
-    just
-    cd "$HOME" || exit 1
-fi
+setup_stow_dotfiles() {
+    echo "Cloning dotfiles and stowing dotfiles..."
+    if [[ ! -d "$HOME/.dotfiles" ]]; then
+        git clone https://github.com/winter-again/.dotfiles.git "$HOME/.dotfiles"
+        cd "$HOME/.dotfiles" || exit 1
+        git remote set-url origin git@github.com:winter-again/.dotfiles.git
+        git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
+        just
+        cd "$HOME" || exit 1
+    fi
+}
+read -r -p "Set up and stow dotfiles? (y/n): " confirm_stow && [[ $confirm_stow = [yY] ]] && setup_stow_dotfiles
 
 echo "Installing Materia theme packages for GTK and Qt. Must still set theme manually..."
 theme_pkgs=(
@@ -362,17 +366,20 @@ printf "%s\n" 30 Y | paru -S --needed "${zathura_pkgs[@]}"
 # NOTE: uses custom stowed desktop file
 xdg-mime default org.pwmt.zathura-sandbox.desktop application/pdf
 
-echo "Installing all AUR packages..."
-aur_pkgs=(
-    epson-inkjet-printer-escpr2
-    librewolf-bin
-    oh-my-posh-bin
-    slack-desktop
-    tofi
-    wezterm-git
-)
-# NOTE: will require manual responses and PKGBUILD review
-paru -S --needed "${aur_pkgs[@]}"
+install_aur_pkgs() {
+    echo "Installing all AUR packages..."
+    local aur_pkgs=(
+        epson-inkjet-printer-escpr2
+        librewolf-bin
+        oh-my-posh-bin
+        slack-desktop
+        tofi
+        wezterm-git
+    )
+    # NOTE: will require manual responses and PKGBUILD review
+    paru -S --needed "${aur_pkgs[@]}"
+}
+read -r -p "Install AUR packages? (y/n): " confirm_aur && [[ $confirm_aur = [yY] ]] && install_aur_pkgs
 
 echo "Installing Wezterm terminfo..."
 tempfile=$(mktemp) &&
@@ -445,7 +452,7 @@ paru_install "${power_pkgs[@]}"
 sudo systemctl enable --now tlp.service
 sudo systemctl mask --now systemd-rfkill.service
 sudo systemctl mask --now systemd-rfkill.socket
-# NOTE: blacklisting bluetooth modules instead
+# NOTE: blacklisting bluetooth modules instead of this
 # sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_STARTUP=.*/DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"/' /etc/tlp.conf
 sudo sed -i 's/.*DEVICES_TO_DISABLE_ON_LAN_CONNECT=.*/DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"/' /etc/tlp.conf
 sudo sed -i 's/.*DEVICES_TO_ENABLE_ON_LAN_DISCONNECT=.*/DEVICES_TO_ENABLE_ON_LAN_DISCONNECT="wifi"/' /etc/tlp.conf
