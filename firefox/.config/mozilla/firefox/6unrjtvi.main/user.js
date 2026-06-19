@@ -1538,6 +1538,7 @@ user_pref("browser.smartwindow.nova.enabled", false);
 user_pref("browser.urlbar.quicksuggest.ampTopPickUseNovaIconSize", false);
 user_pref("browser.newtabpage.activity-stream.nova.enabled", false);
 
+user_pref("browser.newtabpage.activity-stream.widgets.enabled", false);
 user_pref("browser.newtabpage.activity-stream.widgets.weather.enabled", false);
 user_pref(
     "browser.newtabpage.activity-stream.widgets.system.weather.enabled",

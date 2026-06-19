@@ -127,7 +127,7 @@ config.keys = {
 -- only http or local filesystem repos are allowed
 -- local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-again/wezterm-config.nvim")
 local wezterm_config_nvim =
-    wezterm.plugin.require("file:///home/winteragain/Documents/code/nvim-dev/wezterm-config.nvim")
+    wezterm.plugin.require("file:///home/winteragain/Documents/code/wezterm-config.nvim")
 -- local wezterm_config_nvim = require('wezterm_config_plug')
 
 -- wezterm.plugin.update_all()

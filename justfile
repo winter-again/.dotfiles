@@ -27,3 +27,9 @@ default:
     stow yazi
     stow zathura
     stow zsh
+
+firefox:
+    stow firefox
+
+flow:
+    stow flow
