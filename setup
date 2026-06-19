@@ -121,7 +121,7 @@ font_pkgs=(
     ttf-iosevka-nerd
     ttf-sarasa-gothic
     # ttf-zed-mono-nerd
-    # ttf-nerd-fonts-symbols-mono
+    ttf-nerd-fonts-symbols-mono
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
@@ -313,7 +313,7 @@ setup_stow_dotfiles() {
         cd "$HOME" || exit 1
     fi
 }
-read -r -p "Set up and stow dotfiles? (y/n): " confirm_stow && [[ $confirm_stow = [yY] ]] && setup_stow_dotfiles
+read -r -p "Set up and stow dotfiles? (y/n): " confirm_stow_setup && [[ $confirm_stow_setup = [yY] ]] && setup_stow_dotfiles
 
 echo "Installing Materia theme packages for GTK and Qt. Must still set theme manually..."
 theme_pkgs=(
@@ -483,6 +483,8 @@ sudo systemctl enable --now cups.socket
 echo "Installing ufw and activating firewall..."
 paru_install ufw
 sudo systemctl enable --now ufw.service
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
 sudo ufw enable
 
 # echo "Configuring SSH key for GitHub..."

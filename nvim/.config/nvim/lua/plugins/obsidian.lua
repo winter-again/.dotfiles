@@ -20,8 +20,8 @@ return {
             log_level = vim.log.levels.ERROR,
             new_notes_location = "notes_subdir",
             completion = {
-                nvim_cmp = false,
-                blink = false,
+                -- nvim_cmp = false,
+                -- blink = false,
                 min_chars = 2,
                 match_case = false,
                 create_new = false,
