@@ -1415,6 +1415,9 @@ user_pref(
     false,
 );
 user_pref("ui.key.menuAccessKeyFocuses", false);
+// prefer dark mode
+// user_pref("ui.systemUsesDarkTheme", 1);
+// user_pref("layout.css.prefers-color-scheme.content-override", 2);
 
 // allow customization via userChrome.css
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);

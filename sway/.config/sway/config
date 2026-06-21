@@ -102,6 +102,7 @@ focus_follows_mouse no
 
 bindsym {
     $mod+Return exec $term
+    $mod+Shift+o exec ghostty
     $mod+Shift+q kill
     $mod+o exec $menu
     $mod+i exec $browser
