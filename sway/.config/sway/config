@@ -226,7 +226,6 @@ exec_always kanshi; exec kanshictl reload
 # exec_always pkill kanshi; exec kanshi
 
 exec {
-    # waybar
     mako
     nm-applet
     solaar -w hide

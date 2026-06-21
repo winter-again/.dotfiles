@@ -226,7 +226,7 @@ install_js_pkgs() {
     echo "Installing JS/TS packages..."
     local js_dev_pkgs=(
         pnpm
-        typescript-language-server
+        # typescript-language-server
         vscode-html-languageserver
         vscode-css-languageserver
         vscode-json-languageserver
@@ -251,7 +251,7 @@ install_rust_pkgs() {
 }
 read -r -p "Install Rust dev packages? (y/n): " confirm_rust && [[ $confirm_rust = [yY] ]] && install_rust_pkgs
 
-echo "Installing other dev packages..."
+echo "Installing other dev tools and packages..."
 dev_pkgs=(
     clang
     bash-language-server
@@ -263,6 +263,7 @@ dev_pkgs=(
     shfmt
     taplo-cli
     yaml-language-server
+    zk
 )
 paru_install "${dev_pkgs[@]}"
 

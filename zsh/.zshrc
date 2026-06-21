@@ -143,14 +143,14 @@ alias glg="git log --all --graph --date=format-local:'%Y-%m-%d (%a) %I:%M:%S %p'
 alias gls="git log --all --oneline --name-status -i --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)%an%C(reset), %C(magenta)%as%C(reset)(%C(yellow)%ar%C(reset)): %s %C(auto)%d%C(reset)' --grep"
 
 # change cwd on exit; use Q instead of q to prevent
-function y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-    fi
-    rm -f -- "$tmp"
-}
+# function y() {
+#     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+#     yazi "$@" --cwd-file="$tmp"
+#     if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+#         builtin cd -- "$cwd"
+#     fi
+#     rm -f -- "$tmp"
+# }
 
 function f() {
     local dir=$(flow find | fzf --prompt=" Directory: " --no-preview)
