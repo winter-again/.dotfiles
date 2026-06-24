@@ -24,7 +24,7 @@ default:
     stow uv
     stow waybar
     stow wezterm
-    # stow yazi
+    stow yazi
     stow zathura
     stow zsh
 

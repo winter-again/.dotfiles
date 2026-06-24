@@ -160,7 +160,7 @@ tools=(
     usbutils
     wget
     xan
-    # yazi
+    yazi
     yt-dlp
     zip
     zoxide
@@ -418,6 +418,7 @@ network_pkgs=(
     bind
     # gnome-keyring
     # libsecret
+    nmap
     tcpdump
 )
 paru_install "${network_pkgs[@]}"
@@ -427,6 +428,13 @@ sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf >/dev/null <<"EOF"
 [connectivity]
 enabled=false
 EOF
+
+# echo "Turning off hostname sending..."
+# sudo tee /etc/NetworkManager/conf.d/dhcp-send-hostname.conf >/dev/null <<"EOF"
+# [connection]
+# ipv4.dhcp-send-hostname=0
+# ipv6.dhcp-send-hostname=0
+# EOF
 
 echo "Creating NetworkManager dispatcher for setting timezone..."
 sudo tee /etc/NetworkManager/dispatcher.d/09-timezone >/dev/null <<"EOF"
