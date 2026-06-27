@@ -1,7 +1,7 @@
 return {
     "zk-org/zk-nvim",
     lazy = true,
-    dev = true,
+    -- dev = true,
     keys = {
         "<leader>nn",
         "<leader>fn",
@@ -30,21 +30,19 @@ return {
                 enabled = true,
                 filetypes = { "markdown" },
             },
-            tags = {
-                multi_select_strategy = "OR",
-            },
         })
 
         local map = require("winter-again.globals").map
         local opts = { silent = true }
-        local zk = require("zk")
+        -- local zk = require("zk")
         local zk_cmds = require("zk.commands")
 
-        -- search notes from anywhere by specifying notebook_path
         map("n", "<leader>fn", function()
             zk_cmds.get("ZkNotes")({ notebook_path = "/home/winteragain/Documents/notebook" })
-        end, opts, "Search notes by title")
-
+        end, opts, "Search notes by title from anwhere")
+        map("n", "<leader>nt", function()
+            zk_cmds.get("ZkTags")({ multi_select_strategy = "OR" })
+        end, opts, "Search for notes with tags using OR")
         map("n", "<leader>ns", function()
             require("fzf-lua").live_grep({
                 prompt = "rg notes: ",
@@ -53,59 +51,6 @@ return {
                 rg_opts = [[--type=md --smart-case --line-number --column --color=always --colors=line:fg:green --colors=column:fg:yellow --max-columns=4096]],
             })
         end, opts, "Search notes with ripgrep")
-
-        -- TODO: figure out how to add ctrl-q keymap for adding all to qflist
-        -- NOTE: search for notes with any one of many tags
-        zk_cmds.add("ZkTagsOr", function(options)
-            options = options or {}
-
-            local tag_sort_options = {}
-            local edit_sort_options = {}
-            if options.sort ~= nil and vim.tbl_contains(options.sort, "note-count") then
-                if #options.sort == 1 then
-                    tag_sort_options = options.sort
-                else
-                    for _, v in ipairs(options.sort) do
-                        if v == "note-count" then
-                            table.insert(tag_sort_options, v)
-                        else
-                            table.insert(edit_sort_options, v)
-                        end
-                    end
-                end
-            end
-
-            -- NOTE: select multiple tags with <Tab> and search
-            local tags_options = vim.tbl_extend("force", options, { sort = tag_sort_options })
-            zk.pick_tags(tags_options, { title = "Zk tags (using OR)", multi_select = true }, function(tags)
-                tags = vim.tbl_map(function(v)
-                    return v.name
-                end, tags)
-                local tags_or = table.concat(tags, " OR ") -- use OR, otherwise implicitly AND
-                local edit_options = vim.tbl_extend("force", options, { tags = { tags_or }, sort = edit_sort_options })
-                local actions = require("fzf-lua.actions")
-
-                local function path_from_selected(selected)
-                    local delimiter = "\x01"
-                    return vim.tbl_map(function(line)
-                        return string.match(line, "([^" .. delimiter .. "]+)")
-                    end, selected)
-                end
-
-                zk.edit(edit_options, {
-                    title = ("Zk Notes for tag(s) { %s }"):format(tags_or),
-                    fzf_lua = {
-                        actions = {
-                            ["ctrl-q"] = function(selected, _options)
-                                local entries = path_from_selected(selected)
-                                actions.file_sel_to_qf(entries, _options)
-                            end,
-                        },
-                    },
-                })
-            end)
-        end)
-        map("n", "<leader>nt", "<cmd>ZkTagsOr { sort = { 'note-count' } }<CR>", opts, "Search for notes with tags")
 
         -- NOTE: zk can't detect my style of links
         -- map("n", "<leader>nl", function()
