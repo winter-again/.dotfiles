@@ -9,6 +9,9 @@ export XDG_SESSION_DESKTOP=sway
 # some apps rely on XDG_CURRENT_DESKTOP being set e.g., Firefox screensharing
 export XDG_CURRENT_DESKTOP=sway:wlroots
 
+# apparently needed for Vulkan Video (hardware video acceleration) support via vulkan-intel package
+export ANV_DEBUG=video-decode,video-encode
+
 # from Sway wiki: for some Java-based apps to launch/display properly otherwise blank screen
 # export _JAVA_AWT_WM_NONREPARENTING=1
 

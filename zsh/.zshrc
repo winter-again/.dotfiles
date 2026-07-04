@@ -31,10 +31,11 @@ export LS_COLORS="di=1;36:ln=3;92:or=4;91"
 # uu = your user
 export EZA_COLORS=$LS_COLORS:"da=35:uu=1;34:sn=33"
 
-export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
+# export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
+# export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
 
-export XMODIFIERS=@im=fcitx
-export QT_IM_MODULE=fcitx
+# export XMODIFIERS=@im=fcitx
+# export QT_IM_MODULE=fcitx
 
 HISTFILE="$XDG_CACHE_HOME/.zsh_history"
 SAVEHIST="100000000" # num of lines saved (last $SAVEHIST lines)
@@ -92,11 +93,8 @@ path+=("$(go env GOBIN)")
 
 export PATH
 
-# Java for pyspark
-# export JAVA_HOME="/usr/lib/jvm/java-20-openjdk"
-
-alias ls="eza -a --icons --color=always --group-directories-first"
-alias ll="eza -lahM --icons --color=always --group-directories-first --time-style=long-iso"
+alias ls="eza -na --icons --color=always --group-directories-first"
+alias ll="eza -lahngM --icons --color=always --group-directories-first --time-style=long-iso"
 alias cp="cp -vi"
 alias mv="mv -vi"
 alias rm="rm -i"
@@ -108,7 +106,7 @@ alias x="xan"
 alias xv="xan view -l 15"
 alias xc="xan count"
 alias xh="xan headers"
-# alias tw="tw --theme Terminal"
+alias tw="tw --theme Terminal"
 alias j="just"
 alias ve="source .venv/bin/activate"
 alias de="deactivate"

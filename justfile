@@ -1,4 +1,7 @@
-default:
+@_:
+    just --list
+
+base:
     stow --no-folding desktop
     stow bat
     stow fontconfig
@@ -33,3 +36,6 @@ firefox:
 
 flow:
     stow flow
+
+podman:
+    stow containers

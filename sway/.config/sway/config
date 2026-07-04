@@ -52,9 +52,14 @@ input "type:pointer" {
     pointer_accel 0.3
 }
 
+# see: https://wayland.freedesktop.org/libinput/doc/latest/configuration.html#disable-while-typing
 input "type:touchpad" {
     tap enabled
+    tap_button_map lrm
     natural_scroll enabled
+    click_method button_areas
+    # dwt = disable touchpad while typing
+    dwt enabled
 }
 
 set {
@@ -69,7 +74,7 @@ set {
     $laptop_disp "eDP-1"
     # use make, model, and serial since output names can change
     $primary_mon "BNQ BenQ LCD 93J02490SL0"
-    $secondary_mon "BNQ BenQ LCD E2H03452SL0"
+    # $secondary_mon "BNQ BenQ LCD E2H03452SL0"
     $ws1 "1"
     $ws2 "2"
     $ws3 "3"
@@ -113,7 +118,7 @@ bindsym {
     # exit sway (logs you out of your Wayland session)
     $mod+Shift+e exec swaynag -t exit -m "Exit Sway?" -B "Yes" "swaymsg exit"
     # power menu
-    $mod+Shift+p exec ~/.config/tofi/power-menu.sh
+    $mod+Shift+p exec ~/.config/tofi/power-menu
     $mod+Shift+comma exec gtklock
     $mod+Shift+period exec systemctl suspend
     # screenshot 
@@ -231,7 +236,7 @@ exec {
     nm-applet
     solaar -w hide
     spotify-launcher # --skip-update
-    swayidle -w before-sleep "gtklock -d"
+    swayidle -w before-sleep "playerctl pause; gtklock -d"
     # might need for systemd/dbus activation envs
     # systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
     playerctld daemon # make playerctl act on the currently active media player

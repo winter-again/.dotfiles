@@ -65,8 +65,14 @@ fi
 
 echo "Installing Intel graphics packages..."
 intel_graphics_pkgs=(
+    # OpenGL support
     mesa
     mesa-utils
+    # Vulkan support
+    vulkan-icd-loader
+    vulkan-intel
+    vulkan-tools
+    # for VA-API support in Firefox
     intel-media-driver
     libva-utils
 )
@@ -83,9 +89,7 @@ sound_pkgs=(
     pavucontrol
 )
 # NOTE: will be prompted to replace jack2 with pipewire-jack, so respond with "y" since
-# default is "N"
-# NOTE: can't use --no-confirm for this
-# paru -S --needed "${sound_pkgs[@]}"
+# default is "N" (can't use --no-confirm for this)
 printf "%s\n" y Y | paru -S --needed "${sound_pkgs[@]}"
 
 echo "Blacklisting bluetooth and btusb modules..."
@@ -140,7 +144,8 @@ paru_install "${zsh_pkgs[@]}"
 echo "Installing core tools..."
 tools=(
     bat
-    bottom
+    # bottom
+    btop
     dust
     dysk
     eza
@@ -150,10 +155,11 @@ tools=(
     jaq
     just
     openssh
-    # poppler
+    poppler
     ripgrep
     stow
     tar
+    tabiew
     task
     tmux
     unzip
@@ -185,17 +191,8 @@ install_python_pkgs() {
     echo "Installing Python dev packages..."
     local python_dev_pkgs=(
         uv
-        # ruff
     )
     paru_install "${python_dev_pkgs[@]}"
-    # echo "Installing uv tools..."
-    # # NOTE: not sure if --managed-python is needed, but doesn't hurt
-    # uv python --managed-python install # installs latest Python
-    # local uv_tools=(
-    #     basedpyright
-    #     # sqruff
-    # )
-    # uv tool install "${uv_tools[@]}"
 }
 read -r -p "Install Python dev packages? (y/n): " confirm_python && [[ $confirm_python = [yY] ]] && install_python_pkgs
 
@@ -216,7 +213,7 @@ install_typst_pkgs() {
     local typst_dev_pkgs=(
         typst
         tinymist
-        # websocat
+        websocat
     )
     paru_install "${typst_dev_pkgs[@]}"
 }
@@ -226,19 +223,11 @@ install_js_pkgs() {
     echo "Installing JS/TS packages..."
     local js_dev_pkgs=(
         pnpm
-        # typescript-language-server
         vscode-html-languageserver
         vscode-css-languageserver
         vscode-json-languageserver
     )
     paru_install "${js_dev_pkgs[@]}"
-    # echo "Installing Astro language server as global package via pnpm..."
-    # # NOTE: seems that this fails if given path isn't in PATH
-    # # so I set PATH like this and it works, even if path doesn't exist
-    # # Seems that setting PNPM_HOME is needed as well. Though it should resolve to that path by default
-    # export PNPM_HOME="$HOME/.local/share/pnpm"
-    # PATH="$PATH:$PNPM_HOME"
-    # pnpm add -g @astrojs/language-server
 }
 read -r -p "Install JS/TS dev packages? (y/n): " confirm_js && [[ $confirm_js = [yY] ]] && install_js_pkgs
 
@@ -310,7 +299,7 @@ setup_stow_dotfiles() {
         cd "$HOME/.dotfiles" || exit 1
         git remote set-url origin git@github.com:winter-again/.dotfiles.git
         git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
-        just
+        just base
         cd "$HOME" || exit 1
     fi
 }
@@ -416,8 +405,7 @@ paru_install rclone restic rsync
 echo "Installing networking-related packages..."
 network_pkgs=(
     bind
-    # gnome-keyring
-    # libsecret
+    dog
     nmap
     tcpdump
 )
@@ -429,12 +417,12 @@ sudo tee /etc/NetworkManager/conf.d/20-connectivity.conf >/dev/null <<"EOF"
 enabled=false
 EOF
 
-# echo "Turning off hostname sending..."
-# sudo tee /etc/NetworkManager/conf.d/dhcp-send-hostname.conf >/dev/null <<"EOF"
-# [connection]
-# ipv4.dhcp-send-hostname=0
-# ipv6.dhcp-send-hostname=0
-# EOF
+echo "Disabling hostname sending to DHCP server..."
+sudo tee /etc/NetworkManager/conf.d/dhcp-send-hostname.conf >/dev/null <<"EOF"
+[connection]
+ipv4.dhcp-send-hostname=0
+ipv6.dhcp-send-hostname=0
+EOF
 
 echo "Creating NetworkManager dispatcher for setting timezone..."
 sudo tee /etc/NetworkManager/dispatcher.d/09-timezone >/dev/null <<"EOF"
@@ -481,6 +469,12 @@ ExecStart=/bin/sh -c "/bin/echo LID0 > /proc/acpi/wakeup"
 WantedBy=multi-user.target
 EOF
 
+echo "Adding custom udev rule for Shokz headset..."
+sudo tee /etc/udev/rules.d/80-shokz.rules >/dev/null <<"EOF"
+# Rule to prevent Shokz headphones from triggering standby/sleep
+SUBSYSTEM=="usb", ATTRS{idVendor}=="3511", ATTRS{idProduct}=="2b1e", DRIVER=="usbhid", ATTR{authorized}="0"
+EOF
+
 echo "Installing CUPS..."
 cups_pkgs=(
     cups
@@ -495,17 +489,6 @@ sudo systemctl enable --now ufw.service
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw enable
-
-# echo "Configuring SSH key for GitHub..."
-# # NOTE: will prompt for password
-# ssh-keygen -f "$HOME/.ssh/github" -C "$(whoami)@$(uname -n)"
-# cat > "$HOME/.ssh/config" <<"EOF"
-# Host github.com
-#     HostName github.com
-#     IdentitiesOnly yes
-#     IdentityFile ~/.ssh/github
-#     PreferredAuthentications publickey
-# EOF
 
 echo
 echo "Done. Reboot the system..."

@@ -48,6 +48,7 @@ if wezterm.config_builder then
     config = wezterm.config_builder() -- allows better logging of warnings and errors
 end
 
+config.front_end = "OpenGL"
 config.color_scheme = "winter-again"
 config.background = require("bg").set_bg()
 config.font = wezterm.font_with_fallback(fonts["Iosevka"].font)
@@ -61,7 +62,6 @@ config.window_padding = {
 }
 config.hide_tab_bar_if_only_one_tab = true
 config.bypass_mouse_reporting_modifiers = "CTRL" -- use CTRL to bypass app mouse repoorting (for hyperlinks)
--- config.front_end = "WebGpu" -- default is OpenGL
 config.warn_about_missing_glyphs = false
 config.audible_bell = "Disabled"
 config.default_cwd = wezterm.home_dir
@@ -126,8 +126,7 @@ config.keys = {
 -- otherwise check `/run/user/1000/wezterm/plugins/`
 -- only http or local filesystem repos are allowed
 -- local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-again/wezterm-config.nvim")
-local wezterm_config_nvim =
-    wezterm.plugin.require("file:///home/winteragain/Documents/code/wezterm-config.nvim")
+local wezterm_config_nvim = wezterm.plugin.require("file:///home/winteragain/Documents/code/wezterm-config.nvim")
 -- local wezterm_config_nvim = require('wezterm_config_plug')
 
 -- wezterm.plugin.update_all()
