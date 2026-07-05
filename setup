@@ -402,10 +402,11 @@ sudo sed -i "s/.*deny = .*/deny = 5/" /etc/security/faillock.conf
 echo "Installing rclone, restic, and rsync for backups..."
 paru_install rclone restic rsync
 
-echo "Installing networking-related packages..."
+echo "Installing networking tools..."
 network_pkgs=(
     bind
     dog
+    iproute2
     nmap
     tcpdump
 )
