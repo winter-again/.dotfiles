@@ -1494,8 +1494,8 @@ user_pref("network.ssl_tokens_cache_capacity", 10240);
 
 // NOTE: Peskyfox
 // AI
+user_pref("browser.ai.control.default", "blocked");
 // PREF: AI master switch
-// [1] https://github.com/yokoffing/Betterfox/issues/416
 user_pref("browser.ml.enable", false);
 // PREF: AI chat
 user_pref("browser.ml.chat.enabled", false);

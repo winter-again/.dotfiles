@@ -31,9 +31,6 @@ export LS_COLORS="di=1;36:ln=3;92:or=4;91"
 # uu = your user
 export EZA_COLORS=$LS_COLORS:"da=35:uu=1;34:sn=33"
 
-# export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
-# export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"
-
 # export XMODIFIERS=@im=fcitx
 # export QT_IM_MODULE=fcitx
 

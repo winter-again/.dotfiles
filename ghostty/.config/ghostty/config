@@ -12,9 +12,11 @@ mouse-scroll-multiplier = 1
 # background-image-fit = contain
 # background-image-opacity = 0.15
 
+app-notifications = false
 confirm-close-surface = false
 shell-integration-features = false
 
+# this is the reason for the keybind pop-up
 keybind = ctrl+y>r=reload_config
 
 working-directory = home
