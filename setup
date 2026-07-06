@@ -295,10 +295,12 @@ sudo systemctl enable --now keyd.service
 setup_stow_dotfiles() {
     echo "Cloning dotfiles and stowing dotfiles..."
     if [[ ! -d "$HOME/.dotfiles" ]]; then
-        git clone https://github.com/winter-again/.dotfiles.git "$HOME/.dotfiles"
+        git clone https://codeberg.org/winter-again/.dotfiles.git "$HOME/.dotfiles"
         cd "$HOME/.dotfiles" || exit 1
-        git remote set-url origin git@github.com:winter-again/.dotfiles.git
-        git remote set-url --push origin git@github.com:winter-again/.dotfiles.git
+        git remote set-url origin ssh://git@codeberg.org/winter-again/.dotfiles.git
+        # potential bug; have to explicitly set for push, otherwise gets overwritten by --add
+        git remote set-url --push origin ssh://git@codeberg.org/winter-again/.dotfiles.git
+        git remote set-url --add --push origin git@github.com:winter-again/.dotfiles.git
         just base
         cd "$HOME" || exit 1
     fi
