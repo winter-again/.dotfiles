@@ -314,6 +314,7 @@ theme_pkgs=(
     kvantum-theme-materia
     materia-gtk-theme
     nwg-look
+    qt5-wayland
 )
 paru_install "${theme_pkgs[@]}"
 
@@ -335,7 +336,6 @@ app_pkgs=(
     mpv
     nemo
     picard
-    qt5-wayland
     spotify-launcher
 )
 paru_install "${app_pkgs[@]}"
