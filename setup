@@ -339,10 +339,12 @@ app_pkgs=(
     spotify-launcher
 )
 paru_install "${app_pkgs[@]}"
+# firefox; won't run if $BROWSER set
+xdg-settings set default-web-browser firefox.desktop
 # imv
-xdg-mime default imv-dir.desktop image/png image/jpeg
+xdg-mime default imv-dir.desktop image/jpeg image/png
 # mpv
-xdg-mime default mpv.desktop audio/x-opus+ogg audio/x-aiff
+xdg-mime default mpv.desktop audio/mp4 audio/x-opus+ogg audio/flac video/mp4 video/quicktime
 # nemo
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.cinnamon.desktop.default-applications.terminal exec wezterm
