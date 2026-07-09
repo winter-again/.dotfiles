@@ -13,6 +13,7 @@ base:
     stow mako
     stow nvim
     stow oh-my-posh
+    stow mpv
     stow pacman
     stow paru
     stow ripgrep
