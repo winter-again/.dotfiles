@@ -1,0 +1,274 @@
+#!/usr/bin/env python
+
+# pyright: reportAny = false, reportUnusedCallResult = false
+
+import argparse
+import os
+import subprocess
+import time
+from collections.abc import Sequence
+from dataclasses import dataclass, field
+from enum import StrEnum
+from pathlib import Path
+from typing import Self
+
+
+class Codec(StrEnum):
+    LIBAOM = "libaom-av1"
+    SVT_AV1 = "libsvtav1"
+
+
+@dataclass
+class Params:
+    # NOTE: these defaults will override the ones in add_argument() calls
+    input: Path = Path()
+    start: str = ""
+    end: str = ""
+    output: Path = Path()
+    force: bool = False
+    codec: Codec = Codec.SVT_AV1
+    crf: int = 25
+    crop: str = ""
+    fps: int = 24
+    pix_fmt: str = "yuv420p"
+    reverse: bool = False
+    scale: str = "-1:480"
+    speed: int = 1
+
+
+@dataclass
+class Crop:
+    # TODO: cropping options -> may interfere with scaling too; which one wins? Also seems like crop is overridden
+    # by the dimensions of the video itself (ffmpeg must do OOB checks) Seems that if offset + length goes OOB, then
+    # real limits are silently set (i.e., continuing to increase doesn't go off of the image edge)
+    # TODO: come up with some crop presets to make things easier (e.g., center square, center rectangle)?
+    # TODO: is there some shorthand like -1 for cropping to go to end of frame?
+    width: int = 10
+    height: int = 10
+    x: int = 0
+    y: int = 0
+
+    def build(self) -> str:
+        # if expression invalid, original values are kept
+        return f"crop={self.width}:{self.height}:{self.x}:{self.y}"
+
+
+@dataclass
+class Scale:
+    # TODO: this should be configurable via CLI
+    # width or height of 0 will keep input's dimension
+    width: int = -1
+    height: int = 480
+    flags: str = "lanczos"
+
+    def build(self) -> str:
+        return f"scale={self.width}:{self.height}:flags={self.flags}"
+
+
+# TODO: how to keep the [var] names consistent between defaults and user-provided data?
+"""
+split[s0][s1];[s0]palettegen=max_colors=256:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3"
+split[s0][s1];[s1]reverse[s1];[s0][s1]concat=n=2:v=1:a=0,split[avif][pal];[pal]palettegen=stats_mode=diff[p];[avif][p]paletteuse=dither=bayer:bayer_scale=3,setpts=0.25*PTS" yunah-done-2.avif
+"""
+
+
+@dataclass
+class VideoFilter:
+    # TODO: unsure of whether palette and split are too rigid? If they should *always* be used, then it's probably fine
+    # TODO: any sense in using max_colors=256 for avif?
+    _crop: Crop | None = None
+    _fps: int = 24
+    _palette: str = "[s0]palettegen=max_colors=256:stats_mode=diff[pal]; [s1][pal]paletteuse=dither=bayer:bayer_scale=3"  # TODO: maybe this should be own class or not even configurable
+    _reverse: bool = False
+    _scale: Scale = field(default_factory=Scale)
+    _setpts: float | None = None
+    _split: str = "split[s0][s1]"
+
+    def crop(self, x: int, y: int, width: int, height: int) -> Self:
+        self._crop = Crop(width, height, x, y)
+        return self
+
+    def fps(self, fps: int) -> Self:
+        self._fps = fps
+        return self
+
+    def reverse(self, reverse: bool) -> Self:
+        self._reverse = reverse
+        return self
+
+    def scale(self, scaler: Scale) -> Self:
+        self._scale = scaler
+        return self
+
+    def speed(self, speed_up_factor: int) -> Self:
+        if speed_up_factor != 1:
+            self._setpts = 1 / speed_up_factor
+        return self
+
+    def build(self) -> str:
+        vf = (
+            self._crop.build() if self._crop is not None else None,
+            f"fps={self._fps}",
+            self._scale.build(),
+            f"setpts={self._setpts}" if self._setpts is not None else None,
+            self._split,  # must come before palette
+            self._palette,
+        )
+        return ", ".join(f for f in vf if f is not None)
+
+
+@dataclass
+class AVIF:
+    # TODO: should prob assign defaults
+    input: Path
+    start: str
+    end: str
+    codec: Codec
+    crf: int
+    pixel_fmt: str
+    video_filter: VideoFilter
+    output: Path
+
+    def filter(self, video_filter: VideoFilter) -> Self:
+        self.video_filter = video_filter
+        return self
+
+    def create(self, force: bool = False) -> None:
+        cmd = ["ffmpeg"]
+        if force:
+            cmd.append("-y")
+        opts: list[tuple[str, str]] = [
+            ("-v", "warning"),
+            ("-ss", self.start),
+            ("-to", self.end),
+            ("-i", self.input.as_posix()),
+            ("-c:v", self.codec.value),
+            ("-crf", str(self.crf)),
+            ("-pix_fmt", self.pixel_fmt),
+            ("-vf", self.video_filter.build()),
+        ]
+        for param, value in opts:
+            cmd.extend([param, value])
+        cmd.append(self.output.as_posix())
+
+        print(cmd)
+
+        t0 = time.perf_counter()
+        subprocess.run(cmd, check=False)
+        t1 = time.perf_counter()
+        # TODO: show file size too
+        print(
+            f"Finished creating .avif file: {self.output} (size: {format_size(os.stat(self.output).st_size)}, time: {t1 - t0:.4f} s)"
+        )
+
+
+def format_size(size: float) -> str:
+    kib = 1024.0
+    for unit in ("bytes", "KiB", "MiB", "GiB"):
+        if size < kib:
+            return f"{size:.2f} {unit}"
+        size /= kib
+    return ""
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """
+    See: https://glq.pages.dev/posts/high_quality_gifs/ (some of this may be outdated)
+    See: https://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html
+    """
+    # TODO: make subcommand for yt-dlp download?
+    # TODO: ability to read data from csv or json file and create avif with each entry
+    # 1 file per video -> makes multiple avif
+    # TODO: run some infinite loop for binary search on start and end times while previewing
+    # Possible to integrate with some screen selection tool?
+    # Idea is that for each bound, I should be able to say "y" or "n" to effectively "search"
+    # for the optimal start and end timestamps of the avif
+    parser = argparse.ArgumentParser(
+        prog="avif", description="CLI for creating avif files from mp4 files"
+    )
+    parser.add_argument("input", type=Path, help="Target .mp4 file to use as input")
+    # TODO: timestamp parsing to some datetime type
+    parser.add_argument("start", type=str, help="Start timestamp")
+    parser.add_argument("end", type=str, help="End timestamp")
+    parser.add_argument("output", type=Path, help="Name of file to output")
+    parser.add_argument("--force", action="store_true")
+    # NOTE: libaom-av1 is slower than libsvtav1, even with low -crf
+    parser.add_argument("--codec", type=Codec, default=Codec.SVT_AV1, help="avif codec")
+    parser.add_argument(
+        "--crf",
+        type=int,
+        default=25,
+        help="Constant rate factor (CRF). Smaller values -> better quality but slower.",
+    )
+    parser.add_argument(
+        "-c",
+        "--crop",
+        type=str,
+        help="Input cropping given in format x,y,width,height",
+    )
+    # NOTE: for gif pixel fmt must be rgb8?
+    parser.add_argument("--pix-fmt", type=str, default="yuv420p", help="Pixel format")
+    parser.add_argument("--fps", type=int, default=24, help="Output FPS")
+    parser.add_argument(
+        "--reverse",
+        action="store_true",
+        help="Use ffmpeg's reverse filter to create 'boomerang' effect",
+    )
+    parser.add_argument(
+        "-s",
+        "--scale",
+        type=str,
+        default="-1,480",
+        help="Output dimensions in format width,height. Use -1 just as in ffmpeg.",
+    )
+    parser.add_argument(
+        "--speed", type=int, default=1, help="Speed up video by some factor"
+    )
+    # TODO: allow some way to completely overwrite video filter with --vf string
+    # parser.add_argument("--vf", type=str, default=default_vf, help="Video filter")
+
+    params = Params()
+    args = parser.parse_args(argv, params)
+
+    if not args.input.is_file():
+        print("Input file doesn't exist")
+        raise SystemExit(1)
+    if args.input.suffix != ".mp4":
+        print("Input file doesn't have an .mp4 file extension")
+        raise SystemExit(1)
+    if args.output.is_file() and not args.force:
+        print(
+            f"Output file {args.output} already exists. Use the --force flag to overwrite."
+        )
+        raise SystemExit(1)
+    if args.output.suffix != ".avif":
+        print("Input file doesn't have an .avif file extension")
+        raise SystemExit(1)
+
+    out_width, out_height = map(int, args.scale.split(","))
+    scale = Scale(out_width, out_height)
+    video_filter = (
+        VideoFilter().fps(args.fps).scale(scale).speed(args.speed).reverse(args.reverse)
+    )
+    if args.crop != "":
+        crop_x, crop_y, crop_width, crop_height = map(int, args.crop.split(","))
+        video_filter = video_filter.crop(crop_x, crop_y, crop_width, crop_height)
+
+    print(f"Video filter: {video_filter.build()}")
+    avif = AVIF(
+        args.input,
+        args.start,
+        args.end,
+        args.codec,
+        args.crf,
+        args.pix_fmt,
+        video_filter,
+        args.output,
+    )
+    avif.create(args.force)
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

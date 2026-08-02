@@ -18,7 +18,7 @@ return {
                 python = { "ruff_organize_imports", "ruff_format" },
                 rust = { "rustfmt" },
                 sh = { lsp_format = "prefer" }, -- bash LS formats via shfmt if installed
-                -- sql = { "sqruff" },
+                sql = { "sqruff" },
                 svelte = { "prettier" },
                 toml = { "taplo" },
                 typescript = { "prettier", "biome", stop_after_first = true },
@@ -43,6 +43,9 @@ return {
                 },
                 ruff_format = {
                     command = get_tool_path("ruff"),
+                },
+                sqruff = {
+                    command = get_tool_path("sqruff"),
                 },
                 taplo = {
                     condition = function(self, ctx)

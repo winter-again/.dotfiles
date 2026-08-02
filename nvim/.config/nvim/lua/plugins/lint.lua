@@ -8,6 +8,7 @@ return {
             lua = { "selene" },
             markdown = { "markdownlint-cli2" },
             sh = { "shellcheck" },
+            sql = { "sqruff" },
         }
 
         local lint_group = vim.api.nvim_create_augroup("lint", { clear = true })

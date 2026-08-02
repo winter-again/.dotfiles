@@ -334,6 +334,7 @@ app_pkgs=(
     imv
     libreoffice-still
     mpv
+    mpv-mpris
     nemo
     picard
     spotify-launcher
@@ -344,7 +345,7 @@ xdg-settings set default-web-browser firefox.desktop
 # imv
 xdg-mime default imv-dir.desktop image/jpeg image/png
 # mpv
-xdg-mime default mpv.desktop audio/mp4 audio/x-opus+ogg audio/flac video/mp4 video/quicktime
+xdg-mime default mpv.desktop audio/mp4 audio/x-opus+ogg audio/flac video/mp4 video/quicktime image/avif
 # nemo
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
 gsettings set org.cinnamon.desktop.default-applications.terminal exec wezterm

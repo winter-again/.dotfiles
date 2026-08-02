@@ -48,14 +48,14 @@ local parsers = {
     "sql",
     "ssh_config",
     "svelte",
-    "tmux",
+    -- "tmux",
     "toml",
     "tsx",
     "typescript",
     "typst",
     "udev",
     "yaml",
-    "zathurarc",
+    -- "zathurarc",
     "zsh",
 }
 

@@ -125,8 +125,8 @@ config.keys = {
 -- I think because I have `$XDG_RUNTIME_DIR` set, my plugins are in ~/.local/share/wezterm/plugins
 -- otherwise check `/run/user/1000/wezterm/plugins/`
 -- only http or local filesystem repos are allowed
--- local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-again/wezterm-config.nvim")
-local wezterm_config_nvim = wezterm.plugin.require("file:///home/winteragain/Documents/code/wezterm-config.nvim")
+local wezterm_config_nvim = wezterm.plugin.require("https://github.com/winter-again/wezterm-config.nvim")
+-- local wezterm_config_nvim = wezterm.plugin.require("file:///home/winteragain/Documents/code/wezterm-config.nvim")
 -- local wezterm_config_nvim = require('wezterm_config_plug')
 
 -- wezterm.plugin.update_all()

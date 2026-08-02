@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# TODO: can't use yuv420p for gif -> use rgb8 instead?
+
+ffmpeg -y \
+    -v warning \
+    -ss "$2" \
+    -to "$3" \
+    -i "$1" \
+    -pix_fmt rgb8 \
+    -vf "fps=24,scale=-1:480:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=256:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" \
+    "$4"
+
+file_size=$(stat -c %s "$4" | numfmt --to=iec)
+
+echo "---"
+echo "gif creation complete: $4 (size=${file_size})"
