@@ -333,6 +333,7 @@ app_pkgs=(
     gst-libav
     imv
     libreoffice-still
+    librewolf
     mpv
     mpv-mpris
     nemo
@@ -365,7 +366,7 @@ install_aur_pkgs() {
     echo "Installing all AUR packages..."
     local aur_pkgs=(
         epson-inkjet-printer-escpr2
-        librewolf-bin
+        # librewolf-bin
         oh-my-posh-bin
         slack-desktop
         tofi
