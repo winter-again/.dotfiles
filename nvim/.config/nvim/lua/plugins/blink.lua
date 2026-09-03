@@ -149,8 +149,8 @@ return {
             },
             per_filetype = {
                 lua = { inherit_defaults = true, "lazydev" },
-                -- NOTE: I think have to specify inherit_defaults? See https://github.com/obsidian-nvim/obsidian.nvim/issues/430
-                -- markdown = { inherit_defaults = true, "obsidian" },
+                -- TODO: I think this disables built-in obsidian completion
+                markdown = { inherit_defaults = false, "lsp" },
             },
             providers = {
                 lsp = {
